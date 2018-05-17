@@ -36,10 +36,21 @@ Una de las responsabilidades del arquitecto de software es la de diseñar el sis
 
 En definitiva, el arquitecto debe garantizar que la visión del sistema, que podríamos definir cómo las características y restricciones a alto nivel del sistema ha desarrollar, sea comprendida tanto por el equipo de desarrollo como por los clientes y evolucione en función de los requisitos de ambos grupos.
 
+\section{Colaboración entre microservicios}
+
+El arquitecto de software debe preocuparse más por como interaccionan los servicios entre ellos y no tanto en lo que ocurre dentro de los límites de cada uno de ellos. En organizaciones grandes, cada microservicio puede estar desarrollado por un equipo distinto y es el arquitecto quien debe hacer de puente entre ellos.
+
+Como recordamos del capítulo anterior, una de las ventajas de las arquitecturas basadas en microservicios es la heterogeneidad tecnológica.  Sin embargo, dejar plena libertad a cada equipo para elegir la tecnología del servicio que va a desarrollar puede traer problemas a la hora de integrarlo con el resto del sistema. En este sentido, una buena práctica sería:
+
+\begin{itemize}
+
+\item Establecer normas en aspectos clave como el protocolo de comunicación entre los servicios para facilitar el consumo entre ellos.
+
+\item Dejar mayor libertad al equipo de desarrollo en otros aspectos como la manera en que se implementa cada servicio de manera particular. De esta forma, cada equipo gana mayor relevancia a la hora de diseñar su propio microservicio y el arquitecto juega un papel menos técnico y más de supervisor y asesor.
+
+\end{itemize}
+
 \section{Impacto de un cambio}
 
-El arquitecto de software debe preocuparse más por como interaccionan los servicios entre ellos y no tanto en lo que ocurre dentro de los límites de cada uno de ellos. Cada microservicio puede estar desarrollado por un equipo distinto y es el arquitecto quien debe hacer de puente entre ellos.
-
-Una de las ventajas de las arquitecturas basadas en microservicios es la heterogeneidad tecnológica. Sin embargo, dejar plena libertad a cada equipo para elegir la tecnología del servicio que van a desarrollar puede traer problemas a la hora de integrarlo con el resto del sistema. En este sentido, el arquitecto puede establecer normas en aspectos clave como el protocolo de comunicación entre los servicios y dejar mayor libertad al equipo de desarrollo en otros aspectos como la manera en que se implementa cada servicio de manera particular.
 
 \end{document}
