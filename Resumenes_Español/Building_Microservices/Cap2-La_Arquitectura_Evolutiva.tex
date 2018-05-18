@@ -44,18 +44,56 @@ Como recordamos del capítulo anterior, una de las ventajas de las arquitecturas
 
 \begin{itemize}
 
-\item Establecer normas en aspectos clave como el protocolo de comunicación entre los servicios para facilitar el consumo entre ellos.
+\item Establecer normas en aspectos clave como el protocolo de comunicación entre los servicios para facilitar el consumo entre ellos. El uso de interfaces también facilita que el servicio pueda ser consumido por otros.
 
-\item Dejar mayor libertad al equipo de desarrollo en otros aspectos como la manera en que se implementa cada servicio de manera particular. De esta forma, cada equipo gana mayor relevancia a la hora de diseñar su propio microservicio y el arquitecto juega un papel menos técnico y más de supervisor y asesor.
+\item Dejar mayor libertad al equipo de desarrollo en otros aspectos como la manera en que se implementa cada servicio de manera particular. De esta forma, cada equipo gana mayor relevancia a la hora de diseñar su propio microservicio y el arquitecto juega un papel menos técnico y más de supervisor y asesor para evitar que se pierda la imagen del sistema completo.
 
 \end{itemize}
+
+Por último, se debe controlar el manejo de errores entre microservicios para garantizar la autonomía entre ellos. Un servicio que no esté funcionando correctamente no puede influir en el buen funcionamiento de otros servicios.
 
 \section{Toma de decisiones e impacto de los cambios}
 
-El diseño de software se basa contínuamente en hacer balances entre diferentes alternativas. A la hora de tomar una decisión, cuanta más información se pueda recabar mejor. El arquitecto es quien mejor debe conocer los principios para tomar una decisión, que se pueden dividir en:
+El diseño de software se basa contínuamente en hacer balances entre diferentes alternativas. A la hora de tomar una decisión, cuanta más información se pueda recabar mejor. Conocer el impacto del cambio reducirá el número de posibles errores que puedan surgir como consecuencia de este. El arquitecto es quien mejor debe conocer los principios para tomar una decisión, que se pueden dividir en:
 
 \begin{itemize}
+
 \item Objetivos estratégicos: constituyen la dirección que desea tomar una organización a muy alto nivel, sin incluir aspectos a nivel técnico.
+
+\item Principios y restricciones: los principos son reglas establecidas para alinear lo que se hace en cada momento con el un objetivo mayor. Cuantos más principios se establezcan en el desarrollo, más fácil será contradecir unos con otros. Las restricciones representan principios inamovibles que se han de seguir obligatoriamente.
+
+\item Prácticas: determinan de manera detallada como se llevan a cabo los principios en la práctica. Son de naturaleza más técnica y cambian más frecuentemente que los principios.
+
 \end{itemize}
+
+\section{Monitorización de los microservicios}
+
+Dentro de la monitorización de microservicios podemos encontrar las siguientes tareas a llevar a cabo:
+
+\begin{itemize}
+
+\item Supervisar la comprensión de la visión del sistema: el conjunto de stakeholders ha de mantener en todo momento la imagen del sistema en todo su extensión y no solo la de un servicio concreto.
+
+\item Supervisar la aplicación de normas y prácticas: cuando se establecen unas prácticas que deben ser seguidas por el equipo, se debe garantizar de alguna manera que estas son aplicadas. Dos posibles técnicas para fomentar su seguimiento son:
+
+\begin{itemize}
+
+\item Ejemplos de código: muchos desarrolladores prefieren leer código en vez de documentación. Si se promueve que se imiten ejemplos reales de código que siguen las normas de programación y que han sido verificados, aumentará la coherencia en el estilo del código.
+
+\item Uso de plantillas:  la velocidad de desarrollo aumenta si se genera o autogenera parte del código empleando plantillas. Las plantillas contienen llamadas a código que se repite en todos los servicios y que puede haber sido extraído a una librería.
+
+\end{itemize}
+
+\item Hacer balance de la deuda técnica: la deuda técnica es trabajo pendiente que surge fruto de no haber hecho una tarea correctamente cuando se llevó a cabo. Uno de los motivos de la aparición de deuda técnica es el proceso de desarrollo: si la organización se compromete a solucionar un fallo lo más rápido posible o a publicar una nueva funcionalidad en la siguiente versión del producto puede surgir trabajo pendiente fruto de hacer las cosas empleando atajos. El arquitecto es quien debe hacer balance sobre cuando se permite y se debe solucionar la deuda técnica.
+
+\end{itemize}
+
+
+
+
+
+
+
+
 
 \end{document}
