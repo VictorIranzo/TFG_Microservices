@@ -32,10 +32,23 @@ Esta perspectiva puede trasladarse fácilmente al modelado de microservicios. Lo
 
 No todos los modelos de un servicio son públicos. Por ejemplo, podemos definir una entidad en el modelo con muchos atributos pero solo hacer públicos al resto de servicios parte de ellos. También puede ocurrir que una misma entidad aparezca en modelos de distintos servicios. En este caso, los atributos de la entidad en cada uno de ellos podrían variar porque a cada uno les interese unas propiedades u otras.
 
-Por último, es importante resaltar que una descomposición temprana de un sistema en microservicios puede conllevar ciertos riesgos. Si el equipo a cargo del desarrollo tiene pocos conocimientos del dominio del problema a resolver, puede  ser buena idea comenzar la implementación como si de un sistema monolítico se tratara. Una vez sean conocidos los límites de cada servicio, se puede refactorizar el código implementado. En este momento, se puede comenzar dividiendo la solución en grandes servicios que poco a poco se vayan dividiendo en más pequeños conforme se estudien las ventajas de hacer cada nueva extracción.
 
-\section{Modelado de servicios según las capacidades del negocio}
+\section{Descomposición en microservicios según las capacidades del negocio}
 
 Cuando se razona sobre los límites de un servicio no se debe pensar en los datos que este almacena sino en las funcionalidades que ofrece. Pensar en los datos nos conduce a desarrollar únicamente servicios CRUD (en inglés, aquellos que nos permiten las operaciones de crear, leer, actualizar y eliminar datos) que ofrecen unas operaciones muy limitadas. Un servicio ofrece ciertas funcionalidades o capacidades que aportan valor al negocio.
+
+Una descomposición temprana de un sistema en microservicios puede conllevar ciertos riesgos. Si el equipo a cargo del desarrollo tiene pocos conocimientos del dominio del problema a resolver, puede  ser buena idea comenzar la implementación como si de un sistema monolítico se tratara. Una vez sean conocidos los límites de cada servicio, se puede refactorizar el código implementado. En este momento, se puede comenzar dividiendo la solución en grandes servicios que poco a poco se vayan dividiendo en más pequeños conforme se estudien las ventajas de hacer cada nueva extracción.
+
+Cuando sea necesario realizar un cambio por nuevos requisitos del negocio, estos se localizarán en un contexto bien delimitado porque existirá una correspondencia entre la estructura de la organización y los microservicios del sistema. Como consecuencia, el tiempo medio para realizar un cambio se verá reducido porque solo hará falta volver a desplegar una porción del sistema.
+
+Además, la comunicación entre microservicios se asemejará a la existente entre las entidades del negocio. Los objetos empleados para dicha comunicación serán los detallados en los modelos compartidos, que son usados en la interfaz de uno de los interlocutores.
+
+\section{División vertical y horizontal de un servicio}
+
+Cuando un servicio crece demasiado por incluir más funcionalidades, es el momento de dividirlo en otros más pequeños. Las funcionalidades que ofrecía el servicio se reparten entre los nuevos atendiendo a las capacidades del negocio. La división que se debe realizar es en vertical ya que todas las capas del servicio quedan partidas. Cada uno de los nuevos servicios tendrá todas las capas del original pero solo con el código necesario para ofrecer sus funcionalidades.
+
+El otro tipo de división de un servicio es la horizontal. Cuando un servicio es muy consumido puede sufrir problemas de rendimiento. Una posible solución es dividir el sistema de forma horizontal. La división horizontal consiste en añadir una capa intermedia entre dos para reducir el número de accesos que la primera capa hace sobre la segunda. La capa añadida implementa una caché para atendar las peticiones de la capa sobre la que está sin recurrir en todo momento a la capa sobre la que está. Otra posible solución es replicar el servicio de forma geográfica u organizacional atendiendo sus consumidores.
+
+En resumen, a la hora de diseñar microservicios es la primera división la que se debe seguir y únicamente se debe aplicar una división en horizontal por motivos de rendimiento.
 
 \end{document}
