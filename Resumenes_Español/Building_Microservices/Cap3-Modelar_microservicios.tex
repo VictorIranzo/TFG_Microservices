@@ -26,12 +26,16 @@ Estos dos términos son claves para implementar servicios de buena calidad:
 
 \section{Contexto de un microservicio}
 
-En el libro 'Domain-Driven Design', Eric Evans explica que el dominio de una solución está compuesta de múltiples contextos bien limitados. Cada contexto está formado por modelos que no necesitan ser compartidos con otros contextos a menos que se defina explícitamente una interfaz que lo emplee. La interfaz es el punto de entrada para que otros puedan comunicar con nuestro contexto, empleando los términos y entidades que en los modelos que aquí se definan.
+En el libro 'Domain-Driven Design', Eric Evans explica que el dominio de una solución está compuesta de múltiples contextos bien limitados. Cada contexto está formado por modelos que no necesitan ser compartidos con otros a menos que se defina explícitamente una interfaz que los empleen. La interfaz es el punto de entrada para que otros contextos puedan comunicar con el nuestro, empleando los términos y entidades que en nuestros modelos se definan.
 
 Esta perspectiva puede trasladarse fácilmente al modelado de microservicios. Los contextos limitados de Evans que analicemos en nuestro sistema son firmes candidatos a transformarse en servicios. Así, los límites de un servicio quedan bien limitados porque  todas las entidades que pueda requerir se encuentran dentro de sus fronteras, garantizándose su alta cohesión y bajo acoplamiento.
 
 No todos los modelos de un servicio son públicos. Por ejemplo, podemos definir una entidad en el modelo con muchos atributos pero solo hacer públicos al resto de servicios parte de ellos. También puede ocurrir que una misma entidad aparezca en modelos de distintos servicios. En este caso, los atributos de la entidad en cada uno de ellos podrían variar porque a cada uno les interese unas propiedades u otras.
 
+Por último, es importante resaltar que una descomposición temprana de un sistema en microservicios puede conllevar ciertos riesgos. Si el equipo a cargo del desarrollo tiene pocos conocimientos del dominio del problema a resolver, puede  ser buena idea comenzar la implementación como si de un sistema monolítico se tratara. Una vez sean conocidos los límites de cada servicio, se puede refactorizar el código implementado. En este momento, se puede comenzar dividiendo la solución en grandes servicios que poco a poco se vayan dividiendo en más pequeños conforme se estudien las ventajas de hacer cada nueva extracción.
 
+\section{Modelado de servicios según las capacidades del negocio}
+
+Cuando se razona sobre los límites de un servicio no se debe pensar en los datos que este almacena sino en las funcionalidades que ofrece. Pensar en los datos nos conduce a desarrollar únicamente servicios CRUD (en inglés, aquellos que nos permiten las operaciones de crear, leer, actualizar y eliminar datos) que ofrecen unas operaciones muy limitadas. Un servicio ofrece ciertas funcionalidades o capacidades que aportan valor al negocio.
 
 \end{document}
