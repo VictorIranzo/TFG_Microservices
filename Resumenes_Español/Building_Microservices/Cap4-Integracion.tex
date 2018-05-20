@@ -1,0 +1,45 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\author{Víctor Iranzo}
+\title{Capítulo 4: Integración de microservicios}
+\setlength{\parskip}{10pt}
+
+\begin{document}
+\maketitle
+
+La integración de servicios es la parte más relevante en los sistemas basados en este concepto. Hacerlo correctamente nos asegurará su autonomía y su despliegue de manera independiente. Existen muchas tecnologías para la integración: SOAP (Simple Object Access Protocol), RPC (Remote Procedure Call) o REST (Representational State Transfer). De cualquiera de estas tecnologías esperamos las siguientes características:
+
+\begin{itemize}
+
+\item Evitar cambios en los consumidores: la tecnología escogida debe hacer que el número de cambios en un servicio que impliquen cambios en sus consumidores sean los menos posibles.
+
+\item No imponer una tecnología específica: la tecnología empleada para la comunicación entre servicios no debe restringir la tecnología empleada en estos. Se debe mantener la heterogeneidad tecnológica de los servicios y el protocolo empleado para integrarlos debe poderse emplear en cuantas más tecnologías mejor.
+
+\item Hacer simple el consumo de un servicio: los consumidores deberían de tener total libertad en la tecnología que emplean y consumir un servicio para ellos no debe ser complejo de implementar.
+
+\item Ocultar detalles de la implementación: el consumidor de un servicio no debe conocer los detalles de como este está implementado internamente. Así, los interlocutores están desacoplados y se evitan cambios en el consumidor asociados al servicio.
+
+\item Soportar operaciones más allá de las CRUD: las operaciones CRUD para crear, leer, actualizar y eliminar elementos están soportadas en la mayoría de tecnologías de integración. Sin embargo, un sistema requiere dar soporte a más procesos que se deben poder exponer en una interfaz de un servicio.
+
+\end{itemize}
+
+\section{Integración por base de datos}
+
+\section{Integración REST y RPC}
+
+\section{Patrones orquestador y coreógrafo}
+
+\section{La ley de Postel y los lectores tolerantes}
+
+\section{Integración en las interfaces de usuario}
+
+\section{Integración con servicios de terceros}
+
+\section{Integración con sistemas legados}
+
+\end{document}
