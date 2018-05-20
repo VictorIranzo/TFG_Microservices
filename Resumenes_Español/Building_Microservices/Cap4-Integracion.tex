@@ -40,6 +40,13 @@ Por último, con esta aproximación la lógica del servicio queda repartida entr
 
 En definitiva, la integración por base de datos es una buena forma de compartir datos pero no lógica y emplearla en una solución basada en microservicios implica la pérdida de la cohesión y el acoplamiento entre servicios.
 
+\section{Llamadas síncronas y asíncronas}
+
+En la comunicación síncrona, cuando se realiza una llamada a un servidor esta se bloquea hasta que la operación solicitada se complete. En la comunicación asíncrona, el invocador no espera a que la llamada se complete para continuar trabajando.
+
+Es más sencillo razonar sobre las primeras, pero son las llamadas asíncronas las más efectivas cuando se solicitan operaciones largas o cuando se desea hacer una aplicación responsive.
+
+El primer tipo de comunicación está ligado al patrón petición-respuesta (en inglés, request-response), aunque también puede ser empleado de forma asíncrona a través de callbacks que recojan la respuesta del servidor. Otro tipo de patrón es el basado en eventos: el cliente, en lugar de hacer una petición para realizar una operación, comunica al servidor un evento que ha observado y es el servidor quien debe saber qué hacer ante lo ocurrido. Este patrón es de naturaleza asíncrona y disminuye el acoplamiento entre cliente y servidor.
 
 \section{Integración REST y RPC}
 
