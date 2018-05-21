@@ -49,6 +49,7 @@ Es más sencillo razonar sobre las primeras, pero son las llamadas asíncronas l
 El primer tipo de comunicación está ligado al patrón petición-respuesta (en inglés, request-response), aunque también puede ser empleado de forma asíncrona a través de callbacks que recojan la respuesta del servidor. Otro tipo de patrón es el basado en eventos: el cliente, en lugar de hacer una petición para realizar una operación, comunica al servidor un evento que ha observado y es el servidor quien debe saber qué hacer ante lo ocurrido. Este patrón es de naturaleza asíncrona y disminuye el acoplamiento entre cliente y servidor.
 
 \section{Patrones orquestador y coreógrafo}
+
 A la hora de implementar un proceso de negocio múltiples servicios deben participar. Para su coordinación, existen pos estilos arquitectónicos que se pueden seguir: la orquestación, basado en un componente que guía y dirige al resto de servicios como un director de orquesta, y la coreografía, donde cada parte sabe el trabajo que debe realizar y se coordina con el resto como bailarines realizando una coreografía.
 
 Por una parte, el patrón orquestador es más sencillo de implementar, pudiéndose hacer con herramientas para el modelado de procesos de negocio. Sin embargo, al usarlo se otorga demasiada autoridad a uno de los servicios del sistema y el resto pueden llegar a transformarse en simples servicios CRUD.
@@ -61,13 +62,34 @@ En general, las soluciones que siguen el patrón orquestador son más difíciles
 
 La llamada a procedimiento remoto (en inglés, Remote Procedure Call o RPC)es una técnica que permite ejecutar una llamada a un servicio remoto como si de una llamada local se tratara. Existen diferentes tecnologías que la implementan a través del uso de interfaces, que facilitan la comunicación entre cliente y servidor. No es necesario que cliente y servidor empleen la misma pila tecnológica, aunque algunas tecnologías como Java RMI sí lo requieren y limitan al resto de servicios.
 
-El formato de los mensajes o los protocolos de red empleados también varían de una tecnología a otra. En cuanto a los formatos, SOAP (proviene del inglés Simple Object Access Protocol) emplea XML (también del inglés eXtensible Markup Language) mientras que por ejemplo Java RMI transmite mensajes binarios. Los protocoles de red empleados van desde HTTP sobre TCP que emplea SOAP hasta UDP, un protocolo más rápido y ligero.
+El formato de los mensajes o los protocolos de red empleados también varían de una tecnología a otra. En cuanto a los formatos, SOAP (proviene del inglés Simple Object Access Protocol) emplea XML (también del inglés eXtensible Markup Language) mientras que por ejemplo Java RMI transmite mensajes binarios. Los protocoles de red empleados van desde HTTP sobre TCP, que emplea SOAP, hasta UDP, un protocolo más rápido y ligero.
 
 El coste asociado a hacer una llamada remota es mucho mayor al de una local. Los objetos han de serializarse y mandarse a través de la red, teniendo en cuenta que esta no es segura. El tratamiento de errores no puede ser el mismo y ha de estar prevenido de la latencia de la red.
 
 Algunas tecnologías RPC pueden ser frágiles, como por ejemplo Java RMI. Las interfaces que ofrecen los servidores están muy ligadas a la representación del objeto sobre el que se desea hacer una operación. Además, un cambio en la interfaz puede suponer romper alguno de los consumidores,  con lo que puede ocurrir que al desplegar el servidor se tengan que desplegar todos los clientes que lo invocan.
 
 \section{Integración REST}
+
+La transferencia de estado representacional (en inglés, REpresentational State Transfer) es un estilo arquitectónico inspirado en la Web. Se basa en el concepto de recurso, un objeto que el servicio conoce y del que puede crear diferentes representaciones bajo demando. La representación del recurso está completamente desacoplada de como se almacena.
+
+La arquitectura REST es ampliamente usada junto con HTTP (término que proviene del inglés Hypertext Transfer Protocol). Los verbos que se definen en HTTP actúan sobre recursos: por ejemplo, con el verbo GET se puede obtener una representación del recurso y con el POST crear uno nuevo.
+
+\subsection{HATEOAS: Hypermedia As the Engine of Application State}
+
+Un principio introducido en HTTP y que reduce el acoplamiento es el de hipermedia como motor del estado de la aplicación (HATEOAS). Este consiste en que un cliente, a través de enlaces que contiene un recurso hacia otros, interactúa con el servidor navegando con los enlaces hacia los recursos que le interesan.
+
+En una conversación normal entre cliente y servidor, el cliente comenzará solicitando un recurso que estará enlace con otros a través de referencias. El cliente debe conocer la semántica del resultado devuelto por el servidor para saber que significan cada uno de los enlaces del recurso. Aunque cambie la lógica del servidor, el significado del enlace seguirá siendo el mismo y se podrá consumir el recurso de igual manera. Esto reduce el acoplamiento entre servidor y cliente, a menos que se cambie la semántica del servidor y cada enlace pase a tener otro significado. Como consecuencia, esto puede suponer que se rompan todos los consumidores.
+
+Entre las desventajas de este principio se encuentra que la comunicación entre cliente y servidor se ve alargada porque el primero tiene que hacer numerosas navegaciones para encontrar el recurso que busca.
+
+\subsection{Frameworks para crear servicios RESTFul}
+
+Existen algunos frameworks como Sprint Boot que promueven malas prácticas para fabricar servicios más rápidamente. Estos frameworks toman la representación en base de datos de los objetos, la deserializan y exponen al exterior del servicio para su consumo. Se debe hacer una diferenciación entre cómo se almacenan los datos y cómo se exponen a otros servicios para reducir el acoplamiento entre ambas representaciones.
+
+Una técnica que se puede emplear es retrasar la implementación de cómo se almacenan los datos hasta que se estabilice la interfaz del servicio. De esta manera nos aseguraremos que la representación que obtienen los consumidores es la que realmente quieren y no depende de cómo se almacena.
+
+\subsection{Desventajas de usar REST junto con HTTP}
+
 
 \section{La ley de Postel y los lectores tolerantes}
 
