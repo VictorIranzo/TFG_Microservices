@@ -48,9 +48,18 @@ Es más sencillo razonar sobre las primeras, pero son las llamadas asíncronas l
 
 El primer tipo de comunicación está ligado al patrón petición-respuesta (en inglés, request-response), aunque también puede ser empleado de forma asíncrona a través de callbacks que recojan la respuesta del servidor. Otro tipo de patrón es el basado en eventos: el cliente, en lugar de hacer una petición para realizar una operación, comunica al servidor un evento que ha observado y es el servidor quien debe saber qué hacer ante lo ocurrido. Este patrón es de naturaleza asíncrona y disminuye el acoplamiento entre cliente y servidor.
 
-\section{Integración REST y RPC}
-
 \section{Patrones orquestador y coreógrafo}
+A la hora de implementar un proceso de negocio múltiples servicios deben participar. Para su coordinación, existen pos estilos arquitectónicos que se pueden seguir: la orquestación, basado en un componente que guía y dirige al resto de servicios como un director de orquesta, y la coreografía, donde cada parte sabe el trabajo que debe realizar y se coordina con el resto como bailarines realizando una coreografía.
+
+Por una parte, el patrón orquestador es más sencillo de implementar, pudiéndose hacer con herramientas para el modelado de procesos de negocio. Sin embargo, al usarlo se otorga demasiada autoridad a uno de los servicios del sistema y el resto pueden llegar a transformarse en simples servicios CRUD.
+
+Por otra parte, el patrón coreógrafo se basa en la comunicación asíncrona. El proceso se inicia mediante un evento al que los servicios que deban reaccionar se suscriben. Así se puede formar una cadena donde cuando uno de los servicios acaba puede comenzar la actividad siguiente mediante el envío de un evento. Su principal ventaja es que reduce el acoplamiento entre los servicios, pero puede llegar a dificultar la visión del proceso de negocio y requiere más trabajo para ser monitorizado.
+
+En general, las soluciones que siguen el patrón orquestador son más difíciles de cambiar y se suelen programar de forma síncrona, por lo que puede ser perjudicial para procesos largos. Es por esto que se recomienda más el segundo patrón, mucho más flexible, aunque se puede optar por una solución híbrida.
+
+\section{Integración RPC}
+
+\section{Integración REST}
 
 \section{La ley de Postel y los lectores tolerantes}
 
