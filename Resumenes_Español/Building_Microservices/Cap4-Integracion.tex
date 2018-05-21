@@ -59,6 +59,14 @@ En general, las soluciones que siguen el patrón orquestador son más difíciles
 
 \section{Integración RPC}
 
+La llamada a procedimiento remoto (en inglés, Remote Procedure Call o RPC)es una técnica que permite ejecutar una llamada a un servicio remoto como si de una llamada local se tratara. Existen diferentes tecnologías que la implementan a través del uso de interfaces, que facilitan la comunicación entre cliente y servidor. No es necesario que cliente y servidor empleen la misma pila tecnológica, aunque algunas tecnologías como Java RMI sí lo requieren y limitan al resto de servicios.
+
+El formato de los mensajes o los protocolos de red empleados también varían de una tecnología a otra. En cuanto a los formatos, SOAP (proviene del inglés Simple Object Access Protocol) emplea XML (también del inglés eXtensible Markup Language) mientras que por ejemplo Java RMI transmite mensajes binarios. Los protocoles de red empleados van desde HTTP sobre TCP que emplea SOAP hasta UDP, un protocolo más rápido y ligero.
+
+El coste asociado a hacer una llamada remota es mucho mayor al de una local. Los objetos han de serializarse y mandarse a través de la red, teniendo en cuenta que esta no es segura. El tratamiento de errores no puede ser el mismo y ha de estar prevenido de la latencia de la red.
+
+Algunas tecnologías RPC pueden ser frágiles, como por ejemplo Java RMI. Las interfaces que ofrecen los servidores están muy ligadas a la representación del objeto sobre el que se desea hacer una operación. Además, un cambio en la interfaz puede suponer romper alguno de los consumidores,  con lo que puede ocurrir que al desplegar el servidor se tengan que desplegar todos los clientes que lo invocan.
+
 \section{Integración REST}
 
 \section{La ley de Postel y los lectores tolerantes}
