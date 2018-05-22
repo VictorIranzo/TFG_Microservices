@@ -12,6 +12,8 @@
 \begin{document}
 \maketitle
 
+\part{Introducción}
+
 La integración de servicios es la parte más relevante en los sistemas basados en este concepto. Hacerlo correctamente nos asegurará su autonomía y su despliegue de manera independiente. Existen muchas tecnologías para la integración: SOAP (Simple Object Access Protocol), RPC (Remote Procedure Call) o REST (Representational State Transfer). De cualquiera de estas tecnologías esperamos las siguientes características:
 
 \begin{itemize}
@@ -27,18 +29,6 @@ La integración de servicios es la parte más relevante en los sistemas basados 
 \item Soportar operaciones más allá de las CRUD: las operaciones CRUD para crear, leer, actualizar y eliminar elementos están soportadas en la mayoría de tecnologías de integración. Sin embargo, un sistema requiere dar soporte a más procesos que se deben poder exponer en una interfaz de un servicio.
 
 \end{itemize}
-
-\section{Integración por base de datos}
-
-La integración a través de bases de datos es una de las más empleadas en la industria. En nuestro contexto, esto se traduce a que todos los servicios de un sistema comparten la misma base de datos y cuando uno de ellos quiere hacer una operación u obtener información de otro, lo hace a través de la base de datos sobre las entidades del servicio consumido. 
-
-Este tipo de integración tiene un gran número de desventajas. En primer lugar, se está permitiendo a terceros ver y modificar detalles de la implementación interna de un servicio. Como consecuencia, un cambio en el esquema de la base de datos puede suponer romper los consumidores, que se puede comprobar invirtiendo en pruebas de regresión.
-
-En segundo lugar, los consumidores están obligados a emplear una tecnología específica. De esta forma los servicios pierden autonomía a la hora de elegir su propia tecnología y quedan acoplados unos con otros. Por ejemplo, un cambio en el tipo de base de datos empleada (de un esquema relacional a uno clave-valor) implica cambios en todo el sistema.
-
-Por último, con esta aproximación la lógica del servicio queda repartida entre sus consumidores. Acciones como modificar un elemento del servicio pueden ser invocadas por múltiples consumidores. Pongamos por caso que esto lo realizan 3 consumidores. Cada uno es responsable de hacer una consulta a la base de datos para este propósito, lo que se traduce en que la misma lógica quede replicada en tres sitios. Esto supone la pérdida de cohesión en el sistema, porque servicios independientes cambiarían juntos por consumir a otro.
-
-En definitiva, la integración por base de datos es una buena forma de compartir datos pero no lógica y emplearla en una solución basada en microservicios implica la pérdida de la cohesión y el acoplamiento entre servicios.
 
 \section{Llamadas síncronas y asíncronas}
 
@@ -57,6 +47,20 @@ Por una parte, el patrón orquestador es más sencillo de implementar, pudiéndo
 Por otra parte, el patrón coreógrafo se basa en la comunicación asíncrona. El proceso se inicia mediante un evento al que los servicios que deban reaccionar se suscriben. Así se puede formar una cadena donde cuando uno de los servicios acaba puede comenzar la actividad siguiente mediante el envío de un evento. Su principal ventaja es que reduce el acoplamiento entre los servicios, pero puede llegar a dificultar la visión del proceso de negocio y requiere más trabajo para ser monitorizado.
 
 En general, las soluciones que siguen el patrón orquestador son más difíciles de cambiar y se suelen programar de forma síncrona, por lo que puede ser perjudicial para procesos largos. Es por esto que se recomienda más el segundo patrón, mucho más flexible, aunque se puede optar por una solución híbrida.
+
+\part{Integración por base de datos}
+
+La integración a través de bases de datos es una de las más empleadas en la industria. En nuestro contexto, esto se traduce a que todos los servicios de un sistema comparten la misma base de datos y cuando uno de ellos quiere hacer una operación u obtener información de otro, lo hace a través de la base de datos sobre las entidades del servicio consumido. 
+
+Este tipo de integración tiene un gran número de desventajas. En primer lugar, se está permitiendo a terceros ver y modificar detalles de la implementación interna de un servicio. Como consecuencia, un cambio en el esquema de la base de datos puede suponer romper los consumidores, que se puede comprobar invirtiendo en pruebas de regresión.
+
+En segundo lugar, los consumidores están obligados a emplear una tecnología específica. De esta forma los servicios pierden autonomía a la hora de elegir su propia tecnología y quedan acoplados unos con otros. Por ejemplo, un cambio en el tipo de base de datos empleada (de un esquema relacional a uno clave-valor) implica cambios en todo el sistema.
+
+Por último, con esta aproximación la lógica del servicio queda repartida entre sus consumidores. Acciones como modificar un elemento del servicio pueden ser invocadas por múltiples consumidores. Pongamos por caso que esto lo realizan 3 consumidores. Cada uno es responsable de hacer una consulta a la base de datos para este propósito, lo que se traduce en que la misma lógica quede replicada en tres sitios. Esto supone la pérdida de cohesión en el sistema, porque servicios independientes cambiarían juntos por consumir a otro.
+
+En definitiva, la integración por base de datos es una buena forma de compartir datos pero no lógica y emplearla en una solución basada en microservicios implica la pérdida de la cohesión y el acoplamiento entre servicios.
+
+\part{Integraciones basadas en el patrón petición-respuesta}
 
 \section{Integración RPC}
 
@@ -89,7 +93,26 @@ Existen algunos frameworks como Sprint Boot que promueven malas prácticas para 
 Una técnica que se puede emplear es retrasar la implementación de cómo se almacenan los datos hasta que se estabilice la interfaz del servicio. De esta manera nos aseguraremos que la representación que obtienen los consumidores es la que realmente quieren y no depende de cómo se almacena.
 
 \subsection{Desventajas de usar REST junto con HTTP}
+\begin{itemize}
+\item Generar un servidor REST empleando HTTP no es tan sencillo como hacerlo empleando RPC.
+\item Algunos frameworks no soportan todos los verbos HTTP.
+\item No es recomendable en redes con latencias bajas: HTTP es más recomendable que SOAP para enviar grandes volumenes de datos por ser más compacto y permitir formatos como el JSON o el binario. Sin embargo, ante latencias bajas es mejor emplear sobre el protocolo TCP otro protocolo de aplicación, como WebSockets, o directamente usar UDP, que además trabaja mejor con mensajes cortos.
 
+\end{itemize}
+
+\part{Integración basada en eventos}
+
+\section{Colas empleando RabbitMQ y HTTP con ATOM}
+
+En la comunicación asíncrona existen dos problemas a resolver: cómo los microservicios emiten eventos y cómo otros conocen que se ha producido dicho eventos.
+
+Un bróker de mensajería es un patrón arquitectónico para la validación, la transformación y el ruteo de mensajes. Algunos como RabbitMQ buscan solucionar ambos problemas. En RabbitMQ el productor de un evento publica este a través de una API, donde será tramitado por el bróker para hacerlo llegar a todos los consumidores suscritos. 
+
+Por una parte, el uso de este framework añade complejidad porque se debe mantener una nueva infraestructura basada en colas para el envío del eventos. 
+
+Por otra, fomenta la escalabilidad y resilencia de los servicios. Las colas son una excelente manera de implementar arquitecturas basadas en eventos y una manera de reducir el acoplamiento. Además, previene de añadir lógica en el middleware que debe ser añadida en los propios microservicios.
+
+Otra aproximación posible es la basada en HTTP para la propagación de eventos. ATOM es una especificación web para la publicación de fuentes web (en inglés, web feeds). Con esta tecnología el emisor publicaría el evento como un feed que después el cliente recupera. Aunque puedan emplearse librerías existentes para este propósito, los receptores deben implementar un mecanismo para gestionar y recuperar periódicamente los mensajes. También recodar que el uso de HTTP con latencias bajas es poco recomendable. 
 
 \section{La ley de Postel y los lectores tolerantes}
 
