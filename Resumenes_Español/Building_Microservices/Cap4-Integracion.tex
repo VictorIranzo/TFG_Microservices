@@ -93,9 +93,13 @@ Existen algunos frameworks como Sprint Boot que promueven malas prácticas para 
 Una técnica que se puede emplear es retrasar la implementación de cómo se almacenan los datos hasta que se estabilice la interfaz del servicio. De esta manera nos aseguraremos que la representación que obtienen los consumidores es la que realmente quieren y no depende de cómo se almacena.
 
 \subsection{Desventajas de usar REST junto con HTTP}
+
 \begin{itemize}
+
 \item Generar un servidor REST empleando HTTP no es tan sencillo como hacerlo empleando RPC.
+
 \item Algunos frameworks no soportan todos los verbos HTTP.
+
 \item No es recomendable en redes con latencias bajas: HTTP es más recomendable que SOAP para enviar grandes volumenes de datos por ser más compacto y permitir formatos como el JSON o el binario. Sin embargo, ante latencias bajas es mejor emplear sobre el protocolo TCP otro protocolo de aplicación, como WebSockets, o directamente usar UDP, que además trabaja mejor con mensajes cortos.
 
 \end{itemize}
@@ -114,12 +118,57 @@ Por otra, fomenta la escalabilidad y resilencia de los servicios. Las colas son 
 
 Otra aproximación posible es la basada en HTTP para la propagación de eventos. ATOM es una especificación web para la publicación de fuentes web (en inglés, web feeds). Con esta tecnología el emisor publicaría el evento como un feed que después el cliente recupera. Aunque puedan emplearse librerías existentes para este propósito, los receptores deben implementar un mecanismo para gestionar y recuperar periódicamente los mensajes. También recodar que el uso de HTTP con latencias bajas es poco recomendable. 
 
+\section{Complejidad de arquitecturas asíncronas}
+
+Las arquitecturas basadas en eventos están más desacopladas, pero requieren de otro tipo de razonamiento a la hora de ser implementadas. Algunas buenas prácticas para afrontar su complejidad van desde el uso efectivo de sistemas de monitorización hasta el uso de identificadores de correlación para trazar las llamadas entre servicios.
+
+\part{Control de versiones de microservicios}
+
 \section{La ley de Postel y los lectores tolerantes}
 
-\section{Integración en las interfaces de usuario}
+La mejor manera de evitar cambios que puedan romper los clientes es elegir una tecnología de integración adecuada. La tecnología escogida debe separar los detalles de la implementación del servicio de la interfaz de este.
 
-\section{Integración con servicios de terceros}
+Los consumidores pueden romperse fácilmente aunque se presuponga que un cambio no es significativo, como por ejemplo eliminar un atributo que nadie emplea. Los lectores tolerantes son aquellos que obtienen de un mensaje solo los atributos que le interesan, ignorando el resto. Estos lectores cumplen con la ley de Postel sobre la robustez, ya que se previenen de elementos ajenos que pueda contener un mensaje:
 
-\section{Integración con sistemas legados}
+\begin{center}
+    \begin{minipage}{0.9\linewidth}
+        {
+			Sé conservador en lo que haces y liberal en lo que aceptas del resto.
+        }
+    \end{minipage}
+\end{center}
+
+\subsection{Control de versiones semántico}
+Con el control de versiones semántico, cada versión se numera de la forma MAYOR.MENOR.PARCHE.
+
+\begin{itemize}
+
+\item Cuando se incrementa el número MAYOR significa que se ha realizado un cambio que incompatibiliza con versiones antiguas.
+
+\item Cuando se incrementa el número MENOR significa que se han añadido funcionalidades nuevas pero que las existentes previamente se pueden seguir empleando.
+
+\item Por último, el incremento en el PARCHE quiere decir que se ha solucionado un bug detectado en una funcionalidad existente.
+
+\end{itemize}
+
+Este tipo de versionado hace al cliente comprensible las expectativas que debe tener sobre una versión del servicio y el impacto de una nueva versión sobre el cliente.
+
+\subsection{Coexistencia de diferentes interfaces}
+
+Esta aproximación consiste en mantener la vieja y la nueva interfaz de un servicio disponibles. La interfaz vieja se puede dejar hasta asegurarse de que ningún cliente esta empleándola, para evitar su ruptura. Esto último requiere monitorizar el servicio para saber cuántos usuarios usan cada punto de entrada. 
+
+Internamente, las llamadas a la vieja interfaz pueden ser transformadas en llamadas a la nueva. De esta forma, el código a eliminar cuando se deje de mantener la interfaz antigua está localizado.
+
+Esta técnica está basada en el patrón de expansión y contrato porque cuando ninguno de los clientes emplea la vieja funcionalidad, esta se elimina y la nueva API representa el contrato entre ambas partes.
+
+\subsection{Versiones concurrentes de un servicio}
+
+Otra solución para el control de versiones es tener diferentes versiones de un servicio funcionando y redireccionar las peticiones viejas a la versión vieja del servicio y al contrario con las nuevas peticiones. Esta solución es ocasionalmente empleada por Netflix cuando el coste de cambiar a los viejos consumidores es muy alto.
+
+Esta aproximación tiene algunas desventajas. En primer lugar, si se debe hacer una modificación como solucionar un defecto, posiblemente se deba hacer y desplegar en ambas versiones. En segundo lugar, se necesita un middleware con la lógica para redireccionar las peticiones a una u otra versión. En tercer lugar, si se debe persistir el estado de alguna entidad, las modificaciones hechas sobre este estado deben ser visibles en una y otra versión del servicio. En conclusión, esta solución puede resultar apta para periodos cortos de tiempo, pero cuanto más tiempo permanezcan los clientes empleando la vieja versión del servicio más riesgo tendremos de que ocurran estos problemas.
+
+\part{Integración en las interfaces de usuario}
+
+\part{Integración con servicios de terceros y sistemas legados}
 
 \end{document}
