@@ -169,6 +169,30 @@ Esta aproximación tiene algunas desventajas. En primer lugar, si se debe hacer 
 
 \part{Integración en las interfaces de usuario}
 
+Las interfaces de usuario (UI) es donde juntamos los datos y funcionalidades de diferentes servicios para ofrecer al usuario algo que le aporte valor. La tendencia es que los terminales donde se renderizan estas interfaces sean cada vez más simples y con menos lógica (en inglés, el término es thin client). 
+
+La parte servidora debe estar preparada para tratar de igual manera diferentes plataformas como los dispositivos móviles o los navegadores web. Las restricciones son las diferentes maneras en que un usuario puede interactuar con nuestro sistema. Aunque los servicios de back-end sean los mismos, es necesario adaptar la UI a las diferentes restricciones. Se pueden emplear diferentes modelos para su composición o una solución híbrida de todos ellos.
+
+\section{Composición con interfaces de servicios}
+
+Los servicios se comunican entre ellos empleando formatos conocidos como JSON o XML. Esta propuesta consiste en poder invocar desde la UI cualquier interfaz de un servicio.
+
+Esta solución presenta algunos inconvenientes. Primero, la respuesta obtenida de un servicio es igual independientemente de la plataforma de la aplicación. Segundo, las interfaces de los servicios usados no están preparadas para ser usadas por la UI. Esto puede conducirnos a que para componer una interfaz de usuario sea necesario hacer múltiples llamadas al servicio. Como solución a este último problema se puede emplear una fachada de los servicios del back-end que realice de forma agregada estas llamadas. 
+
+\section{Composición empleando fragmentos}
+
+En lugar de dar la responsabilidad a la UI de llenar con datos sus propios controles, esta aproximación se basa en que cada servicio proporcione directamente una parte de la interfaz de usuario asociada a él.
+
+Entre las ventajas podemos citar que el equipo responsable de un servicio es el responsable final de crear su fragmento de la UI asociado, lo que puede aumentar la velocidad de desarrollo.
+
+Sin embargo, que cada equipo se encargue de sus propios fragmentos puede suponer una pérdida de consistencia en la experiencia del usuario si no se siguen unas guías comunes entre todos los equipos. Además, no se puede dar soporte nativo a todas las plataformas soportadas porque ello supondría crear un fragmento por cada plataforma. No obstante, el problema más difícil de solucionar es que a veces las capacidades de un servicio no se pueden representar en un fragmento o bien haría falta que en él participasen múltiples servicios.
+
+\section{Composición a través de una fachada}
+
+Esta aproximación se basa en exponer todos los servicios de back-end en una única interfaz donde además se puedan agregar llamadas que simplifiquen la lógica de la UI. Este patrón es llamado en inglés backends for frontends (BFFs).
+
+Puede suponer un inconveniente si esta nueva capa añade demasiada lógica que no es la directamente expuesta por los servicios. En su estadio más grave, esto se traduce en una pérdida de la separación entre servicios y su despliegue independiente. Una solución a este problema es, en lugar de exponer una interfaz para todos los servicios, exponer una para cada plataforma o UI.
+
 \part{Integración con servicios de terceros y sistemas legados}
 
 \end{document}
