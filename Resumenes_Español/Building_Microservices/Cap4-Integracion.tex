@@ -195,4 +195,14 @@ Puede suponer un inconveniente si esta nueva capa añade demasiada lógica que n
 
 \part{Integración con servicios de terceros y sistemas legados}
 
+Las empresas emplean software comercial disponible en el mercado (en inglés, commercial off-the-shelf software o COTS) y consumen software como servicios (SaaS) que ofrecen poco control sobre el código que venden. Antes de usarlo es bueno plantearse si es mejor que nuestra organización lo construya o lo compre: la mejor respuesta es construir aquello que otorgue a la organización una ventaja estratégica y comprar las herramientas que no.
+
+La integración con este software depende del proveedor, pero nuestro equipo debe tratar de customizarlo, es decir, adaptarlo a las necesidades de la organización. Para tomar control sobre este código se deben hacer las customizaciones de la herramienta sobre una plataforma que el equipo controle y en lugar de referenciar a la herramienta en sí misma, referenciar a la customización hecha. 
+
+Pongamos un ejemplo: los sistemas para la gestión de las relaciones con los clientes (Customer Relationship Management, CRM) son herramientas vitales para una organización. El problema es que la toma de decisiones de estos sistemas recae mayoritariamente en el proveedor del software. Para que nuestra organización tome control sobre esto, una posible solución es exponer una fachada para cada entidad del dominio del CRM y hacer que nuestros servicios interactúen con estas fachadas en lugar de con la propia API. 
+
+Cada una de las herramientas de terceros con las que integremos pueden emplear diferentes estrategias para integrar. Se debe limitar el número de tipos de integraciones diferentes que hagamos para simplificar el mantenimiento.
+
+Para los sistemas legados se sigue una aproximación similar: como en las servicios de terceros, son sistemas sobre los que no se tiene total control. Un patrón útil para progresivamente refactorizar el código legado y moverlo hacia microservicios es el Strangler Pattern. Este patrón nos permite capturar llamadas a sistemas legados y decidir si enrutarlas hacia el código legado o una solución nueva. 
+
 \end{document}
