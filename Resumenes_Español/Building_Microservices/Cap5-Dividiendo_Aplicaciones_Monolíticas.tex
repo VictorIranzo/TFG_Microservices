@@ -22,11 +22,35 @@ El primer paso de nuestra refactorización será identificar las costuras. Mucho
 
 Siguiendo este procedimiento, terminaremos viendo qué código se ha agrupado correctamente y qué código parece que no encaje en ningún paquete. El código sobrante puede estudiarse para ver si se puede agrupar como uno o varios paquetes o se puede añadir a la solución de otra forma. 
 
-Durante todo el proceso, el código debe representar una situación real, por lo que las interacciones y dependencias entre los paquetes será similar a la existente en la realidad. También cabe mencionar que la transformación a microservicios no necesita realizarse de golpe, sino que se pueden ir transformando paquetes progresivamente.
+Durante todo el proceso, el código debe representar una situación real, por lo que las interacciones y dependencias entre los paquetes será similar a la existente en la realidad. También cabe mencionar que la transformación a microservicios no necesita realizarse de golpe, sino que se pueden ir transformando paquetes progresivamente para limitar el impacto de hacer algo mal. A la hora de elegir por qué paquete comenzar, podemos elegir el que supongamos que nos aportará mayor beneficio al separarlo del resto o el paquete que menos dependencias tenga con el resto.
 
 \part{Razones para refactorizar aplicaciones monolíticas}
 
+\begin{itemize}
+
+\item Tranquilidad de cambio: un cambio en un servicio se podrá hacer más rápido de lo que se hacia antes, además de poderse implementar y desplegar de forma autónoma.
+
+\item Organización de los equipos: diferentes equipos pueden encargarse de distintos microservicios sin que interfieran los cambios de unos con los de otros.
+
+\item Seguridad: la seguridad ahora puede aplicarse a un servicio concreto en lugar de a todo el sistema.
+
+\item Tecnológica: los servicios son más sencillos de refactorizar y cambiar a una nueva tecnología se puede hacer de forma progresiva y aislada en un único contexto.
+
+\end{itemize}
+
+
 \part{Refactorizaciones en bases de datos}
+
+La base de datos es la infraestructura donde más enredo de dependencias hay. El proceso a seguir para separar la persistencia de la aplicación en diferentes bases de datos consiste también en buscar costuras. Vamos a explicar algunos problemas que se pueden encontrar en este proceso.
+
+\section{Claves ajenas}
+
+\section{Datos estáticos compartidos}
+
+\section{Datos mutables compartidos}
+
+\section{Tablas compartidas}
+
 
 \part{Transacciones}
 
