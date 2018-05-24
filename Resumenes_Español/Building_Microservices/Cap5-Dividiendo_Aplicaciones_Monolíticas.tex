@@ -1,0 +1,36 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\author{Víctor Iranzo}
+\title{Capítulo 5: Dividiendo aplicaciones monolíticas}
+\setlength{\parskip}{10pt}
+
+\begin{document}
+\maketitle
+
+En este capítulo se explica como abordar la transformación de una aplicación monolítica de forma evolutiva hacia un sistema basado en microservicios. Las aplicaciones monolíticas tienden a crecer con el tiempo, por lo que se hacen frágiles y poco mantenibles al juntar muchas veces código no relacionado. Es por este motivo por el que un equipo pueda preferir no modificar una aplicación así, al menos no de forma descontrolada.
+
+\part{Costuras: pasos para dividir lo monolítico}
+
+En el libro "Working Effectively with Legacy Code" se define una costura como una porción de código que se puede tratar de manera asilada sin alterar al resto del sistema. Las costuras son firmes candidatos a convertirse en futuros servicios.
+
+El primer paso de nuestra refactorización será identificar las costuras. Muchos lenguajes de programación permiten la creación de espacios de nombres o paquetes. Si podemos, moveremos todo el código del contexto que hemos encontrado a un nuevo paquete mediante refactorizaciones del IDE. 
+
+Siguiendo este procedimiento, terminaremos viendo qué código se ha agrupado correctamente y qué código parece que no encaje en ningún paquete. El código sobrante puede estudiarse para ver si se puede agrupar como uno o varios paquetes o se puede añadir a la solución de otra forma. 
+
+Durante todo el proceso, el código debe representar una situación real, por lo que las interacciones y dependencias entre los paquetes será similar a la existente en la realidad. También cabe mencionar que la transformación a microservicios no necesita realizarse de golpe, sino que se pueden ir transformando paquetes progresivamente.
+
+\part{Razones para refactorizar aplicaciones monolíticas}
+
+\part{Refactorizaciones en bases de datos}
+
+\part{Transacciones}
+
+\part{Interacción con grandes volúmenes de datos}
+
+
+\end{document}
