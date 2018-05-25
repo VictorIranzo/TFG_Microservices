@@ -22,9 +22,13 @@ El primer paso de nuestra refactorización será identificar las costuras. Mucho
 
 Siguiendo este procedimiento, terminaremos viendo qué código se ha agrupado correctamente y qué código parece que no encaje en ningún paquete. El código sobrante puede estudiarse para ver si se puede agrupar como uno o varios paquetes o se puede añadir a la solución de otra forma. 
 
-Durante todo el proceso, el código debe representar una situación real, por lo que las interacciones y dependencias entre los paquetes será similar a la existente en la realidad. También cabe mencionar que la transformación a microservicios no necesita realizarse de golpe, sino que se pueden ir transformando paquetes progresivamente para limitar el impacto de hacer algo mal. A la hora de elegir por qué paquete comenzar, podemos elegir el que supongamos que nos aportará mayor beneficio al separarlo del resto o el paquete que menos dependencias tenga con el resto.
+Durante todo el proceso, el código debe representar una situación real, por lo que las interacciones y dependencias entre los paquetes será similar a la existente en la realidad. A la hora de elegir por qué paquete comenzar, podemos elegir el que supongamos que nos aportará mayor beneficio al separarlo del resto o el paquete que menos dependencias tenga con el resto.
 
-\section{Razones para refactorizar aplicaciones monolíticas}
+También cabe mencionar que la transformación a microservicios no necesita realizarse de golpe, sino que se pueden ir transformando paquetes progresivamente para limitar el impacto de hacer algo mal. Muchas dudas sobre las referencias entre servicios pueden resolverse donde el coste del cambio es el menor posible: el papel. Otra posible técnica es el uso de tarjetas clase-responsabilidad-colaboradores (CRC) pero aplicado a servicios, listando las capacidades y las referencias a terceros que tiene cada uno. 
+
+\section{Beneficios de refactorizar aplicaciones monolíticas}
+
+La clave para refactorizar es darse cuenta de cuando una aplicación necesita ser dividida, porque crezca por encima de lo "sano", antes de que resulte demasiado costoso el cambio. Los beneficios obtenidos al hacerlo son los siguientes:
 
 \begin{itemize}
 
@@ -41,7 +45,9 @@ Durante todo el proceso, el código debe representar una situación real, por lo
 
 \section{Refactorizaciones en bases de datos}
 
-La base de datos es la infraestructura donde más enredo de dependencias hay. El proceso a seguir para separar la persistencia de la aplicación en diferentes bases de datos consiste también en buscar costuras. Vamos a explicar algunos problemas que se pueden encontrar en este proceso.
+La base de datos es la infraestructura donde más enredo de dependencias hay. El cambio de una aplicación monolítica a una basada en servicios se ha de hacer evolutivamente.
+
+El proceso a seguir para separar la persistencia de la aplicación en diferentes bases de datos consiste también en buscar costuras. Vamos a explicar algunos problemas que se pueden encontrar en este proceso.
 
 \subsection{Claves ajenas}
 
@@ -69,7 +75,46 @@ En el segundo caso, la solución pasa por crear como tal la entidad en el códig
 
 \section{Transacciones}
 
+Las trasacciones nos permiten establecer un conjunto de acciones que o bien se ejecutan juntas correctamente o bien ninguna se ejecuta si alguna de ellas falla. Si una de las acciones falla, el resto son deshechas. De esta manera nos aseguramos que siempre transitamos de un estado consistente a otro también consistente.
+
+Al haber separado el esquema de la base de datos de la aplicación monolítica en diferentes esquemas hemos perdido el comportamiento transaccional. Si tenemos que ejecutar en dos esquemas distintos una serie de acciones ligadas, ¿qué podemos hacer si una falla y otra acción no?
+
+\begin{itemize}
+
+\item Intentarlo de nuevo más tarde: la acción que ha fallado puede encolarse o escribirse en un registro para volver a ejecutarla más tarde. En lugar de garantizar la consistencia en todos los estados, se está garantizando de forma eventual. La consistencia eventual acepta estados inconsistentes  con la premisa de que en algún momento se alcanzará un estado consistente para una transacción.
+
+\item Deshacer todas las operaciones: al hacerlo, volveremos a un estado consistente mediante transacciones de compensación. Las transacciones de compensación son transacciones nuevas que deshacen una hecha previamente, como puede ser un DELETE de una tupla. En caso de que la transacción de compensación falle, se pueden establecer procesos periódicos para la búsqueda y limpieza de inconsistencias.
+
+\item Transacciones distribuidas: realizan varias transacciones simultáneamente a través de un gestor de transacciones que orquesta las que tiene que realizar cada servicio. El algoritmo más común de esta solución es el commit en dos fases: en una primera fase, los servicios involucrados en el commit comprueban si pueden realizar la transacción que deben llevar a cabo. En caso de que todos los servicios puedan continuar, se realiza una segunda fase en donde cada uno de ellos hace su transacción. Entre las desventajas de este procedimiento están que hay un proceso centralizado que gobierna al resto y que puede bloquearlos si falla y que puede introducir bloqueos ya que el algoritmo ha de esperar a que todos estén disponibles para realizar el conjunto de acciones.
+
+\end{itemize}
+
 \section{Interacción con grandes volúmenes de datos}
 
+Algunos servicios necesitan interaccionar con muchos otros para realizar su función, por ejemplo, para la generación de informes. Por un lado, en una aplicación monolítica los datos necesarios para generar un informe se pueden obtener a través de pocas consultas a la base de datos. Por otro lado, cuando el sistema está formado por microservicios, la obtención de los datos se realiza haciendo múltiples llamadas a las interfaces de los servicios implicados.
+
+Realizar múltiples llamadas a las APIs puede ser un problema si se trabaja con grandes volúmenes de datos, sobretodo si las interfaces no están preparadas para trabajar así. Guardar una copia local de los datos necesarios para generar informes puede ser peligroso si no se implementar los mecanismos necesarios para invalidar datos. 
+
+\subsection{Obtener los datos a través de llamadas a servicios}
+
+Una primera solución pasa por hacer que las APIs puedan trabajar por lotes, es decir, que nos permitan obtener datos de múltiples instancias con una única llamada a través de mecanismos como la paginación. 
+
+Si el tiempo para obtener la respuesta con los datos requeridos es muy largo, es mejor no emplear una comunicación basada en el patrón petición-respuesta. Esto se puede realizar a través de archivos accesibles a ambos participantes y códigos HTTP como son el 202 y el 201, que indican respectivamente que la petición ha sido aceptada pero no procesada todavía y que ya se ha terminado de procesar.
+
+Como desventaja podemos decir que añadir a las interfaces de los servicios funciones para hacer llamadas agregadas supone un esfuerzo para solucionar un problema muy particular como el de generar un informe.
+
+\subsection{Bombeo de datos}
+
+Otra solución consiste en delegar la responsabilidad de obtener los datos en un proceso independiente. En nuestro ejemplo, no será el servicio de informes el encargado de hacer la llamada a los servicios para obtener los datos, sino que estos datos los encontrará en su propia base de datos porque otro proceso ahí los ha insertado. Dicho proceso se encargará de acceder a la base de datos de otros servicios y copiar en la de informes la información relevante. 
+
+Aunque la integración en base de datos es una mala idea, esto puede considerarse una excepción porque facilita la implementación del servicio de informes. Algunas tecnología de BD pueden facilitar el mapping entre el esquema al que pertenecen los datos y el esquema de informes a través de vistas agregadas.
+
+\subsection{Bombeo de datos basado en eventos}
+
+Una cuestión relevante es cuándo va a ejecutarse el proceso para bombear los datos. Si la consistencia de los datos es muy relevante, no puede ser una tarea que se ejecute periódicamente porque no se actualizaría inmediatamente al hacer una modificación sobre una tupla. 
+
+En este caso, se puede hacer el bombeo mediante eventos: cada servicio lanza uno cuando se hace una modificación sobre alguna de las tablas que posee. El proceso captura estos eventos para ejecutarse. La modificación que se ha realizado se puede representar como un delta para que el proceso que se lanza solo tenga que realizar esos cambios sobre la tabla destino. 
+
+Entre las ventajas de la aproximación basada en eventos es que el proceso puede evolucionar de forma independiente, reduce el acoplamiento y, por supuesto, mantiene los datos actualizados.
 
 \end{document}
