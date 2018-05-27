@@ -161,14 +161,42 @@ Cuando estas soluciones no funcionan correctamente en un servicio desplegado, es
 
 \section{Automatización del despliegue}
 
+Cuando el número de máquinas a gestionar es pequeño, es sencillo gestionarlas de forma manual. Pero cuando el número es alto, es recomendable automatizar el despliegue de los servicios, sobretodo si se sigue un modelo de un servicio por host. De esta manera, el aumentar el número de servicios del sistema no hará que aumente proporcionalmente el coste de su mantenimiento.
+
+La automatización repercutirá positivamente en la productividad de los desarrolladores y el tiempo ganado se podrá invertir en desarrollar nuevos servicios. 
+
 \section{Tecnologías para el despliegue}
 
 \subsection{Virtualización tradicional}
 
+Tener muchos hosts es costoso si se cada host consiste en una máquina. Este coste se reduce mediante la virtualización, que nos permite dividir una máquina en hosts separados donde pueden ejecutarse servicios distintos. Sin embargo, no podemos dividir una máquina en tantas piezas como queramos porque la separación de los hosts supone un coste.
+
+La virtualización más usada tradicionalmente para este propósito es la de tipo 2, que es la implementada por plataformas como AWS o VMWare. En ella, sobre el sistema operativo de la máquina se ejecuta el hipervisor. El hipervisor se encarga de repartir los recursos de la máquina como la CPU o la RAM entre los distintos hosts virtualizados y permite al usuario la gestión de las máquinas virtuales. Cada una de las máquinas virtuales puede ejecutar su propio sistema operativo y kernel. Cada una de las  máquinas virtuales se puede considerar aislada de la máquina física y de las otras máquinas virtuales.
+
+Uno de los problemas de esta aproximación es que el hipervisor también necesita consumir recursos, y cuantas más son las máquinas que debe gestionar, mayor será su consumo.
+
 \subsection{Vagrant}
+
+Vagrant es una plataforma de despliegue que se emplea principalmente durante las fases de desarrollo y pruebas de un sistema. Se basa en la virtualización tradicional a través de archivos de texto donde indica las máquinas e imágenes a restaurar y como están conectadas entre ellas. Ofrece un gran número de funcionalidades como asociar una máquina a un directorio local de la máquina sobre la que se ejecuta.
+
+No obstante, la ejecución un un gran número de máquinas virtuales puede sobrecargar los recursos de la máquina física donde se ejecutan. Por este motivo no suele emplearse en fases de producción y en las fases de prueba suelen emplearse stubs para evitar tener que desplegar todas las dependencias de un servicio bajo pruebas.
 
 \subsection{Contenedores Linux}
 
+Para los usuarios de Linux existe una alternativa a la virtualización. Los contenedores Linux (LXC) permite crear un espacio de procesos separado en el que puede ejecutarse de forma aislada un servicio. Cada contenedor es un subárbol del principal y puede tener asociado recursos físicos gestionados por el kernel.
+
+En los contenedores Linux no encontramos un gestor como el hipervisor: los contenedores pueden ejecutar su propio sistema operativo y comparten el kernel de la máquina física. Aparte del ahorro en recursos que supone no tener este middleware, también se reduce el tiempo de aprovisionamiento porque cada contenedor requiere de menos recursos. Esto influye también en la retroalimentación sobre el funcionamiento de un servicio porque su despliegue será más rápido.
+
+El número de contenedores que una máquina puede alojar es mayor que el número de máquinas virtuales debido a la naturaleza ligera de estos. Por esta razón el coste de esta solución es menor. Para obtener las ventajas de ambas aproximaciones se puede seguir una versión híbrida: se puede obtener una máquina virtual de una plataforma con AWS que nos asegure la escalabilidad bajo demanda y sobre ella ejecutar contenedores LXC.
+
+Sin embargo, el grado de aislamiento de los contenedores no es perfecto ya que existen formas en las que uno puede interferir en el funcionamiento de otro debido a problemas de diseño y bugs conocidos. La configuración de los contenedores tampoco es trivial. Es necesario implementar un mecanismo que en la virtualización tradicional hace el hipervisor para enrutar las peticiones recibidas a cada contenedor.
+
 \subsection{Docker}
+
+Docker es una plataforma basada en contenedores que nos permite la creación y despliegue de aplicaciones de forma similar a las imágenes en las máquinas virtuales. Docker gestiona el aprovisionamiento de los contenedores, problemas en la red, la versión de las aplicaciones... Además, oculta la implementación de los servicios que envuelve.
+
+En esta tecnología se ha invertido con el objetivo de hacerla lo más óptima posible. En este sentido, existen sistemas operativos desarrollados específicamente para Docker como CoreOS con el objetivo de incluir en una imagen solo las funcionalidades necesarias y reducir el consumo de recursos.
+
+Sin embargo, Docker no resuelve todos los problemas relativos al despliegue. Existen varias tecnologías que amplían sus capacidades, como por ejemplo Deis o Kubernetes, desarrolada por Google. Esta última nos ofrece una capa adicional para solicitar y ejecutar contenedores bajo demanda. Esta aproximación se puede situar entre las soluciones de infraestructura como servicio (IaaS) y plataforma como servicio (PaaS) y se suele catalagorar como contenedores como servicio (CaaS).
 
 \end{document}
