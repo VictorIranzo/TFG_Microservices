@@ -101,7 +101,15 @@ La segunda aproximación reduce las diferencias entre los entornos donde se inst
 
 \subsection{Definición del entorno}
 
+La definición de los entornos consiste en establecer los recursos de una máquina que se asociarán a un servicio concreto. Entre los recursos que se pueden asociar están los asociados al hardware, como recursos de computo, memoria y red, credenciales, configuraciones regionales, etc. Entre las formas para definir un entorno podemos mencionar los archivos YAML o los Puppet. 
+
+Construir un sistema puede requerir la configuración de muchos entornos si el sistema a desplegar es muy complejo. Algunas herramientas como Terraform pueden facilitarnos este tabajo, aunque todavía están en una fase muy madura. Entre sus capacidades, Terraform nos permite desplegar en diferentes plataformas de forma automatizada.
+
 \subsection{Interfaz para el despliegue}
+
+Es vital tener una interfaz uniforme para lanzar el despliegue de un servicio bajo demando. La manera más sencilla de implementar esto es a través de una llamada por línea de comandos parametrizada con variables como el entorno donde se desea desplegar o la versión del servicio.
+
+Para desarrollar el script que desplegará el servicio atendiendo a esta variable se pueden usar diferentes herramientas: Fabric (empleando Python), Pair (en AWS) o PowerShell (en Windows).
 
 \section{Alojamiento de servicios}
 
