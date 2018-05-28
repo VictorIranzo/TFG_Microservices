@@ -53,6 +53,8 @@ Son pruebas que validan una única función. Se pueden generar fruto de procesos
 
 En estas pruebas se verifica la funcionalidad de los servicios sin emplear las interfaces de usuario. Cada prueba verifica una de las funcionalidades que el servicio expone. Se pretende comprobar la separación entre los servicios y para solventar las dependencias que el servicio bajo pruebas tiene sobre otros, se reemplazan los servicios colaboradores por stubs o fakes.
 
+Los stubs y los fakes imitan el comportamiento real del servicio al que representan. Los stubs contienen menos lógica que los fakes y ante una petición responden siempre de la misma manera. Por su parte, los fakes pueden emplearse para comprobar que los efectos secundarios de la interacción entre los servicios ocurre. Por ejemplo, si al invocar a un servicio el comportamiento esperado es que este añada una tupla en base de datos, un stub podría responder simplemente con un 200 OK mientras que un fake tendría más lógica para reproducir esto.
+
 Este tipo de pruebas pueden ser igual de rápidas que las unitarias siempre que no se tengan que emplear un gran número de infraestructuras como bases de datos o redes.
 
 \begin{figure}[h]
@@ -63,7 +65,9 @@ Este tipo de pruebas pueden ser igual de rápidas que las unitarias siempre que 
 
 \subsection{Pruebas de extremo a extremo}
 
-Son pruebas que se ejecutan sobre todo el sistema. Cubren gran parte de código, por lo que su correcta ejecución dan mucho grado de confianza.
+Son pruebas que se ejecutan sobre todo el sistema. Cubren gran parte de código, por lo que su correcta ejecución dan mucho grado de confianza. En su ejecución se levantan varios servicios diferentes.
+
+De los servicios que se prueban, ¿qué versión se debe emplear de cada uno? ¿Quién debe poder ejecutar esta prueba? Cada vez que se realice un cambio en alguno de los participantes deberían ejecutarse todas las pruebas en las que este se emplea. Una manera elegante de conseguir esto es hacer que en la compilación de la integración continua, la fase de pruebas de extremo a extremo sea compartida entre todos los involucrados para que las pruebas se ejecuten cada vez que cambie uno de ellos y la versión a probar de todos sea la asociada al cambio.
 
 \begin{figure}[h]
 \centering
@@ -71,9 +75,37 @@ Son pruebas que se ejecutan sobre todo el sistema. Cubren gran parte de código,
 \caption{Las pruebas de servicio se ejecutan sobre un único servicio y emplean fakes para reemplazar a los colaboradores de este.}
 \end{figure}
 
-\subsection{Pruebas dirigidas por el consumidor}
+\subsubsection{Desventajas de las pruebas de extremo a extremo}
+
+\begin{itemize}
+
+\item Pruebas frágiles: conforme el alcance del test aumenta mayor son las partes bajo prueba sobre las que no se puede tener control. Estas partes pueden introducir fallos que no demuestran que la funcionalidad tenga un defecto, sino fallan porque otro problema ha ocurrido como puede ser un fallo en la red. Las pruebas así son menos deterministas y el desarrollador puede acostumbrarse a que fallen si consigue hacerlas pasar al ejecutarlas por segunda vez, lo que se conoce como normalizar la desviación. Este tipo de pruebas han de ser eliminadas cuanto antes de la suite de pruebas y refactorizadas en pruebas de menor alcance.
+
+\item Responsable de las pruebas: si los servicios que participan en las pruebas son mantenidos por distintos equipos, es necesario que todos ellos se hagan responsables de la suite de pruebas. Diferentes situaciones pueden ocurrir sino:
+
+\begin{itemize}
+
+\item Explosión de pruebas: si nadie controla la salud de la suite, los equipos pueden añadir pruebas descontroladamente que no aporten valor.
+
+\item Ignorar resultados de las pruebas: cuando una prueba falla, nadie trata de arreglarla porque cree que la responsabilidad la tiene otro.
+
+\item Equipos especializados en pruebas: esto puede alargar el tiempo de desarrollo de una funcionalidad por requerir mayor coordinación entre equipos. Además, con esta metodología los desarrolladores se involucran menos en las pruebas, haciendo su código más difícil de probar e ignorando los resultados de las pruebas.
+
+\end{itemize}
+
+\item Tiempo de ejecución mayor: al levantar un mayor número de servicios y cubrir más código se alarga el tiempo de ejecución de la prueba. Esto puede ser sobrellevado a través de la ejecución en paralelo de pruebas. Esto combinado con la fragilidad de los tests puede desencadenar que encontrar la causa del fallo de una prueba requiera de un mayor esfuerzo.
+
+\item Mayor tiempo de retroalimentación: si las pruebas tardan más en ejecutarse, el desarrollador tardará más tiempo en darse cuenta de que en los cambios realizados ha introducido un defecto. Este hecho puede repercutir en el resto del equipo, ya que si la compilación está rota debido a una prueba que no pasa, los cambios que otros suben pueden apilarse, dificultando su futura integración.
+
+\end{itemize}
 
 \section{Balance de pruebas a realizar}
+
+Si volvemos a la pirámide de Cohn, uno de los conceptos clave es que a medida que aumenta el alcance las pruebas lo hace el nivel de confianza que las pruebas dan sobre la ausencia de defectos. Por otro lado, cuanto más arriba en la pirámide más tiempo tardará una prueba en ejecutarse y dar retroalimentación al desarrollador. Además, determinar el motivo de fallo de una prueba será más costoso cuanto mayor sean las líneas de código probadas.
+
+El número de pruebas que se aconseja tener de cada tipo aumenta conforme descendemos por la pirámide. Un antipatrón sería seguir como convención la misma pirámide invertida. En este caso, nuestra cobertura de pruebas se basaría en pruebas de largo alcance y larga ejecución, nada deseable según los principios de integración continua.
+
+En cuanto a las pruebas de extremo a extremo, no podemos añadir una prueba de este tipo por cada nueva funcionalidad que el sistema ofrezca. El número de servicios que participan para ofrecer una funcionalidad puede ser muy alto y en una prueba no se deberían de levantar más de 3 o 4 servicios para no potenciar las desventajas que hemos mencionado.
 
 \section{Pruebas frágiles y escamosas}
 
