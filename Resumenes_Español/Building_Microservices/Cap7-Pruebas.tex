@@ -72,7 +72,7 @@ De los servicios que se prueban, ¿qué versión se debe emplear de cada uno? ¿
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{End_To_End_Test}
-\caption{Las pruebas de servicio se ejecutan sobre un único servicio y emplean fakes para reemplazar a los colaboradores de este.}
+\caption{Las pruebas de extremo a extremo cubren una funcionalidad del sistema ejecutando los servicios que se involucran para ofrecerla.}
 \end{figure}
 
 \subsubsection{Desventajas de las pruebas de extremo a extremo}
@@ -105,13 +105,31 @@ Si volvemos a la pirámide de Cohn, uno de los conceptos clave es que a medida q
 
 El número de pruebas que se aconseja tener de cada tipo aumenta conforme descendemos por la pirámide. Un antipatrón sería seguir como convención la misma pirámide invertida. En este caso, nuestra cobertura de pruebas se basaría en pruebas de largo alcance y larga ejecución, nada deseable según los principios de integración continua.
 
-En cuanto a las pruebas de extremo a extremo, no podemos añadir una prueba de este tipo por cada nueva funcionalidad que el sistema ofrezca. El número de servicios que participan para ofrecer una funcionalidad puede ser muy alto y en una prueba no se deberían de levantar más de 3 o 4 servicios para no potenciar las desventajas que hemos mencionado.
+En cuanto a las pruebas de extremo a extremo, no podemos añadir una prueba de este tipo por cada nueva funcionalidad que el sistema ofrezca. El número de servicios que participan para ofrecer una funcionalidad puede ser muy alto y en una prueba no se deberían de levantar más de 3 o 4 servicios para no potenciar las desventajas que hemos mencionado. Si es necesario, se pueden emplear fakes o stubs para no levantar a todos los servicios en la prueba.
 
-\section{Pruebas frágiles y escamosas}
+\section{Pruebas dirigidas por el consumidor}
+
+Durante las pruebas queremos asegurarnos que desplegar un cambio en un microservicio no rompe ninguno de sus consumidores. Esto se puede verificar mediante contratos o consumer-driven contract (CDC). Un contrato representa las expectativas que un consumidor tiene sobre un servicio. La manera de asegurarnos de que no se va a romper ningún consumidor es no desplegando cambios que puedan romper el contrato entre ambos.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.45]{CDC_Tests}
+\caption{Dentro de la pirámide de Cohn, las pruebas dirigidas por el consumidor se sitúan al mismo nivel que las pruebas de servicio.}
+\end{figure}
+
+Para la elaboración de un contrato se puede contar con el equipo del servicio que va a consumir este. La colaboración entre ambos equipos también es fundamental si es necesario hacer un cambio que rompe el contrato para que el consumidor este preparado. En casos donde el servicio con el que se integre sea de terceros, la comunicación cuando se rompe un contrato no podrá ser tan frecuente como la deseada.
 
 \section{Pruebas antes de producción}
 
-\subsection{Despliegues verde y azul}
+Muchas organizaciones invierten en pruebas durante los días previos a publicar una versión a producción. Los usuarios usan nuestro sistema en formas que no podemos preveer, por lo que no siempre podemos detectar todos los errores de nuestro código. La reacción habitual cuando se produce un fallo es añadir más pruebas para evitar que vuelva a ocurrir. Sin embargo, es imposible garantizar una aplicación real libre de fallos.
+
+Una forma de capturar más errores es extender los pasos del despliegue donde tradicionalmente las pruebas se ejecutan. Un ejemplo es una suite de pruebas humo (en inglés, smoke tests), una colección de pruebas de rápida ejecución que se ejecuta en cada nuevo componente desplegado para garantizar que el despliegue ha ido correctamente. Otras aproximaciones son los despliegues azul y verde y las canary releases.
+
+\subsection{Despliegues azul y verde}
+
+Este proceso consiste en contar con dos copias del software desplegadas al mismo tiempo, aunque solo una de ellas recibe realmente peticiones. Cuando se despliega una nueva versión de un servicio, se realizan pruebas de humo sobre la nueva versión y una vez se verifica que las pruebas pasan, se redirige el tráfico de la vieja versión a la nueva. La vieja versión se mantiene desplegada pero sin aceptar peticiones por si se tiene que redirigir de nuevo el tráfico debido a un error en la nueva versión.
+
+Para seguir esta aproximación se debe tener la infraestructura suficiente para dirigir el tráfico hacia diferentes hosts y tener los suficinetes nodos para ejecutar diferentes versiones de un mismo servicio. Como ventajas encontramos que reduce el riesgo del despliegue porque nos permite revertir un cambio si se detecta un problema, proceso que se puede automatizar para mayor eficacia.
 
 \subsection{Canary releases}
 
