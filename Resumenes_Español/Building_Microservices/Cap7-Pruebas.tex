@@ -133,10 +133,28 @@ Para seguir esta aproximación se debe tener la infraestructura suficiente para 
 
 \subsection{Canary releases}
 
+Empleando esta aproximación verificamos la nueva versión de un servicio, dirigiendo hacia él algunas de las peticiones que se realizan a la versión en producción para ver si se comporta de la manera esperada. El comportamiento esperado se puede medir a través de métricas como el ratio de errores. El mayor reto de este modelo es el enrutamiento del tráfico a una u otra versión.
+
+Si la nueva versión no funciona correctamente, el cambio se puede revertir rápidamente. Sino, se puede incrementar progresivamente el tráfico real que atiende. Netflix emplea esta aproximación en muchos servicios.
+
+Existen dos vertientes posibles: dirigir parte del tráfico real a la nueva versión o duplicar el tráfico que el servicio recibe, de tal forma que la nueva versión recibe peticiones pero sus respuestas no son vistas por el invocador.
+
 \subsection{Tiempo medio entre fallos y tiempo medio entre reparaciones}
+
+Muchas organizaciones invierten mucho esfuerzo en producir un gran número de pruebas funcionales y ningún esfuerzo en mecanismos para monitorizar o revertir el sistema cuando un fallo ocurre. 
+
+Se debe hacer un balance entre optimizar la media de tiempo entre fallos (MTBF) y la media de tiempo de reparación (MTTR) para alcanzar un equilibro. Mientras que el primero puede reducirse aunmentando el número de pruebas, el segundo puede mejorar con las técnicas que hemos citado antes y buenos sistemas de monitorización.
 
 \section{Pruebas de requisitos no funcionales}
 
+Los requisitos no funcionales representan aquellas características que el sistema exhibe pero que no pueden contabilizarse como una funcionalidad. Las pruebas que sobre estas características se hacen encajan en el cuadrante de Marick de pruebas de propiedades. 
+
+Su implementación puede hacerse de forma unitaria o de extremo a extremo, pero se aconseja seguir la relación de la pirámide de Cohn sobre el alcance y número de pruebas.
+
 \subsection{Pruebas de rendimiento}
+
+Las pruebas de rendimiento pertenecen al grupo de pruebas de requisitos no funcionales. Este tipo de pruebas es más importante en los sistemas basados en microservicios que en los monolíticos porque las integraciones entre los servicios (por ejemplo, invocaciones HTTP) pueden introducir un sobrecoste en el rendimiento si hay muchos servicios colaborando.
+
+En estas pruebas se busca simular un entorno lo más cercano posible al de producción, por lo que puede resultar útil contar con diferentes máquinas con las que ejecutar las pruebas. Debido al tiempo que pueden tardar en ejecutarse, no suele incluirse un estado para este tipo de pruebas en la compilación de cada cambio. En su lugar, suelen ejecutarse periódicamente. Esto puede producir que no se observen los resultados de las pruebas y esto puede resultar un problema si se pierde trazabilidad hacia el cambio que empeoró el rendimiento.
 
 \end{document}
