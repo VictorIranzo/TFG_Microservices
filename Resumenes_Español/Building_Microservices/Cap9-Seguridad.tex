@@ -36,15 +36,35 @@ Para centralizar el contacto entre los servicios del sistema y el proveedor de i
 
 \subsection{HTTP y HTTPS}
 
-\subsection{SAML y OpenID Connect}
+No sólo se deben autenticar los usuarios para realizar una acción, otros servicios también se pueden modelar para saber si se les da acceso a un recurso o funcionalidad. 
+
+Una posible opción es hacer que cualquier invocación a un servicio hecha desde el propio servicio se considera autorizada. Esta solución puede ser peligrosa ante atacantes que penetren en la red, pero puede ser adecuada si los datos almacenados no son de alta sensibilidad.
+
+La autorización HTTP permite a un cliente enviar un nombre de usuario y una contraseña en la cabecera del mensaje. Aunque es un protocolo muy extendido, puede ser peligroso porque estos datos son enviados sin ninguna seguridad. Por este motivo se suele emplear el protocolo de HTTPS.
+
+Entre los problemas de usar HTTPS están que el tráfico en este protocolo no puede ser capturado por proxies inversos, aunque en caso de necesidad se puede capturar en alguno de los extremos o en un balanceador de carga. Además, se deben gestionar los certificados SSL, que puede resultar un problema cuando el sistema se distribuye entre múltiples máquinas, y se puede aumentar el tiempo de entrega de los mensajes.
 
 \subsection{Certificados de clientes}
 
+Con esta aproximación cada cliente emplea un certificado en su interacción con el servidor. Esta solución es aconsejable si la sensibilidad de los datos que se envían es muy alta. Sin embargo, puede traer dificultades a la hora de revocar y emitir certificados.
+
 \subsection{Códigos de autentificación de mensajes en clave-hash (HMAC)}
+
+El tráfico a través de HTTPS puede afectar al rendimiento del sistema. Una solución a este problema pasa por, en lugar de usar este protocolo, usar mensajes cifrados con claves hash y enviarlos a través de HTTP.
+
+Con HMAC, el cuerpo de una petición es convertido en un hash empleado una llave privada y es enviado junto con la petición. El servidor, cuando recibe una petición, usa la misma llave privada que comparten para generar el hash con el cuerpo del mensaje recibido y compararlo con el hash del mensaje. 
+
+Este mecanismo cuenta con 3 desventajas. Primero, entre servidor y cliente tiene que existir un secreto compartido, que debe ser enviada usando un protocolo seguro. Segundo, este mecanismo no es un estándar y existen muchas implementaciones distintas disponibles que deben ser evaluadas. Tercero, un atacante pueda interceptar y leer una petición, pero no puede modificar esta porque si lo hace el hash que genera el servidor y el de la petición no coincidirían.
 
 \subsection{Claves API}
 
+Muchas APIs públicas emplean este mecanismo para ofrecer sus servicios a terceros. Se pueden emplear para identificar quién hace una llamada y limitar las que puede hacer para que no sobrecargue el servicio. Entre sus ventajas podemos nombrar su facilidad de uso.
+
 \subsection{Problema del reemplazo}
+
+Una entidad autenticada puede invocar a un servicio que a su vez tenga que invocar a un tercero. En esta segunda petición, si aceptamos la aproximación de que cualquier petición hecha desde dentro del sistema es válida, podemos incurrir en un problema de reemplazo de identidades. 
+
+Por ejemplo, un atacante que haya conseguido acceso a la red puede obligar a un servicio a hacer peticiones a otro y obtener los datos del servicio atacado. Este problema es grave de acuerdo a la sensibilidad de los datos. Una posible solución es solicitar que en cada petición sean provistas las credenciales de la entidad que comienza la interacción.
 
 \section{Seguridad en los datos}
 
