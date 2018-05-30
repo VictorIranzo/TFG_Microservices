@@ -116,6 +116,12 @@ En caso de que un servicio almacene datos sensibles, se pueden encriptar sus tab
 
 \item No escribas tus propios algoritmos de encriptación: reinventar la rueda es una pérdida de tiempo y es potencialmente peligroso.
 
+\item Seguridad en la fase de Desarrollo: al igual que con las pruebas, la seguridad no debe ser implementada por otro equipo o en el último momento. Hace falta educar a los desarrolladores en conceptos clave de la seguridad como el Top 10 de OWASP de medidas.
+
+\item Herramientas para el CI: herramientas como Zed Attack Proxy (ZAP) para detectar vulnerabilidades se pueden añadir a las compilaciones para su ejecución automática como una medida de integración continua. La ejecución de analizadores estáticos también pueden avisarnos de agujeros de seguridad en nuestro código.
+
+\item Verificación externa: las pruebas de penetración se pueden llevar a cabo para imitar un ataque real. Estas pruebas deberían ser realizadas por una tercera organización ya que los equipos no siempre son capaces de detectar errores de seguridad que ellos mismos han cometido. Estas pruebas pueden aplicarse solo en la publicación a producción de grandes cambios y no necesariamente en cada versión.
+
 \end{itemize}
 
 \end{document}
