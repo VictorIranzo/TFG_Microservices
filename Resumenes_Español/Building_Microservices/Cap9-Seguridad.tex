@@ -68,19 +68,43 @@ Por ejemplo, un atacante que haya conseguido acceso a la red puede obligar a un 
 
 \section{Seguridad en los datos}
 
+La encriptación de los datos almacenados es necesaria en función de su sensibilidad. Existen muchos algoritmos para este propósito en los principales lenguajes de programación y que han sido ampliamente probados. No obstante, hay que estar siempre actualizado ante parches que solucionen vulnerabilidades detectadas. No hacerlo, al igual que tratar de implementar un algoritmo de encriptación propio, puede darnos una falsa sensación de seguridad que en cierto punto puede llegar a ser incluso más peligroso que no tener seguridad alguna.
+
+Algunas bases de datos como SQL Server ofrecen la encriptación de datos de forma transparente. En otras tecnologías hará falta una llave explícita que se debe almacenar en un lugar seguro o de otra forma el atacante solo necesitaría encontrar la llave para acceder a los datos. 
+
+En un sistema basado en microservicios, puede ser una buena idea sólo encriptar las bases de datos o tablas de los servicios más sensibles. La encriptación debe realizarse la primera vez que se ven los datos y sólo debe almacenarse el resultado en un único sitio. La desencriptación debe realizarse bajo demanda para entidades reconocidas. La encriptación en las copias de seguridad también es fundamental.
+
 \section{Seguridad en profundidad: otras medidas de protección}
 
-\subsection{Cortafuegos}
+La seguridad en profundidad es clave para interponer más barreras entre nuestro sistema y un atacante. Se pueden tomar medidas en diferentes niveles:
 
-\subsection{Logging}
+\begin{itemize}
 
-\subsection{Sistemas de detección de intrusos}
+\item Cortafuegos: puede consistir simplemente en limitar el acceso a cierto tipo de tráfico o de puertos. Tener varios cortafuegos puede ser interesante para diferenciar perímetros de seguridad.
 
-\subsection{Segregación de redes}
+\item Logging: no es una medida de prevención, pero puede resultar útil para detectar y recuperarse de un ataque. No se debe almacenar información sensible en los logs.
 
-\subsection{Sistemas operativos}
+\item Sistemas de detección y prevención de intrusos (IDS e IPS): los primeros, se emplean para monitorizar las redes y hosts en busca de comportamientos sospechosos. Los sistemas IPS van un paso más allá y permiten detener actividades sospechosas.
+
+\item Segregación de redes: los servicios se pueden situar en diferentes segmentos de la red para controlar con cuáles puede hablar cada uno. Cada perímetro de la red puede pertenecer a un equipo y puede contar con diferentes medidas de seguridad. AWS ofrece la posibilidad de crear nubes virtuales privadas (VPC) para separar los hosts en subredes y controlar cuáles son accesibles por otras.
+
+\item Sistemas operativos: los servicios deben ejecutarse con un usuario con el menor número de permisos necesarios en el SO. Es importante aplicar los parches de seguridad que se publican ya que la mayoría de ataques se hacen a través de vulnerabilidades para las que existía un parche. Portales como Microsoft SCCM pueden mantenernos informados sobre esto. En Linux, se pueden aplicar medidas de seguridad que se controlan a nivel del kernel con aplicaciones como AppArmor.
+
+\end{itemize}
 
 \section{Caso de estudio}
+
+En un sistema basado en microservicis, necesidades diferentes de seguridad pueden suponer medidas de seguridad diferentes en cada uno.
+
+Para las aplicaciones clientes, como un navegador web, se puede emplear tráfico HTTPS en todas las páginas accesibles una vez el usuario se ha autenticado.
+
+Para integrar con otros servicios, como un sistema de pagos, se pueden emplear certificados de cliente para garantizar la legitimidad de los mensajes intercambiados.
+
+Para las APIs que nuestro sistema ofrece al público general, como hay interés en que sea fácil de usar y se emplee lo máximo posible, se pueden emplear claves API para identificar quien realiza cada petición e incluso limitar el número de peticiones que puede hacer.
+
+Si contamos con servicios internos que son solo accesibles por nuestros servicios, se pueden emplear subredes para aislarlos del exterior y firewalls para impedir tráfico no permitido. 
+
+En caso de que un servicio almacene datos sensibles, se pueden encriptar sus tablas, pero no las de servicios triviales.
 
 \section{Otros factores de la seguridad}
 
