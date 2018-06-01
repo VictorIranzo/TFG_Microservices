@@ -1,0 +1,95 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{float}
+
+\author{Víctor Iranzo}
+\title{Capítulo 11: Escalabilidad}
+\setlength{\parskip}{10pt}
+
+\begin{document}
+\maketitle
+
+\section{Introducción}
+
+\section{Gestión de fallos en el sistema}
+
+\subsection{Timeouts}
+
+\subsection{Cortocircuitos}
+
+\subsection{Bulkhead}
+
+\subsection{Aislamiento}
+
+\section{Idempotencia}
+
+\section{Técnicas de escalabilidad}
+%Incluir secciones Starting again y dividir el riesgo.
+
+\subsection{Escalabilidad vertical}
+
+\subsection{Dividir la carga de trabajo de un servicio}
+
+\subsection{Balanceadores de carga}
+
+\subsection{Sistema basado en trabajadores}
+
+\section{Escalabilidad en bases de datos}
+%Incluir sección de infraestructura de base de datos compartida
+
+\subsection{Escalabilidad en la lectura}
+
+\subsection{Escalabilidad en la escritura}
+
+\subsection{CQRS}
+
+\section{Caching}
+%Incluir secciones de caching en la escritura, caching para resilencia y mantener sencillo.
+
+\subsection{Tipos de caching}
+%Incluir sección de HTTP Caching
+
+\section{Autoescalado}
+
+\begin{itemize}
+\item Escalado reactivo:
+\item Escalado predictivo:
+\end{itemize}
+
+\section{El teorema de CAP}
+%Incluir sección de Sacrificio de Particiones tolerantes
+
+\subsection{Sistemas AP}
+
+\subsection{Sistemas CP}
+
+\subsection{Balance entre sistemas AP y sistemas CP}
+
+\section{Descubrimiento de servicios}
+%Incluir sección no olvidarse de los humanos
+
+\subsection{DNS}
+
+\subsection{Herramientas para el descubrimiento de servicios}
+
+\begin{itemize}
+\item Zookeeper
+\item Consul
+\item Eureka
+\end{itemize}
+
+\section{Documentación de servicios}
+
+\begin{itemize}
+\item Swagger
+\item HAL
+\end{itemize}
+
+\section{Descripción de un servicio}
+
+\end{document}
