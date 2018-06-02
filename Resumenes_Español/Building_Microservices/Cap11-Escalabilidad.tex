@@ -92,8 +92,6 @@ Una forma de aumentar la resilencia de un servicio es evitar que este sea el ún
 
 Los balanceadores de carga pueden implementarse a nivel del hardware o el software. Los primeros son más difíciles de automatizar mientras que los segundos son más flexibles (mod\_proxy).
 
-Aunque se haya aumentado la resilencia del servicio ejecutando varias instancias en diferentes máquinas, todos los servicios siguen accediendo a una misma infraestructura: la base de datos. La base de datos sigue siendo un único punto de fallo y puede convertirse en un cuello de botella para todas las instancias.
-
 \subsection{Sistema basado en trabajadores}
 
 Emplear un balanceador de carga no es la única manera de tener diferentes instancias de un servicio. Un aproximación basada en trabajadores consiste en tener diferentes instancias que trabajan sobre un mismo backlog de peticiones. El número de trabajadores se puede adaptar a la demanda de cada momento (peaky load). 
@@ -103,14 +101,36 @@ Los trabajadores en sí no necesitan ser resilentes: aunque un trabajador falle 
 \section{Escalabilidad en bases de datos}
 %Incluir sección de infraestructura de base de datos compartida
 
+Aunque se haya aumentado la resilencia del servicio ejecutando varias instancias de este en diferentes máquinas, todas ellas siguen accediendo a una misma infraestructura: la base de datos. La base de datos sigue siendo un único punto de fallo y puede convertirse en un cuello de botella. Además, si una misma base de datos contiene esquemas de diferentes servicios, su fallo puede ser catastrófico. 
+
+En esta sección veremos diferentes soluciones para escalar la base de datos según su tipo. Sin embargo, la solución más empleada suele ser aumentar las capacidades de la máquina donde se hospeda la base de datos, aunque esto puede emplearse hasta cierto límite.
+
 \subsection{Escalabilidad en la lectura}
+
+En bases de datos relacionales, los datos pueden ser copiados del nodo principal a varias replicas para distribuir las lecturas. Así, la escritura debe hacerse en el nodo principal pero la lectura se puede hacer en cualquier nodo.
+
+Las modificaciones que se hagan en el nodo principal se propagan a las replicas en algún momento posterior a cada escritura. Esto significa que algunos datos que se leen en una replica pueden ser inconsistentes porque el modelo de consistencia es eventual.
+
+Esta aproximación se emplea comúnmente y es fácil de emplear, pero pueden obtenerse beneficios similares a través de memorias cachés.
 
 \subsection{Escalabilidad en la escritura}
 
+La escalabilidad en la escritura es mucho más compleja. Una aproximación para llevarla a cabo es el sharding, donde se tiene la base de datos distribuida en diferentes nodos. Cuando se realiza una operación, a los datos (para su lectura o modificación) se les aplica una función hash y según el resultado obtenido se manda la consulta a un nodo u otro.
+
+La complejidad del sharding proviene de consultas que requieren datos de múltiples nodos porque requiere consultar cada uno de los shards y juntar los resultados en memoria o tener un nodo con todos los datos de los shards para la lectura. Algunas herramientas suelen emplear cachés para las consultas que involucran a más de un shard.
+
+Entre las herramientas existentes se pueden mencionar Mongo y Cassandra. Entre las funcionalidades de Cassandra encontramos por ejemplo que permite añadir nuevos shards en tiempo de ejecución y recolocar los contenidos del resto una vez hecho esto y que ayuda a mejorar la resilencia mediante la replicación de un mismo dato en más de un nodo.
+
 \subsection{CQRS}
+
+La segregación de responsabilidades de consultas y comandos (CQRS) consiste en separar el sistema de base de datos en dos partes: uno que atienda los comandos para modificarla y otro para atender las consultas. Así, cada una puede escalar de forma diferente. 
+
+Estas dos partes pueden hospedarse en servicios diferentes, aunque esto choca con servicios que ofrecen operaciones CRUD sobre una entidad. Además, la base de datos de lectura debe sincronizarse con los cambios que se hacen sobre la base de datos de escritura, lo que significa que puede dar datos obsoletos.
 
 \section{Caching}
 %Incluir secciones de caching en la escritura, caching para resilencia y mantener sencillo.
+
+El uso de una caché consiste en almacenar el resultado de una operación previa.
 
 \subsection{Tipos de caching}
 %Incluir sección de HTTP Caching
