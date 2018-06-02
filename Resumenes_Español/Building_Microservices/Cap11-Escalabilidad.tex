@@ -130,10 +130,35 @@ Estas dos partes pueden hospedarse en servicios diferentes, aunque esto choca co
 \section{Caching}
 %Incluir secciones de caching en la escritura, caching para resilencia y mantener sencillo.
 
-El uso de una caché consiste en almacenar el resultado de una operación previa.
+El uso de una caché consiste en almacenar el resultado de una operación para poder emplearlo en una petición posterior en lugar de gastar tiempo recalculando la misma operación. 
+
+Otros posibles usos de una caché son los siguientes: en la escritura, para mejorar el rendimiento de tal forma que el cambio se añade a un buffer que más adelante será escrito, o para mejorar la resilencia, ya en algunos sistemas si un servicio está caído podemos servirnos de datos almacenados en la caché (aunque estos puedan estar obsoletos) en lugar de devolver un fallo.
 
 \subsection{Tipos de caching}
-%Incluir sección de HTTP Caching
+
+\begin{itemize}
+
+\item Caching en la parte cliente: el cliente es quien almacena los datos cacheados. Con la ayuda del servidor decide durante cuánto tiempo son válidos los datos y cuándo debe solicitarlos de nuevo. Con esta aproximación se pueden reducir drásticamente las llamadas a través de la red. Sin embargo, la invalidación de los datos es compleja porque se debe trasladar a todos los clientes.
+
+\item Caching en el proxy: con esta aproximación se sitúa un proxy entre el cliente y el servidor que almacena los datos. Esta aproximación es opaca al cliente y al servidor y se puede emplear para cachear los resultados de más de un servicio a la vez. Los datos que se pueden almacenar son los del tráfico HTTP que redirige un proxy inverso a través de herramientas como Squid o Varnish.
+
+\item Caching en la parte servidora: el servidor es quien gestiona este sistema a través de cachés en memoria o herramientas como Redis, Memcache. Si la caché está dentro de los límites del servicio puede ser más fácil razonar sobre ella. Para el cliente la caché es transparente.
+
+\end{itemize}
+
+Según nuestras necesidades de carga o con que frecuencia se modifican los datos elegiremos una aproximación u otra, pudiendo emplearse diferentes en el conjunto del sistema. Hay que tener en cuenta que cuantas más cachés haya entre la fuente de datos y el cliente, más probabilidad hay de que los datos estén obsoletos y más difícil será determinar si estos son todavía válidos.
+
+\subsection{Caching en el protocolo HTTP}
+
+El protocolo HTTP es ampliamente usado y existen un gran número de herramientas que gestionan de esta forma la caché de datos como son Squid o Varnish. En las cabeceras HTTP se pueden especificar directivas como cache-control para cachear respuestas durante un período de tiempo especificado en el valor de la clave Expires. 
+
+Otra aproximación es emplear etiquetas (ETags) para determinar si un recurso ha cambiado. Mediante el verbo GET se puede solicitar un recurso de tal forma que el servidor solo nos enviará este si se cumple cierta condición. Si hemos obtenido un recurso con un ETag y su tiempo de vida (TTL) ha expirado, podemos enviar al servidor una petición en forma de un GET condicional con la cláusula If-None-Match y la etiqueta del recurso. El servidor nos podrá responder de 2 posibles formas: con un ``304 Not modified" indicando que el recurso que tenemos cacheado no ha sido modificado o con un ``200 OK" que contenga la última versión del recurso y su nuevo ETag.
+
+\subsection{Fallos en la caché}
+
+Si se producen un gran número de fallos en la caché, las peticiones a la fuente de datos aumentarán drásticamente ralentizando el sistema entero.
+
+Una manera de solucionar esto es haciendo que las llamadas entre la caché y la fuente de datos se hagan de forma asíncrona. De esta forma, cuando se produzca un fallo en la caché se devolverá un fallo al cliente inmediatamente y una invocación al origen de los datos, que eventualmente actualizará la caché. Obviamente, esta aproximación no tiene sentido para muchas situaciones.
 
 \section{Autoescalado}
 
