@@ -200,15 +200,29 @@ Los sistemas AP escalan más fácilmente y son más sencillos de construir. Los 
 \section{Descubrimiento de servicios}
 %Incluir sección no olvidarse de los humanos
 
+Es imprescindible en un sistema basado en microservicios conocer donde se están ejecutando cada uno de ellos. Estas capacidades se encuentran dentro del llamado descubrimiento de servicios, que se divide en dos partes: el registro de un servicio y el acceso a los servicios registrados. El descubrimiento de servicios se vuelve más complicado en un entorno en el que constantemente se despliegan y destruyen instancias de un servicio.
+
 \subsection{DNS}
+
+DNS es un estándar muy conocido y extendido con un gran número de tecnologías que le dan soporte. Una manera de establecer donde se encuentra cada servicio es mediante una entrada por servicio que apunte a un balanceador de carga que a su vez apunte a las diferentes instancias de ese servicio desplegadas. En caso de que solo haya una instancia del servicio, la entrada del servicio puede referir directamente al host donde se ejecuta. 
+
+Por último, hay que tener en cuenta que las entradas DNS tienen un tiempo de vida y es peligro la cantidad de sitios donde pueden ser cacheadas ya que pueden quedar obsoletas.
 
 \subsection{Herramientas para el descubrimiento de servicios}
 
+Entre las desventajas del sistema de DNSs es que no se adapta a un entorno que cambia frecuentemente como es el de los microservicios. Como soluciones alternativas están las siguientes, que en su mayoría se basan en contar con un servicio central donde el resto se registran:
+
 \begin{itemize}
-\item Zookeeper
-\item Consul
-\item Eureka
+
+\item Zookeeper: se emplea para un gran número de casos de uso como la gestión de la configuración, la sincronización de datos entre servicios o como un servicio para registrar a otros. Ofrece un espacio de nombres jerárquico para almacenar información y al que nos podemos suscribir para estar alerta de cuando un nodo se modificaa. Este espacio de nombres se puede emplear como estructura para almacenar la localización de cada servicio.
+
+\item Consul: entre sus funcionalidades está que expone una interfaz HTTP para el descubrimiento de servicios y que ofrece un servidor DNS para almacenar el IP y el puerto de un servicio indexado por su nombre.
+
+\item Eureka: es una librería de código abierto de Netflix. Al emplearlo son los clientes quienes deben lidiar con el descubrimiento de servicios directamente, sin necesidad de un proceso o servicio aparte. Como consecuencia, la tecnología empleada tiene que soportar JVM.
+
 \end{itemize}
+
+Para concluir, cualquier herramienta elegida debería permitir construir un panel para que los humanos puedan monitorizar los diferentes servicios desplegados.
 
 \section{Documentación de servicios}
 
