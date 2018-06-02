@@ -70,14 +70,35 @@ El sistema entero no tiene porque ser idempotente, solo las funcionalidades de n
 
 \section{Técnicas de escalabilidad}
 %Incluir secciones Starting again y dividir el riesgo.
+Generalmente un sistema se escala para lidiar con posibles fallos o mejorar su rendimiento. Vamos a ver diferentes técnicas para este propósito.
+
+Rediseñar un sistema para que sea escalable no debe considerarse un fallo sino un éxito. En las fases iniciales de un proyecto no tiene sentido invertir demasiado tiempo en hacer el sistema escalable porque puedes estar invirtiendo esfuerzo para soportar una carga de trabajo que posiblemente igual no se dé nunca.
+
+La mejor manera de hacer un sistema resilente es no situar todos los servicios en una misma infraestructura, ya sea una máquina física, red, etc. Algunos proveedores de infraestructura ofrecen facilidades para este propósito. Con esto se consigue que no haya un único punto de fallo.
 
 \subsection{Escalabilidad vertical}
 
+Consiste en aumentar las capacidades de la máquina donde se ejecuta parte del sistema, como mejorar su RAM o CPU. Esta aproximación puede resultar cara: un servidor grande puede costar más que dos pequeños que juntos sumen las mismas capacidades. Además, muchas veces el software no está preparado para beneficiarse de estas mejoras. 
+
+Aunque puede ser una manera sencilla para mejorar el rendimiento, problemas como la resilencia no se solucionan ya que si solo hay un servidor hay un único punto de fallo del sistema.
+
 \subsection{Dividir la carga de trabajo de un servicio}
+
+Si un servicio ofrece funcionalidades con diferente nivel de uso o criticidad, el servicio se puede dividir en otros más pequeños. De esta forma, se puede crear un servicio con la funcionalidad más crítica que se escale para aumentar su resilencia y de forma diferente al otro menos crítico.
 
 \subsection{Balanceadores de carga}
 
+Una forma de aumentar la resilencia de un servicio es evitar que este sea el único punto de fallo. Esto se puede conseguir teniendo varias instancias del mismo a las que se accede a través de un balanceador de carga. Un balanceador de carga se basa en un algoritmo para distribuir las llamadas que recibe entre las diferentes instancias de un servicio y además elimina instancias cuando no están accesibles y las vuelve a añadir cuando se recuperan. El balanceador de carga es transparente a los consumidores de un servicio.
+
+Los balanceadores de carga pueden implementarse a nivel del hardware o el software. Los primeros son más difíciles de automatizar mientras que los segundos son más flexibles (mod\_proxy).
+
+Aunque se haya aumentado la resilencia del servicio ejecutando varias instancias en diferentes máquinas, todos los servicios siguen accediendo a una misma infraestructura: la base de datos. La base de datos sigue siendo un único punto de fallo y puede convertirse en un cuello de botella para todas las instancias.
+
 \subsection{Sistema basado en trabajadores}
+
+Emplear un balanceador de carga no es la única manera de tener diferentes instancias de un servicio. Un aproximación basada en trabajadores consiste en tener diferentes instancias que trabajan sobre un mismo backlog de peticiones. El número de trabajadores se puede adaptar a la demanda de cada momento (peaky load). 
+
+Los trabajadores en sí no necesitan ser resilentes: aunque un trabajador falle mientras atienda una petición, esta se terminará atendiendo por otra instancia más tarde. Una herramienta para implementar este tipo de sistemas es Zookeper.
 
 \section{Escalabilidad en bases de datos}
 %Incluir sección de infraestructura de base de datos compartida
