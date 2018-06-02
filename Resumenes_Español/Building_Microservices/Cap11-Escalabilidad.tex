@@ -162,9 +162,14 @@ Una manera de solucionar esto es haciendo que las llamadas entre la caché y la 
 
 \section{Autoescalado}
 
+El escalado automático de los servicios es sencillo si se tienen implementados mecanismos para la provisión de hosts virtuales. También se debe gestionar la eliminación de instancias que apenas reciben peticiones. El escalado puede estar conducido de dos formas distintas:
+
 \begin{itemize}
-\item Escalado reactivo:
-\item Escalado predictivo:
+
+\item Escalado reactivo: en este aproximación aumentamos el número de hosts en función de tendencias bien conocidas, como puede ser un período de facturación, la hora del día con más visitas a la web...
+
+\item Escalado predictivo: se aumentan el número de hosts cuando se observa un aumento en las peticiones de un servicio o cuando una de sus instancias falla. Esta aproximación es más difícil porque la carga puede aumentar en pocos minutos, pero el aprovisionamiento de una nueva instancia puede tardar al menos 10 minutos. Es aconsejable tener una suite de tests de carga para probar las reglas de autoescalado. Las reglas para gestionar los fallos de una instancia son mucho más usadas que las de carga de trabajo. Como consejo, tener más instancias de las necesarias es mucho mejor que no tener las suficientes, por lo que las reglas han de ser capaces de reaccionar rápidamente.
+
 \end{itemize}
 
 \section{El teorema de CAP}
