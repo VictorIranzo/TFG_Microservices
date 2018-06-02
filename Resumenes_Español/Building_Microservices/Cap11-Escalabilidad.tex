@@ -175,11 +175,27 @@ El escalado automático de los servicios es sencillo si se tienen implementados 
 \section{El teorema de CAP}
 %Incluir sección de Sacrificio de Particiones tolerantes
 
+En los sistemas distribuidos existren 3 características sobre las que se debe hacer balance: la consistencia, que establece que vamos a obtener la misma respuesta de nodos diferentes, la disponibilidad, que significa que toda petición recibirá una respuesta, y la tolerancia a particiones, que es la habilidad de gestionar situaciones en las que la comunicación entre las partes de un sistema se interrumpe.
+
+Pongamos un ejemplo en el que una base de datos está replicada y se produce un fallo por el cual la comunicación entre ambas se interrumpe y los cambios en una no se pueden propagar a la otra. En una situación como esta, el teorema de CAP establece que solo podemos mantener 2 de las 3 características que hemos mencionado antes.
+
+El caso más trivial es el de renunciar a la tolerancia de particiones: si no existe, el sistema no puede ejecutarse sobre una red y el sistema deja de ser distribuido. El sacrificio de las otras dos características da lugar a los llamados sistemas AP y CP.
+
 \subsection{Sistemas AP}
+
+Son los sistemas que surgen fruto de sacrificar la consistencia cuando un fallo se produce. Se permite realizar cambios en ambas bases de datos, con lo que se mantiene la disponibilidad como característica, pero como estas no se sincronizan podemos estar obteniendo datos obsoletos al hacer una consulta.
+
+En algún momento cuando la conexión se restablezca los cambios se sincronizarán, hecho que será más difícil cuanto mayor sea el período sin conexión. La consistencia es eventual, como ocurre en la propagación de los cambios de una base de datos a otra por no poder ser inmediata.
 
 \subsection{Sistemas CP}
 
+Para mantener la consistencia entre las bases de datos cuando no existe comunicación entre ellas se tiene que rechazar cualquier petición,  con lo que dejan de estar disponibles. La única manera de saber que la información de una base de datos es consistente es preguntado al resto de nodos. La lectura por tanto se debe hacer de forma transaccional mediante bloqueos para evitar que mientras se está leyendo un dato este pueda estar siendo modificado al mismo tiempo en otro nodo. 
+
+El uso de bloqueos es difícil de gestionar en sistemas distribuidos: si se interrumpe la comunicación, un nodo puede quedar bloqueado permanentemente a la espera de ser desbloqueado. Por este motivo, no debemos tratar de implementar este tipo de sistemas, sino que podemos aprovecharnos de herramientas como Consul.
+
 \subsection{Balance entre sistemas AP y sistemas CP}
+
+Los sistemas AP escalan más fácilmente y son más sencillos de construir. Los segundos son los únicos que nos aseguran la consistencia de los datos, pero son más difíciles de construir. A la hora de hacer balance entre una solución u otra, debemos preguntarnos cuánto tiempo puede en nuestro servicio estar un dato obsoleto. El sistema no necesita hacerse completamente de una u otra manera.
 
 \section{Descubrimiento de servicios}
 %Incluir sección no olvidarse de los humanos
