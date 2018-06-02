@@ -226,11 +226,20 @@ Para concluir, cualquier herramienta elegida debería permitir construir un pane
 
 \section{Documentación de servicios}
 
+Sabemos dónde se encuentra cada servicio, pero también necesitamos saber que funcionalidades ofrece cada uno. Esto se puede conseguir mediante la documentación a través de herramientas como las siguientes:
+
 \begin{itemize}
-\item Swagger
-\item HAL
+
+\item Swagger: describe la API de un servicio a través de una interfaz web con la que se puede interactuar. Los métodos que pertenecen a la API pueden ser anotados dentro del código para que se genere la documentación automáticamente.
+
+\item Hypertext Application Language (HAL): es un estándar que describe los controles hipermedia que hemos expuesto. El navegador HAL ofrece la posibilidad de explor la API y ejecutar llamada a través de un servicio mediante el navegador web.
+
 \end{itemize}
 
 \section{Descripción de un servicio}
+
+El estándar Universal Description, Discovery and Integration (UDDI) surgió en las fases iniciales de las arquitecturas basadas en servicios. Esta aproximación para el registro de un servicio es muy pesada y se pueden realizar aproximaciones más ligeras a través de una simple wiki. 
+
+La información que necesitamos conocer de cada servicio es su estado, la localización de sus instancias o su relación con otros servicios. Mantener esta información accesible y de forma visual es clave para luchar contra la complejidad que supone la escalabilidad del sistema.
 
 \end{document}
