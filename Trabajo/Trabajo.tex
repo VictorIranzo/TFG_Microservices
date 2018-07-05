@@ -93,9 +93,10 @@
 
 \section{Motivaci\'on}
 
+% Referencia a The Clean Architecture.
 En la actualidad, no es necesario un alto grado de conocimientos en ingeniería del software para desarrollar una aplicación o sistema. Personas que no tienen estudios relacionados con la informática pueden producir código que, sin ser limpio y elegante, funciona. Desarrollar sistemas correctamente requiere de grandes conocimientos, pero minimiza los costes y aumenta la productividad de una organización. Se debe poner el foco en emplear una arquitectura de software que se adapte a nuestras necesidades. De lo contrario el futuro mantenimiento será más costoso y repercutirá en la confianza de los clientes y la moral del equipo.
 
-% Demasiados términos que se deben explicar.
+% TODO: Demasiados términos que se deben explicar.
 Las arquitecturas basadas en microservicios son una tendencia actual que emerge asociada a conceptos clave como la integración continua, el desarrollo centrado en el dominio del problema o el despliegue en contenedores. En estas arquitecturas diferentes funcionalidades se encapsulan en servicios pequeños y autónomos que cooperan entre ellos. En términos de diseño, principios como el de Responsabilidad Única son más fáciles de conseguir y los desafíos de organización del código pueden abordarse de formas más diversas por la baja granularidad de la arquitectura. 
 
 \section{Objetivos}
@@ -118,6 +119,41 @@ El objetivo de este proyecto es validar con un caso de estudio las ventajas e in
 
 \chapter{Estado del arte}
 
+\section{¿Qué son los microservicios?}
+
+%Referencia a Sam Newman, a la Wikipedia y al SOA manifest. https://en.wikipedia.org/wiki/Service_(systems_architecture)
+
+Según Sam Newman, autor del libro Building Microservices, los microservicios son servicios pequeños y autónomos que trabajan conjuntamente. Podemos desglosar esta definición así:
+
+\begin{itemize}
+
+\item Un \textbf{servicio} es un conjunto de funcionalidades que se expone a los clientes para que las empleen con diferentes propósitos. La programación orientada a servicios es un paradigma que se aplica en las arquitecturas orientadas a servicios (SOA). El objetivo principal de SOA es desarrollar servicios que aporten valor al negocio y se adapten a los cambios en las necesidades de los clientes, de forma ágil y con el menor coste posible. Las arquitecturas orientadas a servicios no están asociadas a ninguna tecnología específica. En líneas generales, dividen un sistema en componentes que cambian por el mismo motivo y promueven la flexibilidad y los servicios compartidos frente a implementaciones específicas y óptimas. Son muchos los beneficios de estas arquitecturas, sin embargo existe una falta de consenso sobre cómo debe llevarse a cabo este tipo de arquitecturas en aspectos como los protocolos de comunicación a emplear o la granularidad de los servicios. Los microservicios pueden entenderse como una aproximación específica de las arquitecturas SOA.
+
+\item Diseñar microservicios con el menor \textbf{tamaño} posible no debe ser el foco principal. En todo momento han de cumplirse los principios de cohesión y coherencia: el código relacionado debe agruparse conjuntamente porque será modificado por el mismo motivo. Una regla que puede ser aplicada según el autor Jon Eaves es establecer un tamaño para un microservicio tal que pueda ser completamente reescrito en 2 semanas.
+
+\item  Los servicios han de ser lo menos acoplados posibles para garantizar la \textbf{autonomía} de cada uno. Cada microservicio es una entidad separada: cambian de manera independientemente al resto y al hacerlo sus consumidores no necesiten ser modificados, a menos que se modifique el contrato entre ambas partes. Para lograrlo, lo más habitual es que cada servicio exponga una interfaz (API) y todas las comunicaciones se realicen mediante llamadas a través de la red.
+
+\end{itemize}
+
+
+
+\section{Ventajas del desarrollo de software basado en microservicios}
+
+\section{Inconvenientes del desarrollo de software basado en microservicios}
+
+\section{Los microservicios dentro del ciclo de vida del software}
+
+\subsection{Fase de análisis de requisitos}
+
+\subsection{Fase de diseño}
+
+\subsection{Fase de implementación}
+
+\subsection{Fase de pruebas}
+
+\subsection{Fase de despliegue}
+
+\subsection{Fase de mantenimiento}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                 CONCLUSIONS                                 %
