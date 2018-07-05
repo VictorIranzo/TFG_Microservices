@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.5.14)  5 JUL 2018 23:54
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.5.14)  6 JUL 2018 00:26
 entering extended mode
 **./Microservices.tex
 (Microservices.tex
@@ -603,7 +603,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {C:/Users/Víctor/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
-[2] [3] [4] (Microservices.aux
+[2] [3] [4] [5] (Microservices.aux
 LaTeX Info: Redefining \. on input line 6.
 LaTeX Info: Redefining \% on input line 6.
 ) ) 
@@ -621,9 +621,9 @@ e1/public/amsfonts/cm/cmr10.pfb><C:/Users/Víctor/AppData/Local/Programs/MiKTeX
  2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/Víctor/AppData/Local/P
 rograms/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Users/Víctor/A
 ppData/Local/Programs/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr6.pfb>
-Output written on Microservices.pdf (4 pages, 72344 bytes).
+Output written on Microservices.pdf (5 pages, 75787 bytes).
 PDF statistics:
- 35 PDF objects out of 1000 (max. 8388607)
+ 38 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

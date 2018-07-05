@@ -61,5 +61,22 @@ Sin embargo, la gestión descentralizada supone varios inconvientes. En primer l
 
 Muchos sistemas compuestos por microservicios emplean las prácticas de entrega continua e integración continua. Con estas prácticas se garantiza que los cambios a los clientes llegan antes. Como el despliegue está automatizado, para garantizar que el cambio que se va a desplegar es correcto se ejecutan una suite de pruebas automatizadas. También gracias a la automatización, la puesta en producción del sistema es más familiar y no es una fase que suponga riesgos dentro del proceso de desarrollo.
 
+\subsection{Diseñados para el fallo}
+
+El uso de servicios implica que cualquier invocación puede fallar, ya que se realiza a través de la red. Netflix ha desarrollado una librería para inducir fallos en servicios y centros de datos en producción para probar la resilencia y monitorización de sus servicios. Es importante detectar los fallos rápido y automatizar el proceso de restauración del servicio.
+
+\subsection{Diseño evolutivo}
+
+El diseño modular de los servicios hace que puedan ser fácilmente reemplazados y actualizados. Las cambios que se deben realizar son muchas veces localizados en un único servicio, por lo que solo se debe desplegar este y no toda la aplicación. 
+
+En el momento en que nos demos cuenta que dos servicios cambian conjuntamente de forma repetida estaremos frente a un signo de que puede ser conveniente unirlos. En caso de cambios que puedan romper a los consumidores, se puede lidiar con este problema a través del versionado de servicios, siendo tolerantes con los consumidores para que tengan disponible la vieja interfaz hasta que migren sus invocaciones.
+
+Cabe tener en cuenta que no siempre se obtienen los límites de un servicio a la primera. El código debe ser sencillo de refactorizar y el uso de microservicios hace esta tarea más complicada que si emplearamos librerías.
+
+\section{¿Son los microservicios el futuro?}
+
+Muchas organizaciones (Amazon, Netflix, Travis CI...) están empleando microservicios como estilo arquitectónico, aunque a veces lo envuelvan dentro del concepto de las arquitecturas SOA.
+
+Los microservicios son la dirección futura de las arquitecturas software. Sin embargo, las consecuencias de elegir un estilo arquitectónico no son evidente hasta años más tarde de haber sido tomadas, por lo que hasta que no se vean sistemas maduros que empleen microservicios no podremos afirmar a ciencia cierta que son el futuro.
 
 \end{document}
