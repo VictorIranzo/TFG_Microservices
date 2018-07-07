@@ -17,16 +17,15 @@
 \contentsline {section}{\numberline {2.1}\IeC {\textquestiondown }Qu\IeC {\'e} son los microservicios?}{3}{section.2.1}
 \contentsline {section}{\numberline {2.2}Ventajas del desarrollo de software basado en microservicios}{4}{section.2.2}
 \contentsline {section}{\numberline {2.3}Inconvenientes del desarrollo de software basado en microservicios}{4}{section.2.3}
-\contentsline {section}{\numberline {2.4}Los microservicios dentro del ciclo de vida del software}{4}{section.2.4}
-\contentsline {subsection}{\numberline {2.4.1}Fase de an\IeC {\'a}lisis de requisitos}{4}{subsection.2.4.1}
-\contentsline {subsection}{\numberline {2.4.2}Fase de dise\IeC {\~n}o}{4}{subsection.2.4.2}
-\contentsline {subsection}{\numberline {2.4.3}Fase de implementaci\IeC {\'o}n}{4}{subsection.2.4.3}
-\contentsline {subsection}{\numberline {2.4.4}Fase de pruebas}{4}{subsection.2.4.4}
-\contentsline {subsection}{\numberline {2.4.5}Fase de despliegue}{4}{subsection.2.4.5}
-\contentsline {subsection}{\numberline {2.4.6}Fase de mantenimiento}{4}{subsection.2.4.6}
+\contentsline {subsection}{\numberline {2.3.1}Los microservicios en la fase de an\IeC {\'a}lisis de requisitos}{4}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Los microservicios en la fase de dise\IeC {\~n}o}{4}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.3}Los microservicios en la fase de implementaci\IeC {\'o}n}{4}{subsection.2.3.3}
+\contentsline {subsection}{\numberline {2.3.4}Los microservicios en la fase de pruebas}{4}{subsection.2.3.4}
+\contentsline {subsection}{\numberline {2.3.5}Los microservicios en la fase de despliegue}{4}{subsection.2.3.5}
+\contentsline {subsection}{\numberline {2.3.6}Los microservicios en la fase de mantenimiento}{4}{subsection.2.3.6}
 \contentsline {chapter}{\numberline {3}Conclusiones}{5}{chapter.3}
 \contentsline {chapter}{Bibliograf\'{\i }a}{7}{chapter*.4}
 \noindent \hrulefill \par 
-\appendixname \par 
+\appendicesname \par 
 \contentsline {chapter}{\numberline {A}Configuraci\IeC {\'o}n del sistema}{9}{appendix.Alph1}
 \contentsline {section}{\numberline {A.1}Fase de inicializaci\IeC {\'o}n}{9}{section.Alph1.1}

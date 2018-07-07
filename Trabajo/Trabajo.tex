@@ -28,6 +28,9 @@
 
 \usepackage[utf8]{inputenc} 
 
+\usepackage{natbib}
+\bibliographystyle{agsm}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                        ALTRES PAQUETS I DEFINICIONS                         %
 %                                                                             %
@@ -94,7 +97,7 @@
 \section{Motivaci\'on}
 
 % Referencia a The Clean Architecture.
-En la actualidad, no es necesario un alto grado de conocimientos en ingeniería del software para desarrollar una aplicación o sistema. Personas que no tienen estudios relacionados con la informática pueden producir código que, sin ser limpio y elegante, funciona. Desarrollar sistemas correctamente requiere de grandes conocimientos, pero minimiza los costes y aumenta la productividad de una organización. Se debe poner el foco en emplear una arquitectura de software que se adapte a nuestras necesidades. De lo contrario el futuro mantenimiento será más costoso y repercutirá en la confianza de los clientes y la moral del equipo.
+En la actualidad, no es necesario un alto grado de conocimientos en ingeniería del software para desarrollar una aplicación o sistema. Personas que no tienen estudios relacionados con la informática pueden producir código que, sin ser limpio y elegante, funciona. Desarrollar sistemas de calidad requiere de grandes conocimientos, pero minimiza los costes y aumenta la productividad de una organización. Se debe poner el foco en emplear una arquitectura de software que se adapte a nuestras necesidades. De lo contrario el futuro mantenimiento será más costoso y repercutirá en la confianza de los clientes y en la moral del equipo.
 
 % TODO: Demasiados términos que se deben explicar.
 Las arquitecturas basadas en microservicios son una tendencia actual que emerge asociada a conceptos clave como la integración continua, el desarrollo centrado en el dominio del problema o el despliegue en contenedores. En estas arquitecturas diferentes funcionalidades se encapsulan en servicios pequeños y autónomos que cooperan entre ellos. En términos de diseño, principios como el de Responsabilidad Única son más fáciles de conseguir y los desafíos de organización del código pueden abordarse de formas más diversas por la baja granularidad de la arquitectura. 
@@ -107,9 +110,9 @@ El objetivo de este proyecto es validar con un caso de estudio las ventajas e in
 
 \item Desarrollar una misma aplicación para la venta de productos y la gestión de pedidos siguiendo dos arquitecturas diferentes: una basada en microservicios y otra monolítica.
 
-\item Comparar el proceso de desarrollo de desarrollo de ambos sistemas a lo largo del ciclo de vida del software.
+\item Comparar el proceso de desarrollo de ambos sistemas a lo largo del ciclo de vida del software.
 
-\item Evaluar cómo se pueden llevar a cabo diferentes modificaciones durante el mantenimiento de ambas aplicaciones una vez se ha finalizado su desarrollo.
+\item Evaluar cómo se pueden llevar a cabo diferentes modificaciones durante el mantenimiento de ambas aplicaciones una vez se ha finalizado su implementación.
 
 \item Verificar que una arquitectura basada en microservicios facilita alcanzar los requisitos no funcionales de escalabilidad y tolerancia a fallos frente a una arquitectura monolítica.
 
@@ -139,19 +142,17 @@ Según Sam Newman, autor del libro Building Microservices, los microservicios so
 
 \section{Inconvenientes del desarrollo de software basado en microservicios}
 
-\section{Los microservicios dentro del ciclo de vida del software}
+\subsection{Los microservicios en la fase de análisis de requisitos}
 
-\subsection{Fase de análisis de requisitos}
+\subsection{Los microservicios en la fase de diseño}
 
-\subsection{Fase de diseño}
+\subsection{Los microservicios en la fase de implementación}
 
-\subsection{Fase de implementación}
+\subsection{Los microservicios en la fase de pruebas}
 
-\subsection{Fase de pruebas}
+\subsection{Los microservicios en la fase de despliegue}
 
-\subsection{Fase de despliegue}
-
-\subsection{Fase de mantenimiento}
+\subsection{Los microservicios en la fase de mantenimiento}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                 CONCLUSIONS                                 %
@@ -165,36 +166,9 @@ Según Sam Newman, autor del libro Building Microservices, los microservicios so
 %                                BIBLIOGRAFIA                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{thebibliography}{10}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% MODEL D'ARTICLE                                                             %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\bibitem{light}
-   Jennifer~S. Light.
-   \newblock When computers were women.
-   \newblock \textit{Technology and Culture}, 40:3:455--483, juliol, 1999.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% MODEL DE LLIBRE                                                             %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\bibitem{ifrah}
-   Georges Ifrah.
-   \newblock \textit{Historia universal de las cifras}.
-   \newblock Espasa Calpe, S.A., Madrid, sisena edició, 2008.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% MODEL D'URL                                                                 %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\bibitem{WAR}
-   Comunicat de premsa del Departament de la Guerra, 
-   emés el 16 de febrer de 1946. 
-   \newblock Consultat a 
-   \url{http://americanhistory.si.edu/comphist/pr1.pdf}.
+\bibliography{Bibliografia/library}
 
 
-\end{thebibliography}
-\cleardoublepage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                           APÈNDIXS  (Si n'hi ha!)                           %
