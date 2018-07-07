@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.5.14)  7 JUL 2018 16:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6630 64-bit) (preloaded format=pdflatex 2018.5.14)  7 JUL 2018 16:50
 entering extended mode
 **./Trabajo.tex
 (Trabajo.tex
@@ -803,7 +803,18 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibsep=\skip92
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count123
-) (Trabajo.aux)
+) (Trabajo.aux
+LaTeX Info: Redefining \. on input line 23.
+LaTeX Info: Redefining \% on input line 23.
+LaTeX Info: Redefining \. on input line 26.
+LaTeX Info: Redefining \% on input line 26.
+LaTeX Info: Redefining \. on input line 27.
+LaTeX Info: Redefining \% on input line 27.
+LaTeX Info: Redefining \. on input line 28.
+LaTeX Info: Redefining \% on input line 28.
+LaTeX Info: Redefining \. on input line 30.
+LaTeX Info: Redefining \% on input line 30.
+)
 \openout1 = `Trabajo.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 69.
@@ -1112,10 +1123,20 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 83.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 83.
-
-
-Package hyperref Warning: old toc file detected, not used; run LaTeX again.
-
+ (Trabajo.toc
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+LaTeX Info: Redefining \. on input line 3.
+LaTeX Info: Redefining \% on input line 3.
+LaTeX Info: Redefining \. on input line 4.
+LaTeX Info: Redefining \% on input line 4.
+LaTeX Info: Redefining \. on input line 5.
+LaTeX Info: Redefining \% on input line 5.
+LaTeX Info: Redefining \. on input line 7.
+LaTeX Info: Redefining \% on input line 7.
+LaTeX Font Info:    Font shape `T1/ppl/bx/sc' in size <10.95> not available
+(Font)              Font shape `T1/ppl/b/sc' tried instead on input line 8.
+)
 \tf@toc=\write4
 \openout4 = `Trabajo.toc'.
 
@@ -1143,7 +1164,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 83.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 83.
-[5]
+ [5]
 Package babel Info: Redefining spanish shorthand <<
 (babel)             in language  on input line 83.
 Package babel Info: Redefining spanish shorthand >>
@@ -1183,10 +1204,18 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 83.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 83.
-
-
-Package hyperref Warning: old lof file detected, not used; run LaTeX again.
-
+ (Trabajo.lof
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+LaTeX Info: Redefining \. on input line 3.
+LaTeX Info: Redefining \% on input line 3.
+LaTeX Info: Redefining \. on input line 4.
+LaTeX Info: Redefining \% on input line 4.
+LaTeX Info: Redefining \. on input line 5.
+LaTeX Info: Redefining \% on input line 5.
+LaTeX Info: Redefining \. on input line 7.
+LaTeX Info: Redefining \% on input line 7.
+)
 \tf@lof=\write5
 \openout5 = `Trabajo.lof'.
 
@@ -1202,9 +1231,18 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 83.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 83.
-
-Package hyperref Warning: old lot file detected, not used; run LaTeX again.
-
+ (Trabajo.lot
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+LaTeX Info: Redefining \. on input line 3.
+LaTeX Info: Redefining \% on input line 3.
+LaTeX Info: Redefining \. on input line 4.
+LaTeX Info: Redefining \% on input line 4.
+LaTeX Info: Redefining \. on input line 5.
+LaTeX Info: Redefining \% on input line 5.
+LaTeX Info: Redefining \. on input line 7.
+LaTeX Info: Redefining \% on input line 7.
+)
 \tf@lot=\write6
 \openout6 = `Trabajo.lot'.
 
@@ -1232,7 +1270,7 @@ Package babel Info: Redefining spanish shorthand "!
 (babel)             in language  on input line 89.
 Package babel Info: Redefining spanish shorthand "?
 (babel)             in language  on input line 89.
-[7]
+ [7]
 Package babel Info: Redefining spanish shorthand <<
 (babel)             in language  on input line 89.
 Package babel Info: Redefining spanish shorthand >>
@@ -1751,13 +1789,13 @@ Package rerunfilecheck Info: File `Trabajo.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 191.
  ) 
 Here is how much of TeX's memory you used:
- 11590 strings out of 493305
- 171340 string characters out of 3128932
- 278948 words of memory out of 3000000
- 14901 multiletter control sequences out of 15000+200000
- 33509 words of font info for 59 fonts, out of 3000000 for 9000
+ 11625 strings out of 493305
+ 171977 string characters out of 3128932
+ 279314 words of memory out of 3000000
+ 14927 multiletter control sequences out of 15000+200000
+ 41207 words of font info for 76 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,12n,60p,1118b,683s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 43i,12n,60p,1139b,792s stack positions out of 5000i,500n,10000p,200000b,50000s
  <C:\Users\Víctor\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknappen\ec\dpi60
 0\ecss1095.pk> <C:\Users\Víctor\AppData\Local\MiKTeX\2.9\fonts\pk\ljfour\jknap
 pen\ec\dpi600\ecsx1440.pk> <C:\Users\Víctor\AppData\Local\MiKTeX\2.9\fonts\pk\
@@ -1768,9 +1806,9 @@ cal/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplb8a.pfb><C:/Users/Víctor/A
 ppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplr8a.pfb><C:/Users/
 Víctor/AppData/Local/Programs/MiKTeX 2.9/fonts/type1/urw/palatino/uplri8a.pfb>
 
-Output written on Trabajo.pdf (17 pages, 175796 bytes).
+Output written on Trabajo.pdf (17 pages, 186357 bytes).
 PDF statistics:
- 307 PDF objects out of 1000 (max. 8388607)
- 41 named destinations out of 1000 (max. 500000)
+ 334 PDF objects out of 1000 (max. 8388607)
+ 43 named destinations out of 1000 (max. 500000)
  184 words of extra memory for PDF output out of 10000 (max. 10000000)
 
