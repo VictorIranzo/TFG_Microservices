@@ -1,0 +1,20 @@
+Incidences: 8080
+Security: 8085
+Orders: 8090
+Reports: 8095
+Notifications: 9000
+
+$ docker-compose up
+$ docker-compose stop
+$ docker-compose down
+$ docker build -t nombre_imagen .
+$ docker run -d -p 8080:80 --name nombre_contenedor nombre_imagen
+$ docker logs nombre_contenedor
+$ docker exec -it nombre_contenedor bash
+$ docker ps -a 
+$ docker stop nombre_contenedor
+$ docker rm nombre_contenedor
+$ docker rm $(docker ps -a -f status=exited -q)
+$ docker images -a
+$ docker rmi nombre_imagen
+$ docker rmi $(docker images -a -q)

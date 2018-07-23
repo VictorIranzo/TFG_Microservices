@@ -1,1 +1,9 @@
 La fase de análisis es la única previa al diseño de una solución. Esta fase es independiente del diseño o arquitectura que más tarde se llevarán a cabo. En otras palabras, los requisitos funcionales y no funcionales de un sistema son los mismos independientemente de la arquitectura que luego se utilice. De acuerdo a los requisitos no funcionales, será más conveniente emplear una arquitectura u otra. Por ejemplo, la arquitectura basada en microservicios es apta para garantizar la escalabilidad y la tolerancia a fallos de un sistema, pero no es apta si el requisito funcional que se desea potenciar es la eficiencia ya que el número de llamadas remotas que implica esta aproximación supone un alto sobrecoste.
+
+https://blogs.msdn.microsoft.com/benjaminperkins/2017/06/06/remote-debug-your-azure-app-service-2017-including-asp-net-core/
+
+https://www.thomaslevesque.com/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/
+
+Situaciones de mantenimiento:
+- Añadir una relación entre entidades de distintos dominios.
+- Migrar por ejemplo a otro proveedor de bases de datos (AWS).
