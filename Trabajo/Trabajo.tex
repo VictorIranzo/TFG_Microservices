@@ -183,9 +183,19 @@ En la fase de diseño se definen la arquitectura, componentes e interfaces del s
 
 \subsection{Librerías versus servicios}
 
-Un componente es una unidad de software que se puede reemplazar y actualizar de forma independiente. Las librerías son componentes que están ligados a un programa y son invocadas a través de llamadas a funciones. En cambio, los servicios son componentes que se ejecutan como procesos externos y con los que se puede comunicar a través de mecanismos como llamadas a procedimientos remotos (RPC) o peticiones HTTP. \cite{Lewis2014}
+Un componente es una unidad de software que se puede reemplazar y actualizar de forma independiente. Las \textbf{librerías} son componentes que están ligados a un programa y son invocadas a través de llamadas a funciones. En cambio, los \textbf{servicios} son componentes que se ejecutan como procesos externos y con los que se puede comunicar a través de mecanismos como llamadas a procedimientos remotos (RPC) o peticiones HTTP. \cite{Lewis2014}
 
 Uno de los motivos por los que se recomienda emplear servicios frente a librerías es que los servicios se pueden desplegar de forma independiente. Solo algunos cambios en la interfaz o contrato del servicio requerirán un cambio en sus consumidores. Sin embargo, las llamadas remotas son más costosas que las invocaciones dentro del mismo proceso, por lo que la interfaz del servicio debe definirse de tal forma que sus consumidores no tengan que comunicarse con él continuamente.
+
+\subsection{Diseño guiado por el dominio (DDD)}
+
+El \textbf{diseño guiado por el dominio} (DDD) es un enfoque para el desarrollo de software que propone un modelado rico, expresivo y evolutivo basado en la realidad del negocio. El dominio representa lo que hace una organización y la forma en qué lo hace.
+
+Con esta aproximación los expertos del dominio y los desarrolladores se sitúan en el mismo nivel empleando un lenguaje ubicuo. No hace falta ninguna traducción de términos entre ellos porque todos hablan un lenguaje común, que se plasma hasta en el código de programación. El lenguaje no tiene porque seguir los estándares de la industria que representa: emplea los términos y acciones que en el negocio se dan.
+
+Para su tratamiento, las áreas independientes del dominio se transforman en contextos delimitados. Un contexto delimitado es un límite explícito dentro del cual un modelo de dominio existe. Cada contexto delimitado tiene su propio lenguaje ubicuo. Un concepto tiene un significado dentro de un contexto delimitado, pero fuera de él puede tener un significado totalmente diferente. No se puede tratar de incluir todos los conceptos en un único modelo de dominio: se deben separar los conceptos en diferentes modelos y entender las diferencias que existen para un concepto llamado igual en uno y otro contexto.
+
+El lenguaje ubicuo que se emplea crece y cambia con el paso del tiempo. Nadie es capaz de conocer el dominio de un negocio completo porque este forma parte de un proceso de descubrimiento continuo.
 
 \subsection{La tarea del arquitecto}
 
@@ -193,7 +203,7 @@ El software ha de ser diseñado para ser flexible, adaptarse y evolucionar en fu
 
 El arquitecto de software debe preocuparse más por como interaccionan los servicios entre ellos y no tanto en lo que ocurre dentro de sus límites. En organizaciones grandes, cada microservicio puede estar desarrollado por un equipo distinto y es el arquitecto quien debe hacer de puente entre ellos. \cite{Newman2015a}
 
-Una de las ventajas de las arquitecturas basadas en microservicios es la heterogeneidad tecnológica: cada servicio puede ser desarrollado empleando una pila tecnológica distinta. No obstante, dejar plena libertad a cada equipo para elegir la tecnología del servicio que va a desarrollar puede traer problemas a la hora de integrarlo con el resto del sistema. El uso de contratos o establecer normas en aspectos clave como el protocolo de comunicación entre los servicios facilitará su consumo. Las decisiones de diseño de un servicio en particular pueden recaer en el equipo responsable. En este caso, el arquitecto solo juega un papel de supervisor y asesor para evitar que se pierda la imagen del sistema completo.
+Una de las ventajas de las arquitecturas basadas en microservicios es la \textbf{heterogeneidad tecnológica}: cada servicio puede ser desarrollado empleando una pila tecnológica distinta. No obstante, dejar plena libertad a cada equipo para elegir la tecnología del servicio que va a desarrollar puede traer problemas a la hora de integrarlo con el resto del sistema. El uso de contratos o establecer normas en aspectos clave como el protocolo de comunicación entre los servicios facilitará su consumo. Las decisiones de diseño de un servicio en particular pueden recaer en el equipo responsable. En este caso, el arquitecto solo juega un papel de supervisor y asesor para evitar que se pierda la imagen del sistema completo.
 
 \section{Los microservicios en la fase de implementación}
 
