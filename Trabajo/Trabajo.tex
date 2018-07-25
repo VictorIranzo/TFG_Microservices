@@ -249,7 +249,7 @@ Por un lado, la tecnología empleada para la comunicación entre servicios no de
 
 El formato de los mensajes también varía de una tecnología a otra. SOAP (proviene del inglés Simple Object Access Protocol) emplea XML (también del inglés eXtensible Markup Language) mientras que por ejemplo Java RMI transmite mensajes binarios.
 
-\item \textbf{REST} (Representational State Transfer): la transferencia de estado representacional (en inglés, REpresentational State Transfer) es un estilo arquitectónico inspirado en la Web. Se basa en el concepto de recurso, un objeto que el servicio conoce y del que puede crear diferentes representaciones bajo demando. La representación del recurso está completamente desacoplada de como se almacena.
+\item \textbf{REST} (Representational State Transfer): la transferencia de estado representacional es un estilo arquitectónico inspirado en la Web. Se basa en el concepto de recurso, un objeto que el servicio conoce y del que puede crear diferentes representaciones bajo demando. La representación del recurso está completamente desacoplada de como se almacena.
 
 La arquitectura REST es ampliamente usada junto con HTTP (término que proviene del inglés Hypertext Transfer Protocol). Los verbos que se definen en HTTP actúan sobre recursos: por ejemplo, con el verbo GET se puede obtener una representación del recurso y con el POST crear uno nuevo.
 
@@ -267,20 +267,51 @@ Un bróker de mensajería es un patrón arquitectónico para la validación, la 
 
 Tanto SOAP como REST emplean HTTP, aunque solo el segundo emplea los verbos definidos en HTTP. Existen pocas librerías para trabajar con SOAP, mientras que prácticamente cualquier lenguaje de programación contemporáneo cuenta con un cliente HTTP, con soporte para más o menos verbos. En cuanto a su rendimiento, REST es más eficiente en términos de latencia y ancho de banda consumido. \cite{Mulligan} REST es más recomendable que SOAP para enviar grandes volúmenes de datos por ser más compacto y permitir formatos como el JSON o el binario. Sin embargo, ni uno ni otro son recomendables para trabajar en redes con latencias bajas porque emplean HTTP. En este caso, es mejor emplear directamente protocolos como TCP o UDP. 
 
-En cuanto al tercer tipo de integración, la integración basada en eventos fomenta la escalabilidad y resilencia de los servicios y reduce el acoplamiento entre ellos. No obstante, requiere aprovisionar nuevas infraestructuras y añade complejidad a la hora de razonar sobre el sistema por ser una comunicación asíncrona. \cite{Newman2015a}
+En cuanto al tercer tipo de integración, la integración basada en eventos fomenta la escalabilidad y resilencia de los servicios y reduce el acoplamiento entre ellos. No obstante, requiere aprovisionar nuevas infraestructuras y añade complejidad a la hora de razonar sobre el sistema por ser una comunicación asíncrona. Algunas buenas prácticas para afrontar su complejidad van desde el uso efectivo de sistemas de monitorización hasta el uso de identificadores de correlación para trazar las llamadas entre servicios. \cite{Newman2015a}
 
+\subsection{Programación y persistencia políglotas}
+% .NET
+% https://martinfowler.com/bliki/PolyglotPersistence.html
 
-\subsection{Patrón políglota y heterogeneidad tecnológica}
+%TODO Sustituir anteriormente por enlace.
+Como hemos comentado anteriormente, diferentes microservicios se pueden desarrollar empleando diferentes tecnologías. La base de datos que contiene los datos del servicio o la arquitectura interna del microservicio también pueden adaptarse a los requisitos del mismo. \cite{DelaTorre2018} La \textbf{programación políglota} se fundamenta en que diferentes lenguajes de programación son más aptos para tratar problemas específicos. Es más productivo escoger el lenguaje adecuado para un servicio concreto que tratar de buscar un lenguaje que se ajuste a los requisitos de todos.
+
+El término también se puede extrapolar a la persistencia. La \textbf{persistencia políglota} emplea diferentes tecnologías para la persistencia en función de los datos a almacenar y de cómo estos se van a manipular. Las bases de datos relacionales no son la única opción y se deben considerar otras que escalen mejor si la aplicación recibe muchas peticiones o se quiere hacer una explotación eficiente de los datos. \cite{Fowler2011}
+
+En ambos casos, se debe hacer balance entre los beneficios que puede aportar un diseño políglota y sus costes asociados, por ejemplo, de aprendizaje.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.65]{poliglota}
+\caption{Ejemplo de sistema políglota.}
+\end{figure}
+
+\subsection{Los microservicios y la persistencia de datos}
+% Cada microservicio es dueño de sus datos.
+
+\subsection{Microservicios en la interfaz de usuario}
 
 \section{Los microservicios en la fase de pruebas}
+% Art of unit testing
+% Building microservices
+% Simian army
 
 \section{Los microservicios en la fase de despliegue}
+% Docker
+% Kubernetes
+% Orquestadores (¿Moltó?)
+% Azure y AWS
+% CI/CD
 
 \section{Los microservicios en la fase de mantenimiento}
+% You code, you run it -> Buscar documento "oficial"
+% Arquitectura evolutiva
 
 \section{Ventajas del desarrollo de software basado en microservicios}
 
 \section{Inconvenientes del desarrollo de software basado en microservicios}
+
+\section{Comparación con otras arquitecturas}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                                 CONCLUSIONS                                 %
