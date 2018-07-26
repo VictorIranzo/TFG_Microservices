@@ -128,6 +128,7 @@ El objetivo de este proyecto es validar con un caso de estudio las ventajas e in
 Según Newman, los microservicios son servicios pequeños y autónomos que trabajan conjuntamente. \cite{Newman2015a} Podemos desglosar esta definición así:
 
 \begin{itemize}
+%TODO Sustituir referencia a Wikipedia.
 
 \item Un \textbf{servicio} es un conjunto de funcionalidades que se expone a los clientes para que las empleen con diferentes propósitos. \cite{Wikipedia} La programación orientada a servicios es un paradigma que se aplica en las arquitecturas orientadas a servicios (SOA). El objetivo principal de SOA es desarrollar servicios que aporten valor al negocio y se adapten a los cambios en las necesidades de los clientes, de forma ágil y con el menor coste posible. Las arquitecturas orientadas a servicios no están asociadas a ninguna tecnología específica. En líneas generales, dividen un sistema en componentes que cambian por el mismo motivo y promueven la flexibilidad y los servicios compartidos frente a implementaciones específicas y óptimas. Son muchos los beneficios de estas arquitecturas, sin embargo existe una falta de consenso sobre cómo debe llevarse a cabo este tipo de arquitecturas en aspectos como los protocolos de comunicación a emplear o la granularidad de los servicios. \cite{Arsanjani2009a} Los microservicios pueden entenderse como una aproximación específica de las arquitecturas SOA.
 
@@ -270,15 +271,9 @@ Tanto SOAP como REST emplean HTTP, aunque solo el segundo emplea los verbos defi
 En cuanto al tercer tipo de integración, la integración basada en eventos fomenta la escalabilidad y resilencia de los servicios y reduce el acoplamiento entre ellos. No obstante, requiere aprovisionar nuevas infraestructuras y añade complejidad a la hora de razonar sobre el sistema por ser una comunicación asíncrona. Algunas buenas prácticas para afrontar su complejidad van desde el uso efectivo de sistemas de monitorización hasta el uso de identificadores de correlación para trazar las llamadas entre servicios. \cite{Newman2015a}
 
 \subsection{Programación y persistencia políglotas}
-% .NET
-% https://martinfowler.com/bliki/PolyglotPersistence.html
 
 %TODO Sustituir anteriormente por enlace.
 Como hemos comentado anteriormente, diferentes microservicios se pueden desarrollar empleando diferentes tecnologías. La base de datos que contiene los datos del servicio o la arquitectura interna del microservicio también pueden adaptarse a los requisitos del mismo. \cite{DelaTorre2018} La \textbf{programación políglota} se fundamenta en que diferentes lenguajes de programación son más aptos para tratar problemas específicos. Es más productivo escoger el lenguaje adecuado para un servicio concreto que tratar de buscar un lenguaje que se ajuste a los requisitos de todos.
-
-El término también se puede extrapolar a la persistencia. La \textbf{persistencia políglota} emplea diferentes tecnologías para la persistencia en función de los datos a almacenar y de cómo estos se van a manipular. Las bases de datos relacionales no son la única opción y se deben considerar otras que escalen mejor si la aplicación recibe muchas peticiones o se quiere hacer una explotación eficiente de los datos. \cite{Fowler2011}
-
-En ambos casos, se debe hacer balance entre los beneficios que puede aportar un diseño políglota y sus costes asociados, por ejemplo, de aprendizaje.
 
 \begin{figure}[h]
 \centering
@@ -286,15 +281,66 @@ En ambos casos, se debe hacer balance entre los beneficios que puede aportar un 
 \caption{Ejemplo de sistema políglota.}
 \end{figure}
 
-\subsection{Los microservicios y la persistencia de datos}
-% Cada microservicio es dueño de sus datos.
+El término también se puede extrapolar a la persistencia. La \textbf{persistencia políglota} emplea diferentes tecnologías para la persistencia en función de los datos a almacenar y de cómo estos se van a manipular. Cada microservicio es dueño de sus datos y puede emplear una tecnología diferente. Las bases de datos relacionales no son la única opción y se deben considerar otras que escalen mejor si el servicio recibe muchas peticiones o se quiere hacer una explotación eficiente de los datos. \cite{Fowler2011}
+
+En ambos casos, se debe hacer balance entre los beneficios que puede aportar un diseño políglota y sus costes asociados, por ejemplo, de aprendizaje.
 
 \subsection{Microservicios en la interfaz de usuario}
+
+\subsection{Ley de Conway}
 
 \section{Los microservicios en la fase de pruebas}
 % Art of unit testing
 % Building microservices
 % Simian army
+
+Las pruebas de software consisten en la verificación dinámica de que un programa produce las salidas esperadas para un conjunto finito de casos de prueba. Las pruebas son dinámicas porque se verifica el programa en ejecución. Los casos de prueba son finitos porque el número posible de pruebas es infinito y estos se seleccionan en función de la prioridad y riesgo del código bajo pruebas. Además, se debe comprobar la salida obtenida con el resultado esperado para comprobar si esta es o no aceptable. \cite{Bourque2014}
+
+\subsection{Pruebas unitarias}
+
+Una \textbf{prueba unitaria} es una pieza de código que invoca al método o clase bajo prueba y que comprueba ciertas asunciones sobre su lógica. Se ejecuta de forma rápida y sencilla, está automatizado y es fácilmente mantenible. \cite{Osherove2014} En general, se prefiere tener un gran número de este tipo de pruebas por su rapidez, porque pueden ayudar a la refactorización del código y porque es donde mayor cantidad de defectos se suele capturar.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{Unit_Tests}
+\caption{Diagrama de pruebas unitarias.}
+\end{figure}
+
+\subsection{Pruebas de servicios}
+
+En las \textbf{pruebas de servicios} se verifica cada una de las funcionalidades que un servicio expone. Se pretende verificar el servicio de forma aislada y para ignorar las dependencias que el servicio bajo pruebas tiene sobre otros se reemplazan los servicios colaboradores por fakes.
+
+Encajan dentro de las pruebas de integración, que se definen como la prueba como un conjunto de dos o más módulos de software que colaboran para evaluar un resultado esperado. \cite{Osherove2014} Este tipo de pruebas pueden ser igual de rápidas que las unitarias siempre que no se tengan que emplear un gran número de infraestructuras como bases de datos o colas.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{Service_Tests}
+\caption{Diagrama de pruebas de servicios.}
+\end{figure}
+
+\subsection{Pruebas de extremo a extremo}
+
+Las pruebas de extremo a extremo son pruebas que se ejecutan sobre todo el sistema. Cubren gran parte de código, por lo que su correcta ejecución dan mucho grado de confianza. En su ejecución se levantan varios servicios diferentes.
+
+Son pruebas frágiles: conforme el alcance de la prueba aumenta más son las partes sobre las que no se puede tener control. Estas partes pueden introducir fallos que no demuestran que la funcionalidad tenga un defecto y hacen la prueba menos determinista. Si la prueba falla continuamente, el equipo encargado puede llegar a asumir como normal está situación. Su tiempo de ejecución es mayor y en consecuencia, más tarde se detecta si un cambio ha introducido un defecto.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{End_To_End_Test}
+\caption{Diagrama de pruebas de extremo a extremo.}
+\end{figure}
+
+\subsection{Balance de pruebas a realizar}
+
+A medida que aumenta el alcance de las pruebas lo hace el nivel de confianza que las pruebas dan sobre la ausencia de defectos. Por otro lado, cuanto más arriba en la pirámide más tiempo tardará una prueba en implementarse y ejecutarse. Además, determinar el motivo de fallo de una prueba será más costoso cuanto mayor sean las líneas de código probadas. \cite{Cohn2010}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{Cohn_Pyramid}
+\caption{Pirámide de pruebas diseñada por Mike Cohn. \cite{Cohn2010}}
+\end{figure}
+
+El número de pruebas que se aconseja tener de cada tipo aumenta conforme descendemos por la pirámide. El número de servicios que participan para ofrecer una funcionalidad al usuario puede ser muy alto y en una prueba no se deberían de levantar más de 3 o 4 servicios para no potenciar las desventajas que hemos mencionado. Por este motivo, las pruebas de extremo a extremo deben ser las mínimas posibles y se deben refactorizar en pruebas de servicios que empleen fakes siempre que se pueda.
 
 \section{Los microservicios en la fase de despliegue}
 % Docker
