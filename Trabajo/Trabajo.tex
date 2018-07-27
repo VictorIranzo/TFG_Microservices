@@ -363,17 +363,17 @@ Durante este proceso se crean artefactos sobre los que se ejecutarán validacion
  
 \begin{itemize}
 
-\item Rápida retroalimentación: los desarrolladores obtienen más rápido una respuesta sobre la calidad de sus cambios. Con este fin, la compilación ha de ser lo más rápido posible. Se pueden obtener mayores beneficios de la integración continua a través de las compilaciones por fases o build pipelines. En este tipo de compilaciones se separa por pasos el proceso. Los pasos de la pipeline pueden ser manuales, como las pruebas de aceptación de un usuario, o estar automatizados, como la ejecución de pruebas unitarias. La ventaja de hacer esto es que se obtiene una retroalimentación más rápida si se ejecutan de forma separada acciones rápidas de otras más pesadas. \cite{Fowler2006}
+\item \textbf{Rápida retroalimentación}: los desarrolladores obtienen más rápido una respuesta sobre la calidad de sus cambios. Con este fin, la compilación ha de ser lo más rápido posible. Se pueden obtener mayores beneficios de la integración continua a través de las compilaciones por fases o build pipelines. En este tipo de compilaciones se separa por pasos el proceso. Los pasos de la pipeline pueden ser manuales, como las pruebas de aceptación de un usuario, o estar automatizados, como la ejecución de pruebas unitarias. La ventaja de hacer esto es que se obtiene una retroalimentación más rápida si se ejecutan de forma separada acciones rápidas de otras más pesadas. \cite{Fowler2006}
 
-\item Equipo sincronizado: los integrantes de un equipo obtienen más rápido los cambios que otros han realizado y conocen en todo momento el estado de la compilación. Si esta falla, arreglarla es la prioridad número uno.
+\item \textbf{Equipo sincronizado}: los integrantes de un equipo obtienen más rápido los cambios que otros han realizado y conocen en todo momento el estado de la compilación. Si esta falla, arreglarla es la prioridad número uno.
 
-\item Trazabilidad: si el código está bajo control de versiones, en cualquier momento se puede volver a construir un artefacto de una versión concreta a partir del código que la origina. \cite{Newman2015a}
+\item \textbf{Trazabilidad}: si el código está bajo control de versiones, en cualquier momento se puede volver a construir un artefacto de una versión concreta a partir del código que la origina. \cite{Newman2015a}
 
 \end{itemize}
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.75]{pipeline}
+\includegraphics[scale=1]{pipeline}
 \caption{Ejemplo de una pipeline. \cite{Newman2015a}}
 \end{figure}
 
@@ -381,13 +381,27 @@ La \textbf{entrega continua} extiende la idea de la integración continua en cua
 
 \subsection{Virtualización y tecnología de contenedores}
 
+Un \textbf{host} representa una unidad genérica de aislamiento, un sistema operativo donde se pueden instalar y ejecutar servicios. Si desplegamos directamente sobre máquinas físicas, entonces un host será el equivalente a una de ellas. Sin embargo, tener muchos hosts es costoso si cada uno consiste en una máquina diferente. \cite{Newman2015a}
+
+La \textbf{virtualización} nos permite dividir una máquina en hosts separados, donde pueden ejecutarse servicios distintos. En la virtualización tradicional, cada una de las máquinas virtuales (MV) puede ejecutar su propio sistema operativo. Un recurso adicional es añadido entre la máquina física y las virtuales: el hipervisor. El hipervisor reparte recursos de la máquina física como la CPU o la RAM entre los distintos hosts virtualizados y permite al usuario la gestión de las máquinas virtuales contenidas.
+
+El mayor inconveniente de las máquinas virtuales es que se puede dividir una máquina en muchas piezas como queramos porque la separación entre los hosts supone un coste. El hipervisor también consume recursos y cuantas más son las máquinas que debe gestionar, mayor será su consumo. Además, el tiempo de puesta en funcionamiento de una máquina virtual es de la magnitud de minutos, mientras que el arranque de un contenedor ronda los pocos segundos. \cite{Dua2014} Esto es muy importante en desarrollos que siguen las técnicas de integración continua donde se despliegan artefactos frecuentamente. 
+
+Los \textbf{contenedores} son sistemas operativos ligeros que se ejecutan sobre una máquina con la que comparten el kernel. El número de contenedores que una máquina puede alojar es mayor que el número de máquinas virtuales debido a la naturaleza ligera de estos. \cite{Dua2014} Su uso de recursos es y tiempo de aprovisionamiento son menores al de una MV, lo que reduce el tiempo de retroalimentación sobre el funcionamiento de un servicio. Sin embargo, el grado de aislamiento de los contenedores no es perfecto ya que existen formas en las que se puede interferir en el funcionamiento de otro contenedor debido a problemas de diseño y bugs conocidos. \cite{Newman2015a}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=1]{containers_vms}
+\caption{Comparación entre la virtualización y la contenerización. \cite{Newman2015a}}
+\end{figure}
+
+Ambas soluciones se pueden combinar para obtener las ventajas de ambas. Se puede obtener una máquina virtual de una plataforma como Amazon Web Services (AWS) que nos asegure características como la escalabilidad bajo demanda y sobre ella ejecutar diferentes servicios desplegados como contenedores.
+
 \subsection{Docker}
 
 \subsection{Orquestadores}
 
 \subsection{Kubernetes}
-
-\subsection{Infraestructuras en la nube}
 
 \section{Los microservicios en la fase de mantenimiento}
 % You code, you run it -> Buscar documento "oficial"
