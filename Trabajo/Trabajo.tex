@@ -391,13 +391,28 @@ Los \textbf{contenedores} son sistemas operativos ligeros que se ejecutan sobre 
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=1]{containers_vms}
+\includegraphics[scale=0.8]{containers_vms}
 \caption{Comparación entre la virtualización y la contenerización. \cite{Newman2015a}}
 \end{figure}
 
 Ambas soluciones se pueden combinar para obtener las ventajas de ambas. Se puede obtener una máquina virtual de una plataforma como Amazon Web Services (AWS) que nos asegure características como la escalabilidad bajo demanda y sobre ella ejecutar diferentes servicios desplegados como contenedores.
 
 \subsection{Docker}
+
+Docker es una herramienta basada en contenedores Linux para la creación de artefactos que se pueden desplegar en cualquier entorno y se pueden distribuir y escalar bajo demanda.
+
+La filosofía de Docker se centra en los contenedores desechables. Nada en el entorno donde se ejecuta la aplicación permanecerá ahí más allá de lo que viva la aplicación, por lo que no se delegará en entornos donde se encuentra casualmente una dependencia no especificada en la imagen. Docker promueve las arquitecturas sin estado (stateless) o que externalizan este a otras infraestructuras como bases de datos. Las aplicaciones así se hacen más portables, escalables y confiables. \cite{Matthias}
+
+El proceso de desarrollo también se simplifica: en aproximaciones como la de microservicios, un equipo encargado de un servicio solo necesita la imagen de otro para integrarlo con el suyo y no necesita conocer detalles internos de este. Además, las tareas de construcción de la imagen, provisión de la configuración y despliegue pueden ser realizadas por diferentes personas, como se muestra en la figura. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{docker_process}
+\caption{Proceso de despliegue con Docker. \cite{Matthias}}
+\end{figure}
+
+
+Si se integra dentro del proceso de despliegue, cada cambio que pasa por una pipeline puede construir una nueva imagen Docker sobre la que se ejecutan pruebas de forma automatizada para después ser publicada a producción. De esta forma el equipo puede asegurarse de que el artefacto sobre el que se han ejecutado las pruebas es el mismo que se publica más tarde. 
 
 \subsection{Orquestadores}
 
