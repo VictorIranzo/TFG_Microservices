@@ -357,7 +357,7 @@ Los problemas que aparecen en una nueva versión del producto deben ser atendido
 
 \subsection{Integración y entrega continua}
 
-La integración continua es una práctica en el desarrollo de software donde los miembros del equipo integran su trabajo de forma frecuente, normalmente a diario. Cada integración se verifica mediante compilaciones automatizadas que incluyen la ejecución de pruebas para detectar errores y conflictos en la integración. \cite{Fowler2006} El término tiene su origen como una de las doce prácticas de la metodología Extreme Programming (XP).
+La \textbf{integración continua} es una práctica en el desarrollo de software donde los miembros del equipo integran su trabajo de forma frecuente, normalmente a diario. Cada integración se verifica mediante compilaciones automatizadas que incluyen la ejecución de pruebas para detectar errores y conflictos en la integración. \cite{Fowler2006} El término tiene su origen como una de las doce prácticas de la metodología Extreme Programming (XP).
 
 Durante este proceso se crean artefactos sobre los que se ejecutarán validaciones. Los artefactos construidos deben ser lo más parecidos a los que más tarde se despliegan en la versión de producción para asegurar que es el mismo artefacto sobre el que se han hecho las pruebas. Entre los beneficios de la integración continua encontramos:
  
@@ -374,10 +374,10 @@ Durante este proceso se crean artefactos sobre los que se ejecutarán validacion
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.75]{pipeline}
-\caption{Ejemplo de una pipeline.}
+\caption{Ejemplo de una pipeline. \cite{Newman2015a}}
 \end{figure}
 
-La entrega continua extiende la idea de la integración continua en cuanto a que cada cambio que ha superado la compilación puede ser candidata para ser desplegada en producción en cualquier momento. Sobre cada cambio se puede decidir si se publica o no a producción y hacerlo no cuesta más que pulsar un botón porque está todo el proceso de despliegue automatizado. La práctica de que cada cambio que se realiza y supera la pipeline es publicado automáticamente a producción se denomina despliegue continuo. \cite{Fowler2013}
+La \textbf{entrega continua} extiende la idea de la integración continua en cuanto a que cada cambio que ha superado la compilación puede ser candidata para ser desplegada en producción en cualquier momento. Sobre cada cambio se puede decidir si se publica o no a producción y hacerlo no cuesta más que pulsar un botón porque está todo el proceso de despliegue automatizado. La práctica de que cada cambio que se realiza y supera la pipeline es publicado automáticamente a producción se denomina \textbf{despliegue continuo}. \cite{Fowler2013}
 
 \subsection{Virtualización y tecnología de contenedores}
 
