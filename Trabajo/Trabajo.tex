@@ -28,6 +28,7 @@
 
 \usepackage[utf8]{inputenc} 
 \usepackage{multirow}
+\usepackage{babel}
 
 \usepackage{natbib}
 \bibliographystyle{plain}
@@ -688,6 +689,14 @@ El sistema a implementar se puede dividir en dos partes: front-end y back-end. E
 
 En cuanto al front-end, las llamadas a la parte servidora van a realizarse a través de invocaciones HTTP. Por tanto, va a estar desacoplado de la implementación que elijamos para el back-end y va a poder emplearse la misma solución para comunicarse con ambas soluciones.
 
+\section{Tecnología utilizada}
+
+El lenguaje de programación que se va a emplear es C\# junto con el entorno de desarrollo (IDE) Visual Studio Enterprise 2017. Entre las plataformas de destino que ofrece la tecnología .NET vamos a utilizar tanto .NET Standard 2.0 como .NET Core en su versión 2.1, publicada en Mayo de 2018. \footnote{ Versiones de .NET Core 2.1: https://www.microsoft.com/net/download/dotnet-core/2.1} El uso de librerías distintas a las provistas por la plataforma se realizará a través de paquetes NuGet, un mecanismo sencillo que envuelve el código compilado de una librería y referencia a las dependencias de esta. \footnote{ Una introducción a NuGet: https://docs.microsoft.com/es-es/nuget/what-is-nuget}
+
+A nivel de infraestructura se ha empleado Microsoft Azure para la persistencia de datos en la nube y para la exposición de servicios a través de Azure App Service y Azure Kubernetes Service (AKS). Microsoft Azure es una plataforma que ofrece un conjunto de herramientas y servicios en la nube. Tanto App Service como AKS son parte de sus servicios. El primero se emplea para crear aplicaciones en la nube de forma rápida sin necesidad de administrar la infraestructura sobre la que se hospeda. En cuanto al segundo, permite la orquestación de contenedores Docker a través de Kubernetes dentro de la infraestructura de Azure. \footnote{ Página oficial de Microsoft Azure: https://azure.microsoft.com/es-es/}
+
+Para terminar, para las pruebas a nivel de API se ha empleado Postman. Postman es un entorno para el desarrollo de APIs (ADE) que nos va a permitir crear y almacenar de forma sencilla llamadas HTTP hacia la API del back-end. \footnote{ Página oficial de Postman: https://www.getpostman.com/}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       MONOLITICA
 %
@@ -696,8 +705,6 @@ En cuanto al front-end, las llamadas a la parte servidora van a realizarse a tra
 \chapter{Diseño e implementación de la solución monolítica}
 
 \section{Diseño de la solución}
-
-\section{Tecnología utilizada}
 
 \section{Interfaz de usuario}
 
