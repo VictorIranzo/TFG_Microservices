@@ -15,7 +15,7 @@
 %                                                                             %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass[11pt,spanish,listoffigures,listoftables]{tfgetsinf}
+\documentclass[11pt,spanish,listoffigures]{tfgetsinf}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                     CODIFICACIO DEL FITXER FONT                             %
@@ -490,15 +490,15 @@ Se desea desarrollar un sistema para la venta de productos electrónicos a trav�
 
 Los clientes podrán consultar los \textbf{productos} disponibles en la tienda junto con su precio, descripción y número de unidades en stock. Un \textbf{pedido} se define como un conjunto de productos que el cliente ha seleccionado junto con el número de unidades de cada uno. Mientras no se haya confirmado el pedido, se podrán añadir y eliminar productos al pedido en elaboración.
 
-Todos los pedidos realizados por un cliente se mostrarán en un listado junto con el estado de los mismos. Para cada pedido, el cliente podrá generar una factura donde se listen los productos que lo componen y el precio total.
+Todos los pedidos realizados por un cliente se mostrarán en un listado junto con el estado de los mismos. Para cada pedido, el cliente podrá generar una \textbf{factura} donde se listen los productos que lo componen y el precio total.
 
-Una vez un cliente haya confirmado un pedido, este deberá ser aprobado por un empleado para ser entregado. Mientras que el empleado no lo apruebe, el pedido podrá ser cancelado. Además, cuando el pedido sea entregado físicamente al cliente, este deberá marcar el pedido como entregado.
+Una vez un cliente haya confirmado un pedido, este deberá ser aprobado por un empleado para ser entregado. Cuando esto suceda, se enviará una \textbf{notificación} al correo electrónico del cliente. Mientras que el empleado no lo apruebe, el pedido podrá ser cancelado. Además, cuando el pedido sea entregado físicamente al cliente, este deberá marcar el pedido como entregado.
 
 Un cliente puede crear una \textbf{incidencia} si tiene algún problema con un pedido o quiere consultar una duda con los empleados de la tienda. Dentro de una incidencia, tanto el cliente como los empleados se comunicarán a través de \textbf{comentarios}. Cuando lo considere oportuno, el cliente podrá cerrar la incidencia creada, que podrá volver a consultar en cualquier momento.
 
 \section{Casos de uso y modelo de dominio}
 
-A continuación, vamos a listar los casos de uso de la aplicación móvil. El único usuario de la aplicación móvil es el cliente de la tienda, por lo que es el actor de todos los casos citados. Para cada caso de uso se va a proveer un identificador, un título y una descripción breve:
+A continuación, vamos a listar los casos de uso de la aplicación móvil. En los casos de uso aumentaremos el nivel de detalle de la descripción para emplearlos como especificación del sistema. El único usuario de la aplicación móvil es el cliente de la tienda, por lo que es el actor de todos los casos citados. Para cada caso de uso se va a proveer un identificador, un título y una descripción breve:
 
 \begin{center}
 \begin{tabular}{ | c | l | }
@@ -668,6 +668,14 @@ Se pueden consultar todas las incidencias creadas por el cliente en un listado d
 \hline
 \end{tabular}
 \end{center}
+
+A partir de la descripción del sistema y de los casos de uso podemos definir el siguiente modelo de dominio:
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.6]{modelo_dominio_final}
+\caption{Modelo de dominio del sistema.}
+\end{figure}
 
 \section{Plan de trabajo}
 
