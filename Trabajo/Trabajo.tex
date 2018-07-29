@@ -90,7 +90,7 @@
 \mainmatter
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                  INTRODUCCIO                                %
+%                                  INTRODUCCION                                %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Introducci\'on}
@@ -115,11 +115,15 @@ El objetivo de este proyecto es validar con un caso de estudio las ventajas e in
 
 \item Evaluar cómo se pueden llevar a cabo diferentes modificaciones durante el mantenimiento de ambas aplicaciones una vez se ha finalizado su implementación.
 
-\item Verificar que una arquitectura basada en microservicios facilita alcanzar los requisitos no funcionales de disponibilidad y tolerancia a fallos frente a una arquitectura monolítica.
+\item Verificar que una arquitectura basada en microservicios facilita alcanzar los requisitos no funcionales de escalabilidad y tolerancia a fallos frente a una arquitectura monolítica.
 
 \end{itemize}
 
 \section{Estructura de la memoria}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                                  ESTADO DEL ARTE                                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Estado del arte}
 
@@ -320,7 +324,7 @@ Encajan dentro de las pruebas de integración, que se definen como la prueba com
 
 \subsection{Pruebas de extremo a extremo}
 
-Las pruebas de extremo a extremo son pruebas que se ejecutan sobre todo el sistema. Cubren gran parte de código, por lo que su correcta ejecución dan mucho grado de confianza. En su ejecución se levantan varios servicios diferentes.
+Las \textbf{pruebas de extremo} a extremo son pruebas que se ejecutan sobre todo el sistema. Cubren gran parte de código, por lo que su correcta ejecución dan mucho grado de confianza. En su ejecución se levantan varios servicios diferentes.
 
 Son pruebas frágiles: conforme el alcance de la prueba aumenta más son las partes sobre las que no se puede tener control. Estas partes pueden introducir fallos que no demuestran que la funcionalidad tenga un defecto y hacen la prueba menos determinista. Si la prueba falla continuamente, el equipo encargado puede llegar a asumir como normal está situación. Su tiempo de ejecución es mayor y en consecuencia, más tarde se detecta si un cambio ha introducido un defecto. \cite{Newman2015a}
 
@@ -465,22 +469,85 @@ Con este propósito, se debe registrar toda aquella información relevante que o
 
 La información más útil se debe mostrar de forma gráfica a través de dashboards que reflejen el estado de salud de los servicios. Así, la informacón más consultada se puede visualizar de forma rápida y fácil de entender para ahorrar tiempo. No obstante, cuando un problema ocurre se debe hacer uso de alertas para atenderlo de forma prioritaria. Estas alertas han de ser accionadas automáticamente por métricas que superen un límite establecido, como puede ser el uso de recursos, o por la ocurrencia de excepeciones en el servicio. \cite{FowlerSusan}
 
-\section{Ventajas del desarrollo de software basado en microservicios}
-
-\section{Inconvenientes del desarrollo de software basado en microservicios}
-
 \section{Comparación con otras arquitecturas}
 
+\section{Crítica al estado del arte}
+% Trabajos presentados en la ETSINF.
+
+\section{Propuesta}
+% Que mejora mi trabajo.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                 CONCLUSIONS                                 %
+%                       ANALISIS DEL SISTEMA                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Análisis del sistema}
+
+\section{Descripción del problema}
+
+\section{Casos de uso y modelo de dominio}
+
+\section{Plan de trabajo}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       MONOLITICA
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Diseño e implementación de la solución monolítica}
+
+\section{Diseño de la solución}
+
+\section{Tecnología utilizada}
+
+\section{Interfaz de usuario}
+
+\section{Pruebas}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       MICROSERVICIOS
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Diseño e implementación de la solución basada en microservicios}
+
+\section{Diseño de la solución}
+
+\section{Diferencias respecto a la solución monolítica}
+
+\section{Versionado de servicios y creación de paquetes NuGet}
+
+\section{Adaptación de la interfaz de usuario}
+
+\section{Adaptación de las pruebas}
+
+\section{Despliegue}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                       EVALUACIÓN
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Evaluación de las soluciones}
+
+\section{Mantenimiento}
+
+\subsection{Añadir una relación entre diferentes servicios}
+
+\subsection{Migración de la infraestructura}
+
+\section{Escalabilidad}
+
+\section{Tolerancia a fallos}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      CONCLUSIONES                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Conclusiones}
 
-????? ????????????? ????????????? ????????????? ????????????? ????????????? 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                                BIBLIOGRAFIA                                 %
+%                     BIBLIOGRAFIA                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \bibliography{Bibliografia/library}
@@ -488,21 +555,38 @@ La información más útil se debe mostrar de forma gráfica a través de dashbo
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                           APÈNDIXS  (Si n'hi ha!)                           %
+%                           APENDICES  (Si HAY!)                           %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \APPENDIX
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                         LA CONFIGURACIO DEL SISTEMA                         %
+%                      VENTAJAS E INCONVENIENTES   
+%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Configuración del sistema}
+\chapter{Ventajas e inconvenientes del desarrollo basado en microservicios}
 
-????? ????????????? ????????????? ????????????? ????????????? ?????????????
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      VENTAJAS E INCONVENIENTES   
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Despliegue del sistema basado en microservicios}
 
-\section{Fase de inicialización}
+\section{Ejecución de un contenedor con Docker}
 
-????? ????????????? ????????????? ????????????? ????????????? ?????????????
+\subsection{Archivo Docker Compose}
+
+\section{Introducción a Azure Kubernetes Service (AKS)}
+
+\section{Depuración de contenedores a través de Azure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                      CREACIÓN DE CLIENTES CON NSWAG  
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Creación de clientes con NSwag}
+
 
 \end{document}
