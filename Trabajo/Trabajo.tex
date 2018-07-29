@@ -483,7 +483,17 @@ La información más útil se debe mostrar de forma gráfica a través de dashbo
 
 \chapter{Análisis del sistema}
 
-\section{Descripción del problema}
+\section{Descripción del sistema}
+
+Se desea desarrollar un sistema para la venta de productos a través de dispositivos móviles. La aplicación móvil estará destinada solo a los clientes de una tienda, que deberán registrarse para usarla.
+
+Los clientes podrán consultar los productos disponibles en la tienda junto con su precio, descripción y número de unidades en stock. Un pedido se define como un conjunto de productos que el cliente ha seleccionado junto con el número de unidades de cada uno. Mientras no se haya confirmado el pedido, se podrán añadir y eliminar productos al pedido en elaboración.
+
+Todos los pedidos realizados por un cliente se mostrarán en un listado junto con el estado de los mismos. Para cada pedido, el cliente podrá generar una factura donde se listen los productos que lo componen y el precio total.
+
+Una vez un cliente haya confirmado un pedido, este deberá ser aprobado por un empleado para ser entregado. Mientras que el empleado no lo apruebe, el pedido podrá ser cancelado garantizando su reembolso completo. Además, cuando el pedido sea entregado físicamente al cliente, este deberá marcar el pedido como entregado.
+
+En cualquier momento, un cliente puede crear una incidencia si tiene algún problema con un pedido o quiere consultar una duda con el equipo que gestiona la aplicación. Dentro de una incidencia, tanto el cliente como los empleados se comunicarán a través de mensajes. Cuando lo considere oportuno, el cliente podrá cerrar la incidencia creada, que podrá volver a consultar en cualquier momento.
 
 \section{Casos de uso y modelo de dominio}
 
