@@ -27,6 +27,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage[utf8]{inputenc} 
+\usepackage{multirow}
 
 \usepackage{natbib}
 \bibliographystyle{plain}
@@ -443,19 +444,19 @@ Gracias a su diseño modular, los microservicios son una arquitectura que se pue
 
 \subsection{Reemplazamiento}
 
-En la mayoría de empresas abundan los sistemas legados que nadie desea mantener. La refactorización de estos sistemas es imposible por su tamaño y riesgo. Si en lugar de haber empleado una arquitectura monolítica para su diseño se emplearan microservicios se observaría como los barreras para la refactorización no existen al poderse reescribir el microservicio al completo en pocos días.
+En la mayoría de empresas abundan los sistemas legados que nadie desea mantener. La \textbf{refactorización} de estos sistemas es imposible por su tamaño y riesgo. Si en lugar de haber empleado una arquitectura monolítica para su diseño se emplearan microservicios se observaría como los barreras para la refactorización no existen al poderse reescribir el microservicio al completo en pocos días.
 
 Una regla que puede ser aplicada es establecer un tamaño para un microservicio tal que pueda ser completamente reescrito en 2 semanas. \cite{Newman2015a}
 
 \subsection{You Build It, You Run It}
 
-En muchas organizaciones, el desarrollo de sistemas se hace a través de proyectos: piezas de software que una vez desarrolladas se consideran completadas. En una aproximación basada en microservicios, cada equipo es responsable del ciclo de vida completo de un producto o servicio. Esto sigue la filosofía de Amazon: "you build, you run it". \cite{Lewis2014}
+En muchas organizaciones, el desarrollo de sistemas se hace a través de proyectos: piezas de software que una vez desarrolladas se consideran completadas. En una aproximación basada en microservicios, cada equipo es responsable del ciclo de vida completo de un producto o servicio. Esto sigue la filosofía de Amazon: \textbf{"you build, you run it"}. \cite{Lewis2014}
 
 No hay necesidad de distinguir entre quien construye un sistema y quien lo ejecuta y posteriormente mantiene. Esta filosofía aproxima a desarralloradores y clientes: los desarrolladores están en contacto directo con los clientes día tras día, lo que les proporciona retroalimentación para mejorar la calidad de sus servicios. Tampoco hay necesidad de contar en la organización con un equipo centrado en la infraestructura (IT). Contar con un equipo así distribuye la responsabilidad de hacer un servicio funcionar entre diferentes equipos y añade un sobreesfuerzo de coordinación y comunicación cuando un problema aparece. \cite{Vliet2011}
 
 \subsection{Documentación}
 
-Una de las ventajas de los microservicios es que acelara el proceso de desarrollo. Sin embargo, cuanto más rápido tratamos de implementar un servicio más probable es que tomemos atajos para poder desplegar antes una iteración del producto, lo que se traduce en un aumento de la deuda técnica. \cite{FowlerSusan}
+Una de las ventajas de los microservicios es que acelara el proceso de desarrollo. Sin embargo, cuanto más rápido tratamos de implementar un servicio más probable es que tomemos atajos para poder desplegar antes una iteración del producto, lo que se traduce en un aumento de la \textbf{deuda técnica}. \cite{FowlerSusan}
 
 En un equipo de desarrollo el conocimiento de cómo funciona un sistema se reparte entre los miembros que lo forman. Nadie es capaz de conocer completamente su funcionamiento y lo más probable es que cada desarrollador conozca mejor la parte donde más tiempo ha invertido. A la hora de realizar un cambio, el entendimiento de cómo funciona el sistema tiene que ser compartido por todos sus miembros para asegurar que el cambio a implementar es el correcto.
 
@@ -463,7 +464,7 @@ La documentación es una de las mejores maneras de solventar la deuda técnica y
 
 \subsection{Monitorización}
 
-Durante el mantenimiento se debe asegurar la disponibilidad de los microservicios. Las herramientas de monitorización son clave para garantizar los acuerdos de nivel de un servicio (SLA) y el estudio de errores cuando estos ocurren.
+Durante el mantenimiento se debe asegurar la disponibilidad de los microservicios. Las herramientas de monitorización son clave para garantizar los \textbf{acuerdos de nivel de un servicio} (SLA) y el estudio de errores cuando estos ocurren.
 
 Con este propósito, se debe registrar toda aquella información relevante que ocurra. Los microservicios colaboran entre ellos para ofrecer funcionalidades concretas y recrear un sistema donde ha ocurrido un error puede ser complejo debido a que cada uno se versiona de forma independiente. Por ello, lo mejor es contar con toda la información necesaria registrada para determinar la causa del problema.
 
@@ -485,17 +486,188 @@ La información más útil se debe mostrar de forma gráfica a través de dashbo
 
 \section{Descripción del sistema}
 
-Se desea desarrollar un sistema para la venta de productos a través de dispositivos móviles. La aplicación móvil estará destinada solo a los clientes de una tienda, que deberán registrarse para usarla.
+Se desea desarrollar un sistema para la venta de productos electrónicos a través de dispositivos móviles. La aplicación móvil estará destinada solo a los clientes de una tienda, que deberán registrarse para usarla.
 
-Los clientes podrán consultar los productos disponibles en la tienda junto con su precio, descripción y número de unidades en stock. Un pedido se define como un conjunto de productos que el cliente ha seleccionado junto con el número de unidades de cada uno. Mientras no se haya confirmado el pedido, se podrán añadir y eliminar productos al pedido en elaboración.
+Los clientes podrán consultar los \textbf{productos} disponibles en la tienda junto con su precio, descripción y número de unidades en stock. Un \textbf{pedido} se define como un conjunto de productos que el cliente ha seleccionado junto con el número de unidades de cada uno. Mientras no se haya confirmado el pedido, se podrán añadir y eliminar productos al pedido en elaboración.
 
 Todos los pedidos realizados por un cliente se mostrarán en un listado junto con el estado de los mismos. Para cada pedido, el cliente podrá generar una factura donde se listen los productos que lo componen y el precio total.
 
-Una vez un cliente haya confirmado un pedido, este deberá ser aprobado por un empleado para ser entregado. Mientras que el empleado no lo apruebe, el pedido podrá ser cancelado garantizando su reembolso completo. Además, cuando el pedido sea entregado físicamente al cliente, este deberá marcar el pedido como entregado.
+Una vez un cliente haya confirmado un pedido, este deberá ser aprobado por un empleado para ser entregado. Mientras que el empleado no lo apruebe, el pedido podrá ser cancelado. Además, cuando el pedido sea entregado físicamente al cliente, este deberá marcar el pedido como entregado.
 
-En cualquier momento, un cliente puede crear una incidencia si tiene algún problema con un pedido o quiere consultar una duda con el equipo que gestiona la aplicación. Dentro de una incidencia, tanto el cliente como los empleados se comunicarán a través de mensajes. Cuando lo considere oportuno, el cliente podrá cerrar la incidencia creada, que podrá volver a consultar en cualquier momento.
+Un cliente puede crear una \textbf{incidencia} si tiene algún problema con un pedido o quiere consultar una duda con los empleados de la tienda. Dentro de una incidencia, tanto el cliente como los empleados se comunicarán a través de \textbf{comentarios}. Cuando lo considere oportuno, el cliente podrá cerrar la incidencia creada, que podrá volver a consultar en cualquier momento.
 
 \section{Casos de uso y modelo de dominio}
+
+A continuación, vamos a listar los casos de uso de la aplicación móvil. El único usuario de la aplicación móvil es el cliente de la tienda, por lo que es el actor de todos los casos citados. Para cada caso de uso se va a proveer un identificador, un título y una descripción breve:
+
+\begin{center}
+\begin{tabular}{ | c | l | }
+\hline
+\textbf{ CU001 } & Iniciar sesión \\
+\hline
+\multicolumn{2}{ | p{14cm} | }
+{
+Para iniciar sesión, el usuario debe haberse registrado previamente en la aplicación. Para hacerlo debe proveer simplemente su correo electrónico y su contraseña.
+} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ | c | l | }
+\hline
+\textbf{ CU002 } & Registrarse en la aplicación \\
+\hline
+\multicolumn{2}{ | p{14cm} | }
+{
+Cualquier persona que tenga la aplicación instalada en su dispositivo móvil puede registrarse como cliente. Para hacerlo, simplemente ha de proveer su nombre, su correo electrónico y una contraseña.
+} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ | c | l | }
+\hline
+\textbf{ CU003 } & Listar los productos de la tienda \\
+\hline
+\multicolumn{2}{ | p{14cm} | }
+{
+El cliente puede consultar todos los productos disponibles en la tienda. Para cada producto se mostrará una imagen, el nombre del producto y su precio. El usuario podrá buscar un producto por su nombre y ordenar el listado por nombre y precio.
+} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ | c | l | }
+\hline
+\textbf{ CU004 } & Visualizar un producto \\
+\hline
+\multicolumn{2}{ | p{14cm} | }
+{
+El cliente puede ver la descripción de un producto, su precio y número de unidades en stock. Cuando lo desee, el usuario puede seleccionarlo para comprarlo y crear así un nuevo pedido.
+} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ | c | l | }
+\hline
+\textbf{ CU005 } & Crear un pedido \\
+\hline
+\multicolumn{2}{ | p{14cm} | }
+{
+El cliente puede crear un pedido y añadir en él productos. Para cada uno, debe especificar el número de unidades que desea. En cualquier momento puede eliminar cualquiera de los productos que componen el pedido. Cuando lo considere oportuno, el cliente ha de confirmar el pedido que está creando para que sea tramitado.
+} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ | c | l | }
+\hline
+\textbf{ CU006 } & Cancelar un pedido \\
+\hline
+\multicolumn{2}{ | p{14cm} | }
+{
+Para los pedidos confirmados, mientras estos no hayan sido gestionados por un empleado para su entrega, el pedido se podrá cancelar.
+} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ | c | l | }
+\hline
+\textbf{ CU007 } & Generar factura de un pedido \\
+\hline
+\multicolumn{2}{ | p{14cm} | }
+{
+El cliente podrá generar una factura para cualquiera de sus pedidos. La factura se generará en formato PDF e incluirá la siguiente información: los datos del cliente, el listado de todos los productos que componen el pedido junto con su precio unitario y el precio total del pedido antes y después de aplicar el IVA.
+} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ | c | l | }
+\hline
+\textbf{ CU008 } & Marcar un pedido como recibido \\
+\hline
+\multicolumn{2}{ | p{14cm} | }
+{
+Cuando un pedido se entregue físicamente a un cliente, este deberá marcar a través de la aplicación el pedido como recibido.
+} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ | c | l | }
+\hline
+\textbf{ CU009 } & Listar los pedidos del cliente \\
+\hline
+\multicolumn{2}{ | p{14cm} | }
+{
+Todos los pedidos que ha realizado un cliente se podrán listar en cualquier momento, mostrando la fecha en que se realizó y su estado actual. Los pedidos aparecen ordenados por la fecha en la que se realizaron. El listado se puede filtrar por el estado de los pedidos. Los posibles estados de un pedido son: CONFIRMADO, PROGRAMADO, RECIBIDO y CANCELADO.
+} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ | c | l | }
+\hline
+\textbf{ CU010 } & Crear una incidencia \\
+\hline
+\multicolumn{2}{ | p{14cm} | }
+{
+Un cliente puede crear una incidencia si tiene algún problema con un pedido o quiere consultar una duda con los empleados de la tienda. Para hacerlo, ha de proveer un título que describa el problema o consulta.
+} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ | c | l | }
+\hline
+\textbf{ CU011 } & Añadir un comentario en una incidencia \\
+\hline
+\multicolumn{2}{ | p{14cm} | }
+{
+En el contexto de una incidencia, los clientes podrán comunicarse a través de comentarios con los empleados de la tienda. En la incidencia se verán los comentarios tanto de los empleados como del cliente ordenados cronológicamente. Para cada comentario se mostrará el nombre del autor, la fecha en la que lo escribió y el contenido del mismo.
+} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ | c | l | }
+\hline
+\textbf{ CU012 } & Cerrar una incidencia \\
+\hline
+\multicolumn{2}{ | p{14cm} | }
+{
+Solo el cliente puede cerrar una incidencia que haya abierto. Cuando lo haga, el cliente podrá seguir accediendo a ella pero ya no podrá añadir nuevos comentarios. Tampoco le estará permitido volver a abrirla.
+} \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{ | c | l | }
+\hline
+\textbf{ CU013 } & Listar las incidencias del cliente \\
+\hline
+\multicolumn{2}{ | p{14cm} | }
+{
+Se pueden consultar todas las incidencias creadas por el cliente en un listado donde se mostrará tanto la fecha en la que se crearon como su estado actual. El listado aparecerá ordenado por la fecha de creación de las incidencias y se podrá filtrar por el estado de las mismas. Los posibles estados de las incidencias son: ABIERTA y CERRADA.
+} \\
+\hline
+\end{tabular}
+\end{center}
 
 \section{Plan de trabajo}
 
@@ -541,6 +713,8 @@ En cualquier momento, un cliente puede crear una incidencia si tiene algún prob
 \chapter{Evaluación de las soluciones}
 
 \section{Mantenimiento}
+
+\subsection{Mantenimiento correctivo}
 
 \subsection{Añadir una relación entre diferentes servicios}
 
