@@ -503,7 +503,7 @@ A continuación, vamos a listar los casos de uso de la aplicación móvil. En lo
 \begin{center}
 \begin{tabular}{ | c | l | }
 \hline
-\textbf{ CU001 } & Iniciar sesión \\
+\textbf{ CU001 } & Iniciar sesión en la aplicación \\
 \hline
 \multicolumn{2}{ | p{14cm} | }
 {
@@ -677,7 +677,16 @@ A partir de la descripción del sistema y de los casos de uso podemos definir el
 \caption{Modelo de dominio del sistema.}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
 \section{Plan de trabajo}
+
+El sistema a implementar se puede dividir en dos partes: front-end y back-end. En lo referente al back-end, este se va a implementar siguiendo dos arquitecturas distintas: una monolítica y otra basada en microservicios. Existirá una gran cantidad de código compartido entre ambas soluciones y las mayores diferencias entre ellas serán las relacionadas con la organización del código. Por este motivo, primero se va a implementar la solución monolítica y una vez implementada se creará una nueva solución donde se refactorizará el código siguiendo los principios que en el apartado de Diseño del Estado del Arte se han mencionado.
+
+En cuanto al front-end, las llamadas a la parte servidora van a realizarse a través de invocaciones HTTP. Por tanto, va a estar desacoplado de la implementación que elijamos para el back-end y va a poder emplearse la misma solución para comunicarse con ambas soluciones.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       MONOLITICA
