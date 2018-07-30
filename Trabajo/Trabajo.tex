@@ -767,9 +767,14 @@ Con todo esto, el diagrama de clases que se encuentran en la capa de dominio ser
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.5]{ClassDiagram}
+\includegraphics[scale=0.65]{ClassDiagram}
 \caption{Diagrama de clases de dominio de la solución monolítica.}
 \end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 
 \section{Detalles de la implementación back-end}
 
@@ -803,7 +808,7 @@ Por último, algunas entidades en lugar de ofrecer operaciones CRUD solo ofrecen
 % https://docs.microsoft.com/es-es/aspnet/core/security/authorization/simple?view=aspnetcore-2.1
 % https://docs.microsoft.com/es-es/aspnet/core/security/authentication/identity?view=aspnetcore-2.1&tabs=visual-studio%2Caspnetcore2x
 
-La mayoría de métodos expuestos en la API del backend requieren de mecanismos de autorización para establecer si la persona que realiza una petición puede acceder o no a los datos que solicita. Con este propósito, vamos a hacer uso de ASP.NET Core Identity y de tokens de seguridad JWT (JSON Web Token). 
+La mayoría de métodos expuestos en la API del backend requieren de mecanismos de autorización para establecer si la persona que realiza una petición puede acceder o no a los datos que solicita. Con este propósito, vamos a hacer uso de \textbf{ASP.NET Core Identity} y de tokens de seguridad JWT (JSON Web Token). 
 
 Identity es el sistema de ASP.NET Core para administrar los usuarios registrados de una aplicación a través de proveedores externos como Google y Facebook o a través de una base de datos de usuarios propia. \footnote{ Introducción a la identidad en ASP.NET Core: https://docs.microsoft.com/es-es/aspnet/core/security/authentication/identity} Atendiendo a los requisitos especificados, no necesitamos que nuestros usuarios se puedan autenticar a través de proveedores externos, por lo que vamos a optar por gestionar los usuarios de la aplicación nosotros mismos. Los pasos para conseguirlo se resumen a continuación:
 
@@ -817,17 +822,29 @@ Identity es el sistema de ASP.NET Core para administrar los usuarios registrados
 \caption{La clase User.}
 \end{figure}
 
-\item En la capa de persistencia, para asegurar la creación de las tablas asociadas a Identity, el contexto de la aplicación que representa a la base de datos debe extender la clase IdentityDbContext<User>.
+\item En la capa de persistencia, para asegurar la creación de las tablas asociadas a Identity, el contexto de la aplicación que representa a la base de datos debe extender la clase IdentityDbContext<User>. En la base de datos, las tablas de datos creadas automáticamente por Identity se identifican por el prefijo AspNet.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{BDMonolitica}
+\caption{Tablas creadas por ASP.NET Core Identity.}
+\end{figure}
 
 \item En la capa de servicios, a los métodos de la API que requieran de autorización se les ha de añadir el atributo Authorize. Con esto, cuando se realice una petición sin proveer un token de autorización se devolverá automáticamente un error 401: Unauthorized. En el atributo Authorize se puede especificar si el método puede ser ejecutado solo por los usuarios que tengan cierto rol. \footnote{ Autorización basada en roles en ASP.NET Core: https://docs.microsoft.com/es-es/aspnet/core/security/authorization/roles?view=aspnetcore-2.1} Por ejemplo, podemos establecer que las operaciones agregadas de tipo CRUD solo puedan ser invocadas por los usuarios con el rol Administrador.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.8]{Authorize}
+\includegraphics[scale=0.7]{Authorize}
 \caption{Ejemplo de métodos de la clase de servicios.}
 \end{figure}
 
-\item Por último, en la capa de servicios se debe especificar que el mecanismo por el cual el usuario proveerá su identidad será a través de tokens JWT.
+\item Por último, en la capa de servicios se debe especificar que el mecanismo por el cual el usuario proveerá su identidad será a través de tokens JWT. Para ello, en la clase Startup se debe añadir a la colección de servicios el servicio de autenticación con este tipo de tokens, indicando que los únicos tokens válidos son los firmados con la clave provista en el archivo de configuración. \footnote{ Securing ASP.NET Core 2.0 Applications with JWTs: https://auth0.com/blog/securing-asp-dot-net-core-2-applications-with-jwts/}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{jwt}
+\caption{Pieza de código para añadir la autenticación usando tokens JWT.}
+\end{figure}
 
 \end{itemize}
 
