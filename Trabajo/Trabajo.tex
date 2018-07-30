@@ -856,7 +856,48 @@ El usuario podrá obtener el token que le identifica a través del método Login
 \caption{Ejemplo de petición HTTP donde se incluye un token de seguridad.}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
 \subsection{Persistencia}
+
+Para la persistencia se va a emplear \textbf{Entity Framework Core} para el mapeo objeto-relacional y una base de datos SQL en la nube de \textbf{Microsoft Azure}. Entity Framework Core es una versión multiplataforma del ORM Entity Framework (EF) para trabajar con una base de datos mediante objetos .NET. \footnote{Descripción general de Entity Framework Core: https://docs.microsoft.com/es-es/ef/core/}
+
+Vamos a emplear una aproximación Code-First para el diseño de la base de datos. Esta aproximación nos permite diseñar primero las entidades de nuestro dominio a través de las clases en la capa de dominio y luego trasladar sus atributos y relaciones a un esquema de base de datos gracias a EF. \footnote{What is Code-First?: http://www.entityframeworktutorial.net/code-first/what-is-code-first.aspx}
+
+Para la creación de la base de datos se debe ir al portal de Azure \footnote{ Portal de Azure: https://portal.azure.com/} y navegar hasta la página SQL Databases. Para la creación de la base de datos hay que proveer principalmente su nombre, la suscripción a la que se redirigirán los costes asociados, el grupo de recursos en el que se incluirá y el servidor donde se emplazará.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.4]{CreateDB}
+\caption{Creación de una base de datos SQL en Azure.}
+\end{figure}
+
+Una vez creada, debemos ir al recurso y en la pestaña de cadenas de conexión copiar la asociada a .NET. La cadena de conexión la pegaremos en el archivo de configuración de la capa de servicios. En la clase Startup del mismo proyecto leeremos la cadena de conexión para configurar la clase ShopContext.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{AddDbContext}
+\caption{Configuración del contexto de la capa de persistencia para apuntar a la BD en Azure.}
+\end{figure}
+
+En la clase ShopContext debemos indicar cuáles son las entidades del dominio que se añadirán como tablas a la BD. Para cada entidad del dominio se creará un DbSet distinto.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{ShopContext}
+\caption{Clase ShopContext.}
+\end{figure}
+
+Por último, para que desde otras capas accedan a los datos emplearemos el patrón DAO. Exponer el contexto entero fuera de la capa de persistencia puede ser peligroso porque permitiría modificar desde otras capas aspectos que solo deben conocerse en esta capa. Por ello, se definirá para cada entidad del dominio una interfaz para acceder a sus datos donde las operaciones permitidas están acotadas. De nuevo, tanto estas interfaces como su implementación se pueden definir de forma genérica y si se desea se puede extender o sobreescribir su comportamiento.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{ICrudDAO}
+\caption{Interfaz genérica para los DAOs que exponen operaciones CRUD.}
+\end{figure}
 
 \subsection{Informes empleando la librería Open XML PowerTools}
 
