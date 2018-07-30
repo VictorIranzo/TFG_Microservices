@@ -891,7 +891,7 @@ En la clase ShopContext debemos indicar cuáles son las entidades del dominio qu
 \caption{Clase ShopContext.}
 \end{figure}
 
-Por último, para que desde otras capas accedan a los datos emplearemos el patrón DAO. Exponer el contexto entero fuera de la capa de persistencia puede ser peligroso porque permitiría modificar desde otras capas aspectos que solo deben conocerse en esta capa. Por ello, se definirá para cada entidad del dominio una interfaz para acceder a sus datos donde las operaciones permitidas están acotadas. De nuevo, tanto estas interfaces como su implementación se pueden definir de forma genérica y si se desea se puede extender o sobreescribir su comportamiento.
+Por último, para que desde otras capas accedan a los datos emplearemos el \textbf{patrón DAO}. Exponer el contexto entero fuera de la capa de persistencia puede ser peligroso porque permitiría modificar desde otras capas aspectos que solo deben conocerse en esta capa. Por ello, se definirá para cada entidad del dominio una interfaz para acceder a sus datos donde las operaciones permitidas están acotadas. De nuevo, tanto estas interfaces como su implementación se pueden definir de forma genérica y si se desea se puede extender o sobreescribir su comportamiento.
 
 \begin{figure}[h]
 \centering
@@ -901,13 +901,37 @@ Por último, para que desde otras capas accedan a los datos emplearemos el patr�
 
 \subsection{Informes empleando la librería Open XML PowerTools}
 
+La generación de informes es una de las funcionalidades más empleadas en los software de gestión. En los requisitos de nuestro sistema solo se ha establecido un informe: la factura de un pedido. Esto no implica que debamos dejar de seguir el principio de responsabilidad única. La lógica para generar un informe debe ser genérica para que no dependa del tipo de informe que se va a generar y así pueda ser invocada desde diferentes sitios. Vamos a hacer uso de una librería para la generación de informes con estas librerías: \textbf{Open XML PowerTools}.
+
+Open XML PowerTools provee funcionalidades para la combinación de documentos, la conversión de estos a diferentes formatos y la creación de informes a partir de plantillas. \footnote{ Página de GitHub de Open XML PowerTools: https://github.com/OfficeDev/Open-Xml-PowerTools}. Para generar un informe se separan explícitamente los datos que lo originan y la plantilla del documento. En las plantillas se define cómo se van a renderizar los datos mediante un lenguaje basado en anotaciones. Este lenguaje nos permite renderizar contenido en base a condiciones, iterar sobre las colecciones en los datos, crear tablas, etc.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{Factura}
+\caption{Plantilla para la creación de facturas.}
+\end{figure}
+
+Las plantillas se almacenarán en la base de datos y cuando se quiera generar un informe se recuperará esta para ensamblar el informe. Los métodos para generar un informe concreto estarán expuestos en los managers de la entidad asociada al informe. Por ejemplo, el método para generar la factura de un pedido se situará en el OrdersManager. En este método se recuperarán los datos para generar la factura y se enviarán estos al manager de informes para que los combine con la plantilla de la factura.
+
 \subsection{Notificaciones con la librería MailKit}
+
+Con las notificaciones ocurre lo mismo que con los informes: solo existe un caso de uso que envíe una notificación al cliente, pero para segregar responsabilidades vamos a crear un manager específico para este propósito. Para enviar notificaciones se va emplear la librería \textbf{MailKit}, una librería multiplataforma con utilidades sobre los protocolos IMAP, POP3 y SMTP.
+
+Para desacoplar los mensajes a enviar y el código para enviarlo se hará uso de un DTO que contenga el usuario destinatario, el asunto del correo y el cuerpo del mismo. Tanto el cuerpo como el asunto de la notificación se definirán en archivos de recursos en la capa de aplicación.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=1]{NotificationsMessage}
+\caption{Archivo de recursos para las notificaciones.}
+\end{figure}
 
 \subsection{Inyección de dependencias}
 
 El uso de interfaces promueve el desacoplamiento entre la definición de las operaciones de una clase y las implementaciones concretas que esta definición puede tener.
 
 \subsection{Documentando la API con Swagger}
+
+\subsection{Generación de la capa de Proxy}
 
 \subsection{Calidad del código}
 
