@@ -735,9 +735,9 @@ También se situarán en esta capa los objetos para la transferencia de datos (D
 
 \item \textbf{Capa de aplicación}: en esta capa es donde se implementa la lógica de la parte servidora. Aquí se da implementación a las interfaces que se sitúan en la capa de contratos. Es en esta capa donde se validan los permisos de un usuario que ha realizado una petición al servidor sobre la acción que desea realizar. En caso de que se trate de hacer una operación no válida será esta capa la encarga de lanzar la excepción oportuna. También aquí se situarán los conversores para transformar una entididad en un DTO, que se emplearán principalmente en las operaciones CRUD.
 
-\item \textbf{Capa de servicios}: contiene el punto de entrada del proceso que representa al back-end. En esta capa se encuentran los controladores, donde se definen todas las acciones de la API. Cada acción se define a través de un verbo HTTP, la URL donde se localiza y sus parámetros obtenidos a partir del cuerpo o las cabeceras de una petición. La capa de servicios delega en la capa de aplicación para devolver un resultado a cada una de las peticiones que atiende. \footnote{ Control de solicitudes con controladores en ASP.NET Core MVC: https://docs.microsoft.com/es-ES/aspnet/core/mvc/controllers/actions?view=aspnetcore-2.1}
+\item \textbf{Capa de servicios}: contiene el punto de entrada del proceso que representa al back-end (el método Main). En esta capa se encuentran los controladores, donde se definen todas las acciones de la API. Cada acción se define a través de un verbo HTTP, la URL donde se localiza y sus parámetros obtenidos a partir del cuerpo o las cabeceras de una petición. La capa de servicios delega en la capa de aplicación para devolver un resultado a cada una de las peticiones que atiende. \footnote{ Control de solicitudes con controladores en ASP.NET Core MVC: https://docs.microsoft.com/es-ES/aspnet/core/mvc/controllers/actions?view=aspnetcore-2.1}
 
-\item \textbf{Capa de dominio}: contiene las entidades del dominio del sistema y los estados asociados a estas. Esta capa es referenciada tanto por la capa de aplicación como por la capa de persistencia.
+\item \textbf{Capa de dominio}: contiene las entidades del dominio del sistema junto con sus propiedades y los estados asociados a estas. Esta capa es referenciada tanto por la capa de aplicación como por la capa de persistencia.
 
 \item \textbf{Capa de persistencia}: la capa de persistencia ofrece operaciones CRUD para cada una de las entidades que se almacenan en BD a través objetos para el acceso a datos (DAO). La capa de persistencia no trabaja con DTOs: cuando la capa de aplicación le solicita una entidad la devuelve completa y es la capa de aplicación quien a través de los conversores la transforma en un DTO para devolver una representación de la entidad al usuario.
 
@@ -751,12 +751,55 @@ También se situarán en esta capa los objetos para la transferencia de datos (D
 \caption{Capas del back-end monolítico.}
 \end{figure}
 
+A nivel de la solución en Visual Studio, cada capa consistirá en un proyecto distinto. Un proyecto consiste en un archivo XML con extensión *.csproj que tiene una plataforma y dependencias específicas y que se puede compilar de forma independiente. Cada proyecto es un contenedor que organiza sus clases y otros archivos de forma jerárquica. \footnote{ Soluciones y proyectos en Visual Studio: https://docs.microsoft.com/es-es/visualstudio/ide/solutions-and-projects-in-visual-studio} Adicionalmente, existe un proyecto que contiene las pruebas del sistema. Todos los proyectos son .NET Standard 2.0 salvo los de las capa de servicios y pruebas, cuya plataforma es .NET Core 2.1 porque no son librerías y pueden ser ejecutados.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{MonolithicSolution}
+\caption{Solución del sistema monolítico.}
+\end{figure}
+
+A nivel de diseño, se van a definir las siguientes entidades en la capa de dominio: pedido (Order), producto (Product), compra (Purchase), incidencia (Incidence) y comentario (Comment). Estas entidades se pueden obtener a partir del modelo de dominio. Sin embargo, algunos conceptos que aparecen en el modelo de dominio como los informes o las notificaciones no vamos a modelarlas como entidades. No son entidades como tal porque no necesitamos almacenarlas o ofrecer operaciones CRUD sobre ellas, así que vamos a modelarlas como acciones. Simplemente ofreceremos métodos para generar un informe (GenerateReport) y enviar notificaciones (SendNotification).
+
+La relación que existe entre un pedido y un producto es de muchos a muchos: un pedido está formado por múltiples productos y un producto puede estar incluido en diferentes pedidos. Además, la relación cuenta con una propiedad que es el número de unidades del producto en el pedido, que se puede modelar como una clase asociación. Si razonamos a nivel de base de datos, la clase asociación se implementará como una tabla intermedia entre las tablas de pedidos y productos. En nuestro código también lo modelaremos así para emplear la librería de Entity Framework para el mapeo objeto-relacional (ORM).
+
+Con todo esto, el diagrama de clases que se encuentran en la capa de dominio será el siguiente:
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{ClassDiagram}
+\caption{Diagrama de clases de dominio de la solución monolítica.}
+\end{figure}
 
 \section{Detalles de la implementación back-end}
 
 \subsection{Operaciones CRUD}
 
+Para la mayoría de entidades que hemos modelado vamos a ofrecer operaciones CRUD. Esto se hará a través de las interfaces que expone la parte servidora en la capa de contratos. Con este propósito vamos a definir una interfaz que exponga estas de forma unitaria y agregada. En los servicios, las operaciones agregadas son un mecanismo para evitar que dos componentes tengan que comunicarse continuamente. Si se tienen que crear una colección de entidades, en lugar de crear una petición al servidor para cada entidad, se envía una única petición con toda la colección. \cite{Newman2015a} 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{ICrudManager}
+\caption{Interfaz interna para las operaciones CRUD.}
+\end{figure}
+
+La interfaz es interna porque no debe ser visible fuera de la solución del back-end. Además, es genérica: se define en base a DTOs con diferentes propósitos. Para la creación de una entidad son necesarias solo algunas propiedades y otras como la fecha de creación son calculadas por el sistema y no deben ser provistas en el \textbf{CreateDTO} de la petición. Lo mismo ocurre con la lectura y la actualización de una entidad. Por ejemplo, de una entidad algunas propiedades no está permitido actualizarlas, por lo que no deben incluirse estas en el \textbf{UpdateDTO} de la entidad. 
+
+Sin embargo, no se van a definir únicamente operaciones CRUD para una entidad. Cada entidad tiene una serie de operaciones asociadas, como puede ser generar la factura de un pedido o obtener la lista de incidencias de un usuario. Tanto estas acciones como las CRUD se definen en la interfaz de contratos de la entidad. Si para una entidad se quieren exponer operaciones CRUD, se deben definir los DTOs específicos para las operaciones de lectura, escritura y actualización y se debe extender la interfaz genérica.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{IOrdersManager}
+\caption{Interfaz en la capa de contratos para la entidad Pedido.}
+\end{figure}
+
+La implementación de las operaciones CRUD en la capa de aplicación también se realizará de forma genérica. Si la implementación de una de las operaciones no se ajusta a la que una entidad necesita, esta puede ser sobreescrita en el manager de la entidad.
+
+Por último, algunas entidades en lugar de ofrecer operaciones CRUD solo ofrecen \textbf{operaciones CUD} (crear, actualizar y eliminar). Estas entidades son las de Comentario y Compra porque podemos considerarlas como secundarias. No tiene sentido exponer un método en la interfaz de back-end para leer un único comentario o obtener el número de unidades de un producto en un pedido. No obstante, si que tiene sentido exponer un método para, por ejemplo, crear o eliminar un comentario dentro de una incidencia. Las operaciones de lectura de estas entidades se realizan a través de la entidad principal asociada. Por ejemplo, cuando solicitamos una incidencia obtendremos todos los comentarios que en la incidencia se han hecho aunque sea una entidad independiente.
+
 \subsection{Seguridad}
+
+\subsection{Persistencia}
 
 \subsection{Informes empleando la librería Open XML PowerTools}
 
@@ -764,7 +807,11 @@ También se situarán en esta capa los objetos para la transferencia de datos (D
 
 \subsection{Inyección de dependencias}
 
+El uso de interfaces promueve el desacoplamiento entre la definición de las operaciones de una clase y las implementaciones concretas que esta definición puede tener.
+
 \subsection{Documentando la API con Swagger}
+
+\subsection{Calidad del código}
 
 \section{Interfaz de usuario}
 
