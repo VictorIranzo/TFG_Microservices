@@ -790,7 +790,7 @@ Sin embargo, no se van a definir únicamente operaciones CRUD para una entidad. 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{IOrdersManager}
-\caption{Interfaz en la capa de contratos para la entidad Pedido.}
+\caption{Interfaz en la capa de contratos asociada a la entidad Pedido.}
 \end{figure}
 
 La implementación de las operaciones CRUD en la capa de aplicación también se realizará de forma genérica. Si la implementación de una de las operaciones no se ajusta a la que una entidad necesita, esta puede ser sobreescrita en el manager de la entidad.
@@ -798,6 +798,46 @@ La implementación de las operaciones CRUD en la capa de aplicación también se
 Por último, algunas entidades en lugar de ofrecer operaciones CRUD solo ofrecen \textbf{operaciones CUD} (crear, actualizar y eliminar). Estas entidades son las de Comentario y Compra porque podemos considerarlas como secundarias. No tiene sentido exponer un método en la interfaz de back-end para leer un único comentario o obtener el número de unidades de un producto en un pedido. No obstante, si que tiene sentido exponer un método para, por ejemplo, crear o eliminar un comentario dentro de una incidencia. Las operaciones de lectura de estas entidades se realizan a través de la entidad principal asociada. Por ejemplo, cuando solicitamos una incidencia obtendremos todos los comentarios que en la incidencia se han hecho aunque sea una entidad independiente.
 
 \subsection{Seguridad}
+% https://auth0.com/blog/securing-asp-dot-net-core-2-applications-with-jwts/
+% https://docs.microsoft.com/es-es/aspnet/core/security/authorization/roles?view=aspnetcore-2.1
+% https://docs.microsoft.com/es-es/aspnet/core/security/authorization/simple?view=aspnetcore-2.1
+% https://docs.microsoft.com/es-es/aspnet/core/security/authentication/identity?view=aspnetcore-2.1&tabs=visual-studio%2Caspnetcore2x
+
+La mayoría de métodos expuestos en la API del backend requieren de mecanismos de autorización para establecer si la persona que realiza una petición puede acceder o no a los datos que solicita. Con este propósito, vamos a hacer uso de ASP.NET Core Identity y de tokens de seguridad JWT (JSON Web Token). 
+
+Identity es el sistema de ASP.NET Core para administrar los usuarios registrados de una aplicación a través de proveedores externos como Google y Facebook o a través de una base de datos de usuarios propia. \footnote{ Introducción a la identidad en ASP.NET Core: https://docs.microsoft.com/es-es/aspnet/core/security/authentication/identity} Atendiendo a los requisitos especificados, no necesitamos que nuestros usuarios se puedan autenticar a través de proveedores externos, por lo que vamos a optar por gestionar los usuarios de la aplicación nosotros mismos. Los pasos para conseguirlo se resumen a continuación:
+
+\begin{itemize}
+
+\item En la capa de dominio, se debe crear una entidad que represente al usuario de la aplicación y que herede de la clase IdentityUser. La clase IdentityUser provee numerosos atributos, como el nombre o el correo electrónico. Se puede añadir cualquier atributo más asociado al usuario de la aplicación dentro de la clase User.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{User}
+\caption{La clase User.}
+\end{figure}
+
+\item En la capa de persistencia, para asegurar la creación de las tablas asociadas a Identity, el contexto de la aplicación que representa a la base de datos debe extender la clase IdentityDbContext<User>.
+
+\item En la capa de servicios, a los métodos de la API que requieran de autorización se les ha de añadir el atributo Authorize. Con esto, cuando se realice una petición sin proveer un token de autorización se devolverá automáticamente un error 401: Unauthorized. En el atributo Authorize se puede especificar si el método puede ser ejecutado solo por los usuarios que tengan cierto rol. \footnote{ Autorización basada en roles en ASP.NET Core: https://docs.microsoft.com/es-es/aspnet/core/security/authorization/roles?view=aspnetcore-2.1} Por ejemplo, podemos establecer que las operaciones agregadas de tipo CRUD solo puedan ser invocadas por los usuarios con el rol Administrador.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{Authorize}
+\caption{Ejemplo de métodos de la clase de servicios.}
+\end{figure}
+
+\item Por último, en la capa de servicios se debe especificar que el mecanismo por el cual el usuario proveerá su identidad será a través de tokens JWT.
+
+\end{itemize}
+
+El usuario podrá obtener el token que le identifica a través del método Login del manager de Seguridad. Para hacerlo, deberá proveer su correo electrónico y contraseña. En la implementación de este método en la capa de aplicación se comprueba que el correo electrónico y contraseña coinciden con los almacenados en las tablas de Identity. Si coinciden, el método devuelve un token JWT donde se incluirán los datos del usuario y la fecha en la que el token expira. En cada petición HTTP que haga el usuario a la parte servidora deberá proveer este en la cabecera.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{http}
+\caption{Ejemplo de petición HTTP donde se incluye un token de seguridad.}
+\end{figure}
 
 \subsection{Persistencia}
 
@@ -829,6 +869,7 @@ El uso de interfaces promueve el desacoplamiento entre la definición de las ope
 \section{Diferencias respecto a la solución monolítica}
 
 \section{Versionado de servicios y creación de paquetes NuGet}
+% https://www.thomaslevesque.com/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/
 
 \section{Adaptación de la interfaz de usuario}
 
@@ -903,6 +944,7 @@ El uso de interfaces promueve el desacoplamiento entre la definición de las ope
 \section{Introducción a Azure Kubernetes Service (AKS)}
 
 \section{Depuración de contenedores a través de Azure}
+% https://blogs.msdn.microsoft.com/benjaminperkins/2017/06/06/remote-debug-your-azure-app-service-2017-including-asp-net-core/ 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      CREACIÓN DE CLIENTES CON NSWAG  
