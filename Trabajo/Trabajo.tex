@@ -803,6 +803,7 @@ La implementación de las operaciones CRUD en la capa de aplicación también se
 Por último, algunas entidades en lugar de ofrecer operaciones CRUD solo ofrecen \textbf{operaciones CUD} (crear, actualizar y eliminar). Estas entidades son las de Comentario y Compra porque podemos considerarlas como secundarias. No tiene sentido exponer un método en la interfaz de back-end para leer un único comentario o obtener el número de unidades de un producto en un pedido. No obstante, si que tiene sentido exponer un método para, por ejemplo, crear o eliminar un comentario dentro de una incidencia. Las operaciones de lectura de estas entidades se realizan a través de la entidad principal asociada. Por ejemplo, cuando solicitamos una incidencia obtendremos todos los comentarios que en la incidencia se han hecho aunque sea una entidad independiente.
 
 \subsection{Seguridad}
+%TODO Ha faltado mencionar registro en la clase PersistenceDependencies.
 % https://auth0.com/blog/securing-asp-dot-net-core-2-applications-with-jwts/
 % https://docs.microsoft.com/es-es/aspnet/core/security/authorization/roles?view=aspnetcore-2.1
 % https://docs.microsoft.com/es-es/aspnet/core/security/authorization/simple?view=aspnetcore-2.1
@@ -927,7 +928,23 @@ Para desacoplar los mensajes a enviar y el código para enviarlo se hará uso de
 
 \subsection{Inyección de dependencias}
 
-El uso de interfaces promueve el desacoplamiento entre la definición de las operaciones de una clase y las implementaciones concretas que esta definición puede tener.
+La \textbf{inyección de dependencias} (DI) es un mecanismo para desacoplar un objeto de sus colaboradores. En lugar de instanciar o obtener una referencia a los objetos de los que depende una clase, estos se declaran en el constructor de la clase y es el sistema quien automáticamente los resuelve e instancia. \footnote{ Inserción de dependencias en ASP.NET Core: https://docs.microsoft.com/es-es/aspnet/core/fundamentals/dependency-injection} 
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{ProductsManager}
+\caption{Constructor de la clase ProductsManager donde se aplica DI.}
+\end{figure}
+
+El uso de interfaces reduce el acoplamiento entre la definición de las operaciones de una clase y las implementaciones concretas que esta definición puede tener. Sin embargo, es necesario indicar con qué implementación se resuelve una interfaz cuando esta se inyecta en el constructor de una clase. Para ellos, se emplean una serie de métodos sobre la colección de servicios donde el sistema busca sus dependencias para indicar cómo resolver cada interfaz. El método más empleado es AddScoped. Este método instancia el objeto de la dependencia una vez por cada petición que el servidor recibe y comparte este mismo objeto entre todas las clases que dependan de él.
+
+En nuestra solución, cada capa es responsable de registrar las diferentes interfaces que contiene junto con la clase que la implementa. De esta forma, desde otras capas se podrán emplear las interfaces resultas.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.9]{ResolucionDependencias}
+\caption{Registro de interfaces en la capa de persistencia.}
+\end{figure}
 
 \subsection{Documentando la API con Swagger}
 
