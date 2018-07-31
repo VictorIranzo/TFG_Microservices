@@ -946,7 +946,27 @@ En nuestra solución, cada capa es responsable de registrar las diferentes inter
 \caption{Registro de interfaces en la capa de persistencia.}
 \end{figure}
 
-\subsection{Documentando la API con Swagger}
+\subsection{Documentando la API con Swagger UI}
+
+\textbf{Swagger} es un conjunto de herramientas de código abierto para describir la estructura de una API, crear clientes para consumirla en diferentes lenguajes (Swagger CodeGen) y documentarla para que los usuarios puedan emplearla de forma interactiva (Swagger UI). \footnote{ Documentación oficial de Swagger: https://swagger.io/docs/specification/2-0/what-is-swagger/}
+
+En este apartado nos centraremos en la construcción de la API interactiva. Para hacerlo, basta con añadir la siguiente pieza de código en la clase Startup de la capa de servicios. Aparte de proveer algunos metadatos como la versión de la API o su mantenedor, se debe indicar que los controladores para generar la documentación se encuentran en el ensamblado actual.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.9]{SwaggerUI}
+\caption{Metadatos de la API especificados en la clase Startup.}
+\end{figure}
+
+La documentación de la API se genera en la dirección formada por la unión de la URL del servidor y el recurso con nombre swagger. Para generar la documentación de los métodos, Swagger hace uso de la documentación del método del controlador de la capa de servicios que la origina. En la documentación de cada método se incluye información como la descripción de los parámetros o el tipo de respuesta que da el método.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.4]{SwaggerAPI}
+\caption{Documentación de la API generada con Swagger UI.}
+\end{figure}
+
+\subsection{Logging}
 
 \subsection{Generación de la capa de Proxy}
 
