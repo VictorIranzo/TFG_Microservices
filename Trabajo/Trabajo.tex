@@ -204,7 +204,7 @@ En el primer tipo, las replicas continuarían operativas, pero como los datos en
 
 Los sistemas AP escalan más fácilmente y son más sencillos de construir, pero nos obligan a una consistencia eventual de los datos. Los segundos son los únicos que nos aseguran una consistencia fuerte, pero son más difíciles de construir. A la hora de optar por una solución u otra se debe tener en cuenta la especificación de requisitos, donde se debe detallar de forma específica y cuantitativa cuánto tiempo puede nuestro servicio estar inoperativo o con un dato obsoleto. Si en las fases siguientes se opta por una arquitectura basada en microservicios, no será necesario implementar el sistema completo de una u otra forma. Cada microservicio tendrá necesidades diferentes y podrá seguir la aproximación que mejor le convenga. \cite{Newman2015a}
 
-\section{Los microservicios en la fase de diseño}
+\section{Los microservicios en la fase de diseño} \label{sct:FaseDiseño}
 
 En la fase de diseño se definen la arquitectura, componentes e interfaces del sistema. La especificación de requisitos es analizada para producir una descripción de la estructura interna del sistema, con el suficiente nivel de detalle para que sirva como base en su construcción. En esta fase se plantean diferentes diseños como alternativas de las que se debe hacer balance. Los modelos que se generan se emplearán para validar que se cumplen los requisitos establecidos y para planificar la fase de implementación. \cite{Bourque2014}
 
@@ -701,15 +701,18 @@ A partir de la descripción del sistema y de los casos de uso podemos definir el
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 
-\section{Plan de trabajo}
+\section{Plan de trabajo} \label{sct:PlanTrabajo}
 
-El sistema a implementar se puede dividir en dos partes: front-end y back-end. En lo referente al back-end, este se va a implementar siguiendo dos arquitecturas distintas: una monolítica y otra basada en microservicios. Existirá una gran cantidad de código compartido entre ambas soluciones y las mayores diferencias entre ellas serán las relacionadas con la organización del código. Por este motivo, primero se va a implementar la solución monolítica y una vez implementada se creará una nueva solución donde se refactorizará el código siguiendo los principios que en el apartado de Diseño del Estado del Arte se han mencionado.
+El sistema a implementar se puede dividir en dos partes: front-end y back-end. En lo referente al back-end, este se va a implementar siguiendo dos arquitecturas distintas: una monolítica y otra basada en microservicios. Existirá una gran cantidad de código compartido entre ambas soluciones y las mayores diferencias entre ellas serán las relacionadas con la organización del código. Por este motivo, primero se va a implementar la solución monolítica y una vez implementada se creará una nueva solución donde se refactorizará el código siguiendo los principios que en la sección \ref{sct:FaseDiseño} \nameref{sct:FaseDiseño} se han mencionado.
 
 En cuanto al front-end, las llamadas a la parte servidora van a realizarse a través de invocaciones HTTP. Por tanto, va a estar desacoplado de la implementación que elijamos para el back-end y va a poder emplearse la misma solución para comunicarse con ambas soluciones.
 
 \section{Tecnología utilizada}
 
 El lenguaje de programación que se va a emplear es C\# junto con el entorno de desarrollo (IDE) Visual Studio Enterprise 2017. Entre las plataformas de destino que ofrece la tecnología .NET vamos a utilizar tanto .NET Standard 2.0 como .NET Core en su versión 2.1, publicada en Mayo de 2018. \footnote{ Versiones de .NET Core 2.1: https://www.microsoft.com/net/download/dotnet-core/2.1} El uso de librerías distintas a las provistas por la plataforma se realizará a través de paquetes NuGet, un mecanismo sencillo que envuelve el código compilado de una librería y referencia a las dependencias de esta. \footnote{ Una introducción a NuGet: https://docs.microsoft.com/es-es/nuget/what-is-nuget}
+
+Para el desarrollo de la interfaz de usuario se va a utilizar Xamarin.Forms. Xamarin es una plataforma que permite desarrollar aplicaciones móviles para dispositivos Universal Windows Platform (UWP), Android y iOS empleando código C\#. Xamarin.Forms es un conjunto de herramientas para Xamarin centrado en el desarrollo multiplataforma. Su propósito que se pueda compartir la mayor cantidad de código posible en el desarrollo de una aplicación para las distintas plataformas que hemos mencionado. \footnote{ Introducción a Xamarin.Forms
+: https://docs.microsoft.com/es-es/xamarin/xamarin-forms/get-started/introduction-to-xamarin-forms}
 
 A nivel de infraestructura se ha empleado Microsoft Azure para la persistencia de datos en la nube y para la exposición de servicios a través de Azure App Service y Azure Kubernetes Service (AKS). Microsoft Azure es una plataforma que ofrece un conjunto de herramientas y servicios en la nube. Tanto App Service como AKS son parte de sus servicios. El primero se emplea para crear aplicaciones en la nube de forma rápida sin necesidad de administrar la infraestructura sobre la que se hospeda. En cuanto al segundo, permite la orquestación de contenedores Docker a través de Kubernetes dentro de la infraestructura de Azure. \footnote{ Página oficial de Microsoft Azure: https://azure.microsoft.com/es-es/}
 
@@ -728,7 +731,6 @@ A nivel arquitectónico, la aplicación monolítica va a seguir una arquitectura
 
 \begin{itemize}
 
-%TODO Ver si añadir por qué es bueno usar interfaces.
 \item \textbf{Capa de contratos}: en esta capa se situarán las interfaces que contienen todas las acciones del back-end que pueden ser invocadas desde el exterior a través de la API. Estas interfaces se implementarán tanto en las capas de Aplicación, Servicios y Proxy. 
 
 También se situarán en esta capa los objetos para la transferencia de datos (DTO). Los DTOs se emplean para desacoplar los servicios que ofrece una API de la representación interna que da el sistema a sus entidades. En lugar de devolver al cliente una entidad tal y como se almacena en base de datos, los DTOs representan una entidad ocultando aquellas propiedades que no necesitan ser transferidas o cambian su formato para que sea más cómodo para el cliente su procesamiento. \footnote{ Crear objetos de transferencia de datos (DTO): https://docs.microsoft.com/es-es/aspnet/web-api/overview/data/using-web-api-with-entity-framework/part-5}
@@ -1013,14 +1015,63 @@ En la mayoría de proyectos se ha configurado para que las alertas que devuelve 
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=1]{TreatWarning}
+\includegraphics[scale=0.9]{TreatWarning}
 \caption{Fragmento de un proyecto donde se añade la opción TreatWarningsAsErrors.}
 \end{figure}
 
 \section{Interfaz de usuario}
 
+Como hemos comentado en la sección \ref{sct:PlanTrabajo} \nameref{sct:PlanTrabajo}, vamos a implementar una interfaz de usuario que cumpla con los casos de uso y se pueda emplear para comunicar tanto con la solución monolítica como con la basada en microservicios. Para desacoplar el desarrollo del back-end y el front-end, la aplicación móvil va a desarrollarse en un repositorio de código distinto.
+
+%TODO Decidir si poner esto. https://techcrunch.com/2017/05/11/microsoft-now-lets-ios-developers-deploy-run-and-test-their-apps-directly-from-windows/
+La solución de la UI está compuesta por dos proyectos. El primero es en el que se localiza la mayoría del código que se ha implementado, un proyecto .NET Standard con el código compartido por todas las plataformas. El segundo es el proyecto específico para la plataforma Android. Los proyectos asociados a las plataformas UWP y iOS han sido eliminados para hacer más simple su desarrollo.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{ShopFrontEnd}
+\caption{Solución de la interfaz de usuario hecha con Xamarin.Forms.}
+\end{figure}
+
+Podemos citar las siguientes características que se desean poner en valor de la implementación de la interfaz de usuario:
+
+\begin{itemize}
+
+\item \textbf{Presentación de resultados de forma paginada}: en el back-end se han implementado diferentes métodos para obtener resultados (como la lista de incidencias de un usuario o la lista de productos) de forma paginada, ordenada y a través de filtros. La paginación en las invocaciones a una API son una forma de mejorar el rendimiento de una aplicación porque evita traer más resultados de los que luego se consultan. El filtrado y la ordenación de los datos están más centrados en mejor la experiencia del usuario (UX).\footnote{ REST API Design: Filtering, Sorting, and Pagination: https://www.moesif.com/blog/technical/api-design/REST-API-Design-Filtering-Sorting-and-Pagination/} 
+
+A nivel de UI se ha implementado de tal forma que se soliciten al back-end una cantidad de datos aproximada a la que se puede mostrar en la pantalla de un dispositivo. Cuando el usuario haga scroll para mostrar más resultados, se realizará una nueva petición en segundo plano a la parte servidora solicitando el siguiente bloque de datos. Mientras se cargan los datos, el usuario visualizará un elemento que indica que el sistema está trabajando en segundo plano para traer más datos.
+
+
+%TODO Interesante https://msdn.microsoft.com/en-us/magazine/dd419663.aspx https://blogs.msdn.microsoft.com/johngossman/2005/10/08/introduction-to-modelviewviewmodel-pattern-for-building-wpf-apps/
+\item \textbf{Uso de ViewModels}: la separación de responsabilidades no es un principio que se deba aplicar solo en el back-end. El patrón arquitectónico \textbf{Model-View-ViewModel} (MVVM) divide la interfaz de usuario en 3 capas: la vista, empleando páginas XAML, los datos tal como se obtienen en su origen, también llamados el modelo, y el modelo de la vista, que conecta ambos y se emplea para rellenar la vista. \footnote{From Data Bindings to MVVM: https://docs.microsoft.com/es-es/xamarin/xamarin-forms/xaml/xaml-basics/data-bindings-to-mvvm} 
+
+La diferencia entre este patrón y otros como el Model-View-Controller(MVC) es que en MVC los datos con los que se llena la vista son los que se obtienen en el origen y es el controlador quien ha de adaptarlos a cómo se visualizan en la vista. En cambio, en MVVM la vista y el modelo de la vista suelen relacionarse a través de enlaces (bindings) en el propio XAML y se notifican mutuamente cuando alguna de sus propiedades cambia. \footnote{ Patterns - WPF Apps With The Model-View-ViewModel Design Pattern: https://msdn.microsoft.com/en-us/magazine/dd419663.aspx}
+
+Sin embargo, usar este patrón puede ser excesivo para UIs muy sencillas. \footnote{Advantages and disadvantages of M-V-VM: https://blogs.msdn.microsoft.com/johngossman/2006/03/04/advantages-and-disadvantages-of-m-v-vm/} Por este motivo, hemos empleado objetos ViewModel en solo aquellos casos que era necesario adaptar los datos del modelo a la vista. Lo que aquí definimos como modelo es un DTO que devuelve la parte servidora y ya está diseñado para que contenga solo la información estrictamente necesaria. Un ejemplo en el que se emplea un ViewModel es el ProductViewModel, donde se tiene que transformar la imagen que se recibe del ProductDTO de byte[] a un ImageSource.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{ProductViewModel}
+\caption{Método para transformar de un DTO a un modelo de una vista.}
+\end{figure}
+
+\item \textbf{Código específico de plataforma}: existen algunos servicios que no se pueden implementar en el proyecto compartido por todas las plataformas. Estos servicios están relacionados con aspectos muy ligados a cada plataforma, como puede ser el sistema de archivos. Para este propósito se define una interfaz en el proyecto compartido. Cada una de las plataformas debe dar una implementación concreta a esta interfaz. Desde el proyecto genérico, se hace uso de la interfaz y será el sistema quien se encargará de dirigir la operación que se invoca sobre la interfaz a la implementación de la plataforma. \footnote{Native Services with Xamarin.Forms? It's DependencyService to the Rescue: https://visualstudiomagazine.com/articles/2015/09/01/native-services-with-xamarinforms.aspx}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{AndroidFileManager}
+\caption{Servicio concreto del proyecto de Android.}
+\end{figure}
+
+\end{itemize}
+
+Como material adicional, en el apéndice \ref{ch:ModeloNavegacion} \nameref{ch:ModeloNavegacion} se incluyen capturas de la aplicación desarrollada y la navegación que existe entre las diferentes pantallas.
+
 \section{Pruebas}
 
+- Número de pruebas.
+- Pruebas realizadas.
+- Captura de las pruebas ejecutadas satisfactoriamente.
+ 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       MICROSERVICIOS
 %
@@ -1093,7 +1144,7 @@ En la mayoría de proyectos se ha configurado para que las alertas que devuelve 
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Modelo de navegación de la aplicación móvil}
+\chapter{Modelo de navegación de la aplicación móvil} \label{ch:ModeloNavegacion}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      DESPLIEGUE  
