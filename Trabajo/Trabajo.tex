@@ -722,7 +722,7 @@ Para terminar, para las pruebas a nivel de API se ha empleado Postman. Postman e
 
 \chapter{Diseño e implementación de la solución monolítica}
 
-\section{Diseño de la solución}
+\section{Diseño de la solución} \label{sct:DiseñoMonolitico}
 
 A nivel arquitectónico, la aplicación monolítica va a seguir una arquitectura de 6 capas, que detallamos a continuación:
 
@@ -976,7 +976,7 @@ En el entorno de desarrollo puede ser útil emplear logs que capturen todo lo qu
 \caption{Añadir servicios para el logging.}
 \end{figure}
 
-Información como el entorno donde se ejecuta el servidor, las peticiones HTTP que se realicen al servidor o las consultas a base de datos quedarán registrados en la consola del proceso del servidor.
+Información como el entorno donde se ejecuta el servidor, las peticiones HTTP que se realicen al servidor o las consultas a base de datos quedarán registrados en la consola del proceso.
 
 \begin{figure}[h]
 \centering
@@ -984,9 +984,38 @@ Información como el entorno donde se ejecuta el servidor, las peticiones HTTP q
 \caption{Ejemplo del contenido de un log.}
 \end{figure}
 
-\subsection{Generación de la capa de Proxy}
+\subsection{Generación de la capa de proxy}
+%TODO Explicar por qué la capa de servicios no implementa como tal el contrato
+
+Como hemos comentado en la sección \ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}, la capa de proxy se emplea para invocar a la API de la parte servidora a través de llamadas HTTP. Para cada una de las interfaces de contratos vamos a crear un proxy, que implementará sus métodos delegando en un cliente HTTP generado automáticamente con \textbf{NSwag}. NSwag es un conjunto de herramientas para varias plataformas, entre ellas .NET Core, para la generación de especificaciones Swagger a partir de los controladores definidos en C\# y la generación de clientes HTTP para el consumo de estos controladores. \footnote{ Página de GitHub de NSwag: https://github.com/RSuter/NSwag} \footnote{ NSwag Tutorial: How to integrate NSwag into your ASP.NET Core Web API project: https://www.youtube.com/watch?v=lF9ZZ8p2Ciw}
+
+El cliente HTTP autogenerado es inyectado en el proxy a través del constructor. El proxy también es el encargado de adaptar los parámetros de la interfaz de contratos a los parámetros que espera el cliente HTTP. Esta adaptación es necesaria porque, por ejemplo, en las peticiones HTTP para los métodos GET no se puede especificar un Body y todos los parámetros se deben pasar a través de la cabecera de la petición. Como consecuencia, los parámetros solo pueden ser de tipos simples como una cadena (string) y objetos muy empleados como los identificadores (Guid) han de ser transformados a tipos más simples.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{OrdersProxy}
+\caption{Fragmento del proxy de pedidos donde se adaptan los parámetros a tipos simples.}
+\end{figure}
 
 \subsection{Calidad del código}
+
+Para asegurar la calidad del código se ha hecho uso de dos herramientas: CodeMaid y StyleCop.
+
+\begin{itemize}
+
+\item \textbf{CodeMaid}: es una extensión de Visual Studio para la limpieza automática de código C\# y otros lenguajes. En el proceso de limpieza, CodeMaid ordena los métodos y propiedades de acuerdo a los estándares, revisa el formato de los comentarios, elimina las referencias a espacios de nombres que no se emplean, etc. \footnote{ Página oficial de CodeMaid: http://www.codemaid.net/}
+
+\item \textbf{StyleCop}: es un analizador estático de código C\# desarrollado por Microsoft. Se basa en reglas centradas en aspectos como la documentación, la ordenación de los elementos o el estilo de código. Además, permite configurar las reglas que se aplican, definir excepciones a una de ellas o la creación de reglas propias. \footnote{Página de la Wikipedia de StyleCop: https://en.wikipedia.org/wiki/StyleCop} 
+
+En la mayoría de proyectos se ha configurado para que las alertas que devuelve StyleCop cuando no se cumple una regla se trate como un error y no como una alerta. Esto se puede conseguir añadiendo la opción TreatWarningsAsErrors en los archivos .csproj.
+
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=1]{TreatWarning}
+\caption{Fragmento de un proyecto donde se añade la opción TreatWarningsAsErrors.}
+\end{figure}
 
 \section{Interfaz de usuario}
 
