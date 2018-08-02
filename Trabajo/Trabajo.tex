@@ -117,7 +117,7 @@ El objetivo de este proyecto es validar con un caso de estudio las ventajas e in
 
 \item Evaluar cómo se pueden llevar a cabo diferentes modificaciones durante el mantenimiento de ambas aplicaciones una vez se ha finalizado su implementación.
 
-\item Verificar que una arquitectura basada en microservicios facilita alcanzar los requisitos no funcionales de escalabilidad y tolerancia a fallos frente a una arquitectura monolítica.
+\item Examinar ambas arquitecturas respecto a los requisitos no funcionales de escalabilidad y tolerancia a fallos.
 
 \end{itemize}
 
@@ -133,7 +133,7 @@ En el capítulo 3 se analiza la aplicación a desarrollar mediante su especifica
 
 El capítulo 4 explica el diseño e implementación del sistema siguiendo una arquitectura monolítica.
 
-El capítulo 5 se centra en los mismos aspectos que el capítulo anterior pero para una arquitectura basada en microservicos.
+El capítulo 5 se centra en los mismos aspectos que el capítulo anterior pero para una arquitectura basada en microservicios.
 
 En el capítulo 6 se realiza una comparación de ambas soluciones respecto a los requisitos no funcionales de escalabilidad y tolerancia a fallos  y se evalúa como afrontaría cada solución diferentes situaciones de mantenimiento.
 
@@ -1071,7 +1071,9 @@ Como material adicional, en el apéndice \ref{ch:ModeloNavegacion} \nameref{ch:M
 - Número de pruebas.
 - Pruebas realizadas.
 - Captura de las pruebas ejecutadas satisfactoriamente.
- 
+
+\section{Despliegue}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       MICROSERVICIOS
 %
@@ -1079,7 +1081,17 @@ Como material adicional, en el apéndice \ref{ch:ModeloNavegacion} \nameref{ch:M
 
 \chapter{Diseño e implementación de la solución basada en microservicios}
 
+A lo largo del capítulo anterior nos hemos centrado sobretodo en aspectos de implementación relacionados con diferentes herramientas como Identity o Swagger. En este capítulo nos vamos a centrar más en el diseño ya que, como hemos dicho en el apartado \ref{sct:PlanTrabajo} \nameref{sct:PlanTrabajo}, vamos a refactorizar la solución monolítica y a nivel de código apenas va a verse modificada.
+
 \section{Diseño de la solución}
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=1]{ShopBoundedContexts}
+\caption{División del modelo de dominio en contextos delimitados.}
+\end{figure}
+
+\subsection{Arquitectura interna de los microservicios}
 
 \section{Diferencias respecto a la solución monolítica}
 
