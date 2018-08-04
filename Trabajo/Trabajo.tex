@@ -210,7 +210,7 @@ Los sistemas AP escalan más fácilmente y son más sencillos de construir, pero
 
 En la fase de diseño se definen la arquitectura, componentes e interfaces del sistema. La especificación de requisitos es analizada para producir una descripción de la estructura interna del sistema, con el suficiente nivel de detalle para que sirva como base en su construcción. En esta fase se plantean diferentes diseños como alternativas de las que se debe hacer balance. Los modelos que se generan se emplearán para validar que se cumplen los requisitos establecidos y para planificar la fase de implementación. \cite{Bourque2014}
 
-\subsection{Librerías versus servicios}
+\subsection{Librerías versus servicios} \label{subsect:librerias}
 
 Un componente es una unidad de software que se puede reemplazar y actualizar de forma independiente. Las \textbf{librerías} son componentes que están ligados a un programa y son invocadas a través de llamadas a funciones. En cambio, los \textbf{servicios} son componentes que se ejecutan como procesos externos y con los que se puede comunicar a través de mecanismos como llamadas a procedimientos remotos (RPC) o peticiones HTTP. \cite{Lewis2014}
 
@@ -297,7 +297,7 @@ Tanto SOAP como REST emplean HTTP, aunque solo el segundo emplea los verbos defi
 
 En cuanto al tercer tipo de integración, la integración basada en eventos fomenta la escalabilidad y resilencia de los servicios y reduce el acoplamiento entre ellos. No obstante, requiere aprovisionar nuevas infraestructuras y añade complejidad a la hora de razonar sobre el sistema por ser una comunicación asíncrona. Algunas buenas prácticas para afrontar su complejidad van desde el uso efectivo de sistemas de monitorización hasta el uso de identificadores de correlación para trazar las llamadas entre servicios. \cite{Newman2015a}
 
-\subsection{Programación y persistencia políglotas}
+\subsection{Programación y persistencia políglotas} \label{subsec:Poliglota}
 
 %TODO Sustituir anteriormente por enlace.
 Como hemos comentado anteriormente, diferentes microservicios se pueden desarrollar empleando diferentes tecnologías. La base de datos que contiene los datos del servicio o la arquitectura interna del microservicio también pueden adaptarse a los requisitos del mismo. \cite{DelaTorre2018} La \textbf{programación políglota} se fundamenta en que diferentes lenguajes de programación son más aptos para tratar problemas específicos. Es más productivo escoger el lenguaje adecuado para un servicio concreto que tratar de buscar un lenguaje que se ajuste a los requisitos de todos.
@@ -805,7 +805,7 @@ Con todo esto, el diagrama de clases que se encuentran en la capa de dominio ser
 
 \section{Detalles de la implementación back-end}
 
-\subsection{Operaciones CRUD}
+\subsection{Operaciones CRUD} \label{subsect:CRUD}
 
 Para la mayoría de entidades que hemos modelado vamos a ofrecer operaciones CRUD. Esto se hará a través de las interfaces que expone la parte servidora en la capa de contratos. Con este propósito vamos a definir una interfaz que exponga estas de forma unitaria y agregada. En los servicios, las operaciones agregadas son un mecanismo para evitar que dos componentes tengan que comunicarse continuamente. Si se tienen que crear una colección de entidades, en lugar de crear una petición al servidor para cada entidad, se envía una única petición con toda la colección. \cite{Newman2015a} 
 
@@ -889,7 +889,7 @@ El usuario podrá obtener el token que le identifica a través del método Login
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 
-\subsection{Persistencia}
+\subsection{Persistencia} \label{subsect:Persistencia}
 
 Para la persistencia se va a emplear \textbf{Entity Framework Core} para el mapeo objeto-relacional y una base de datos SQL en la nube de \textbf{Microsoft Azure}. Entity Framework Core es una versión multiplataforma del ORM Entity Framework (EF) para trabajar con una base de datos mediante objetos .NET. \footnote{Descripción general de Entity Framework Core: https://docs.microsoft.com/es-es/ef/core/}
 
@@ -1134,11 +1134,31 @@ Concretamente, para representar visualmente la división en contextos delimitado
 
 \end{itemize}
 
-
-
 \subsection{Arquitectura interna de los microservicios}
 
-\section{Diferencias respecto a la solución monolítica}
+En el apartado \ref{subsec:Poliglota} \nameref{subsec:Poliglota} se ha reflexionado sobre que una arquitectura basada en microservicios permite emplear diferentes tecnologías, arquitecturas y bases de datos en cada microservicio. Para validar lo que en este apartado se dice, vamos a desarrollar algunos microservicios con diferentes combinaciones de estas 3 características.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.35]{Componentes}
+\caption{Diagrama de componentes de la solución basada en microservicios.}
+\end{figure}
+
+En la mayoría de microservicios vamos a seguir la arquitectura de 6 capas que se describe en la sección \ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}. Esto hará que su refactorización sea más sencilla ya que sólo debemos copiar las clases relacionadas al microservicio en cada una de las capas. 
+
+Cada microservicio tendrá su propia base de datos, aunque estas pueden localizarse dentro del mismo servidor. Para evaluar otra tecnología de base de datos, la BD del servicio de incidencias la vamos a implementar con Firebase.
+
+Las necesidades de cada microservicio de nuestro caso de estudio son diferentes: algunos como el de informes o notificaciones no requieren persistir datos, por lo que aplicar una arquitectura de 6 capas en ellos no es necesario. 
+
+En el microservicio de informes vamos a seguir una arquitectura más sencilla. Su lógica se situará directamente en la capa de servicios, eliminando la capa de aplicación. Las capas de dominio y persistencia también pueden ser eliminadas porque las plantillas de los informes se van a almacenar como un recurso y no en una base de datos. 
+
+En cuanto al servicio de notificaciones, vamos a implementarlo en el lenguaje Java. Sin embargo, como debe ser consumido por microservicios en lenguaje C\#, construiremos un proxy en este lenguaje para hacer más fácil su consumo.
+
+En el capítulo anterior, en las secciones \ref{subsect:CRUD} \nameref{subsect:CRUD} y \ref{subsect:Persistencia} \nameref{subsect:Persistencia} hemos nombrado algunas interfaces e implementaciones genéricas relacionadas con las entidades de dominio. Los microservicios de pedidos e incidencias deben seguir haciendo uso de estas implementaciones. En el apartado \ref{subsect:librerias} \nameref{subsect:librerias} hemos reflexionado sobre las formas de realizar componentes software. Hacer de este código común un servicio no tiene sentido porque está relacionado con el acceso a datos y cada microservicio es dueño de sus propios datos. En este caso, este código genérico lo referenciarán como una librería a través de paquetes NuGet.
+
+Por último, indicar que el consumo de cualquier microservicio, ya sea desde la interfaz de usuario o desde otros servicios, se realizará a través de las capas de proxy. En el diagrama de componentes no se ha incluido esta capa en la arquitectura interna de ninguno de los microservicios porque esta capa no se ejecuta en el proceso del servicio.
+
+\section{Diferencias en la implementación respecto a la solución monolítica}
 
 \section{Versionado de servicios y creación de paquetes NuGet}
 % https://www.thomaslevesque.com/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/
