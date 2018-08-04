@@ -106,6 +106,7 @@ En la actualidad, no es necesario un alto grado de conocimientos en ingeniería 
 Las arquitecturas basadas en microservicios son una tendencia actual que emerge asociada a conceptos clave como la integración continua, el desarrollo centrado en el dominio del problema o el despliegue en contenedores. En estas arquitecturas diferentes funcionalidades se encapsulan en servicios pequeños y autónomos que cooperan entre ellos. En términos de diseño, principios como el de Responsabilidad Única son más fáciles de conseguir y los desafíos de organización del código pueden abordarse de formas más diversas por la baja granularidad de la arquitectura. 
 
 \section{Objetivos}
+%TODO Revisar.
 
 El objetivo de este proyecto es validar con un caso de estudio las ventajas e inconvenientes de una arquitectura basada en microservicios frente a una arquitectura monolítica. Concretamente,los objetivos específicos son:
 
@@ -223,12 +224,13 @@ Con esta aproximación los expertos del dominio y los desarrolladores se sitúan
 
 El lenguaje ubicuo que se emplea crece y cambia con el paso del tiempo. Nadie es capaz de conocer el dominio de un negocio completo porque este forma parte de un proceso de descubrimiento continuo. Si la organización sigue una estrategia de desarrollo ágil, en cada iteración se refina el modelo de forma incremental y este plasma en todo momento el software en funcionamiento.
 
-Para su tratamiento, las áreas independientes del dominio se transforman en contextos delimitados. Cada contexto delimitado es un límite explícito que tiene su propio lenguaje ubicuo. Un concepto tiene un significado dentro de un contexto delimitado, pero fuera de él puede tener un significado totalmente diferente. No se puede tratar de incluir todos los conceptos en un único contexto: se deben separar los conceptos en diferentes contextos y entender las diferencias que existen para un concepto llamado igual en uno y otro contexto.
+Para su tratamiento, las áreas independientes del dominio se transforman en contextos delimitados. Cada contexto delimitado es un límite explícito que tiene su propio lenguaje ubicuo. Un concepto tiene un significado dentro de un contexto delimitado, pero fuera de él puede tener un significado totalmente distinto. No se puede tratar de incluir todos los conceptos en un único contexto: se deben separar los conceptos en diferentes contextos y entender las diferencias que existen para un concepto llamado igual en uno y otro contexto.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{bounded_contexts}
 \caption{Ejemplo de dos contextos delimitados dentro del mismo dominio que emplean el mismo nombre para un concepto, pero con significados diferentes. \cite{Fowler}}
+\label{fig:BoundedContexts}
 \end{figure}
 
 Cada contexto está formado por modelos que no necesitan ser compartidos con otros a menos que se defina explícitamente una interfaz que los empleen. La interfaz es el punto de entrada para que otros contextos puedan comunicar con el nuestro, empleando los términos y entidades que en nuestros modelos se definan.
@@ -239,7 +241,7 @@ Esta perspectiva puede trasladarse fácilmente al modelado de microservicios. Lo
 
 Cuando se razona sobre los límites de un servicio no se debe pensar en los datos que este almacena sino en las funcionalidades que ofrece. Pensar en los datos que almacena nos conduce a desarrollar únicamente servicios CRUD (en inglés, aquellos que nos permiten las operaciones de crear, leer, actualizar y eliminar datos), que ofrecen unas operaciones muy limitadas. Un servicio ofrece ciertas funcionalidades o capacidades que aportan \textbf{valor al negocio}.
 
-Una descomposición temprana de un sistema en microservicios puede conllevar ciertos riesgos. Si el equipo a cargo del desarrollo tiene pocos conocimientos del dominio del problema a resolver, puede  ser buena idea comenzar la implementación como si de un sistema monolítico se tratara. 
+Una descomposición temprana de un sistema en microservicios puede conllevar ciertos riesgos. Si el equipo a cargo del desarrollo tiene pocos conocimientos del dominio del problema a resolver, puede  ser buena idea comenzar la implementación como si de un sistema monolítico se tratara. Un mal diseño inicial puede desenvocar en que dos servicios se tengan que combinar porque exista un exceso de interacciones entre ellos. 
 
 Es aconsejable dividir la solución en grandes servicios que poco a poco se vayan dividiendo en más pequeños conforme se estudien las ventajas de hacer cada nueva extracción. Una vez sean conocidos los límites de cada servicio, se pueden refactorizar el código y los datos hacia una granularidad más fina. Como se puede ver en la figura, se puede migrar primero solo la funcionalidad del servicio sin preocuparse por sus límites en base de datos para no tener que realizar simultáneamente dos migraciones. Una vez nos aseguremos de que el servicio funciona correctamente, podemos migrar sus datos a una base de datos diferentes ya que cada servicio ha de ser dueño de sus propios datos. \cite{Richards2016}
 
@@ -1108,11 +1110,31 @@ A lo largo del capítulo anterior nos hemos centrado sobretodo en aspectos de im
 
 \section{Diseño de la solución}
 
+Para la descomposición de la solución en microservicios vamos a aplicar los principios que hemos explicado en el apartado \ref{sct:FaseDiseño} \nameref{sct:FaseDiseño}. Se tienen que extraer contextos bien delimitados sin importar en un primer momento el tamaño de estos. Aunque contemos con la experiencia del desarrollo de la solución monolítica, el tamaño de los microservicios se puede ajustar más adelante evaluando si vale la pena dividir un microservicio.
+
+Concretamente, para representar visualmente la división en contextos delimitados se va emplear el modelo de dominio del caso de estudio de forma similar a como se ha hecho en la figura \ref{fig:BoundedContexts}. A continuación, detallamos cada uno de ellos, centrándonos en las capacidades que ofrece al negocio y no tanto en las entidades que maneja:
+
 \begin{figure}[h]
 \centering
 \includegraphics[scale=1]{ShopBoundedContexts}
 \caption{División del modelo de dominio en contextos delimitados.}
 \end{figure}
+
+\begin{itemize}
+
+\item \textbf{Incidencias}: permite la creación de incidencias, obtener las incidencias de un cliente y añadir comentarios dentro de una incidencia.
+
+\item \textbf{Seguridad}: ofrece las funcionalidades de registro de nuevos clientes y login. Además, persiste los datos de los clientes, por lo que algunos de los microservicios tendrán una referencia a este, por ejemplo, para obtener el cliente o empleado que escribió un comentario.
+
+\item \textbf{Informes}: es un motor que almacena las plantillas de los informes que se pueden generar y simplemente combina esta con los datos que recibe para generar un documento de salida. No ofrece directamente ninguna funcionalidad al cliente: se trata de un \textbf{microservicio interno} que otros servicios emplean.
+
+\item \textbf{Notificaciones}: al igual que el microservicio de informes, no está ligado a ningún tipo de dato. Simplemente, ofrece la funcionalidad de enviar una notificación con el contenido que recibe como parámetro al destinatario especificado. También es un microservicio interno.
+
+\item \textbf{Pedidos}: permite obtener los pedidos de un cliente, generar una factura de un pedido, añadir productos...En este servicio se ha incluido la entidad Producto. Podríamos considerar un microservicio de catálogo al que solo tuvieran acceso los empleados del comercio para gestionar el número de unidades en stock o la creación de nuevos productos. Sin embargo, ninguna funcionalidad fuera del contexto de los pedidos se relaciona con los productos, por lo que la incluiremos en este servicio y más adelante evaluaremos si vale la pena representarla como un microservicio independiente. 
+
+\end{itemize}
+
+
 
 \subsection{Arquitectura interna de los microservicios}
 
