@@ -7,3 +7,5 @@ https://www.thomaslevesque.com/2017/09/18/common-msbuild-properties-and-items-wi
 Situaciones de mantenimiento:
 - Añadir una relación entre entidades de distintos dominios.
 - Migrar por ejemplo a otro proveedor de bases de datos (AWS).
+
+Para que se pueda enfocar en la arquitectura y las tecnologías, en lugar de pensar en un dominio de negocio hipotético que quizás no conozca, hemos seleccionado un dominio de negocio bien conocido, específicamente, una aplicación simplificada de comercio electrónico (e-shop) que presenta un catálogo de productos, toma pedidos de los clientes, verifica el inventario y realiza otras funciones del negocio.

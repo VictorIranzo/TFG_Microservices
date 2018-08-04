@@ -1158,7 +1158,25 @@ En el capítulo anterior, en las secciones \ref{subsect:CRUD} \nameref{subsect:C
 
 Por último, indicar que el consumo de cualquier microservicio, ya sea desde la interfaz de usuario o desde otros servicios, se realizará a través de las capas de proxy. En el diagrama de componentes no se ha incluido esta capa en la arquitectura interna de ninguno de los microservicios porque esta capa no se ejecuta en el proceso del servicio.
 
+\subsection{Organización de los microservicios}
+%Cesar de la Torre.
+
+En cuanto a la organización de los microservicios, vamos a emplear un único repositorio de código que contenga el código de todos los microservicios. Como en la solución monolítica, cada capa se representará a través de un proyecto .NET y cada microservicio tendrá una solución de VS distinta.
+
+En "Building Microservices", Newman reflexiona sobre esto en relación a las compilaciones de integración continua. Según él, la mejor opción es tener un repositorio y una compilación diferente para cada microservicio. De esta forma, existe una mayor correspondencia entre los servicios y los equipos encargados de cada uno porque cada equipo realiza cambios en un único repositorio. Además, se evita que un simple cambio en un microservicio lance la compilación de toda la solución. \cite{Newman2013a} En nuestro caso, no vamos a aplicar las prácticas de integración continua y tampoco tenemos equipos de trabajo distintos, por lo que será más cómodo emplear un único repositorio. Como consecuencia, esto implica que en un mismo commit (la unidad de los repositorios de código git que representa los cambios que se guardan en el repositorio) se puedan incluir cambios de diferentes microservicios.
+
+En cuanto a la organización en soluciones en Visual Studio, en "Microservicios .NET: Arquitectura para Aplicaciones .NET Contenerizadas" se organiza el código de la aplicación desarrollada en un único repositorio con una única solución. \cite{DelaTorre2018} Creemos que esta aproximación no es la mejor. Si consideramos una solución de Visual Studio como una vista de un repositorio de código, no tiene sentido que un desarrollador que trabaja en un único repositorio vea en su solución otros microservicios distintos al suyo. Además, incluir tantos archivos en la solución aumenta su tiempo de compilación, cuando jamás se van a realizar cambios o ejecutar algunos de ellos. Por ello, hemos optado por una solución diferente para cada servicio.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.85]{MicroservicesSolution}
+\caption{Organización de la solución basada en microservicios.}
+\end{figure}
+
 \section{Diferencias en la implementación respecto a la solución monolítica}
+% Uso del proxy en lugar de manager.
+% Servicio de notificaciones.
+% Base de datos de Firebase.
 
 \section{Versionado de servicios y creación de paquetes NuGet}
 % https://www.thomaslevesque.com/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/
@@ -1194,6 +1212,11 @@ Por último, indicar que el consumo de cualquier microservicio, ya sea desde la 
 \subsection{Utilización de recursos}
 
 \subsection{Capacidad para ser modificado}
+
+\section{Los microservicios en la interfaz de usuario}
+
+\section{Otros posibles diseños de la solución basada en microservicios}
+%Reports y notifications como una librería porque no requieren desplegarse frecuentemente y ahorras en llamadas HTTP.
 
 \section{Ventajas e inconvenientes de los microservicios}
 
