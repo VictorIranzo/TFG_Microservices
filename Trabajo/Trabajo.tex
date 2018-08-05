@@ -1175,13 +1175,13 @@ En cuanto a la organización en soluciones en Visual Studio, en "Microservicios 
 
 \section{Diferencias en la implementación respecto a la solución monolítica}
 
-\subsection{Consumo de otros microservicios}
+\subsection{Consumo de otros microservicios} \label{subsect:Consumo}
 
 Para que un microservicio pueda hacer peticiones a otro se deben seguir los siguientes pasos:
 
 \begin{enumerate}
 
-\item Instalar el paquete NuGet del microservicio a instalar en la capa de aplicación.
+\item Instalar el paquete NuGet del microservicio a consumir en la capa de aplicación.
 
 \begin{figure}[h]
 \centering
@@ -1244,7 +1244,9 @@ Por último, el archivo Dockerfile para el despliegue del servicio también var�
 
 \subsection{Persistencia en microservicio de incidencias}
 
-En el microservicio de incidencias vamos a emplear una base de datos en la plataforma Firebase. \textbf{Firebase} es una plataforma para el desarrollo de aplicaciones. Uno de los servicios que ofrece es una base de datos NoSQL en la nube en tiempo real. Los datos se almacenan en formato JSON y su acceso puede realizarse a través de peticiones HTTP. \footnote{ Documentación de Firebase Realtime Database: https://firebase.google.com/docs/database/}
+En el microservicio de incidencias vamos a emplear una base de datos en la plataforma Firebase. \textbf{Firebase} es una plataforma para el desarrollo de aplicaciones. Uno de los servicios que ofrece es una base de datos NoSQL en la nube en tiempo real. Los datos se almacenan en formato JSON y su acceso puede realizarse a través de peticiones HTTP. \footnote{ Documentación de Firebase Realtime Database: https://firebase.google.com/docs/database/} 
+
+Una de las principales ventajas de las bases de datos NoSQL es su escalabilidad horizontal. En lugar de tener un gran servidor para alojar una base de datos relacional, una base de datos NoSQL se puede distribuir entre diferentes máquinas. Esta funcionalidad en Firebase es de pago, por lo que no vamos a obtener grandes beneficios por emplear esta BD. Nuestro objetivo simplemente es validar que diferentes microservicios pueden emplear tecnologías de bases de datos distintas.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SALTO DE PAGINA
@@ -1261,12 +1263,57 @@ Gracias a la arquitectura interna basada en capas, el uso de esta BD solo implic
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.85]{IncidencesDAO}
+\includegraphics[scale=0.8]{IncidencesDAO}
 \caption{Fragmento de DAO que accede a una base de datos de Firebase.}
 \end{figure}
 
-\section{Versionado de servicios y creación de paquetes NuGet}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\section{Versionado de servicios}
 % https://www.thomaslevesque.com/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/
+
+Cada uno de los microservicios se va a desplegar de forma independiente. El consumo de un microservicio se realiza a través de su proxy, que es una implementación de una interfaz de la capa de contratos. Cuando se realiza y se despliega un cambio en un servicio pueden ocurrir dos situaciones respecto a sus consumidores:
+
+\begin{itemize}
+
+\item  La primera situación es que el cambio \textbf{no haya supuesto un cambio en la interfaz} de la capa de contratos. En este caso, se habrá realizado un cambio a nivel de la lógica del servicio o su persistencia, como puede ser la corrección de un defecto. El cambio realizado no necesita ser conocido por sus consumidores porque están desacoplados de la implementación específica del servicio. 
+
+Los consumidores pueden seguir consumiendo la misma interfaz del servicio. Solo en caso de que se haya modificado el comportamiento del servicio (su especificación) los consumidores deberán ser notificados para adaptarse a cambios en las respuestas del servidor. Por ejemplo, se puede haber cambiado la política de permisos de un método sin haber cambiado su interfaz y ahora devuelve un error 401:Unauthorized porque es necesario otro rol para invocarlo.
+
+\item Una segunda situación consiste en que el cambio \textbf{haya significado un cambio en la interfaz} de contratos. Por ejemplo, puede ocurrir que se haya añadido un nuevo parámetro a un método o se haya cambiado el DTO de respuesta de un método. En este caso, los consumidores deben actualizar el proxy que emplean para comunicar con la nueva versión del servicio. Para asegurar que ningún consumidor se rompe por la actualización se pueden seguir dos aproximaciones según la literatura:
+
+\begin{itemize}
+
+\item \textbf{Mantener la vieja interfaz y redireccionar internamente las peticiones que recibe a la nueva interfaz.} Ambas interfaces están disponibles hasta asegurarse de que ningún cliente esta empleando la interfaz vieja, lo que requiere de la monitorización del servicio para saber cuántos clientes la emplean todavía.
+
+\item \textbf{Tener diferentes versiones del servicio en funcionamiento.} Las peticiones realizadas a la interfaz antigua se redireccionan a la versión vieja del servicio y al contrario con las nuevas peticiones.
+
+Sin embargo, esta aproximación cuenta con algunas desventajas. En primer lugar, si se debe hacer una modificación como solucionar un defecto, posiblemente se deba hacer y desplegar en ambas versiones del servicio. En segundo lugar, se necesita un middleware con la lógica para redireccionar las peticiones a una u otra versión. En conclusión, esta solución puede resultar apta para periodos cortos de tiempo, pero cuanto más tiempo permanezcan los clientes empleando la vieja versión del servicio más riesgo tendremos de que ocurran estos problemas. \cite{Newman2015a}
+
+\end{itemize}
+
+\end{itemize}
+
+En nuestro caso de estudio, tenemos control de todos los consumidores ya que la interfaz de los servicios no va a ser publicada para su consumo por aplicaciones de terceros. Los consumidores de un microservicio serán o la interfaz de usuario u otros servicios. Como hemos comentado en la sección \ref{subsect:Consumo} \nameref{subsect:Consumo}, el proxy se añade como un paquete NuGet con una versión específica. Para asegurarnos de que siempre se consume la última versión de un servicio, vamos a hacer uso de variables para referir a la versión del paquete NuGet a instalar, como se puede ver en la figura \ref{fig:Csproj}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.9]{OrdersNuGets}
+\caption{Fragmento del proyecto (.csproj) del servicio de pedidos.}
+\label{fig:Csproj}
+\end{figure}
+
+A estas variables se les da valor en un archivo llamado Versions.props. Este archivo está centralizado y es común para todos los servicios para que todos ellos referencien a la misma versión de otro microservicio. Cuando se realice un cambio que cambie la interfaz de un servicio, la versión de este se incrementará en una unidad. Los consumidores deberán ser modificados para adaptarse al cambio de la interfaz y deberán desplegarse también. Como se puede ver en el archivo, la versión de cada servicio evoluciona de forma separada.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.9]{Versionsprops}
+\caption{Archivo Versions.props con las versiones de los microservicios.}
+\label{fig:Csproj}
+\end{figure}
 
 \section{Adaptación de la interfaz de usuario}
 
