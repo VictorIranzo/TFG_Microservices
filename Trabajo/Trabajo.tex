@@ -1174,6 +1174,75 @@ En cuanto a la organización en soluciones en Visual Studio, en "Microservicios 
 \end{figure}
 
 \section{Diferencias en la implementación respecto a la solución monolítica}
+
+\subsection{Consumo de otros microservicios}
+
+Para que un microservicio pueda hacer peticiones a otro se deben seguir los siguientes pasos:
+
+\begin{enumerate}
+
+\item Instalar el paquete NuGet del microservicio a instalar en la capa de aplicación.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.85]{OrdersApplicationDependencies}
+\caption{Dependencias del microservicio de pedidos en la capa de aplicación.}
+\end{figure}
+
+\item Al registrar las dependencias de la capa de aplicación, invocar al código de la capa de proxy donde se registran las interfaces del microservicio a consumir. En la capa de proxy, las interfaces de la capa de contratos se resuelven con un proxy. Esto significa que en un microservicio cuando hagamos una petición a otro servicio a través de la interfaz se realizará una llamada HTTP a través de su proxy.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.85]{UsingMicroservices}
+\caption{Código para resolver otros microservicios consumidos.}
+\end{figure}
+
+\item En el microservicio, inyectar en el constructor la interfaz de contratos del servicio que se desea consumir.
+
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\subsection{Microservicio de notificaciones}
+
+El microservicio de notificaciones ahora está desarrollado en dos lenguajes de programación distintos: Java y C\#:
+
+En C\# está desarrollado todo lo necesario para el consumo del servicio. Esto incluye la capa de contratos (donde se define su interfaz y el DTO que se empleará en la parte C\#) y la de proxy (donde se indica que la interfaz de contratos se resuelve a través del proxy, que recurre al cliente HTTP para realizar peticiones al microservicio).
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.85]{NotificationsC}
+\caption{Parte del microservicio de notificaciones desarrollada en C\#.}
+\end{figure}
+
+En Java se han desarrollado la capa de aplicación y servicios. La implementación de la capa de aplicación para mandar un correo electrónico es trivial. Para la capa de servicios, se crea e inicia un objeto HttpServer al que se le asigna un handler.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.85]{NotificationsJava}
+\caption{Parte del microservicio de notificaciones desarrollada en Java.}
+\end{figure}
+
+El handler es similar a lo que en .NET llamábamos controlador. En nuestro caso, deserializará el cuerpo (body) de la petición en un objeto empleando la librería Gson y delegará en la capa de aplicación la operación a realizar. Cuando se quiere consumir otro microservicio no podemos emplear los proxies que hemos creado para C\# porque es otro lenguaje de programación. En nuestro ejemplo, queremos contactar con el servicio de seguridad para obtener el correo electrónico de un usuario. Debemos crear un objeto para conectar a través del protocolo HTTP con el microservicio de seguridad y leer la respuesta obtenida.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.85]{JavaProxy}
+\caption{Proxy del microservicio de seguridad para su consumo en Java.}
+\end{figure}
+
+Por último, el archivo Dockerfile para el despliegue del servicio también varía. Vamos a seguir el mismo criterio que en los contenedores de microservicios .NET de usar los ensamblados (en este caso, un archivo *.jar) para generar la imagen con el menor número de recursos posibles. Tanto el comando para iniciar el proceso del contenedor como la imagen base se verán afectados.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.85]{JavaDockerfile}
+\caption{Dockerfile del microservicio de notificaciones.}
+\end{figure}
+
+\subsection{Persistencia en microservicio de incidencias}
 % Uso del proxy en lugar de manager.
 % Servicio de notificaciones.
 % Base de datos de Firebase.
