@@ -1092,7 +1092,7 @@ Sin embargo, usar este patrón puede ser excesivo para UIs muy sencillas. \footn
 Como material adicional, en el apéndice \ref{ch:ModeloNavegacion} \nameref{ch:ModeloNavegacion} se incluyen capturas de la aplicación desarrollada y la navegación que existe entre las diferentes pantallas.
 
 \section{Pruebas}
-
+%TODO Pruebas del CRUD.
 - Número de pruebas.
 - Pruebas realizadas.
 - Captura de las pruebas ejecutadas satisfactoriamente.
@@ -1306,18 +1306,32 @@ En nuestro caso de estudio, tenemos control de todos los consumidores ya que la 
 \label{fig:Csproj}
 \end{figure}
 
-A estas variables se les da valor en un archivo llamado Versions.props. Este archivo está centralizado y es común para todos los servicios para que todos ellos referencien a la misma versión de otro microservicio. Cuando se realice un cambio que cambie la interfaz de un servicio, la versión de este se incrementará en una unidad. Los consumidores deberán ser modificados para adaptarse al cambio de la interfaz y deberán desplegarse también. Como se puede ver en el archivo, la versión de cada servicio evoluciona de forma separada.
+A estas variables se les da valor en un archivo llamado Versions.props. Este archivo está centralizado y es común para todos los servicios para que todos ellos referencien a la misma versión de otro microservicio. \footnote{ Common MSBuild properties and items with Directory.Build.props: https://www.thomaslevesque.com/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/} Cuando se realice un cambio que cambie la interfaz de un servicio, la versión de este se incrementará en una unidad. Los consumidores deberán ser modificados para adaptarse al cambio de la interfaz y deberán desplegarse también. Como se puede ver en el archivo, la versión de cada servicio evoluciona de forma separada.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.9]{Versionsprops}
 \caption{Archivo Versions.props con las versiones de los microservicios.}
-\label{fig:Csproj}
 \end{figure}
 
 \section{Adaptación de la interfaz de usuario}
 
+Para que la UI emplee los microservicios que se han creado se debe sustituir el proxy monolítico por los proxies de los microservicios de Seguridad, Incidencias y Pedidos. Esto se hace eliminando el paquete NuGet del proxy monolítico e instalando los tres paquetes nuevos.
+
+Una vez hecho esto, habrá que corregir las referencias a diferentes espacios de nombres. Los espacios de nombre de la solución monolítica a la solución basada en microservicios se han modificado para distinguir clases de ambas soluciones que se llaman igual. Otro cambio que se debe realizar, como muestra la figura \ref{fig:ChangesUI} es invocar el código para resolver las interfaces de contratos con los proxies.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.9]{ChangesUI}
+\caption{Cambios en la UI para emplear la solución basada en microservicios.}
+\label{fig:ChangesUI}
+\end{figure}
+
+%TODO Explicar appsettings
+
 \section{Adaptación de las pruebas}
+
+%TODO A la espera de TestServer.
 
 \section{Despliegue}
 
