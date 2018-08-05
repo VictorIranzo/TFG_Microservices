@@ -1238,14 +1238,32 @@ Por último, el archivo Dockerfile para el despliegue del servicio también var�
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.85]{JavaDockerfile}
+\includegraphics[scale=1]{JavaDockerfile}
 \caption{Dockerfile del microservicio de notificaciones.}
 \end{figure}
 
 \subsection{Persistencia en microservicio de incidencias}
-% Uso del proxy en lugar de manager.
-% Servicio de notificaciones.
-% Base de datos de Firebase.
+
+En el microservicio de incidencias vamos a emplear una base de datos en la plataforma Firebase. \textbf{Firebase} es una plataforma para el desarrollo de aplicaciones. Uno de los servicios que ofrece es una base de datos NoSQL en la nube en tiempo real. Los datos se almacenan en formato JSON y su acceso puede realizarse a través de peticiones HTTP. \footnote{ Documentación de Firebase Realtime Database: https://firebase.google.com/docs/database/}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.85]{Firebase}
+\caption{Base de datos de incidencias en Firebase.}
+\end{figure}
+
+Gracias a la arquitectura interna basada en capas, el uso de esta BD solo implica dejar de usar la implementación que se da por defecto al DAO en la librería común y programar una implementación propia que acceda a los datos a través de llamadas HTTP.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.85]{IncidencesDAO}
+\caption{Fragmento de DAO que accede a una base de datos de Firebase.}
+\end{figure}
 
 \section{Versionado de servicios y creación de paquetes NuGet}
 % https://www.thomaslevesque.com/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/
