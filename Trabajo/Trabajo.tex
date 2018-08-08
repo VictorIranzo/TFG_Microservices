@@ -1420,6 +1420,12 @@ Ahora, revisaremos las soluciones frente a diferentes requisitos no funcionales 
 
 \subsection{Disponibilidad}
 
+La disponibilidad de un servicio se puede definir como la habilidad de un consumidor para conectarse a él y enviarle peticiones. \cite{Richards2016} Para que un sistema esté disponible se han de implementar mecanismos conformes a sus necesidades para reaccionar automáticamente al incremento de carga o a un fallo. \cite{Newman2015a}
+
+En la solución basada en microservicios, se ha garantizado la disponibilidad frente a algunas situaciones gracias a Kubernetes. Para cada uno de los microservicios desplegados se puede establecer el número de replicas que en todo momento se desea tener de él. Esto nos garantiza que en caso de fallo el microservicio se recupere rápidamente. 
+
+Sin embargo, no se ha implementado ningún mecanismo para reaccionar automáticamente al incremento de peticiones. Para garantizar esto se tiene que modificar el tamaño de un clúster de forma dinámica en función de su demanda. Con este propósito, se debe situar un balanceador de carga antes del clúster que modifique el número de replicas para crear nuevas en función de la carga que observe. \cite{Rensin2015}
+
 \subsection{Tolerancia a fallos}
 
 Un sistema debe ser capaz de tolerar fallos y continuar trabajando. En las arquitecturas SOA, la integración entre servicios está muy ligada a como se gestionan los fallos: se debe asumir que cualquier servicio puede estar inoperativo. Por ejemplo, cuando se realiza una petición, no se puede esperar indefinidamente a que un servicio responda. \cite{Newman2015a}
