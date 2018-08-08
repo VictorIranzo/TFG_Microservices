@@ -1352,6 +1352,8 @@ Una vez hecho esto, habrá que corregir las referencias a diferentes espacios de
 
 \section{Mantenimiento}
 
+A continuación, revisaremos como una arquitectura monolítica y una basada en microservicios afrontan diferentes situaciones de mantenimiento. Para ello, recorreremos los diferentes tipos de mantenimiento según la ISO/IEC 14764 y plantearemos ejemplos dentro de nuestro caso de estudio. 
+
 \subsection{Mantenimiento correctivo}
 
 El mantenimiento correctivo consiste en una modificación del producto software una vez se ha entregado para corregir un error detectado. \cite{Bourque2014} En piezas de código muy largas resulta difícil encontrar dónde se encuentra un defecto. Gracias al diseño modular de las arquitecturas orientadas a servicios, un defecto será más fácil de localizar. A nivel de código, clases que deben modificarse como un conjunto para corregir un defecto estarán en el mismo microservicio.
