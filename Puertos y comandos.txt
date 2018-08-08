@@ -18,3 +18,47 @@ $ docker rm $(docker ps -a -f status=exited -q)
 $ docker images -a
 $ docker rmi nombre_imagen
 $ docker rmi $(docker images -a -q)
+
+
+az login
+az resource list --resource-group MicroservicesBackend
+az acr login --name MicroservicesContainterRegistry
+
+docker tag shopmicroservicessecurity microservicescontainterregistry.azurecr.io/shopmicroservicessecurity
+
+docker push microservicescontainterregistry.azurecr.io/shopmicroservicessecurity
+
+Entidad de servicio de Azure Active directory:
+{
+  "appId": "c328cbc4-36f8-4082-8d8a-8eded646f4fd",
+  "displayName": "azure-cli-2018-08-07-17-22-55",
+  "name": "http://azure-cli-2018-08-07-17-22-55",
+  "password": "0f7a0b65-5dbe-434b-9a26-f12e7d34a8f2",
+  "tenant": "be4655df-ac73-401f-a7ae-198c3b72d0c6"
+}
+
+az vm list-ip-addresses --resource-group MicroservicesBackend -o table
+
+journalctl -u kubelet -o cat
+
+kubectl get service shop-microservices-security --watch
+
+kubectl apply -f kubernetes.yaml
+
+kubectl run -it --rm aks-ssh --image=debian
+
+kubectl cp ~/.ssh/id_rsa aks-ssh-7b5b5856cd-k74hd:/id_rsa
+
+kubectl replace --force -f kubernetes.yaml
+
+az acr login --name MicroservicesContainterRegistry
+
+az login
+
+az acr list --resource-group myResourceGroup --query "[].{acrLoginServer:loginServer}" --output table
+
+az acr repository list --name MicroservicesContainterRegistry --output table
+
+az aks create --name KubernetesCluster2 --resource-group MicroservicesBackend --node-count 1 --generate-ssh-keys --service-principal c328cbc4-36f8-4082-8d8a-8eded646f4fd --client-secret 0f7a0b65-5dbe-434b-9a26-f12e7d34a8f2
+
+az aks get-credentials --name myAKSCluster --resource-group myResourceGroup

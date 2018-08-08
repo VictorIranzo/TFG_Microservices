@@ -1354,7 +1354,7 @@ Una vez hecho esto, habrá que corregir las referencias a diferentes espacios de
 
 \subsection{Mantenimiento correctivo}
 
-El mantenimiento correctivo consiste en una modificación del producto software una vez se ha entregado para corregir un error detectado. \cite{Bourque2014} En piezas de código muy largas resulta difícil encontrar dónde se encuentra un defecto. Gracias al diseño modular de las arquitecturas orientadas a servicios, un defecto será más fácil de localizar. 
+El mantenimiento correctivo consiste en una modificación del producto software una vez se ha entregado para corregir un error detectado. \cite{Bourque2014} En piezas de código muy largas resulta difícil encontrar dónde se encuentra un defecto. Gracias al diseño modular de las arquitecturas orientadas a servicios, un defecto será más fácil de localizar. A nivel de código, clases que deben modificarse como un conjunto para corregir un defecto estarán en el mismo microservicio.
 
 En el caso de estudio, un fallo, por ejemplo, en la creación de un pedido se localizará en el microservicio de pedidos. En la misma solución monolítica, si las responsabilidades de las clases no están bien delimitadas, se deberá buscar entre más código para encontrar el defecto.
 
@@ -1366,7 +1366,7 @@ Por ejemplo, si se observa un fallo de que no se genera correctamente una factur
 
 %TODO Añadir la defincion de Sommerville
 
-Según la ISO/IEC 14764, el mantenimiento pefectivo es una modificación de un producto software una vez se ha entregado para proveer mejoras a sus usuarios, mejorar la documentación del programa o atributos del software como el rendimiento o la mantenibilidad. \cite{Bourque2014}
+Según la ISO/IEC 14764, el mantenimiento pefectivo es una modificación de un producto software una vez se ha entregado para proveer mejoras a sus usuarios, mejorar la documentación del programa o atributos del software como el rendimiento o la mantenibilidad. \cite{Bourque2014} Según Sommerville, este tipo de mantenimiento se origina cuando los requisitos del sistema cambian para responder a un cambio en el negocio. Además, el tamaño de la modificación a realizar es normalmente superior al de modificaciones asociadas al del resto de tipos de mantenimiento. \cite{Sommerville2010}
 
 Como hemos comentado en el apartado \ref{subsect:Descomposicion} \nameref{subsect:Descomposicion}, el hecho de que se divida la solución en contextos bien delimitados hará que los nuevos requisitos encajen mejor en uno de ellos.
 
@@ -1379,8 +1379,19 @@ El problema al que nos podemos enfrentar es que un nuevo requisito nos haga plan
 Esto no es un problema y puede gestionarse a través de mecanismos para la consistencia eventual. Con estos mecanismos, si se elimina por ejemplo un pedido, el cambio se propagaría hasta el microservicio de incidencias para que actuase en consecuencia borrando las incidencias asociadas. En definitiva, aunque se puedan implementar manteniendo los límites de los servicios, puede ser interesante replantearse estos límites de acuerdo a los nuevos requisitos funciones.
 
 \subsection{Mantenimiento adaptativo}
-%Migrar a una nueva plataforma
-El mantenimiento adaptativo se define como la modificación de un producto software tras su entrega para que sea utilizable en un nuevo entorno. \cite{Bourque2014}
+% Migrar a una nueva plataforma
+
+El mantenimiento adaptativo se define como la modificación de un producto software tras su entrega para que sea utilizable en un nuevo entorno. \cite{Bourque2014} Según Sommerville, estos cambios pueden deberse, por ejemplo, a cambios en el hardware, la plataforma donde opera el sistema o cambios en productos software de los que se depende. \cite{Sommerville2010} En este tipo de mantenimiento, una arquitectura basada en microservicios presenta grandes beneficios que vamos a explicar siguiendo los 3 ejemplos de Sommerville.
+
+En primer lugar, al poderse desplegar de forma independiente, el alcance de un cambio en el hardware influirá será menor. Cada servicio se puede desplegar en un hardware diferente de acuerdo a sus necesidades. En consecuencia, el aprovechamiento de los recursos es mayor. Microservicios que requieren mayor rendimiento se pueden ubicar en servidores con mayores prestaciones. Si nos situamos en el contexto de nuestro caso de estudio, los microservicios de incidencias y pedidos pueden situarse en un servidor con mayor CPU y RAM. En caso de que se detecte que las prestaciones hardware comienzan a deteriorarse para albergar ambos servicios en el mismo servidor, podemos migrar uno de ellos a otro servidor. 
+
+En una arquitectura monolítica, al desplegarse todo el back-end como un conjunto las prestaciones hardware del servidor han de ser superiores para soportar todas las peticiones que recibe el monolito. En caso de que se requiera migrar a otro servidor, se ha de migrar todo el sistema como un conjunto.
+
+En segundo lugar, en un sistema basado en microservicios, gracias a su integración interprocedural, la plataforma donde operan diferentes servicios puede ser distintos. Por ejemplo, el microservicio de incidencias podría ejecutarse en AWS mientras que el resto del sistema se encontrara en la plataforma de Azure. Obviamente, no podemos decir lo mismo de un sistema monolítico.
+
+En tercer lugar, las dependencias del software se pueden gestionar a un nivel más granular en un sistema basado en microservicios. Por ejemplo, puede ocurrir que un sistema necesite ejecutarse en .NET Framework para emplear una librería que no sea multiplataforma. En una arquitectura basada en microservicios, esa librería solo se empleará en un contexto bien delimitado, por lo que solo hará falta tener un servicio en este framework. En cambio, en un sistema monolítico para poder emplearla todo el sistema debería estar en este framework, lo que resulta muy restrictivo si se desea hacer un sistema multiplataforma.
+
+Lo mismo ocurre con la versión de una librería. Diferentes servicios pueden emplear versiones diferentes de ella. Así, si se tiene que actualizar la librería, solo hará falta hacerlo en un microservicio y no en todo el sistema, disminuyendo sus posibles efectos secundarios.
 
 \section{Comparación de las soluciones ante RNFs}
 
