@@ -176,7 +176,7 @@ Otra definición interesante es la que aportan Lewis y Fowler. Según ellos, los
 
 La fase de requisitos del software es aquella en la que se elicitan, analizan, documentan, validan y mantienen los requisitos del sistema. Los requisitos del software expresan las necesidades y restricciones asociadas a un sistema. \cite{Fernandes2016} El artefacto principal que se produce en esta fase es el documento con la especificación de requisitos software (ERS). Una vez validado dicho documento por los stakeholders se puede iniciar la fase de diseño la solución. Esto no significa el final de esta fase del proceso: la gestión de los requisitos continúa durante el resto del desarrollo del producto.
 
-\subsection{Requisitos funcionales y no funcionales}
+\subsection{Requisitos funcionales y no funcionales} \label{subsect:RNF}
 
 Los requisitos se pueden clasificar en funcionales y no funcionales. Los \textbf{requisitos funcionales} (RF) describen la funcionalidad que los usuarios esperan del sistema. Los \textbf{requisitos no funcionales} (RNF) son restricciones impuestas sobre el sistema a desarrollar, estableciendo por ejemplo como de rápido o fiable ha de ser. Mientras que los primeros no incluyen ninguna mención relacionada con la tecnología que emplea el sistema, los segundos sí pueden establecer restricciones de este tipo. Por ejemplo, un requisito no funcional puede consistir en desarrollar una aplicación en un lenguaje de programación específico o hacer que esté disponible para diferentes sistemas operativos móviles. Por este motivo, los requisitos deben ser tenidos en cuenta a lo largo de todo el desarrollo del sistema.
 
@@ -438,6 +438,8 @@ El mantenimiento de software es la fase del desarrollo que más recursos consume
 Gracias a su diseño modular, los microservicios son una arquitectura que se puede seguir para hacer más sencillo el mantenimiento de un sistema. Sin embargo, las consecuencias de elegir un estilo arquitectónico no son evidente hasta años más tarde de haber sido tomadas, por lo que hasta que no se vean sistemas maduros que empleen microservicios no se debe afirmar a ciencia cierta que garantizan estas características. \cite{Lewis2014}
 
 \subsection{Reemplazamiento}
+
+%TODO Característica del ISO 25010
 
 En la mayoría de empresas abundan los sistemas legados que nadie desea mantener. La \textbf{refactorización} de estos sistemas es imposible por su tamaño y riesgo. Si en lugar de haber empleado una arquitectura monolítica para su diseño se emplearan microservicios se observaría como los barreras para la refactorización no existen al poderse reescribir el microservicio al completo en pocos días.
 
@@ -1205,6 +1207,26 @@ Para que un microservicio pueda hacer peticiones a otro se deben seguir los sigu
 
 \end{enumerate}
 
+\subsection{Consistencia eventual}
+%TODO Escribir cambios en la capa de dominio
+
+Cada servicio es soberano de sus datos y la mejor manera de conseguir esto es separar los datos de cada uno en diferentes bases de datos. Una única base de datos relacional para toda la aplicación, tal y como se usa en la solución monolítica, tiene dos ventajas principalmente: se pueden emplear transacciones atómicas y restricciones de integridad referencial. 
+
+No se puede realizar una transacción única que involucre a diferentes microservicios, sobretodo porque cada uno puede utilizar una tecnología de BD diferente. Las transacciones se deben implementar en la capa de aplicación y en caso de que una operación falle, se deben establecer mecanismos de compensación que reviertan los cambios hechos hasta ese punto. \cite{DelaTorre2018}
+
+Por suerte, las únicas referencias en los datos que hay entre diferentes servicios son las que hay desde incidencias y pedidos al servicio de seguridad. Tanto los pedidos, las incidencias y los comentarios están asociados a un cliente. En caso de que se borre un cliente, en cascada se deben borrar las instancias de estas entidades que tenga asociadas como si de una transacción se tratara. La operación de eliminar un cliente no está soportada por la API, por lo que no ha sido necesario implementar ninguna transacción entre microservicios.
+
+En caso de que estuviera soportada, no se puede realizar de forma atómica y la consistencia sería eventual. Un usuario podría ver un estado inconsistente del sistema si se ha eliminado un cliente en el microservicio de seguridad pero sus pedidos todavía no en el microservicio de pedidos. Se denomina eventual porque en algún punto próximo del tiempo la transacción que se ha iniciado entre diferentes microservicios para eliminar a un usuario se completará en todo el sistema.
+
+En cuanto a las restricciones de integridad referencial, en una base de datos relacional se modela a través de claves externas (foreign key, FK). Dentro de la base de datos de un servicio podemos emplear FKs, como ocurre en las relaciones entre pedido y compra. Sin embargo, en las relaciones que hemos comentado con el módulo de seguridad, no se pueden emplear como tal FKs porque se referenciaría a otra base de datos. En su lugar, se almacena únicamente el identificador de la entidad referenciada y cuando se quiere acceder a ella se debe hacer una petición al servicio que la gestiona. Esto se refleja en las entidades de la capa de dominio, como se ve en la figura \ref{fig:Comment}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{Comment}
+\caption{Clases de dominio de la entidad comentario en la solución monolítica (derecha) y la basada en microservicios (izquierda).}
+\label{fig:Comment}
+\end{figure}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SALTO DE PAGINA
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1215,9 +1237,6 @@ Para que un microservicio pueda hacer peticiones a otro se deben seguir los sigu
 El microservicio de notificaciones ahora está desarrollado en dos lenguajes de programación distintos: Java y C\#:
 
 En C\# está desarrollado todo lo necesario para el consumo del servicio. Esto incluye la capa de contratos (donde se define su interfaz y el DTO que se empleará en la parte C\#) y la de proxy (donde se indica que la interfaz de contratos se resuelve a través del proxy, que recurre al cliente HTTP para realizar peticiones al microservicio).
-
-\subsection{Consistencia eventual}
-%TODO Escribir cambios en la capa de dominio
 
 \begin{figure}[h]
 \centering
@@ -1350,7 +1369,7 @@ Una vez hecho esto, habrá que corregir las referencias a diferentes espacios de
 
 \chapter{Evaluación de las soluciones}
 
-\section{Mantenimiento}
+\section{Mantenimiento} \label{sect:Mantenimiento}
 
 A continuación, revisaremos como una arquitectura monolítica y una basada en microservicios afrontan diferentes situaciones de mantenimiento. Para ello, recorreremos los diferentes tipos de mantenimiento según la ISO/IEC 14764 y plantearemos ejemplos dentro de nuestro caso de estudio. 
 
@@ -1397,20 +1416,39 @@ Lo mismo ocurre con la versión de una librería. Diferentes servicios pueden em
 
 \section{Comparación de las soluciones ante RNFs}
 
+Ahora, revisaremos las soluciones frente a diferentes requisitos no funcionales que hemos mencionado en la sección \ref{subsect:RNF} \nameref{subsect:RNF}. En el capítulo de \nameref{ch:Conclusiones} sintetizaremos lo que aquí se comenta para ofrecer una respuesta al cuarto objetivo que proponemos en este memoria.
+
 \subsection{Disponibilidad}
 
 \subsection{Tolerancia a fallos}
+
+Un sistema debe ser capaz de tolerar fallos y continuar trabajando. En las arquitecturas SOA, la integración entre servicios está muy ligada a como se gestionan los fallos: se debe asumir que cualquier servicio puede estar inoperativo. Por ejemplo, cuando se realiza una petición, no se puede esperar indefinidamente a que un servicio responda. \cite{Newman2015a}
+
+En nuestro caso de estudio, este problema está presente en las dos soluciones implementadas. El front-end comunica con el back-end a través de llamadas HTTP, al igual que ocurre entre los propios microservicios de la segunda solución. En las soluciones, para limitar el tiempo de espera se emplean timeouts, tal que si una petición no obtiene una respuesta esta se considera un fallo.
+
+Sin embargo, el uso de timeotus no es una solución aconsejable debido al valor que se le debe dar a la espera. No se puede poner un límite demasiado bajo porque trataría como errores respuestas que han tardado más de lo debido. Tampoco puede ser muy alto, o se tardaría mucho en devolver un error, sobretodo cuando se encadenan diferentes llamadas.
+
+Una solución pasa por usar un patrón de cortocircuitos. Los cortocircuitos monitorizan continuamente el estado de un servicio. Si detectan que un servicio no responde cierto número de peticiones, el cortocircuito pasa a un estado en el que rechaza cualquier petición para que estas fallen rápidamente. Cuando el servicio vuelve a estar operativo, el cortocircuito comienza a aceptar de nuevo peticiones. \cite{Richards2016}
+
+También se ha de proteger el sistema de los fallos de infraestructura. La mejor manera de hacer un sistema tolerante a este tipo de fallos es no situar todos sus servicios en una misma infraestructura, ya sea una máquina física, red, etc. Así, se consigue que no haya un único punto de fallo. \cite{Newman2015a} En la solución del caso de estudio basada en microservicios, esto se consigue gracias al uso de Kubernetes, como hemos comentado en el apartado anterior.
+
+El uso de diferentes bases de datos y no una única como hay en la solución monolítica también hace que en los datos no haya un único punto de fallo. No obstante, se podrían haber empleado tecnologías de bases de datos distribuidas (BDD) como MongoDB para garantizar esta característica a nivel de cada microservicio.
+
+Por último, organizaciones como Netflix prueban la tolerancia a fallos de sus servicios incitando al fallo de estos. Para ello, emplea un conjunto de programas que componen el ``ejército de simios", que apagan máquinas y centros de datos en producción de forma aleatoria. \cite{Lewis2014}
 
 \subsection{Utilización de recursos}
 
 \subsection{Capacidad para ser modificado}
 
-Los microservicios incrementan la facilidad de cambio de un producto software. Los microservicios permiten que un cambio en un único servicio se despliegue de manera independiente, haciendo que los cambios lleguen al cliente final de forma más rápida.
+Los microservicios incrementan la facilidad de cambio de un producto software. Un cambio en un único servicio se despliegue de manera independiente y llega al cliente final de forma más rápida si se siguen prácticas como las de entrega continua.
+
+En el apartado \ref{sect:Mantenimiento} \nameref{sect:Mantenimiento} se han planteado diferentes situaciones que acreditan que, durante esta fase del ciclo del software, los beneficios de una arquitectura basada en microservicios son superiores a los de una arquitectura monolítica. 
 
 \section{Los microservicios en la interfaz de usuario}
 
 \section{Otros posibles diseños de la solución basada en microservicios}
 %Reports y notifications como una librería porque no requieren desplegarse frecuentemente y ahorras en llamadas HTTP.
+%Services y application combinados
 
 \section{Ventajas e inconvenientes de los microservicios}
 
@@ -1418,7 +1456,7 @@ Los microservicios incrementan la facilidad de cambio de un producto software. L
 %                      CONCLUSIONES                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Conclusiones}
+\chapter{Conclusiones} \label{ch:Conclusiones}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                     BIBLIOGRAFIA                                 %
