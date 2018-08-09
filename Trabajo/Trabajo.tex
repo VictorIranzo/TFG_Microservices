@@ -198,6 +198,8 @@ Requisitos no funcionales asociados a atributos de calidad como la disponibilida
 
 \item La \textbf{utilización de recursos} se define en la ISO como la cantidad y tipos de recursos empleados durante el funcionamiento del software bajo unas condiciones determinadas. \cite{Standard2010} Por un lado, los arquitecturas basadas en microservicos ofrecen beneficios ya que permiten que cada servicio se despliegue en un hardware diferente con unas prestaciones acordes a sus necesidades. También permiten que se escale cada servicio de acuerdo a su demanda de forma independiente, en lugar de tener que escalar el sistema monolítico al completo. \cite{DelaTorre2018} Por otro lado, los servicios se ejecutan en diferentes procesos y las llamadas interprocedurales a través de la red pueden suponer un mayor consumo de recursos. \cite{FowlerSusan}
 
+\item La \textbf{capacidad para ser reemplazado} es la capacidad de un producto software para ser reemplazado por otro en el mismo entorno y con el mismo propósito. La ventaja de los microservicios es que, gracias a su diseño modular, las piezas de software se pueden reemplazar fácilmente. Cada microservicio es un componente de software que puede ser completamente reescrito en poco tiempo. Autores como Jon Eaves estiman que el tiempo para hacerlo no debería superar las dos semanas. Esto hace que se pueda reaccionar a situaciones imprevistas más fácilmente. Por ejemplo, para que un sistema pueda operar en un entorno determinado puede ocurrir que se tenga que reescribir un servicio por otra persona a la que inicialmente lo desarrolló. Al reescribirlo se puede emplear otro lenguaje de programación; basta con mantener la misma interfaz del servicio para que otros puedan continuar operando con él. \cite{Eaves2014} Si en lugar de reescribir un servicio se tuviera que reescribir toda la aplicación, el proceso de hacerlo no se podría abordar de forma incremental si la aplicación fuera un monolito.
+
 \end{itemize}
 
 \subsection{El teorema de CAP}
@@ -522,6 +524,7 @@ Kubernetes se emplea principalmente para especificar el número de replicas que 
 
 \section{Crítica al estado del arte}
 % Trabajos presentados en la ETSINF.
+% Gonzalez en Docs.
 
 \section{Propuesta} \label{sect:Propuesta}
 %TODO Revisar
@@ -1499,14 +1502,20 @@ En resumen, en el caso de estudio no se han apreciado grandes diferencias en el 
 
 \subsection{Capacidad de ser reemplazado}
 %TODO Reformular. Jon Eaves (2 semanas).
+%Hablar del tiempo que ha costado desarrollar cada microservicio.
 
 Los microservicios incrementan la facilidad de cambio de un producto software. Un cambio en un único servicio se despliegue de manera independiente y llega al cliente final de forma más rápida si se siguen prácticas como las de entrega continua.
 
-En el apartado \ref{sect:Mantenimiento} \nameref{sect:Mantenimiento} se han planteado diferentes situaciones que acreditan que, durante esta fase del ciclo del software, los beneficios de una arquitectura basada en microservicios son superiores a los de una arquitectura monolítica. 
+La capacidad para ser reemplazado está estrechamente relacionada con la facilidad de cambio. El uso de interfaces en la capa de contratos, por ejemplo, hace que un microservicio pueda ser modificado y reemplazado fácilmente. El componente sustituto puede estar implementada con otra tecnología si respeta la vieja interfaz. 
+
+Si recordamos el cronograma que hemos explicado en el apartado \ref{sct:PlanTrabajo} \nameref{sct:PlanTrabajo}, la refactorización de la solución monolítica para generar cualquiera de los servicios apenas se ha prolongado por más de un día (las tareas que empiezan su nombre con la palabra ``microservicio"). A esto habría que incluirle el tiempo que se ha tardado en desarrollar la lógica del servicio durante el desarrollo de la solución monolítica (las tareas que empiezan su nombre con la palabra ``implementación"). En comparación, el desarrollo de la solución monolítica en su totalidad se ha prolongado durante casi un mes (desde el día 19 de Junio hasta el día 16 de Julio).
+
+El desarrollo de cada microservicio apenas ha costado dos semanas, tal y como dice la regla de Jon Eaves que hemos explicado en el apartado \ref{subsect:RNF} \nameref{subsect:RNF}. Si un componente del software debe ser reemplazado, puede ocurrir que en la solución basada en microservicios solo se tenga que reemplazar un microservicio mientras que en la solución monolítica se tenga que adaptar todo el monolito. Si consideramos que el tiempo para desarrollar un componente software que remplaza a otro es similar al tiempo que costó desarrollar el segundo, reemplazar la solución monolítica será más costoso que reemplazar un único microservicio. Si nos situamos en un caso más extremo en el que se tuviera que reemplazar todo el sistema basado en microservicios, este problema podría abordarse de forma incremental por la modularidad de la solución. De nuevo, no se puede afirmar lo mismo de la solución monolítica.
 
 \section{Otros posibles diseños de la solución basada en microservicios}
 %Reports y notifications como una librería porque no requieren desplegarse frecuentemente y ahorras en llamadas HTTP.
 %Services y application combinados
+%Notificaciones como una librería: tendría que estar desarrollado en C# para poderse usar por los microservicios de esta tecnología
 
 \section{Ventajas e inconvenientes de los microservicios}
 
@@ -1515,6 +1524,8 @@ En el apartado \ref{sect:Mantenimiento} \nameref{sect:Mantenimiento} se han plan
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Conclusiones} \label{ch:Conclusiones}
+
+En el apartado \ref{sect:Mantenimiento} \nameref{sect:Mantenimiento} se han planteado diferentes situaciones que acreditan que, durante esta fase del ciclo del software, los beneficios de una arquitectura basada en microservicios son superiores a los de una arquitectura monolítica.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                     BIBLIOGRAFIA                                 %
