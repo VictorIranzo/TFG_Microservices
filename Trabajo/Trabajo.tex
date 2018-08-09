@@ -118,7 +118,7 @@ El objetivo de este proyecto es validar con un caso de estudio las ventajas e in
 
 \item Evaluar cómo se pueden llevar a cabo diferentes modificaciones durante el mantenimiento de ambas aplicaciones una vez se ha finalizado su implementación.
 
-\item Examinar ambas arquitecturas respecto a los requisitos no funcionales de escalabilidad y tolerancia a fallos.
+\item Examinar ambas arquitecturas respecto a los siguientes requisitos no funcionales: disponibilidad, tolerancia a fallos, utilización de recursos y capacidad para ser reemplazado.
 
 \end{itemize}
 
@@ -188,13 +188,15 @@ Los requisitos funcionales y no funcionales son ortogonales en el sentido de que
 \caption{Características y subcaracterísticas definidas en el modelo de calidad del producto de la ISO/IEC 25010. \cite{Standard2010}}
 \end{figure}
 
-Requisitos no funcionales asociados a atributos de calidad como la tolerancia a fallos o la disponibilidad pueden conducir al arquitecto hacia la elección de una arquitectura basada en microservicios:
+Requisitos no funcionales asociados a atributos de calidad como la disponibilidad, la tolerancia a fallos, la utilización de recursos o la capacidad de ser reemplazado pueden conducir al arquitecto hacia la elección de una arquitectura basada en microservicios:
 
 \begin{itemize}
 
+\item La \textbf{disponibilidad} se define como la capacidad del sistema de estar operativo y accesible para su uso cuando se requiere. \cite{Standard2010} En los sistemas distribuidos existen 3 características sobre las que se debe hacer balance: la consistencia, que establece que vamos a obtener una respuesta correcta de cualquier nodo de un servicio de acuerdo a su especificación, la disponibilidad, que ya hemos definido, y la tolerancia a particiones, que es la habilidad de gestionar situaciones en las que la comunicación entre las partes de un sistema se interrumpe. El teorema de CAP (debe sus siglas a las características en inglés Consistency, Availability y Partition Tolerance) establece que en caso de fallo, solo dos de las tres características pueden prevalecer. \cite{Gilbert2012} En la siguiente sección entraremos en más detalle sobre el balance que se debe realizar para elegir que propiedad se debe sacrificar.
+
 \item La \textbf{tolerancia a fallos} se define en la ISO/IEC 25010 como la capacidad del sistema para operar según lo previsto en presencia de fallos hardware o software. \cite{Standard2010} Cuando se escala un sistema, la probabilidad de fallo es inevitable. Muchas organizaciones invierten mucho esfuerzo en evitar que un fallo se produzca, pero muy poco en mecanismos para recuperar el sistema una vez se ha producido. Un sistema que por culpa de un servicio caído deja de funcionar es menos resilente que un sistema que puede continuar ofreciendo el resto de sus funcionalidades.
 
-\item La \textbf{disponibilidad} se define como la capacidad del sistema de estar operativo y accesible para su uso cuando se requiere. \cite{Standard2010} En los sistemas distribuidos existen 3 características sobre las que se debe hacer balance: la consistencia, que establece que vamos a obtener una respuesta correcta de cualquier nodo de un servicio de acuerdo a su especificación, la disponibilidad, que ya hemos definido, y la tolerancia a particiones, que es la habilidad de gestionar situaciones en las que la comunicación entre las partes de un sistema se interrumpe. El teorema de CAP (debe sus siglas a las características en inglés Consistency, Availability y Partition Tolerance) establece que en caso de fallo, solo dos de las tres características pueden prevalecer. \cite{Gilbert2012}
+\item La \textbf{utilización de recursos} se define en la ISO como la cantidad y tipos de recursos empleados durante el funcionamiento del software bajo unas condiciones determinadas. \cite{Standard2010} Por un lado, los arquitecturas basadas en microservicos ofrecen beneficios ya que permiten que cada servicio se despliegue en un hardware diferente con unas prestaciones acordes a sus necesidades. También permiten que se escale cada servicio de acuerdo a su demanda de forma independiente, en lugar de tener que escalar el sistema monolítico al completo. \cite{DelaTorre2018} Por otro lado, los servicios se ejecutan en diferentes procesos y las llamadas interprocedurales a través de la red pueden suponer un mayor consumo de recursos. \cite{FowlerSusan}
 
 \end{itemize}
 
@@ -1479,6 +1481,21 @@ Por último, organizaciones como Netflix prueban la tolerancia a fallos de sus s
 
 \subsection{Utilización de recursos}
 %TODO Libros
+
+Los microservicios son una solución para afrontar problemas inherentes a productos de software de gran tamaño. Estos sistemas pueden llegar a descomponerse en cientos de pequeños servicios. Mientras que, según la teoría, en estos sistemas si que se observa un mejor aprovechamiento de los recursos por emplear microservicios, \cite{DelaTorre2018} en nuestro caso de estudio no. Por ejemplo, aunque hayamos hecho una solución basada en microservicios no hemos desplegado el servicio de pedidos en un hardware con mejores prestaciones, al igual que tampoco hemos hecho la situación inversa con los servicios que reciben menos peticiones.
+
+En el siguiente estudio \cite{Amaral2016}, realizado en la Universidad Politécnica de Cataluña junto con la organización IBM, se evalúa el uso de recursos de un servicio desplegado en diferentes configuraciones de contenedores y en una máquina virtual. En su primer experimento se evalúa el uso que hacen de CPU, que es similar tanto en la MV como en los contenedores. También se evalúa el tiempo que consume la creación del servicio, donde en todos los escenarios el tiempo de desplegar el servicio en un MV es al menos es el doble que en un contenedor. En los últimos experimentos se evalúa el uso que hacen de la red. En este aspecto se puede concluir que, para las invocaciones que se hacen dentro del mismo host, los contenedores ofrecen un mejor rendimiento, mientras que para las llamadas fuera del host, el rendimiento de ambas tecnologías es similar.
+
+Durante el desarrollo, tanto el sistema basado en microservicios como el monolítico se han desplegado en contenedores. Con el comando \textbf{docker stats} podemos obtener estadísticas sobre el uso de recursos que hacen los contenedores en ejecución. El resultado de aplicarlo en el entorno de desarrollo y con los servicios sin recibir peticiones se puede ver en la figura \ref{UsoRecursos}. No se aprecia una gran diferencia en el uso de recursos del contenedor monolítico (shopmonolithic) y un contenedor de un microservicio. Los contenedores basados en una imagen .NET hacen un mayor uso de memoria. Estos también tienen un tamaño de la imagen Docker superior: alrededor de 1,8 GB frente a los 644 MB que emplea el microservicio de notificaciones, basado en una imagen java.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.65]{useMemory}
+\caption{Estadísticas de uso de recursos de los contenedores de la solución monolítica y la basada en microservicios.}
+\label{fig:UsoRecursos}
+\end{figure}
+
+En resumen, en el caso de estudio no se han apreciado grandes diferencias en el uso de recursos entre la solución monolítica y la basada en microservicios. Esto se debe principalmente al pequeño tamaño del sistema desarrollado. Sin embargo, tal y como dice la literatura, los servicios se pueden desplegar de forma independiente de acuerdo a las prestaciones que necesiten.
 
 \subsection{Capacidad de ser reemplazado}
 %TODO Reformular. Jon Eaves (2 semanas).
