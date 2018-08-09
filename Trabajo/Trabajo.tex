@@ -521,7 +521,7 @@ Kubernetes se emplea principalmente para especificar el número de replicas que 
 \section{Crítica al estado del arte}
 % Trabajos presentados en la ETSINF.
 
-\section{Propuesta}
+\section{Propuesta} \label{sect:Propuesta}
 %TODO Revisar
 
 El lenguaje de programación que se va a emplear es C\# junto con el entorno de desarrollo (IDE) Visual Studio Enterprise 2017. Entre las plataformas de destino que ofrece la tecnología .NET vamos a utilizar tanto .NET Standard 2.0 como .NET Core en su versión 2.1, publicada en Mayo de 2018. \footnote{ Versiones de .NET Core 2.1: https://www.microsoft.com/net/download/dotnet-core/2.1} El uso de librerías distintas a las provistas por la plataforma se realizará a través de paquetes NuGet, un mecanismo sencillo que envuelve el código compilado de una librería y referencia a las dependencias de esta. \footnote{ Una introducción a NuGet: https://docs.microsoft.com/es-es/nuget/what-is-nuget}
@@ -1105,6 +1105,41 @@ Como material adicional, en el apéndice \ref{ch:ModeloNavegacion} \nameref{ch:M
 
 \section{Despliegue}
 
+Como hemos mencionado en la sección \ref{sect:Propuesta} \nameref{sect:Propuesta}, para el despliegue de la aplicación se va a emplear Azure App Service. No se va a implementar ninguna pipeline para desplegar automáticamente y todos los pasos que se detallan se deben hacer manualmente, aunque sean muy sencillos:
+
+\begin{enumerate}
+
+\item \textbf{Creación de un Dockerfile}: en la capa de servicios se debe crear un Dockerfile. En la mayoría de ejemplos encontrados se ha visto que la imagen de Docker se genera básicamente mediante dos pasos del Dockerfile: se copian todos los archivos de la solución a la imagen y se compila la solución completo. Cuando se crea y arranca un contenedor, se inicia el proceso del servicio a través de la DLL que se ha generado tras la compilación. \footnote{ Dockerize a .NET Core application
+: https://docs.docker.com/engine/examples/dotnetcore/\#create-a-dockerfile-for-an-aspnet-core-application} Este Dockerfile es más fiable en cuanto a que los ensamblados necesarios se generan dentro de la propia imagen. Sin embargo, la creación de la imagen es más lenta. Por ello, para entornos de desarrollo vamos a simplificar el Dockerfile para que simplemente copie los ensamblados, que se han generado previamente en el entorno de desarrollo, de aquí a la imagen. Los ensamblados se publican dentro de una carpeta que hemos llamado PublishOutput. En el Dockerfile tampoco hace falta exponer ningún puerto porque esto ya lo hace la imagen base.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{Dockerfile}
+\caption{Dockerfile de la solución monolítica.}
+\end{figure}
+
+\item \textbf{Crear un App Service}: en el portal de Azure, seleccionar la pestaña de nuevo recurso y marcar Web App. Se debe proveer el nombre de la aplicación, que será la URL donde luego encontraremos nuestro servicio, la suscripción y el grupo de recursos. También se debe crear un plan de App Service, donde se establecerán las prestaciones del servidor donde se desplegará y las tarifas asociadas. 
+
+\item \textbf{Obtener perfil de publicación}: una vez creado el recurso nos podemos descargar el perfil de publicación. Desde el panel del recurso podemos iniciar y detener el servicio.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.6]{AppService2}
+\caption{Recurso App Service en el portal de Azure.}
+\end{figure}
+
+\item \textbf{Importar perfil de publicación}: desde la solución de Visual Studio, abrir el menú contextual del proyecto de la capa de servicios y seleccionar la opción ``Publish". En la ventana que se abre seleccionar ``New profile" y luego ``Import profile", donde seleccionaremos el archivo que nos hemos descargado.
+
+\item \textbf{Desplegar el servicio}: cada vez que queramos desplegar a producción una nueva versión de la API nos iremos al proyecto de servicios, abriremos el menú de publicación a través del menú contextual y seleccionaremos el perfil de AppService. Si accedemos a la URL que antes hemos señalado, veremos la documentación de la API generada por Swagger UI.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.6]{AppService3}
+\caption{Despliegue a través de App Service.}
+\end{figure}
+
+\end{enumerate}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       MICROSERVICIOS
 %
@@ -1443,14 +1478,14 @@ El uso de diferentes bases de datos y no una única como hay en la solución mon
 Por último, organizaciones como Netflix prueban la tolerancia a fallos de sus servicios incitando al fallo de estos. Para ello, emplea un conjunto de programas que componen el ``ejército de simios", que apagan máquinas y centros de datos en producción de forma aleatoria. \cite{Lewis2014}
 
 \subsection{Utilización de recursos}
+%TODO Libros
 
-\subsection{Capacidad para ser modificado}
+\subsection{Capacidad de ser reemplazado}
+%TODO Reformular. Jon Eaves (2 semanas).
 
 Los microservicios incrementan la facilidad de cambio de un producto software. Un cambio en un único servicio se despliegue de manera independiente y llega al cliente final de forma más rápida si se siguen prácticas como las de entrega continua.
 
 En el apartado \ref{sect:Mantenimiento} \nameref{sect:Mantenimiento} se han planteado diferentes situaciones que acreditan que, durante esta fase del ciclo del software, los beneficios de una arquitectura basada en microservicios son superiores a los de una arquitectura monolítica. 
-
-\section{Los microservicios en la interfaz de usuario}
 
 \section{Otros posibles diseños de la solución basada en microservicios}
 %Reports y notifications como una librería porque no requieren desplegarse frecuentemente y ahorras en llamadas HTTP.
