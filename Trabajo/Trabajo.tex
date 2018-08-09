@@ -556,7 +556,7 @@ Una vez un cliente haya confirmado un pedido, este deberá ser aprobado por un e
 
 Un cliente puede crear una \textbf{incidencia} si tiene algún problema con un pedido o quiere consultar una duda con los empleados de la tienda. Dentro de una incidencia, tanto el cliente como los empleados se comunicarán a través de \textbf{comentarios}. Cuando lo considere oportuno, el cliente podrá cerrar la incidencia creada, que podrá volver a consultar en cualquier momento.
 
-\section{Casos de uso y modelo de dominio}
+\section{Casos de uso y modelo de dominio} \label{sect:CUs}
 
 A continuación, vamos a listar los casos de uso de la aplicación móvil. En los casos de uso aumentaremos el nivel de detalle de la descripción para emplearlos como especificación del sistema. El único usuario de la aplicación móvil es el cliente de la tienda, por lo que es el actor de todos los casos citados. Para cada caso de uso se va a proveer un identificador, un título y una descripción breve:
 
@@ -1036,6 +1036,7 @@ El cliente HTTP autogenerado es inyectado en el proxy a través del constructor.
 \end{figure}
 
 \subsection{Calidad del código}
+%TODO Uso de variables con nombre descriptivo, TODOs
 
 Para asegurar la calidad del código se ha hecho uso de dos herramientas: CodeMaid y StyleCop.
 
@@ -1103,10 +1104,24 @@ Sin embargo, usar este patrón puede ser excesivo para UIs muy sencillas. \footn
 Como material adicional, en el apéndice \ref{ch:ModeloNavegacion} \nameref{ch:ModeloNavegacion} se incluyen capturas de la aplicación desarrollada y la navegación que existe entre las diferentes pantallas.
 
 \section{Pruebas}
-%TODO Pruebas del CRUD.
-- Número de pruebas.
-- Pruebas realizadas.
-- Captura de las pruebas ejecutadas satisfactoriamente.
+
+Se han realizado un total de 16 pruebas automatizadas mediante el framework \textbf{NUnit}. NUnit es una librería para la implementación de pruebas unitarias en todos los lenguajes .NET al igual que JUnit lo es para el lenguaje Java. \footnote{ Página de GitHub de NUnit: https://github.com/nunit/nunit}. La mayoría de las pruebas realizadas se clasifican como pruebas de integración porque involucran a más de una clase. 
+
+No se han podido probar todos los métodos expuestos en la interfaz del back-end, pero gracias a que existe mucho código genérico para la realización de operaciones CRUD y la persistencia de datos, podemos considerar el sistema como fiable. Algunas de las pruebas que si se han hecho son las asociadas a los casos de uso CU003, CU004, CU005, CU007, CU009 y CU013 que se encuentran en la sección \ref{sect:CUs} \nameref{sect:CUs}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{Tests}
+\caption{Pruebas realizadas en la solución monolítica.}
+\end{figure}
+
+Para la realización de las pruebas se ha empleado una base de datos en memoria. Así, las pruebas son más cercanas a una situación real. A la vez, no añade un sobrecoste asociado al acceso a datos de una base de datos real, que haría más lenta la ejecución de las pruebas. \footnote{ Pruebas con InMemory: https://docs.microsoft.com/es-es/ef/core/miscellaneous/testing/in-memory} Además, en el método Setup que se invoca antes de cada prueba es donde se resuelven las dependencias declaradas en los constructores de las clases invocando a los métodos AddDependencies() de las capas de aplicación y persistencia. Por último, para algunos servicios provistos por las herramientas utilizadas se han tenido que implementar fakes. Es el caso del manager de Identity para hacer login en la aplicación, que se debe sobreescribir para devolver que el usuario ha hecho login correctamente sin acceder a la base de datos de usuarios.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{SetupTest}
+\caption{Ejemplo de método Setup donde se emplea una base de datos en memoria.}
+\end{figure}
 
 \section{Despliegue}
 
