@@ -1561,10 +1561,26 @@ Si recordamos el cronograma que hemos explicado en el apartado \ref{sct:PlanTrab
 
 El desarrollo de cada microservicio apenas ha costado dos semanas, tal y como dice la regla de Jon Eaves que hemos explicado en el apartado \ref{subsect:RNF} \nameref{subsect:RNF}. Si un componente del software debe ser reemplazado, puede ocurrir que en la solución basada en microservicios solo se tenga que reemplazar un microservicio mientras que en la solución monolítica se tenga que adaptar todo el monolito. Si consideramos que el tiempo para desarrollar un componente software que remplaza a otro es similar al tiempo que costó desarrollar el segundo, reemplazar la solución monolítica será más costoso que reemplazar un único microservicio. Si nos situamos en un caso más extremo en el que se tuviera que reemplazar todo el sistema basado en microservicios, este problema podría abordarse de forma incremental por la modularidad de la solución. De nuevo, no se puede afirmar lo mismo de la solución monolítica.
 
-\section{Otros posibles diseños de la solución basada en microservicios}
+\section{Otras posibles soluciones}
 %Reports y notifications como una librería porque no requieren desplegarse frecuentemente y ahorras en llamadas HTTP.
 %Services y application combinados
 %Notificaciones como una librería: tendría que estar desarrollado en C# para poderse usar por los microservicios de esta tecnología
+
+Tanto el back-end monolítico como el basado en microservicios representan uno de los posibles diseños que se pueden emplear para implementar el sistema especificado. Otras soluciones pueden ofrecer los mismos requisitos funcionales pero con distintos atributos de calidad.
+
+Respecto a la solución monolítica, para un caso de estudio como el que hemos presentado es posible que no sea necesario una arquitectura de 6 capas. Se podía haber seguido un diseño más simple, como el que se presenta para el microservicio de informes en la solución basada en servicios. 
+
+Las capas de aplicación y servicios se podían haber combinado en una única siempre que se mantenga el principio de responsabilidad única de una clase. Los controladores de la capa de servicios definían el método HTTP expuesto en la API del back-end, mientras que los managers de aplicación contenían la lógica de la operación. Aunque se combinasen ambas capas, se debería seguir manteniendo este criterio y mantener ambos tipos de clases.
+
+Las capas de persistencia y dominio también podrían combinarse en una única. La capa de aplicación depende de ambas y la capa de persistencia depende de la de dominio. En nuestro caso de estudio, la capa de dominio solo contiene las entidades que hemos identificado en el modelo de dominio. Almacenarlas en la capa de persistencia, que es la capa que principalmente las emplea para implementar las operaciones CRUD a través de Entity Framework, no traería efectos adversos.
+
+En cuanto a la solución basada en microservicios, se puede ver claramente que algunos de los servicios desarrollados solo son invocados por un consumidor. Concretamente, los servicios de informes y notificaciones son solo invocados por el servicio de pedidos. Esto debería conducirnos a razonar sobre si es beneficiosos combinar los tres en un único servicio. 
+
+Gracias a su implementación, tanto el servicio de informes como el de notificaciones están desacoplados de los datos que requieren para realizar su función porque estos son transferidos como parámetros del método. Esto se ha hecho así para facilitar su invocación por cualquier servicio. Por ejemplo, el servicio de informes se podría haber implementado para que expusiera él directamente todos los informes que puede generar. Sin embargo, esto habría supuesto que tuviera una dependencia con todos los servicios de los que necesitara obtener datos. Como se desea mantener que puedan seguir siendo invocados desde cualquier otro servicio, no vamos a combinarlos con el servicio de pedidos.
+
+No obstante, podemos plantearnos si realmente vale la pena representar estos componentes de software como microservicios. Por ejemplo, si observamos que apenas se modifican una vez implementados, sería buena idea representarlos como una librería y no como un servicio. Así, el sobrecoste asociado a las invocaciones a través de la red se reduciría a cambio de no poder desplegarlos de forma independiente.
+
+Otra consideración a tener en cuenta a la hora de transformar un servicio en una librería es que las librerías están ligadas a una única plataforma. Por ejemplo, el servicio de notificaciones está desarrollado en Java y gracias a que se ejecuta en otro proceso puede ser invocado por cualquier servicio, da igual su lenguaje de programación, a través de llamadas HTTP. La implementación del servicio tal como está en Java no puede desplegarse como una librería y emplearse en los servicios desarrollados en .NET porque no son plataformas compatibles. Por tanto, para cada servicio que desea consumir este componente se debería dar una implementación compatible con la plataforma del consumidor.
 
 \section{Ventajas e inconvenientes de los microservicios}
 
