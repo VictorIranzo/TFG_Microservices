@@ -270,7 +270,7 @@ Una de las ventajas de las arquitecturas basadas en microservicios es la \textbf
 
 La fase de implementación consiste en la creación de un sistema o componente software combinando técnicas de programación, verificación y depuración. Esta fase emplea la salida de la fase de diseño y sirve como entrada para la de pruebas. Los límites entre estas tres fases varían en función del proceso seguido. \cite{Bourque2014}
 
-\subsection{Integración de microservicios}
+\subsection{Integración de microservicios} \label{subsect:Integracion}
 
 La \textbf{integración} es la parte más relevante en los sistemas basados en microservicios. Hacerlo correctamente nos asegurará su autonomía y su despliegue de manera independiente.
 
@@ -535,7 +535,11 @@ Kubernetes se emplea principalmente para especificar el número de replicas que 
 \section{Propuesta} \label{sect:Propuesta}
 %TODO Revisar
 
-El lenguaje de programación que se va a emplear es C\# junto con el entorno de desarrollo (IDE) Visual Studio Enterprise 2017. Entre las plataformas de destino que ofrece la tecnología .NET vamos a utilizar tanto .NET Standard 2.0 como .NET Core en su versión 2.1, publicada en Mayo de 2018. \footnote{ Versiones de .NET Core 2.1: https://www.microsoft.com/net/download/dotnet-core/2.1} El uso de librerías distintas a las provistas por la plataforma se realizará a través de paquetes NuGet, un mecanismo sencillo que envuelve el código compilado de una librería y referencia a las dependencias de esta. \footnote{ Una introducción a NuGet: https://docs.microsoft.com/es-es/nuget/what-is-nuget}
+En el caso de estudio, en el desarrollo de la solución basada en microservicios se van a emplear contenedores Docker. Para su orquestación, en producción se hará uso de Kubernetes. En desarrollo, se empleará Docker Compose para agilizar la creación de los diferentes contenedores. 
+
+En cuanto a la comunicación entre los servicios y con la interfaz de usuario, en la sección \ref{subsect:Integracion} \nameref{subsect:Integracion} hemos presentado tres posibles alternativas. Hemos optado por la que la literatura considera más sencilla, la integración REST a través de HTTP.
+
+En cuanto a aspectos más técnicos, el lenguaje de programación que se va a emplear principalmente es C\# junto con el entorno de desarrollo (IDE) Visual Studio Enterprise 2017. Entre las plataformas de destino que ofrece la tecnología .NET vamos a utilizar tanto .NET Standard 2.0 como .NET Core en su versión 2.1, publicada en Mayo de 2018. \footnote{ Versiones de .NET Core 2.1: https://www.microsoft.com/net/download/dotnet-core/2.1} El uso de librerías distintas a las provistas por la plataforma se realizará a través de paquetes NuGet, un mecanismo sencillo que envuelve el código compilado de una librería y referencia a las dependencias de esta. \footnote{ Una introducción a NuGet: https://docs.microsoft.com/es-es/nuget/what-is-nuget}
 
 Para el desarrollo de la interfaz de usuario se va a utilizar Xamarin.Forms. Xamarin es una plataforma que permite desarrollar aplicaciones móviles para dispositivos Universal Windows Platform (UWP), Android y iOS empleando código C\#. Xamarin.Forms es un conjunto de herramientas para Xamarin centrado en el desarrollo multiplataforma. Su propósito que se pueda compartir la mayor cantidad de código posible en el desarrollo de una aplicación para las distintas plataformas que hemos mencionado. \footnote{ Introducción a Xamarin.Forms
 : https://docs.microsoft.com/es-es/xamarin/xamarin-forms/get-started/introduction-to-xamarin-forms}
