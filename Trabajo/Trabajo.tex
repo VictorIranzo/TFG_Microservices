@@ -746,13 +746,47 @@ A partir de la descripción del sistema y de los casos de uso podemos definir el
 
 \section{Plan de trabajo} \label{sct:PlanTrabajo}
 
-El sistema a implementar se puede dividir en dos partes: front-end y back-end. En lo referente al back-end, este se va a implementar siguiendo dos arquitecturas distintas: una monolítica y otra basada en microservicios. Existirá una gran cantidad de código compartido entre ambas soluciones y las mayores diferencias entre ellas serán las relacionadas con la organización del código. Por este motivo, primero se va a implementar la solución monolítica y una vez implementada se creará una nueva solución donde se refactorizará el código siguiendo los principios que en la sección \ref{sct:FaseDiseño} \nameref{sct:FaseDiseño} se han mencionado.
+El sistema a implementar se puede dividir en dos partes: front-end y back-end. En lo referente al back-end, este se va a implementar siguiendo dos arquitecturas distintas: una monolítica y otra basada en microservicios. Existirá una gran cantidad de código compartido entre ambas soluciones y las mayores diferencias entre ellas serán las relacionadas con la organización del código. Por este motivo, primero se va a implementar la solución monolítica y una vez implementada se creará una nueva solución donde se refactorizará el código para obtener la solución basada en microservicios, siguiendo los principios que en la sección \ref{sct:FaseDiseño} \nameref{sct:FaseDiseño} se han mencionado.
 
-En cuanto al front-end, las llamadas a la parte servidora van a realizarse a través de invocaciones HTTP. Por tanto, va a estar desacoplado de la implementación que elijamos para el back-end y va a poder emplearse la misma solución para comunicarse con ambas soluciones.
+Una vez se implemente la solución monolítica, se comenzará la implementación de la aplicación front-end. Las llamadas a la parte servidora van a realizarse a través de invocaciones HTTP. En consecuencia, el front-end va a estar desacoplado de la implementación que elijamos para el back-end y va a poder emplearse la misma solución, con muy pequeñas modificaciones, para comunicarse con ambas partes servidoras.
 
-%TODO Incluir un cronograma.
+La organización de la memoria en los siguientes capítulos es acorde a este proceso. Primero, presentaremos la solución monolítica centrándonos sobretodo en aspectos de implementación, que son comunes a los de la solución basada en servicios. Después, explicaremos la solución basada en microservicios, centrándonos sobretodo en aspectos de diseño y modificaciones que se han realizado frente a la monolítica.
 
 \section{Organización del trabajo}
+
+El proceso de desarrollo se ha desglosado en grandes tareas, muy ligadas a las entidades del dominio que existen en el caso de estudio. En el siguiente cronograma se pueden observar estas tareas y su evolución a lo largo del tiempo que ha durado el desarrollo de las soluciones. En azul se han representado las tareas asociadas a la solución monolítica, en verde las asociadas al front-end y en naranja las asociadas a la solución basada en microservicios.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{Cronograma}
+\caption{Cronograma del proceso de desarrollo del caso de estudio.}
+\end{figure}
+
+Se puede observar como de las 3 fases del desarrollo donde más esfuerzo se ha dedicado es en la solución monolítica. Esto es porque es aquí donde se ha implementado casi la totalidad del código del sistema y donde se han evaluado muchas de las tecnologías empleadas. La fase de desarrollo de la solución basada en microservicios se prolonga menos porque únicamente ha involucrado refactorizar el diseño monolítico y a penas se ha modificado la implementación del sistema. En un sistema real, esta tarea sería mucho más costosa que en nuestro caso de estudio.
+
+Todo el código desarrollado se va a almacenar en un repositorio de código de GitHub. Se han creado tres repositorios: uno para el back-end monolítico, otro para la interfaz de usuario y otro para el back-end basado en servicios. Adicionalmente, se ha creado un repositorio para el desarrollo de la memoria de este TFG.
+
+En los repositorios de GitHub vamos a emplear un proyecto. Un proyecto de GitHub es similar a un Trello. Aquí podemos crear columnas, que representan un estado del trabajo, y tarjetas, que representan tareas a realizar y que van transitando de una columna a otra conforme se van completando. En nuestro caso, las tareas que vamos a incluir en el proyecto son de un detalle más bajo a las que hemos incluido en el cronograma, más cercanas a las tareas que debe llevar a cabo el programador. El proyecto lo hemos dividido en 4 columnas: TODO, que contiene las tareas pendientes, TODO - Priority, que contiene también tareas pendientes pero que urge resolver, DONE, para las tareas ya realizadas, y DISCARD, para las tareas que se han descartado y ya no se van a implementar.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.35]{GitHubProject}
+\caption{Proyecto de GitHub asociado al desarrollo del front-end.}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+
+El proceso de desarrollo se puede visualizar en los diferentes repositorios a través de los commits que en ellos se hacen. En el siguiente gráfico se muestra el número de commits realizados cada día sobre los tres repositorios mencionados. Como en el cronograma, se puede ver como las fases de front-end e implementación de la solución monolítica se superponen en la mitad del proceso de desarrollo. También se puede ver como la fase de la solución monolítica es la que más commits ha requerido porque ha sido la más inestable respecto a defectos corregidos y detalles de implementación.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{commits}
+\caption{Número de commits realizados cada día en los repositorios del caso de estudio.}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       MONOLITICA
