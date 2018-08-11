@@ -129,15 +129,19 @@ A continuación, se presenta la estructura de la memoria:
 
 El capítulo 1 introduce la memoria a través de la motivación del trabajo y los objetivos a cumplir.
 
-En el capítulo 2 se presenta una definición para el término microservicio y se describe el estado del arte de estos a lo largo del ciclo de vida del software.
+En el capítulo 2 se presenta una definición para el término microservicio y se describe su influencia en el proceso de desarrollo a lo largo del ciclo de vida del software.
 
-En el capítulo 3 se analiza la aplicación a desarrollar mediante su especificación   empleando casos de uso y un modelo de dominio. Además, se presenta el plan de trabajo y las tecnologías empleadas.
+El capítulo 3 presentará brevemente el estado del arte asociado a la tecnología de los microservicios, explicando brevemente algunas de las herramientas más empleadas.
 
-El capítulo 4 explica el diseño e implementación del sistema siguiendo una arquitectura monolítica.
+En el capítulo 4 se analiza la aplicación a desarrollar mediante su especificación   empleando casos de uso y un modelo de dominio.
 
-El capítulo 5 se centra en los mismos aspectos que el capítulo anterior pero para una arquitectura basada en microservicios.
+El capítulo 5 contiene el proceso de desarrollo y la organización del trabajo que se seguirá durante la implementación de las dos soluciones propuestas.
 
-En el capítulo 6 se realiza una comparación de ambas soluciones respecto a los requisitos no funcionales de escalabilidad y tolerancia a fallos  y se evalúa como afrontaría cada solución diferentes situaciones de mantenimiento.
+El capítulo 6 explica el diseño e implementación del sistema siguiendo una arquitectura monolítica.
+
+El capítulo 7 se centra en los mismos aspectos que el capítulo anterior pero para una arquitectura basada en microservicios.
+
+En el capítulo 8 se realiza una comparación de ambas soluciones respecto a diferentes requisitos no funcionales  y se evalúa como afrontaría cada solución diferentes situaciones de mantenimiento.
 
 El último capítulo presenta las conclusiones del trabajo respecto a los objetivos planteados inicialmente.
 
@@ -426,7 +430,7 @@ La \textbf{virtualización} nos permite dividir una máquina en hosts separados,
 
 El mayor inconveniente de las máquinas virtuales es que se puede dividir una máquina en muchas piezas como queramos porque la separación entre los hosts supone un coste. El hipervisor también consume recursos y cuantas más son las máquinas que debe gestionar, mayor será su consumo. Además, el tiempo de puesta en funcionamiento de una máquina virtual es de la magnitud de minutos, mientras que el arranque de un contenedor ronda los pocos segundos. \cite{Dua2014} Esto es muy importante en desarrollos que siguen las técnicas de integración continua donde se despliegan artefactos frecuentamente. 
 
-Los \textbf{contenedores} son sistemas operativos ligeros que se ejecutan sobre una máquina con la que comparten el kernel. El número de contenedores que una máquina puede alojar es mayor que el número de máquinas virtuales debido a la naturaleza ligera de estos. \cite{Dua2014} Su uso de recursos es y tiempo de aprovisionamiento son menores al de una MV, lo que reduce el tiempo de retroalimentación sobre el funcionamiento de un servicio. Sin embargo, el grado de aislamiento de los contenedores no es perfecto ya que existen formas en las que se puede interferir en el funcionamiento de otro contenedor debido a problemas de diseño y bugs conocidos. \cite{Newman2015a}
+Los \textbf{contenedores} son sistemas operativos ligeros que se ejecutan sobre una máquina con la que comparten el kernel. El número de contenedores que una máquina puede alojar es mayor que el número de máquinas virtuales debido a la naturaleza ligera de estos. \cite{Dua2014} Su uso de recursos y tiempo de aprovisionamiento son menores al de una MV, lo que reduce el tiempo de retroalimentación sobre el funcionamiento de un servicio. Sin embargo, el grado de aislamiento de los contenedores no es perfecto ya que existen formas en las que se puede interferir en el funcionamiento de otro contenedor debido a problemas de diseño y bugs conocidos. \cite{Newman2015a}
 
 \begin{figure}[h]
 \centering
@@ -484,7 +488,12 @@ La información más útil se debe mostrar de forma gráfica a través de dashbo
 
 \chapter{Estado del arte de la tecnología de microservicios}
 
+En este capítulo recorreremos las principales tecnologías asociadas
+
 \section{Contenedores}
+
+\subsection{Contenedores Linux}
+
 
 \subsection{Docker}
 
@@ -502,8 +511,6 @@ El proceso de desarrollo también se simplifica: en aproximaciones como la de mi
 
 
 Si se integra dentro del proceso de despliegue, cada cambio que pasa por una pipeline puede construir una nueva imagen Docker sobre la que se ejecutan pruebas de forma automatizada para después ser publicada a producción. De esta forma el equipo puede asegurarse de que el artefacto sobre el que se han ejecutado las pruebas es el mismo que se publica más tarde. 
-
-\subsection{Vagrant}
 
 \section{Orquestadores}
 
