@@ -488,12 +488,15 @@ La información más útil se debe mostrar de forma gráfica a través de dashbo
 
 \chapter{Estado del arte de la tecnología de microservicios}
 
-En este capítulo recorreremos las principales tecnologías asociadas
-
 \section{Contenedores}
 
 \subsection{Contenedores Linux}
 
+Los contenedores Linux (LXC) permite crear un espacio de procesos separado en el que puede ejecutarse de forma aislada un servicio. Cada contenedor es un subárbol del principal y puede tener asociado recursos físicos gestionados por el kernel. \cite{Newman2015a}.
+
+Estos contenedores se fundamentan en los espacios de nombre de Linux y lod grupos de control (cgroups). Los espacios de nombre aísla el conjunto del sistema de archivos que un grupo de procesos puede ver. Los grupos de control organizan los procesos en un árbol de forma jerárquica, donde se pueden definir límites y políticas para el uso de los recursos. \cite{Amaral2016}
+
+La principal ventaja de los LXC es que son una implementación muy ligera que se ejecuta a velocidades muy similares a las de la máquina donde se ejecuta. Sin embargo, está limitado al uso de Linux como base del entorno, estando muy acoplado a su kernel, y presenta problemas en cuanto a la seguridad y aislamiento de los contenedores. \cite{Dua2014} Una solución pasa por usar contenedores Linux contenidos en máquinas virtuales para establecer los límites de seguridad a través de la MV y los límites de los recursos empleados por la aplicación a través de los contenedores.  \cite{DeAlfonso2017}
 
 \subsection{Docker}
 
@@ -524,16 +527,28 @@ Kubernetes es una herramienta diseñada por Google para el despliegue y orquesta
 \caption{Un nodo de Kubernetes. \cite{Rensin2015}}
 \end{figure}
 
-Kubernetes se emplea principalmente para especificar el número de replicas que se desea tener simultánemanete de un pod. La herramienta es buena para asegurar la disponiblidad de un servicio, pero no garantizan la escalabilidad de este, que consistiría en modificar el número de replicas de un pod de forma dinámica en función de su demanda. Para este propósito se deben introducir balanceadores de carga como puntos de entrada al sistema. Estos balancenadores redirigirían cada petición al pod correspondiente y se encarguen de ajustar el número de replicas de un pod según una serie de reglas.
+Kubernetes se emplea principalmente para especificar el número de replicas que se desea tener simultánemanete de un pod. La herramienta es buena para asegurar la disponiblidad de un servicio, pero no garantizan la escalabilidad de esta, que consistiría en modificar el número de replicas de un pod de forma dinámica en función de su demanda. Para este propósito se deben introducir balanceadores de carga como puntos de entrada al sistema. Estos balanceadores redirigirían cada petición al pod correspondiente y se encargarán de ajustar el número de replicas de un pod según una serie de reglas.
 
 \subsection{Docker Swarm}
 
+Docker Swarm es la aproximación nativa propuesta por Docker para la creación de clústeres, donde un conjunto de contenedores Docker aparentan formar uno único de forma virtual. En Docker Swarm, los nodos ejecutan un agente llamado \textbf{Swarm} y uno de ellos ejecuta un gestor para su coordinación.
 
-\section{Infraestructura}
+Cuando un contenedor es creado, este se despliega en cualquiera de los nodos gestionados por el Swarm. El conjunto de contenedores son gestionados por el Swarm como una única entidad.
+
+Docker Swarm se puede ejecutar para ofrecer servicios con alta disponibilidad a través de herramientas como etcd, Consul o ZooKeeper para la gestión y recuperación de los fallos. Además, está complementamenta integrado dentro de la interfaz de línea de comandos de Docker. \cite{DeAlfonso2017}
+
+\section{Proveedores de servicios en la nube}
+
+\subsection{Amazon Web Services (AWS)}
+Amazon es el líder en el mercado de computación en la nube con su producto Amazon Web Services (AWS), lanzado en 2006. Fue el primer proveedor en ofrecer infraestructura como servicio (IaaS), permitiendo el alquiler de máquinas virtuales.
+
+Amazon Elastic Compute Cloud (EC2) permite a sus usuarios la creación de las máquinas necesarias para la ejecución de una aplicación. Este servicio es capaz de escalar las aplicaciones de acuerdo a las necesidades de sus usuarios. La creación, ejecución y destrucción de máquinas virtuales o instancias puede ser controlada a demanda del usuario de AWS. El pago de esta plataforma se realiza por horas, a diferencia de Azure, donde se paga por minutos y el pago es más exacto con el uso realizado. \cite{Qaisi2016}
 
 \subsection{Microsoft Azure}
 
-\subsection{Amazon Web Services (AWS)}
+Microsoft Azure es una plataforma que ofrece un conjunto de herramientas y servicios en la nube. Es el segundo mayor proveedor de servicios en la nube y fue lanzado en 2010. Ofrece tanto funcionalidades de plataforma como servicio (PaaS) como IaaS.
+
+Los usuarios pueden crear, desplegar y gestionar aplicaciones  servicios a través de la red global de los centros de datos de Microsoft. Aunque el pago de sus servicios sea más cercano a la realidad, los modos de pago son manejados de forma poco transparente. \cite{Qaisi2016}
 
 \section{Crítica al estado del arte}
 % Trabajos presentados en la ETSINF.
@@ -551,7 +566,7 @@ En cuanto a aspectos más técnicos, el lenguaje de programación que se va a em
 Para el desarrollo de la interfaz de usuario se va a utilizar Xamarin.Forms. Xamarin es una plataforma que permite desarrollar aplicaciones móviles para dispositivos Universal Windows Platform (UWP), Android y iOS empleando código C\#. Xamarin.Forms es un conjunto de herramientas para Xamarin centrado en el desarrollo multiplataforma. Su propósito que se pueda compartir la mayor cantidad de código posible en el desarrollo de una aplicación para las distintas plataformas que hemos mencionado. \footnote{ Introducción a Xamarin.Forms
 : https://docs.microsoft.com/es-es/xamarin/xamarin-forms/get-started/introduction-to-xamarin-forms}
 
-A nivel de infraestructura se ha empleado Microsoft Azure para la persistencia de datos en la nube y para la exposición de servicios a través de Azure App Service y Azure Kubernetes Service (AKS). Microsoft Azure es una plataforma que ofrece un conjunto de herramientas y servicios en la nube. Tanto App Service como AKS son parte de sus servicios. El primero se emplea para crear aplicaciones en la nube de forma rápida sin necesidad de administrar la infraestructura sobre la que se hospeda. En cuanto al segundo, permite la orquestación de contenedores Docker a través de Kubernetes dentro de la infraestructura de Azure. \footnote{ Página oficial de Microsoft Azure: https://azure.microsoft.com/es-es/}
+A nivel de infraestructura se ha empleado Microsoft Azure para la persistencia de datos en la nube y para la exposición de servicios a través de Azure App Service y Azure Kubernetes Service (AKS). Hemos decidido emplear esta tecnología porque es la mejor soportada por el IDE en el que vamos a trabajar, ofreciendo funcionalidades para desplegar una nueva versión simplemente pulsando un botón. Tanto App Service como AKS son parte de los servicios de Azure. El primero se emplea para crear aplicaciones en la nube de forma rápida sin necesidad de administrar la infraestructura sobre la que se hospeda. En cuanto al segundo, permite la orquestación de contenedores Docker a través de Kubernetes dentro de la infraestructura de Azure. \footnote{ Página oficial de Microsoft Azure: https://azure.microsoft.com/es-es/}
 
 Para terminar, para las pruebas a nivel de API se ha empleado Postman. Postman es un entorno para el desarrollo de APIs (ADE) que nos va a permitir crear y almacenar de forma sencilla llamadas HTTP hacia la API del back-end. \footnote{ Página oficial de Postman: https://www.getpostman.com/}
 
