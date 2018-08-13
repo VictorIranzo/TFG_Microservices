@@ -1682,13 +1682,37 @@ Otra consideración a tener en cuenta a la hora de transformar un servicio en un
 
 \section{Ventajas e inconvenientes de los microservicios}
 
+\section{Consideraciones finales}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      CONCLUSIONES                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \chapter{Conclusiones} \label{ch:Conclusiones}
 
-En el apartado \ref{sect:Mantenimiento} \nameref{sect:Mantenimiento} se han planteado diferentes situaciones que acreditan que, durante esta fase del ciclo del software, los beneficios de una arquitectura basada en microservicios son superiores a los de una arquitectura monolítica.
+Gracias al caso de estudio desarrollado hemos podido evaluar las ventajas e inconvenientes del desarrollo de software basado en microservicios. Se han recapitulado todas las que recoge la literatura y se han añadido algunas ventajas fruto de la experiencia en este y otros proyectos anteriores. 
+
+En cuanto a los objetivos de esta memoria, podemos hacer las siguientes reflexiones:
+
+\begin{itemize}
+
+\item Se ha desarrollado satisfactoriamente la aplicación descrita en el caso de estudio siguiendo dos arquitecturas distintas. Para hacerlo se han empleado tecnologías que se emplean en el desarrollo profesional de productos software para aportar al caso de estudio un enfoque lo más realista posible.
+
+\item En cuanto al proceso de desarrollo, a partir de una misma especificación hemos desarrollado una misma aplicación de dos formas distintas. Fases como las de despliegue o pruebas han resultado ser más desafiantes en una solución basada en microservicios debido al incremento en el número de piezas de software que participan. Fases como las de diseño cobran mayor relevancia porque un fallo en la descomposición del sistema en servicios es más costoso de reparar. Las fases de mantenimiento e implementación son más fáciles de gestionar porque las bases de código son menores y más flexibles.
+
+\item En el apartado \ref{sect:Mantenimiento} \nameref{sect:Mantenimiento} se han planteado diferentes situaciones que acreditan que, durante esta fase del ciclo del software, los beneficios de una arquitectura basada en microservicios son superiores a los de una arquitectura monolítica. Estos beneficios se plasman sobretodo dentro del marco del mantenimiento adaptativo.
+
+\item En la mayoría los requisitos no funcionales que hemos estudiado se observan ventajas en una arquitectura basada en microservicios frente a una monolítica. Algunos como la utilización de recursos no han podido ser comprobados debido al pequeño tamaño del caso de estudio. Otros como los de disponibilidad o tolerancia a fallos se benefician del gran número de tecnologías asociadas a los microservicios que garantizan estas propiedades, como por ejemplo Kubernetes.
+
+\end{itemize}
+
+A lo largo de todo el proceso de desarrollo me he enfrentado a diversos problemas, de los que voy a destacar dos. El primero de ellos está asociado al despliegue de las soluciones. Mi experiencia con Microsoft Azure hasta la fecha era escasa y en una plataforma con tantas funcionalidades me he visto necesitado de una mejor guía en cuanto a documentación. Además, el proceso de despliegue se ha realizado de forma manual, por lo que un fallo en un paso del proceso de despliegue suponía mucho esfuerzo adicional. Como mejora, se podía haber invertido parte del tiempo del proyecto en desarrollar una pipeline para la integración continua.
+
+En segundo lugar, la integración de los microservicios ha sido más costosa de lo que en un principio suponía. Desacoplar los microservicios a nivel de diseño ha supuesto realizar varias refactorizaciones durante la fase de implementación. Hay que ser consciente de que realizar un buen diseño a la primera es prácticamente imposible. Además, la comunicación entre los servicios en el entorno de producción ha requerido varios días de esfuerzo, sobretodo por la falta de conocimiento en herramientas para su depuración.
+
+Personalmente este trabajo refleja el conocimiento adquirido en la universidad y en mi experiencia laboral. Por una parte, de la universidad he aplicado mis estudios realizados sobre dispositivos móviles y plataformas como Xamarin. Por otra parte, he podido aplicar mi experiencia con los microservicios en las tecnologías .NET y he fortalecido mi madurez a la hora de enfrentarme a un problema de tamaño considerable.
+
+En cuanto a líneas de trabajo futuras, tras este proyecto se abren dos caminos para proseguir el trabajo realizado. En primer lugar, la realización y aplicación de un modelo de calidad a las dos soluciones realizadas para medir de forma cuantitativa los atributos de calidad que hemos citado en la memoria. En segundo lugar, la extensión de la aplicación desarrollada mediante la exploración de otras tecnologías, como la asociada a la integración basada en eventos o diferentes orquestadores.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                     BIBLIOGRAFIA                                 %
