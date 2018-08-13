@@ -1517,6 +1517,36 @@ Otra posible opción habría sido crear una base de datos de Firebase distinta l
 
 \section{Despliegue}
 
+Una de las características de los microservicios que más se ha repetido en la memoria es que se pueden desplegar de forma independiente. Esto es así porque cada uno de los microservicios se va a desplegar como un contenedor independiente, a diferencia de la solución monolítica donde sólo había un Dockerfile y un contenedor. Por eso, en total existirán simultáneamente un total de 5 contenedores. Para agilizar el proceso de construcción de las imágenes e inicio de los contenedores haremos uso de Docker Compose. 
+
+Docker Compose es una herramienta para definir y ejecutar aplicaciones formadas por más de un contenedor Docker. Los servicios que forman la aplicación tienen su propio Dockerfile y se definen dentro de un archivo YAML para que con un único comando se inicie la aplicación al completo. \footnote{ Overview of Docker Compose
+: https://docs.docker.com/compose/overview/} 
+
+En la figura \ref{fig:Compose} se puede ver un extracto de este archivo. En él se ve como para cada contenedor que se debe ejecutar se especifica un nombre para la imagen que se va crear a partir del Dockerfile y la ubicación de este. Además, se pueden añadir parámetros, como los que se añaden al comando ``docker run" para la ejecución de un contenedor, para relacionar los puertos que emplea el contenedor y los del host donde se ejecuta.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.6]{Compose}
+\caption{Extracto del archivo docker-compose.yml de la solución basada en microservicios.}
+\label{fig:Compose}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+
+En la siguiente figura se muestra el resultado de ejecutar el comando ``docker-compose up", tras el cual se inicia cada servicio en los puertos que se han especificado. Para la comunicación entre los diferentes servicios, un servicio que desea comunicar con otro almacena en su archivo de configuración la dirección URL donde se ubica este.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.4]{docker-compose-up}
+\caption{Resultado de ejecutar docker-compuse up en el entorno de desarrollo.}
+\end{figure}
+
+Docker Compose es una herramienta excepcional para agilizar el despliegue de la aplicación en un entorno de desarrollo. Sin embargo, en un entorno de producción se desean propiedades como la escalabilidad de los contenedores desplegados de acuerdo a su demanda o la recuperación automática de estos ante un fallo. Docker Compose no nos provee estas funcionalidades, que sí nos puede ofrecer un orquestador como Kubernetes. En el apéndice \ref{chap:Despliegue} \nameref{chap:Despliegue} recogemos paso por paso como se despliega la aplicación en un entorno de producción empleando Azure Kubernetes Services.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       EVALUACIÓN
 %
@@ -1683,7 +1713,7 @@ En el apartado \ref{sect:Mantenimiento} \nameref{sect:Mantenimiento} se han plan
 %                      DESPLIEGUE  
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Despliegue del sistema basado en microservicios}
+\chapter{Despliegue del sistema basado en microservicios} \label{chap:Despliegue}
 
 \section{Ejecución de un contenedor con Docker}
 
