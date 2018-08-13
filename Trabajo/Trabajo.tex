@@ -332,7 +332,7 @@ La organización en los microservicios se realizada alrededor de las capacidades
 
 %TODO Continuar ...
 
-\section{Los microservicios en la fase de pruebas}
+\section{Los microservicios en la fase de pruebas} \label{sect:FasePruebas}
 % Art of unit testing
 % Building microservices
 % Simian army
@@ -1169,7 +1169,7 @@ Sin embargo, usar este patrón puede ser excesivo para UIs muy sencillas. \footn
 
 Como material adicional, en el apéndice \ref{ch:ModeloNavegacion} \nameref{ch:ModeloNavegacion} se incluyen capturas de la aplicación desarrollada y la navegación que existe entre las diferentes pantallas.
 
-\section{Pruebas}
+\section{Pruebas} \label{sect:MonoPruebas}
 
 Se han realizado un total de 16 pruebas automatizadas mediante el framework \textbf{NUnit}. NUnit es una librería para la implementación de pruebas unitarias en todos los lenguajes .NET al igual que JUnit lo es para el lenguaje Java. \footnote{ Página de GitHub de NUnit: https://github.com/nunit/nunit}. La mayoría de las pruebas realizadas se clasifican como pruebas de integración porque involucran a más de una clase. 
 
@@ -1389,16 +1389,17 @@ Por último, el archivo Dockerfile para el despliegue del servicio también var�
 \caption{Dockerfile del microservicio de notificaciones.}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+
 \subsection{Persistencia en microservicio de incidencias}
 
 En el microservicio de incidencias vamos a emplear una base de datos en la plataforma Firebase. \textbf{Firebase} es una plataforma para el desarrollo de aplicaciones. Uno de los servicios que ofrece es una base de datos NoSQL en la nube en tiempo real. Los datos se almacenan en formato JSON y su acceso puede realizarse a través de peticiones HTTP. \footnote{ Documentación de Firebase Realtime Database: https://firebase.google.com/docs/database/} 
 
 Una de las principales ventajas de las bases de datos NoSQL es su escalabilidad horizontal. En lugar de tener un gran servidor para alojar una base de datos relacional, una base de datos NoSQL se puede distribuir entre diferentes máquinas. Esta funcionalidad en Firebase es de pago, por lo que no vamos a obtener grandes beneficios por emplear esta BD. Nuestro objetivo simplemente es validar que diferentes microservicios pueden emplear tecnologías de bases de datos distintas.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SALTO DE PAGINA
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
 
 \begin{figure}[h]
 \centering
@@ -1462,6 +1463,11 @@ A estas variables se les da valor en un archivo llamado Versions.props. Este arc
 \caption{Archivo Versions.props con las versiones de los microservicios.}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
 \section{Adaptación de la interfaz de usuario}
 
 Para que la UI emplee los microservicios que se han creado se debe sustituir el proxy monolítico por los proxies de los microservicios de Seguridad, Incidencias y Pedidos. Esto se hace eliminando el paquete NuGet del proxy monolítico e instalando los tres paquetes nuevos.
@@ -1479,7 +1485,35 @@ Una vez hecho esto, habrá que corregir las referencias a diferentes espacios de
 
 \section{Adaptación de las pruebas}
 
-%TODO A la espera de TestServer.
+De la misma forma que se han migrado las clases de cada una de las entidades a un microservicio específico, las pruebas también se situarán en el contexto de un servicio.
+
+En la sección \ref{sect:MonoPruebas} \nameref{sect:MonoPruebas} hemos visto que la mayoría de pruebas realizadas eran de integración porque representaban un caso de uso de la aplicación. Vamos a emplear la clasificación de pruebas hemos presentado en el apartado \ref{sect:FasePruebas} \nameref{sect:FasePruebas}. Las pruebas de integración pasarán ahora a denominarse pruebas de servicio, si toda la lógica que necesita se encuentra en un único servicio, o de extremo a extremo, si involucra para su ejecución más de un servicio.
+
+De las pruebas realizadas en la solución monolítica, la mayoría se transformarán en pruebas de servicio. Sin embargo, servicios como los de incidencias o pedidos dependen del de seguridad para realizar muchos de los casos de uso en los que se requiere obtener datos de un cliente. Para evitar tener que representar estas pruebas como de extremo a extremo, mucho más costosas, se empleará un fake del servicio de seguridad. Si recordamos, en la solución monolítica ya hemos tenido que emplear un fake porque algunas clases de Identity trataban de acceder a la base de datos de usuarios. Ahora, el fake será de la interfaz de contratos de seguridad y devolverá, por ejemplo, los datos de un usuario falso cuando se requiera uno por su identificador.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{FakeSecurityManager}
+\caption{Fake de la interfaz de contratos del servicio de seguridad.}
+\end{figure}
+
+Algunas pruebas han tenido que implementarse obligatoriamente como pruebas de extremo a extremo. Es el caso de la prueba para la generación de una factura. En este tipo de prueba se hará uso de la clase de ASP .NET Core TestServer. TestServer permite la creación de un servidor en memoria para pruebas que redirige las peticiones que recibe hacia los controladores que representa. \footnote{ In-Memory ASP.NET Core Integration Tests with TestServer: https://visualstudiomagazine.com/articles/2017/07/01/testserver.aspx} De esta forma, las depenendencias que tiene un servicio como pedidos para las pruebas quedan suplidas con un servidor que responde tal y como lo haría el servicio de informes y no como un fake.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{TestServer}
+\caption{Fake de la interfaz de contratos del servicio de seguridad.}
+\end{figure}
+
+Otras pruebas que se han modificado son las del microservicio de incidencias. En las pruebas de servicios que emplean SQL se crea una base de datos de este tipo en memoria. La base de datos de incidencias ahora es Firebase y en Entity Framework no existe la funcionalidad de hacer BD en memoria para este proveedor. Para que las pruebas del servicio no dejen de cubrir código de la capa de persistencia, las pruebas escribirán en la base de datos de Firebase y eliminarán el contenido que han escrito en un método tear down. Esto no es necesario en las bases de datos en memoria porque son eliminadas al final de cada prueba.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.6]{TearDown}
+\caption{Método para eliminar registros escritos durante las pruebas del servicio de incidencias.}
+\end{figure}
+
+Otra posible opción habría sido crear una base de datos de Firebase distinta la de producción y a la que apuntaran las pruebas. Con esta solución se habría tenido que implementar igualmente un método para eliminar el contenido escrito durante la prueba o de otra forma se crearía contenido duplicado en esta BD.
 
 \section{Despliegue}
 
