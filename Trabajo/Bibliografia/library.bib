@@ -13,12 +13,85 @@ pages = {1--6},
 title = {{A Twitter Sentiment Analysis for Cloud Providers: A Case Study of Azure vs. AWS}},
 year = {2016}
 }
-@misc{Fowler2006,
+@book{Hunter2017,
+abstract = {Teaches you to use the many types of tools required to navigate and maintain a microservice ecosystem. This book examines what is normally a complex system of interconnected services and clarifies them one at a time, first examining theoretical requirements then looking at concrete tools, configuration, and workflows. Building out these systems includes many concerns such as containerization, container orchestration, build pipelines and continuous integration solutions, automated testing, service discovery, logging and analytics. You will examine each of these tools and understand how they can be combined within an organization. You will design an automated build pipeline from Pull Request to container deployment, understand how to achieve High Availability and monitor application health with Service Discovery, and learn how to collaborate with other teams, write documentation, and describe bugs. Covering use of Jenkins, Docker, Kubernetes, the ELK stack (Elasticsearch, Logstash, and Kibana), and StatsD and Grafana for analytics, you will build on your existing knowledge of Service-Oriented Architecture and gain an advanced, practical understanding of everything from infrastructure development to team collaboration. . At a Glance; Contents; About the Author; About the Technical Reviewers; Preface; Chapter 1: Introduction; Why Use Microservices?; Forced Separation of Concerns; Natural Team Ownership; Frequent Deployments; Heterogeneous Selection of Languages; Organization Buy-In; Separation of Concerns; Nouns (Entities); Verbs (Actions/Relationships); Example Microservice Breakdown; Team Structure; Splitting a Monolith; Terminology; Networking Basics; Hostnames and IP Addresses; Network Interfaces; Ports; Protocols; Chapter 2: HTTP API Design; Data Design and Abstraction; Examples of Abstraction Good AbstractionBad Abstraction; Real-World Examples; GitHub: An Ideal Example; Twitter: A Flawed Example; Anatomy of an HTTP Message; Debugging HTTP Traffic; API Entrypoint; Choosing an Entrypoint for a Public API; Content Located at the Root; API Requests; HTTP Methods; URL Endpoints; Top-Level Collections; Specific Endpoints; Filtering Resources; White-Listing Attributes; Filtered Request; Unfiltered Request; Requesting Arrays via URL Parameters; Repeat Parameters; Bracket Notation; Comma Separated; Body Formats; JSON; Form URL Encoded; Multipart Form Data; HTTP Headers; API Responses HTTP Status CodesCommon API Status Codes; Status Code Ranges; 1XX: Informational; 2XX: Successful; 3XX: Redirection; 4XX: Client Error; 5XX: Server Error; Content Types; Expected Body Content; GET /{\{}collection{\}}; GET /{\{}collection{\}}/{\{}resource{\_}id{\}}; POST /{\{}collection{\}}; PUT /{\{}collection{\}}/{\{}resource{\_}id{\}}; PATCH /{\{}collection{\}}/{\{}resource{\_}id{\}}; DELETE /{\{}collection{\}}/{\{}resource{\_}id{\}}; JSON Attribute Conventions; Attribute Name Casing; Snake Case; Pascal Case; Camel Case; Consistency Between Resources; Booleans; Timestamps; ISO 8601; JavaScript Default; Unix Epoch; SQL Timestamp; Resource Identifiers (IDs) NullsArrays; Whitespace; Error Reporting; Validation Errors; Generic Errors; Always Handle Server Errors; String-Based Error Codes; Responses Should Mimic Requests; Acceptable Discrepancy; Avoidable Discrepancy; HTTP Headers; API Standards; Simple Response Envelope; JSON Schema; JSON API; GraphQL; Hypermedia APIs; API Transports; JSON RPC; SOAP; MessagePack (Binary); Apache Thrift (Binary); Chapter 3: Deployments; Automated Testing; Unit Tests; Smoke Tests; Integration Tests; Acceptance Tests; Performance Tests; Regression Tests; Containers; Docker Containers; Dockerfile Breakdown Running a Docker ImageManaging Containers with Kubernetes; Further Reading: Mesos and Marathon; Build Pipeline; Continuous Integration and Deployment; Choosing Environments; Designing a Build Pipeline; Building with Jenkins; Testing Contributions; Jenkins; Travis CI; Further Reading: TeamCity and CircleCI; Chapter 4: Service Discovery; Why Do You Need Service Discovery?; Client Side vs. Server Side; Client-Side Discovery; Server-Side Discovery; Example Implementation; Get Entire State; Register Provider Instance; Deregister Provider Instance; Finding a Provider},
+author = {Hunter, Thomas},
+booktitle = {Advanced Microservices: A Hands-on Approach to Microservice Infrastructure and Tooling},
+doi = {10.1007/978-1-4842-2887-6},
+file = {:C$\backslash$:/Users/V{\'{i}}ctor/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Hunter - 2017 - Advanced Microservices A Hands-on Approach to Microservice Infrastructure and Tooling.pdf:pdf},
+isbn = {9781484228876},
+pages = {1--181},
+title = {{Advanced Microservices: A Hands-on Approach to Microservice Infrastructure and Tooling}},
+year = {2017}
+}
+@article{Ameller2013,
+author = {Ameller, David and Ayala, Claudia and Cabot, Jordi and Franch, Xavier},
+file = {:C$\backslash$:/Users/V{\'{i}}ctor/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Ameller et al. - 2013 - Non-functional Requirements in Architectural Decision Making.pdf:pdf},
+journal = {IEEE SOFTWARE},
+title = {{Non-functional Requirements in Architectural Decision Making}},
+url = {www.essi.upc.edu/{~}gessi/},
+year = {2013}
+}
+@misc{Fowler2013,
 author = {Fowler, Martin},
-title = {{Continuous Integration}},
-url = {https://martinfowler.com/articles/continuousIntegration.html},
+title = {{ContinuousDelivery}},
+url = {https://martinfowler.com/bliki/ContinuousDelivery.html},
 urldate = {2018-07-27},
-year = {2006}
+year = {2013}
+}
+@book{Sommerville2010,
+abstract = {The book presents a broad perspective on software systems engineering, concentrating on widely used techniques for developing large-scale systems. Building on the widely acclaimed strengths of the 8th edition, the 9th edition updates readers with the latest developments in the field while remaining the most current Software Engineering text in the market with quality trusted coverage and practical case studies. This text is structured into 6 parts: Introduction; Requirements Engineering; Design; Software Development; Verification and Validation; Management. An up-to-date reference for software engineers.},
+archivePrefix = {arXiv},
+arxivId = {0321313798},
+author = {Sommerville, Ian},
+booktitle = {Software Engineering},
+doi = {10.1111/j.1365-2362.2005.01463.x},
+eprint = {0321313798},
+file = {:D$\backslash$:/TFG/Books/Software{\_}Engineering/1429431793.203Software Engineering by Somerville.pdf:pdf},
+isbn = {9780137035151},
+issn = {0014-2972},
+pages = {56--81},
+pmid = {15667577},
+title = {{Software Engineering}},
+year = {2010}
+}
+@book{FowlerSusan,
+author = {Fowler, Susan J.},
+file = {:D$\backslash$:/TFG/Books/Microservicios/Microservices-in-Production.pdf:pdf},
+publisher = {O'REILLY},
+title = {{Microservices in Production : Standard Principles and Requirements}},
+year = {2017}
+}
+@misc{Baum2016,
+author = {Baum, Vitaly},
+title = {{Practical Microservices: Correlation Tokens – Microservices Practitioner Articles}},
+url = {https://articles.microservices.com/practical-microservices-correlation-tokens-75888baa5182},
+urldate = {2018-08-06},
+year = {2016}
+}
+@book{Vaughn2013,
+author = {Vernon, Vaughn},
+isbn = {978-0-321-83457-7},
+pages = {656},
+publisher = {Addison-Wesley Professional},
+title = {{Implementing Domain-Driven Design}},
+url = {https://www.safaribooksonline.com/library/view/implementing-domain-driven-design/9780133039900/?ar},
+year = {2013}
+}
+@inproceedings{Amaral2016,
+abstract = {Microservices architecture has started a new trend for application development for a number of reasons: (1) to reduce complexity by using tiny services; (2) to scale, remove and deploy parts of the system easily; (3) to improve flexibility to use different frameworks and tools; (4) to increase the overall scalability; and (5) to improve the resilience of the system. Containers have empowered the usage of microservices architectures by being lightweight, providing fast start-up times, and having a low overhead. Containers can be used to develop applications based on monolithic architectures where the whole system runs inside a single container or inside a microservices architecture where one or few processes run inside the containers. Two models can be used to implement a microservices architecture using containers: master-slave, or nested-container. The goal of this work is to compare the performance of CPU and network running benchmarks in the two aforementioned models of microservices architecture hence provide a benchmark analysis guidance for system designers.},
+archivePrefix = {arXiv},
+arxivId = {1511.02043},
+author = {Amaral, Marcelo and Polo, Jord{\`{a}} and Carrera, David and Mohomed, Iqbal and Unuvar, Merve and Steinder, Malgorzata},
+booktitle = {Proceedings - 2015 IEEE 14th International Symposium on Network Computing and Applications, NCA 2015},
+doi = {10.1109/NCA.2015.49},
+eprint = {1511.02043},
+file = {:C$\backslash$:/Users/V{\'{i}}ctor/Downloads/PerformanceEvaluation.pdf:pdf},
+isbn = {0769556817},
+keywords = {Containers,Microservices,Networking,Performance Evaluation},
+pages = {27--34},
+title = {{Performance evaluation of microservices architectures using containers}},
+year = {2016}
 }
 @misc{Wikipedia,
 author = {Wikipedia},
@@ -26,102 +99,14 @@ title = {{Service (systems architecture)}},
 url = {https://en.wikipedia.org/wiki/Service{\_}(systems{\_}architecture)},
 urldate = {2018-07-07}
 }
-@misc{NetCore21,
-title = {{.NET Core 2.1 versions}},
-url = {https://www.microsoft.com/net/download/dotnet-core/2.1},
-urldate = {2018-07-29}
-}
-@article{Gilbert2012,
-abstract = {The CAP theorem is one example of a more general tradeoff between safety and liveness in unreliable systems. Viewing CAP in this context provides insight into the inherent tradeoffs and the manner in which they can be circumvented in practice.},
-author = {Gilbert, Seth and Lynch, Nancy},
-doi = {10.1109/MC.2011.389},
-isbn = {0018-9162},
-issn = {0018-9162},
-journal = {Computer},
-month = {feb},
-number = {2},
-pages = {30--36},
-pmid = {6122006},
-title = {{Perspectives on the CAP Theorem}},
-url = {http://ieeexplore.ieee.org/document/6122006/},
-volume = {45},
-year = {2012}
-}
-@book{IEEECOMPUTERSOCIETY2004,
-author = {{IEEE COMPUTER SOCIETY}},
-booktitle = {IEEE Computer Society},
-file = {:C$\backslash$:/Users/V{\'{i}}ctor/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Unknown - 2004 - GU{\'{I}}A AL CUERPO DE CONOCIMIENTO DE LA INGENIER{\'{I}}A DEL SOFTWARE VERSI{\'{O}}N 2004 SWEBOK UN PROYECTO DEL COMIT{\'{E}} DE LA PR{\'{A}}CTICA.pdf:pdf},
-isbn = {0769523307},
-keywords = {Ingenier{\'{i}}a de Software},
-pages = {215},
-title = {{Swebok - Gu{\'{i}}a al cuerpo de conocimiento de la Ingenier{\'{i}}a de Software}},
-url = {http://shop.ieee.org/store/customer-},
-year = {2004}
-}
-@book{Rensin2015,
-author = {Rensin, David},
-file = {:C$\backslash$:/Users/V{\'{i}}ctor/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Rensin - 2015 - Kubernetes.pdf:pdf},
-publisher = {O'REILLY},
-title = {{Kubernetes}},
-year = {2015}
-}
-@misc{Fowler,
-author = {Fowler, Martin},
-title = {{BoundedContext}},
-url = {https://martinfowler.com/bliki/BoundedContext.html},
-urldate = {2018-07-25},
-year = {2014}
-}
-@article{Standard2010,
-author = {Standard, International},
-title = {{ISO 25010}},
-url = {https://iso25000.com/index.php/normas-iso-25000/iso-25010?limit=3{\&}start=3 http://iso25000.com/index.php/normas-iso-25000/iso-25010?limit=3{\&}limitstart=0},
-volume = {2010},
-year = {2010}
-}
-@book{Fernandes2016,
-author = {Fernandes, Jo{\~{a}}o M. and Machado, Ricardo J.},
-file = {:C$\backslash$:/Users/V{\'{i}}ctor/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Fernandes, Machado - 2016 - Requirements in Engineeng Projects.pdf:pdf},
-isbn = {9783319185972},
-publisher = {Springer},
-title = {{Requirements in Engineeng Projects}},
-url = {http://www.springer.com/series/11786},
-year = {2016}
-}
-@book{Osherove2014,
-abstract = {2nd ed.},
-author = {Osherove, Roy.},
-isbn = {1617290890},
-publisher = {Manning Publications},
-title = {{The art of unit testing : with examples in C Sharp}},
-year = {2014}
-}
-@book{Vliet2011,
-abstract = {1st ed. If you plan to use Amazon Web Services to run applications in the cloud, the end-to-end approach in this book will save you needless trial and error. You'll find practical guidelines for designing and building applications with Amazon Elastic Compute Cloud (EC2) and a host of supporting AWS tools, with a focus on critical issues such as load balancing, monitoring, and automation. How do you move an existing application to AWS, or design your application so that it scales effectively? How much storage will you require? Programming Amazon EC2 not only helps you get started, it will also keep y. Foreword -- Preface -- Introducing AWS -- Starting with EC2,RDS, and S3/CloudFront --Growing with S3, ELB, Auto Scaling, and RDS -- Decoupling with SQS, SimpleDB, and SNS -- Managing the inevitable downtime -- Improving your uptime -- Managing your decoupled system -- And now -- Index.},
-author = {van. Vliet, Jurg and Paganelli, Flavia.},
-isbn = {1449305261},
-pages = {163},
-publisher = {O'Reilly Media},
-title = {{Programming Amazon EC2}},
-year = {2011}
-}
-@book{Bourque2014,
-abstract = {SWEBOK V3.0 is the most recent completely revised and updated version of the internationally respected Guide to the Software Engineering Body of Knowledge. Newly imagined as a living, changing document, and thoroughly rewritten, SWEBOK V3.0 has been developed and created by leading authorities, reviewed by professionals, and made available for public review and comment, continuing its 20-year reputation as the most authoritative, fundamental, and trusted definition of the software engineering profession. SWEBOK V3.0 is comprised of 15 Knowledge Areas, plus a new Appendix on Standards. SWEBOK V3.0 is now specifically designed to be constantly reviewed and updated as technology and the engineering profession changes over time, remaining consistently relevant. Be sure to register to receive notifications when the SWEBOK Guide is revised.},
-archivePrefix = {arXiv},
-arxivId = {arXiv:1210.1833v2},
-author = {SOCIETY, IEEE COMPUTER},
-booktitle = {IEEE Computer Society},
-doi = {10.1234/12345678},
-editor = {Bourque, Pierre and Fairley, Richard E.},
-eprint = {arXiv:1210.1833v2},
-file = {:C$\backslash$:/Users/V{\'{i}}ctor/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Unknown - Unknown - Guide to the Software Engineering Body of Knowledge SWEBOK {\textregistered} A Project of the IEEE Computer Society.pdf:pdf},
-isbn = {0-7695-2330-7},
-issn = {07407459},
-pages = {346},
-pmid = {13861254},
-title = {{Guide to the Software Engineering - Body of Knowledge.}},
-url = {http://www4.ncsu.edu/{~}tjmenzie/cs510/pdf/SWEBOKv3.pdf www.swebok.org},
-year = {2014}
+@book{DelaTorre2018,
+abstract = {Reservados todos los derechos. No se puede reproducir ni transmitir de ninguna forma, ni por ning{\'{u}}n medio, ninguna parte del contenido de este libro, sin la autorizaci{\'{o}}n por escrito del editor. Este libro se proporciona "tal cual" y expresa los puntos de vista y opiniones de los autores. Los puntos de vista, opiniones e informaci{\'{o}}n expresada en este libro, incluyendo las URL y otras referencias a sitios web de Internet, pueden cambiar sin previo aviso. Algunos ejemplos mostrados aqu{\'{i}} se proporcionan s{\'{o}}lo a t{\'{i}}tulo ilustrativo y son ficticios. No se pretende ni se debe inferir ninguna conexi{\'{o}}n ni asociaciaci{\'{o}}n con la realidad. Microsoft y las marcas que figuran en la p{\'{a}}gina web de "Trademarks" en http://www.microsoft.com, son marcas comerciales del grupo de compa{\~{n}}{\'{i}}as de Microsoft. Mac y macOS son marcas de Apple Inc. El logotipo de la ballena de Docker es una marca registrada de Docker, Inc. Se usa con la autorizaci{\'{o}}n correspondiente. Todas las otras marcas y logotipos son propiedad de sus respectivos due{\~{n}}os.},
+author = {{De la Torre}, Cesar and Wagner, Bill and Rousos, Mike},
+edition = {2},
+file = {:C$\backslash$:/Users/V{\'{i}}ctor/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/De la Torre, Wagner, Rousos - 2018 - Microservicios .NET Arquitectura para Aplicaciones .NET Contenerizadas.pdf:pdf},
+publisher = {Microsoft Corporation},
+title = {{Microservicios .NET: Arquitectura para Aplicaciones .NET Contenerizadas}},
+year = {2018}
 }
 @article{Arsanjani2009a,
 abstract = {Tracking the fate of cells in murine epidermis in vivo has revealed that a committed progenitor cell population can maintain normal adult tissue in the long term without support from a long-lived, self-renewing population of stem cells. Here, we argue that these results challenge the dogma that stem-cell proliferation is required for the cellular homeostasis of the epidermis and other adult tissues, with important implications for tissue physiology and disease.},
@@ -134,14 +119,30 @@ title = {{SOA Manifesto}},
 url = {http://www.soa-manifesto.org/},
 year = {2009}
 }
-@book{Matthias,
-author = {Matthias, Karl and Kane, Sean P},
-file = {:D$\backslash$:/TFG/Books/Microservicios/Docker - Up {\&} Running.pdf:pdf},
-isbn = {9781491917572},
-keywords = {www.finebook.ir},
-publisher = {O'REILLY},
-title = {{Docker Up {\&} Running}},
-year = {2015}
+@misc{Lewis2014,
+author = {Lewis, James and Fowler, Martin},
+title = {{Microservices}},
+url = {https://www.martinfowler.com/articles/microservices.html},
+urldate = {2018-07-08},
+year = {2014}
+}
+@misc{Fowler,
+author = {Fowler, Martin},
+title = {{BoundedContext}},
+url = {https://martinfowler.com/bliki/BoundedContext.html},
+urldate = {2018-07-25},
+year = {2014}
+}
+@book{IEEECOMPUTERSOCIETY2004,
+author = {{IEEE COMPUTER SOCIETY}},
+booktitle = {IEEE Computer Society},
+file = {:C$\backslash$:/Users/V{\'{i}}ctor/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Unknown - 2004 - GU{\'{I}}A AL CUERPO DE CONOCIMIENTO DE LA INGENIER{\'{I}}A DEL SOFTWARE VERSI{\'{O}}N 2004 SWEBOK UN PROYECTO DEL COMIT{\'{E}} DE LA PR{\'{A}}CTICA.pdf:pdf},
+isbn = {0769523307},
+keywords = {Ingenier{\'{i}}a de Software},
+pages = {215},
+title = {{Swebok - Gu{\'{i}}a al cuerpo de conocimiento de la Ingenier{\'{i}}a de Software}},
+url = {http://shop.ieee.org/store/customer-},
+year = {2004}
 }
 @book{Martin2017,
 abstract = {Building upon the success of best-sellers The Clean Coder and Clean Code, legendary software craftsman Robert C. "Uncle Bob" Martin shows how to bring greater professionalism and discipline to application architecture and design. As with his other books, Martin's Clean Architecture doesn't merely present multiple choices and options, and say "use your best judgment": it tells you what choices to make, and why those choices are critical to your success. Martin offers direct, no-nonsense answers to key architecture and design questions like: What are the best high level structures for different kinds of applications, including web, database, thick-client, console, and embedded apps? What are the core principles of software architecture? What is the role of the architect, and what is he/she really trying to achieve? What are the core principles of software design? How do designs and architectures go wrong, and what can you do about it? What are the disciplines and practices of professional architects and designers? Clean Architecture is essential reading for every software architect, systems analyst, system designer, and software manager -- and for any programmer who aspires to these roles or is impacted by their work.},
@@ -159,57 +160,12 @@ publisher = {Prentice Hall},
 title = {{Clean Architecture: A Craftsman's Guide to Software Structure and Design}},
 year = {2017}
 }
-@misc{Fowler2013,
-author = {Fowler, Martin},
-title = {{ContinuousDelivery}},
-url = {https://martinfowler.com/bliki/ContinuousDelivery.html},
-urldate = {2018-07-27},
-year = {2013}
-}
-@article{Ameller2013,
-author = {Ameller, David and Ayala, Claudia and Cabot, Jordi and Franch, Xavier},
-file = {:C$\backslash$:/Users/V{\'{i}}ctor/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Ameller et al. - 2013 - Non-functional Requirements in Architectural Decision Making.pdf:pdf},
-journal = {IEEE SOFTWARE},
-title = {{Non-functional Requirements in Architectural Decision Making}},
-url = {www.essi.upc.edu/{~}gessi/},
-year = {2013}
-}
-@misc{Baum2016,
-author = {Baum, Vitaly},
-title = {{Practical Microservices: Correlation Tokens – Microservices Practitioner Articles}},
-url = {https://articles.microservices.com/practical-microservices-correlation-tokens-75888baa5182},
-urldate = {2018-08-06},
+@book{Richards2016,
+author = {Richards, Mark},
+file = {:C$\backslash$:/Users/V{\'{i}}ctor/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Richards - 2016 - Microservices AntiPatterns and Pitfalls.pdf:pdf},
+publisher = {O'REILLY},
+title = {{Microservices AntiPatterns and Pitfalls}},
 year = {2016}
-}
-@misc{Fowler2011,
-author = {Fowler, Martin},
-title = {{PolyglotPersistence}},
-url = {https://martinfowler.com/bliki/PolyglotPersistence.html},
-urldate = {2018-07-26},
-year = {2011}
-}
-@book{Pressman,
-abstract = {Eighth edition. A guide to software engineering. It focuses on widely used software engineering methods and will de-emphasize or completely eliminate discussion of secondary methods, tools and techniques. 1. The nature of software -- 2. Software engineering -- 3. Software process structure -- 4. Process models -- 5. Agile development -- 6. Human aspects of software engineering -- 7. Principles that guide practice -- 8. Understanding requirements -- 9. Requirements modeling: scenario-based methods -- 10. Requirements modeling: class-based methods -- 11. Requirements modeling: behavior, patterens, and web / mobile apps -- 12. Design concepts -- 13. Architectural desigtn -- 14. Component-level design -- 15. User interface design -- 16. Pattern-based design -- 17. Web-app design -- 18 Mobile-app design -- 19. Quality concepts -- 20. Review techniques -- 21. Software quality assurance -- 22. Software testing strategies -- 23. Testing conventional applications -- 24. Testing object-oriented applications -- 25. Testing web applications -- 26. Testing moble applications -- 27. Security engineering -- 28. Formal modeling and verification -- 29. Software configuration management -- 30. Product metrics.},
-author = {Pressman, Roger S.},
-isbn = {0078022126},
-pages = {941},
-title = {{Software engineering : a practitioner's approach}}
-}
-@book{Newman2015a,
-abstract = {Distributed systems have become more fine-grained in the past 10 years, shifting from code-heavy monolithic applications to smaller, self-contained microservices. But developing these systems brings its own set of headaches. With lots of examples and practical advice, this book takes a holistic view of the topics that system architects and administrators must consider when building, managing, and evolving microservice architectures.Microservice technologies are moving quickly. Author Sam Newman provides you with a firm grounding in the concepts while diving into current solutions for modeling, integrating, testing, deploying, and monitoring your own autonomous services. You'll follow a fictional company throughout the book to learn how building a microservice architecture affects a single domain.Discover how microservices allow you to align your system design with your organization's goalsLearn options for integrating a service with the rest of your systemTake an incremental approach when splitting monolithic codebasesDeploy individual microservices through continuous integrationExamine the complexities of testing and monitoring distributed servicesManage security with user-to-service and service-to-service modelsUnderstand the challenges of scaling microservice architectures},
-archivePrefix = {arXiv},
-arxivId = {1606.04036},
-author = {Newman, Sam},
-booktitle = {O'Reilly},
-doi = {10.1109/MS.2016.64},
-eprint = {1606.04036},
-isbn = {978-1-491-95035-7},
-issn = {07407459},
-keywords = {www.it-ebooks.info},
-pmid = {15003161},
-publisher = {O'Reilly},
-title = {{Building Microservices}},
-year = {2015}
 }
 @article{Dua2014,
 abstract = {—PaaS vendors face challenges in efficiently providing services with the growth of their offerings. In this paper, we explore how PaaS vendors are using containers as a means of hosting Apps. The paper starts with a discussion of PaaS Use case and the current adoption of Container based PaaS archi- tectures with the existing vendors. We explore various container implementations - Linux Containers, Docker, Warden Container, lmctfy and OpenVZ.We look at how each of this implementation handle Process, FileSystem and Namespace isolation. We look at some of the unique features of each container and how some of them reuse base Linux Container implementation or differ from it. We also explore how IaaSlayer itself has started providing support for container lifecycle management along with Virtual Machines. In the end, we look at factors affecting container implementation choices and some of the features missing from the existing implementations for the next generation PaaS.},
@@ -227,6 +183,15 @@ pages = {610--614},
 pmid = {11242594},
 title = {{Virtualization vs containerization to support PaaS}},
 year = {2014}
+}
+@book{Vliet2011,
+abstract = {1st ed. If you plan to use Amazon Web Services to run applications in the cloud, the end-to-end approach in this book will save you needless trial and error. You'll find practical guidelines for designing and building applications with Amazon Elastic Compute Cloud (EC2) and a host of supporting AWS tools, with a focus on critical issues such as load balancing, monitoring, and automation. How do you move an existing application to AWS, or design your application so that it scales effectively? How much storage will you require? Programming Amazon EC2 not only helps you get started, it will also keep y. Foreword -- Preface -- Introducing AWS -- Starting with EC2,RDS, and S3/CloudFront --Growing with S3, ELB, Auto Scaling, and RDS -- Decoupling with SQS, SimpleDB, and SNS -- Managing the inevitable downtime -- Improving your uptime -- Managing your decoupled system -- And now -- Index.},
+author = {van. Vliet, Jurg and Paganelli, Flavia.},
+isbn = {1449305261},
+pages = {163},
+publisher = {O'Reilly Media},
+title = {{Programming Amazon EC2}},
+year = {2011}
 }
 @book{Cohn2010,
 author = {Cohn, Mike},
@@ -251,6 +216,81 @@ title = {{Container-based virtual elastic clusters}},
 volume = {127},
 year = {2017}
 }
+@book{Newman2015a,
+abstract = {Distributed systems have become more fine-grained in the past 10 years, shifting from code-heavy monolithic applications to smaller, self-contained microservices. But developing these systems brings its own set of headaches. With lots of examples and practical advice, this book takes a holistic view of the topics that system architects and administrators must consider when building, managing, and evolving microservice architectures.Microservice technologies are moving quickly. Author Sam Newman provides you with a firm grounding in the concepts while diving into current solutions for modeling, integrating, testing, deploying, and monitoring your own autonomous services. You'll follow a fictional company throughout the book to learn how building a microservice architecture affects a single domain.Discover how microservices allow you to align your system design with your organization's goalsLearn options for integrating a service with the rest of your systemTake an incremental approach when splitting monolithic codebasesDeploy individual microservices through continuous integrationExamine the complexities of testing and monitoring distributed servicesManage security with user-to-service and service-to-service modelsUnderstand the challenges of scaling microservice architectures},
+archivePrefix = {arXiv},
+arxivId = {1606.04036},
+author = {Newman, Sam},
+booktitle = {O'Reilly},
+doi = {10.1109/MS.2016.64},
+eprint = {1606.04036},
+isbn = {978-1-491-95035-7},
+issn = {07407459},
+keywords = {www.it-ebooks.info},
+pmid = {15003161},
+publisher = {O'Reilly},
+title = {{Building Microservices}},
+year = {2015}
+}
+@book{Matthias,
+author = {Matthias, Karl and Kane, Sean P},
+file = {:D$\backslash$:/TFG/Books/Microservicios/Docker - Up {\&} Running.pdf:pdf},
+isbn = {9781491917572},
+keywords = {www.finebook.ir},
+publisher = {O'REILLY},
+title = {{Docker Up {\&} Running}},
+year = {2015}
+}
+@misc{NetCore21,
+title = {{.NET Core 2.1 versions}},
+url = {https://www.microsoft.com/net/download/dotnet-core/2.1},
+urldate = {2018-07-29}
+}
+@book{Osherove2014,
+abstract = {2nd ed.},
+author = {Osherove, Roy.},
+isbn = {1617290890},
+publisher = {Manning Publications},
+title = {{The art of unit testing : with examples in C Sharp}},
+year = {2014}
+}
+@book{Rensin2015,
+author = {Rensin, David},
+file = {:C$\backslash$:/Users/V{\'{i}}ctor/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Rensin - 2015 - Kubernetes.pdf:pdf},
+publisher = {O'REILLY},
+title = {{Kubernetes}},
+year = {2015}
+}
+@book{Pressman,
+abstract = {Eighth edition. A guide to software engineering. It focuses on widely used software engineering methods and will de-emphasize or completely eliminate discussion of secondary methods, tools and techniques. 1. The nature of software -- 2. Software engineering -- 3. Software process structure -- 4. Process models -- 5. Agile development -- 6. Human aspects of software engineering -- 7. Principles that guide practice -- 8. Understanding requirements -- 9. Requirements modeling: scenario-based methods -- 10. Requirements modeling: class-based methods -- 11. Requirements modeling: behavior, patterens, and web / mobile apps -- 12. Design concepts -- 13. Architectural desigtn -- 14. Component-level design -- 15. User interface design -- 16. Pattern-based design -- 17. Web-app design -- 18 Mobile-app design -- 19. Quality concepts -- 20. Review techniques -- 21. Software quality assurance -- 22. Software testing strategies -- 23. Testing conventional applications -- 24. Testing object-oriented applications -- 25. Testing web applications -- 26. Testing moble applications -- 27. Security engineering -- 28. Formal modeling and verification -- 29. Software configuration management -- 30. Product metrics.},
+author = {Pressman, Roger S.},
+isbn = {0078022126},
+pages = {941},
+title = {{Software engineering : a practitioner's approach}}
+}
+@article{Gilbert2012,
+abstract = {The CAP theorem is one example of a more general tradeoff between safety and liveness in unreliable systems. Viewing CAP in this context provides insight into the inherent tradeoffs and the manner in which they can be circumvented in practice.},
+author = {Gilbert, Seth and Lynch, Nancy},
+doi = {10.1109/MC.2011.389},
+isbn = {0018-9162},
+issn = {0018-9162},
+journal = {Computer},
+month = {feb},
+number = {2},
+pages = {30--36},
+pmid = {6122006},
+title = {{Perspectives on the CAP Theorem}},
+url = {http://ieeexplore.ieee.org/document/6122006/},
+volume = {45},
+year = {2012}
+}
+@misc{Fowler2011,
+author = {Fowler, Martin},
+title = {{PolyglotPersistence}},
+url = {https://martinfowler.com/bliki/PolyglotPersistence.html},
+urldate = {2018-07-26},
+year = {2011}
+}
 @techreport{Mulligan,
 abstract = {This paper describes the conceptual design of an interaction independence middleware framework and describes the role that web services plays within it. We investigate two pervasive service-oriented architecture paradigms, SOAP and REST, in order to gauge their potential effectiveness in meeting underlying back-end data transmission requirements; provide implementations for the service-oriented architecture and data model; and, finally, critically evaluate both implementations with an emphasis on their performance with regard to both efficiency and scalability.},
 author = {Mulligan, Gavin and Gra{\v{c}}anin, Denis},
@@ -259,86 +299,46 @@ title = {{A COMPARISON OF SOAP AND REST IMPLEMENTATIONS OF A SERVICE BASED INTER
 url = {http://delivery.acm.org/10.1145/2000000/1995650/p1423-mulligan.pdf?ip=158.42.242.33{\&}id=1995650{\&}acc=ACTIVE SERVICE{\&}key=DD1EC5BCF38B3699.016407C0B79CBB66.4D4702B0C3E38B35.4D4702B0C3E38B35{\&}{\_}{\_}acm{\_}{\_}=1532552615{\_}046868fa8df380f51574c32197d0fa8e},
 year = {2009}
 }
-@misc{Lewis2014,
-author = {Lewis, James and Fowler, Martin},
-title = {{Microservices}},
-url = {https://www.martinfowler.com/articles/microservices.html},
-urldate = {2018-07-08},
-year = {2014}
-}
-@book{FowlerSusan,
-author = {Fowler, Susan J.},
-file = {:D$\backslash$:/TFG/Books/Microservicios/Microservices-in-Production.pdf:pdf},
-publisher = {O'REILLY},
-title = {{Microservices in Production : Standard Principles and Requirements}},
-year = {2017}
-}
-@book{Vaughn2013,
-author = {Vernon, Vaughn},
-isbn = {978-0-321-83457-7},
-pages = {656},
-publisher = {Addison-Wesley Professional},
-title = {{Implementing Domain-Driven Design}},
-url = {https://www.safaribooksonline.com/library/view/implementing-domain-driven-design/9780133039900/?ar},
-year = {2013}
-}
-@book{DelaTorre2018,
-abstract = {Reservados todos los derechos. No se puede reproducir ni transmitir de ninguna forma, ni por ning{\'{u}}n medio, ninguna parte del contenido de este libro, sin la autorizaci{\'{o}}n por escrito del editor. Este libro se proporciona "tal cual" y expresa los puntos de vista y opiniones de los autores. Los puntos de vista, opiniones e informaci{\'{o}}n expresada en este libro, incluyendo las URL y otras referencias a sitios web de Internet, pueden cambiar sin previo aviso. Algunos ejemplos mostrados aqu{\'{i}} se proporcionan s{\'{o}}lo a t{\'{i}}tulo ilustrativo y son ficticios. No se pretende ni se debe inferir ninguna conexi{\'{o}}n ni asociaciaci{\'{o}}n con la realidad. Microsoft y las marcas que figuran en la p{\'{a}}gina web de "Trademarks" en http://www.microsoft.com, son marcas comerciales del grupo de compa{\~{n}}{\'{i}}as de Microsoft. Mac y macOS son marcas de Apple Inc. El logotipo de la ballena de Docker es una marca registrada de Docker, Inc. Se usa con la autorizaci{\'{o}}n correspondiente. Todas las otras marcas y logotipos son propiedad de sus respectivos due{\~{n}}os.},
-author = {{De la Torre}, Cesar and Wagner, Bill and Rousos, Mike},
-edition = {2},
-file = {:C$\backslash$:/Users/V{\'{i}}ctor/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/De la Torre, Wagner, Rousos - 2018 - Microservicios .NET Arquitectura para Aplicaciones .NET Contenerizadas.pdf:pdf},
-publisher = {Microsoft Corporation},
-title = {{Microservicios .NET: Arquitectura para Aplicaciones .NET Contenerizadas}},
-year = {2018}
-}
-@inproceedings{Amaral2016,
-abstract = {Microservices architecture has started a new trend for application development for a number of reasons: (1) to reduce complexity by using tiny services; (2) to scale, remove and deploy parts of the system easily; (3) to improve flexibility to use different frameworks and tools; (4) to increase the overall scalability; and (5) to improve the resilience of the system. Containers have empowered the usage of microservices architectures by being lightweight, providing fast start-up times, and having a low overhead. Containers can be used to develop applications based on monolithic architectures where the whole system runs inside a single container or inside a microservices architecture where one or few processes run inside the containers. Two models can be used to implement a microservices architecture using containers: master-slave, or nested-container. The goal of this work is to compare the performance of CPU and network running benchmarks in the two aforementioned models of microservices architecture hence provide a benchmark analysis guidance for system designers.},
-archivePrefix = {arXiv},
-arxivId = {1511.02043},
-author = {Amaral, Marcelo and Polo, Jord{\`{a}} and Carrera, David and Mohomed, Iqbal and Unuvar, Merve and Steinder, Malgorzata},
-booktitle = {Proceedings - 2015 IEEE 14th International Symposium on Network Computing and Applications, NCA 2015},
-doi = {10.1109/NCA.2015.49},
-eprint = {1511.02043},
-file = {:C$\backslash$:/Users/V{\'{i}}ctor/Downloads/PerformanceEvaluation.pdf:pdf},
-isbn = {0769556817},
-keywords = {Containers,Microservices,Networking,Performance Evaluation},
-pages = {27--34},
-title = {{Performance evaluation of microservices architectures using containers}},
-year = {2016}
-}
-@book{Hunter2017,
-abstract = {Teaches you to use the many types of tools required to navigate and maintain a microservice ecosystem. This book examines what is normally a complex system of interconnected services and clarifies them one at a time, first examining theoretical requirements then looking at concrete tools, configuration, and workflows. Building out these systems includes many concerns such as containerization, container orchestration, build pipelines and continuous integration solutions, automated testing, service discovery, logging and analytics. You will examine each of these tools and understand how they can be combined within an organization. You will design an automated build pipeline from Pull Request to container deployment, understand how to achieve High Availability and monitor application health with Service Discovery, and learn how to collaborate with other teams, write documentation, and describe bugs. Covering use of Jenkins, Docker, Kubernetes, the ELK stack (Elasticsearch, Logstash, and Kibana), and StatsD and Grafana for analytics, you will build on your existing knowledge of Service-Oriented Architecture and gain an advanced, practical understanding of everything from infrastructure development to team collaboration. . At a Glance; Contents; About the Author; About the Technical Reviewers; Preface; Chapter 1: Introduction; Why Use Microservices?; Forced Separation of Concerns; Natural Team Ownership; Frequent Deployments; Heterogeneous Selection of Languages; Organization Buy-In; Separation of Concerns; Nouns (Entities); Verbs (Actions/Relationships); Example Microservice Breakdown; Team Structure; Splitting a Monolith; Terminology; Networking Basics; Hostnames and IP Addresses; Network Interfaces; Ports; Protocols; Chapter 2: HTTP API Design; Data Design and Abstraction; Examples of Abstraction Good AbstractionBad Abstraction; Real-World Examples; GitHub: An Ideal Example; Twitter: A Flawed Example; Anatomy of an HTTP Message; Debugging HTTP Traffic; API Entrypoint; Choosing an Entrypoint for a Public API; Content Located at the Root; API Requests; HTTP Methods; URL Endpoints; Top-Level Collections; Specific Endpoints; Filtering Resources; White-Listing Attributes; Filtered Request; Unfiltered Request; Requesting Arrays via URL Parameters; Repeat Parameters; Bracket Notation; Comma Separated; Body Formats; JSON; Form URL Encoded; Multipart Form Data; HTTP Headers; API Responses HTTP Status CodesCommon API Status Codes; Status Code Ranges; 1XX: Informational; 2XX: Successful; 3XX: Redirection; 4XX: Client Error; 5XX: Server Error; Content Types; Expected Body Content; GET /{\{}collection{\}}; GET /{\{}collection{\}}/{\{}resource{\_}id{\}}; POST /{\{}collection{\}}; PUT /{\{}collection{\}}/{\{}resource{\_}id{\}}; PATCH /{\{}collection{\}}/{\{}resource{\_}id{\}}; DELETE /{\{}collection{\}}/{\{}resource{\_}id{\}}; JSON Attribute Conventions; Attribute Name Casing; Snake Case; Pascal Case; Camel Case; Consistency Between Resources; Booleans; Timestamps; ISO 8601; JavaScript Default; Unix Epoch; SQL Timestamp; Resource Identifiers (IDs) NullsArrays; Whitespace; Error Reporting; Validation Errors; Generic Errors; Always Handle Server Errors; String-Based Error Codes; Responses Should Mimic Requests; Acceptable Discrepancy; Avoidable Discrepancy; HTTP Headers; API Standards; Simple Response Envelope; JSON Schema; JSON API; GraphQL; Hypermedia APIs; API Transports; JSON RPC; SOAP; MessagePack (Binary); Apache Thrift (Binary); Chapter 3: Deployments; Automated Testing; Unit Tests; Smoke Tests; Integration Tests; Acceptance Tests; Performance Tests; Regression Tests; Containers; Docker Containers; Dockerfile Breakdown Running a Docker ImageManaging Containers with Kubernetes; Further Reading: Mesos and Marathon; Build Pipeline; Continuous Integration and Deployment; Choosing Environments; Designing a Build Pipeline; Building with Jenkins; Testing Contributions; Jenkins; Travis CI; Further Reading: TeamCity and CircleCI; Chapter 4: Service Discovery; Why Do You Need Service Discovery?; Client Side vs. Server Side; Client-Side Discovery; Server-Side Discovery; Example Implementation; Get Entire State; Register Provider Instance; Deregister Provider Instance; Finding a Provider},
-author = {Hunter, Thomas},
-booktitle = {Advanced Microservices: A Hands-on Approach to Microservice Infrastructure and Tooling},
-doi = {10.1007/978-1-4842-2887-6},
-file = {:C$\backslash$:/Users/V{\'{i}}ctor/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Hunter - 2017 - Advanced Microservices A Hands-on Approach to Microservice Infrastructure and Tooling.pdf:pdf},
-isbn = {9781484228876},
-pages = {1--181},
-title = {{Advanced Microservices: A Hands-on Approach to Microservice Infrastructure and Tooling}},
-year = {2017}
-}
-@book{Richards2016,
-author = {Richards, Mark},
-file = {:C$\backslash$:/Users/V{\'{i}}ctor/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Richards - 2016 - Microservices AntiPatterns and Pitfalls.pdf:pdf},
-publisher = {O'REILLY},
-title = {{Microservices AntiPatterns and Pitfalls}},
-year = {2016}
-}
-@book{Sommerville2010,
-abstract = {The book presents a broad perspective on software systems engineering, concentrating on widely used techniques for developing large-scale systems. Building on the widely acclaimed strengths of the 8th edition, the 9th edition updates readers with the latest developments in the field while remaining the most current Software Engineering text in the market with quality trusted coverage and practical case studies. This text is structured into 6 parts: Introduction; Requirements Engineering; Design; Software Development; Verification and Validation; Management. An up-to-date reference for software engineers.},
-archivePrefix = {arXiv},
-arxivId = {0321313798},
-author = {Sommerville, Ian},
-booktitle = {Software Engineering},
-doi = {10.1111/j.1365-2362.2005.01463.x},
-eprint = {0321313798},
-file = {:D$\backslash$:/TFG/Books/Software{\_}Engineering/1429431793.203Software Engineering by Somerville.pdf:pdf},
-isbn = {9780137035151},
-issn = {0014-2972},
-pages = {56--81},
-pmid = {15667577},
-title = {{Software Engineering}},
+@article{Standard2010,
+author = {Standard, International},
+title = {{ISO 25010}},
+url = {https://iso25000.com/index.php/normas-iso-25000/iso-25010?limit=3{\&}start=3 http://iso25000.com/index.php/normas-iso-25000/iso-25010?limit=3{\&}limitstart=0},
+volume = {2010},
 year = {2010}
+}
+@book{Fernandes2016,
+author = {Fernandes, Jo{\~{a}}o M. and Machado, Ricardo J.},
+file = {:C$\backslash$:/Users/V{\'{i}}ctor/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Fernandes, Machado - 2016 - Requirements in Engineeng Projects.pdf:pdf},
+isbn = {9783319185972},
+publisher = {Springer},
+title = {{Requirements in Engineeng Projects}},
+url = {http://www.springer.com/series/11786},
+year = {2016}
+}
+@misc{Fowler2006,
+author = {Fowler, Martin},
+title = {{Continuous Integration}},
+url = {https://martinfowler.com/articles/continuousIntegration.html},
+urldate = {2018-07-27},
+year = {2006}
+}
+@book{Bourque2014,
+abstract = {SWEBOK V3.0 is the most recent completely revised and updated version of the internationally respected Guide to the Software Engineering Body of Knowledge. Newly imagined as a living, changing document, and thoroughly rewritten, SWEBOK V3.0 has been developed and created by leading authorities, reviewed by professionals, and made available for public review and comment, continuing its 20-year reputation as the most authoritative, fundamental, and trusted definition of the software engineering profession. SWEBOK V3.0 is comprised of 15 Knowledge Areas, plus a new Appendix on Standards. SWEBOK V3.0 is now specifically designed to be constantly reviewed and updated as technology and the engineering profession changes over time, remaining consistently relevant. Be sure to register to receive notifications when the SWEBOK Guide is revised.},
+archivePrefix = {arXiv},
+arxivId = {arXiv:1210.1833v2},
+author = {SOCIETY, IEEE COMPUTER},
+booktitle = {IEEE Computer Society},
+doi = {10.1234/12345678},
+editor = {Bourque, Pierre and Fairley, Richard E.},
+eprint = {arXiv:1210.1833v2},
+file = {:C$\backslash$:/Users/V{\'{i}}ctor/AppData/Local/Mendeley Ltd./Mendeley Desktop/Downloaded/Unknown - Unknown - Guide to the Software Engineering Body of Knowledge SWEBOK {\textregistered} A Project of the IEEE Computer Society.pdf:pdf},
+isbn = {0-7695-2330-7},
+issn = {07407459},
+pages = {346},
+pmid = {13861254},
+title = {{Guide to the Software Engineering - Body of Knowledge.}},
+url = {http://www4.ncsu.edu/{~}tjmenzie/cs510/pdf/SWEBOKv3.pdf www.swebok.org},
+year = {2014}
 }
 @misc{Eaves2014,
 author = {Eaves, Jon},
