@@ -30,8 +30,8 @@
 \usepackage{multirow}
 \usepackage{babel}
 
-\usepackage{natbib}
-\bibliographystyle{plain}
+\usepackage[square,sort,comma,numbers]{natbib}
+\bibliographystyle{acm}
 \graphicspath{ {Imagenes/} }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -42,7 +42,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{hyperref}
-\hypersetup{colorlinks,linkcolor={black},citecolor={black},urlcolor={black}} 
+\hypersetup{colorlinks,linkcolor={black},citecolor={black},urlcolor={blue}} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                        DADES DEL TREBALL                                    %
@@ -1293,7 +1293,7 @@ Por último, indicar que el consumo de cualquier microservicio, ya sea desde la 
 
 En cuanto a la organización de los microservicios, vamos a emplear un único repositorio de código que contenga el código de todos los microservicios. Como en la solución monolítica, cada capa se representará a través de un proyecto .NET y cada microservicio tendrá una solución de VS distinta.
 
-En "Building Microservices", Newman reflexiona sobre esto en relación a las compilaciones de integración continua. Según él, la mejor opción es tener un repositorio y una compilación diferente para cada microservicio. De esta forma, existe una mayor correspondencia entre los servicios y los equipos encargados de cada uno porque cada equipo realiza cambios en un único repositorio. Además, se evita que un simple cambio en un microservicio lance la compilación de toda la solución \cite{Newman2013a}. En nuestro caso, no vamos a aplicar las prácticas de integración continua y tampoco tenemos equipos de trabajo distintos, por lo que será más cómodo emplear un único repositorio. Como consecuencia, esto implica que en un mismo commit (la unidad de los repositorios de código git que representa los cambios que se guardan en el repositorio) se puedan incluir cambios de diferentes microservicios.
+En "Building Microservices", Newman reflexiona sobre esto en relación a las compilaciones de integración continua. Según él, la mejor opción es tener un repositorio y una compilación diferente para cada microservicio. De esta forma, existe una mayor correspondencia entre los servicios y los equipos encargados de cada uno porque cada equipo realiza cambios en un único repositorio. Además, se evita que un simple cambio en un microservicio lance la compilación de toda la solución \cite{Newman2015a}. En nuestro caso, no vamos a aplicar las prácticas de integración continua y tampoco tenemos equipos de trabajo distintos, por lo que será más cómodo emplear un único repositorio. Como consecuencia, esto implica que en un mismo commit (la unidad de los repositorios de código git que representa los cambios que se guardan en el repositorio) se puedan incluir cambios de diferentes microservicios.
 
 En cuanto a la organización en soluciones en Visual Studio, en "Microservicios .NET: Arquitectura para Aplicaciones .NET Contenerizadas" se organiza el código de la aplicación desarrollada en un único repositorio con una única solución \cite{DelaTorre2018}. Creemos que esta aproximación no es la mejor. Si consideramos una solución de Visual Studio como una vista de un repositorio de código, no tiene sentido que un desarrollador que trabaja en un único repositorio vea en su solución otros microservicios distintos al suyo. Además, incluir tantos archivos en la solución aumenta su tiempo de compilación, cuando jamás se van a realizar cambios o ejecutar algunos de ellos. Por ello, hemos optado por una solución diferente para cada servicio.
 
@@ -1637,7 +1637,7 @@ Los microservicios son una solución para afrontar problemas inherentes a produc
 
 En el siguiente estudio \cite{Amaral2016}, realizado en la Universidad Politécnica de Cataluña junto con la organización IBM, se evalúa el uso de recursos de un servicio desplegado en diferentes configuraciones de contenedores y en una máquina virtual. En su primer experimento se evalúa el uso que hacen de CPU, que es similar tanto en la MV como en los contenedores. También se evalúa el tiempo que consume la creación del servicio, donde en todos los escenarios el tiempo de desplegar el servicio en un MV es al menos es el doble que en un contenedor. En los últimos experimentos se evalúa el uso que hacen de la red. En este aspecto se puede concluir que, para las invocaciones que se hacen dentro del mismo host, los contenedores ofrecen un mejor rendimiento, mientras que para las llamadas fuera del host, el rendimiento de ambas tecnologías es similar.
 
-Durante el desarrollo, tanto el sistema basado en microservicios como el monolítico se han desplegado en contenedores. Con el comando \textbf{docker stats} podemos obtener estadísticas sobre el uso de recursos que hacen los contenedores en ejecución. El resultado de aplicarlo en el entorno de desarrollo y con los servicios sin recibir peticiones se puede ver en la figura \ref{UsoRecursos}. No se aprecia una gran diferencia en el uso de recursos del contenedor monolítico (shopmonolithic) y un contenedor de un microservicio. Los contenedores basados en una imagen .NET hacen un mayor uso de memoria. Estos también tienen un tamaño de la imagen Docker superior: alrededor de 1,8 GB frente a los 644 MB que emplea el microservicio de notificaciones, basado en una imagen java.
+Durante el desarrollo, tanto el sistema basado en microservicios como el monolítico se han desplegado en contenedores. Con el comando \textbf{docker stats} podemos obtener estadísticas sobre el uso de recursos que hacen los contenedores en ejecución. El resultado de aplicarlo en el entorno de desarrollo y con los servicios sin recibir peticiones se puede ver en la figura \ref{fig:UsoRecursos}. No se aprecia una gran diferencia en el uso de recursos del contenedor monolítico (shopmonolithic) y un contenedor de un microservicio. Los contenedores basados en una imagen .NET hacen un mayor uso de memoria. Estos también tienen un tamaño de la imagen Docker superior: alrededor de 1,8 GB frente a los 644 MB que emplea el microservicio de notificaciones, basado en una imagen java.
 
 \begin{figure}[h]
 \centering
