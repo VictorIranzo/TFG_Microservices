@@ -30,8 +30,11 @@
 \usepackage{multirow}
 \usepackage{babel}
 
-\usepackage[square,sort,comma,numbers]{natbib}
-\bibliographystyle{acm}
+\usepackage[%
+  backend=biber,
+  style=ieee
+]{biblatex}
+\addbibresource{Bibliografia/library.bib}
 \graphicspath{ {Imagenes/} }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1719,9 +1722,7 @@ En cuanto a líneas de trabajo futuras, tras este proyecto se abren dos caminos 
 %                     BIBLIOGRAFIA                                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\renewcommand{\bibname}{Referencias}
-
-\bibliography{Bibliografia/library}
+\printbibliography
 
 
 
