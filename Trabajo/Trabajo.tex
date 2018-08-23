@@ -32,6 +32,7 @@
 
 \usepackage[square,sort,comma,numbers]{natbib}
 \bibliographystyle{acm}
+
 \graphicspath{ {Imagenes/} }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -43,6 +44,9 @@
 
 \usepackage{hyperref}
 \hypersetup{colorlinks,linkcolor={black},citecolor={black},urlcolor={blue}} 
+
+\usepackage{booktabs}
+\newcommand{\tabitem}{~~\llap{\textbullet}~~}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                        DADES DEL TREBALL                                    %
@@ -1683,6 +1687,33 @@ Otra consideración a tener en cuenta a la hora de transformar un servicio en un
 
 \section{Ventajas e inconvenientes de los microservicios}
 
+\begin{table}
+\centering
+\begin{tabular}{p{7cm} p{7cm}}
+\hline
+
+\textbf{ Ventajas } & \textbf{ Inconvenientes } \\
+
+\hline
+
+\vspace{2mm}
+\tabitem \textbf{Escalabilidad}: en las arquitecturas monolíticas, para escalar una funcionalidad concreta hace falta escalar el sistema completo. Empleando microservicios, se puede escalar cada servicio de forma distinta según sus necesidades. Esto produce un mejor aprovechamiento de los recursos y un ahorro en los costes.
+
+\vspace{2mm}
+\tabitem \textbf{Facilidad de despliegue}: un cambio en una línea de código de una aplicación monolítica supone el despliegue del sistema completo para publicar dicho cambio. El riesgo que supone el despliegue es mayor porque comprende una mayor base de código. Empleando microservicios, un cambio en un único servicio se despliega de manera independiente, haciendo que los cambios lleguen al cliente final de forma más rápida.
+
+\vspace{2mm}
+\tabitem \textbf{Programación y persistencia políglota}: el desarrollo basado en microservicios nos permiten poder escoger una tecnología diferente para cada uno de ellos. De esta manera, se escoge aquella que mejor se adecue a las necesidades concretas del servicio y no una tecnología estándar válida para todos ellos. Esto se aplica tanto al lenguaje de programación empleado, la arquitectura del servicio o la tecnología de base de datos empleada.
+
+
+&
+
+
+\\
+\hline
+\end{tabular}
+\end{table}
+
 \section{Consideraciones finales}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1722,8 +1753,6 @@ En cuanto a líneas de trabajo futuras, tras este proyecto se abren dos caminos 
 \renewcommand{\bibname}{Referencias}
 
 \bibliography{Bibliografia/library}
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                           APENDICES  (Si HAY!)                           %
