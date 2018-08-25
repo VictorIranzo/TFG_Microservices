@@ -456,13 +456,11 @@ El mantenimiento de software es la fase del desarrollo que más recursos consume
 
 Gracias a su diseño modular, los microservicios son una arquitectura que se puede seguir para hacer más sencillo el mantenimiento de un sistema. Sin embargo, las consecuencias de elegir un estilo arquitectónico no son evidente hasta años más tarde de haber sido tomadas, por lo que hasta que no se vean sistemas maduros que empleen microservicios no se debe afirmar a ciencia cierta que garantizan estas características. \cite{Lewis2014}
 
-\subsection{Reemplazamiento}
+\subsection{Refactorización}
 
 %TODO Característica del ISO 25010
 
-En la mayoría de empresas abundan los sistemas legados que nadie desea mantener. La \textbf{refactorización} de estos sistemas es imposible por su tamaño y riesgo. Si en lugar de haber empleado una arquitectura monolítica para su diseño se emplearan microservicios se observaría como los barreras para la refactorización no existen al poderse reescribir el microservicio al completo en pocos días.
-
-Una regla que puede ser aplicada es establecer un tamaño para un microservicio tal que pueda ser completamente reescrito en 2 semanas \cite{Newman2015a}.
+En la mayoría de empresas abundan los sistemas legados que nadie desea mantener. La \textbf{refactorización} de estos sistemas es imposible por su tamaño y riesgo. Si en lugar de haber empleado una arquitectura monolítica para su diseño se emplearan microservicios se observaría como los barreras para la refactorización no existen al poderse reescribir el microservicio al completo en pocos días. \cite{Eaves2014}
 
 \subsection{You Build It, You Run It}
 
@@ -1622,7 +1620,7 @@ Sin embargo, no se ha implementado ningún mecanismo para reaccionar automática
 
 Un sistema debe ser capaz de tolerar fallos y continuar trabajando. En las arquitecturas SOA, la integración entre servicios está muy ligada a como se gestionan los fallos: se debe asumir que cualquier servicio puede estar inoperativo. Por ejemplo, cuando se realiza una petición, no se puede esperar indefinidamente a que un servicio responda \cite{Newman2015a}.
 
-En nuestro caso de estudio, este problema está presente en las dos soluciones implementadas. El front-end comunica con el back-end a través de llamadas HTTP, al igual que ocurre entre los propios microservicios de la segunda solución. En las soluciones, para limitar el tiempo de espera se emplean timeouts, tal que si una petición no obtiene una respuesta esta se considera un fallo.
+En nuestro caso de estudio, este problema está presente en las dos soluciones implementadas. El front-end comunica con el back-end a través de llamadas HTTP, al igual que ocurre entre los propios microservicios de la segunda solución. En ambas soluciones, para limitar el tiempo de espera se emplean timeouts, tal que si una petición no obtiene una respuesta esta se considera un fallo.
 
 Sin embargo, el uso de timeotus no es una solución aconsejable debido al valor que se le debe dar a la espera. No se puede poner un límite demasiado bajo porque trataría como errores respuestas que han tardado más de lo debido. Tampoco puede ser muy alto, o se tardaría mucho en devolver un error, sobretodo cuando se encadenan diferentes llamadas.
 
@@ -1689,7 +1687,7 @@ Otra consideración a tener en cuenta a la hora de transformar un servicio en un
 
 \begin{table}
 \centering
-\begin{tabular}{p{7cm} p{7cm}}
+\begin{tabular}{|p{7cm}|p{7cm}|}
 \hline
 
 \textbf{ Ventajas } & \textbf{ Inconvenientes } \\
@@ -1697,20 +1695,49 @@ Otra consideración a tener en cuenta a la hora de transformar un servicio en un
 \hline
 
 \vspace{2mm}
-\tabitem \textbf{Escalabilidad}: en las arquitecturas monolíticas, para escalar una funcionalidad concreta hace falta escalar el sistema completo. Empleando microservicios, se puede escalar cada servicio de forma distinta según sus necesidades. Esto produce un mejor aprovechamiento de los recursos y un ahorro en los costes.
+\tabitem \textbf{Escalabilidad}: en las arquitecturas monolíticas, para escalar una funcionalidad concreta hace falta escalar el sistema completo. Empleando microservicios, se puede escalar cada servicio de forma distinta según sus necesidades. Esto produce un mejor aprovechamiento de los recursos y un ahorro en los costes \cite{Newman2015a, DelaTorre2018, Lewis2014}.
 
 \vspace{2mm}
-\tabitem \textbf{Facilidad de despliegue}: un cambio en una línea de código de una aplicación monolítica supone el despliegue del sistema completo para publicar dicho cambio. El riesgo que supone el despliegue es mayor porque comprende una mayor base de código. Empleando microservicios, un cambio en un único servicio se despliega de manera independiente, haciendo que los cambios lleguen al cliente final de forma más rápida.
+\tabitem \textbf{Facilidad para evolucionar}: un cambio en una línea de código de una aplicación monolítica supone el despliegue del sistema completo para publicar dicho cambio. El riesgo que supone el despliegue es mayor porque comprende una mayor base de código. Empleando microservicios, un cambio en un único servicio se despliega de manera independiente, haciendo que los cambios lleguen al cliente final de forma más rápida \cite{Newman2015a, DelaTorre2018, Lewis2014}.
 
 \vspace{2mm}
-\tabitem \textbf{Programación y persistencia políglota}: el desarrollo basado en microservicios nos permiten poder escoger una tecnología diferente para cada uno de ellos. De esta manera, se escoge aquella que mejor se adecue a las necesidades concretas del servicio y no una tecnología estándar válida para todos ellos. Esto se aplica tanto al lenguaje de programación empleado, la arquitectura del servicio o la tecnología de base de datos empleada.
+\tabitem \textbf{Programación y persistencia políglota}: se puede escoger una tecnología diferente para cada uno de los servicios. De esta manera, se escoge aquella que mejor se adecue a las necesidades concretas del servicio y no una tecnología estándar válida para todos ellos. Esto se aplica tanto al lenguaje de programación empleado, la arquitectura del servicio o la tecnología de base de datos empleada \cite{Newman2015a, DelaTorre2018, Lewis2014}.
 
+\vspace{2mm}
+\tabitem \textbf{Facilidad para reemplazar}: el sistema se divide en componentes que pueden ser reescritos en pocos días. Gracias al uso de contratos, basta con seguir ofreciendo la misma interfaz para que ningún consumidor se rompa \cite{Newman2015a, Lewis2014}.
 
 &
 
+\vspace{2mm}
+\tabitem \textbf{Depuración}: encontrar un defecto es sencillo si la funcionalidad que se ve afectada no involucra a más de un servicio. Sin embargo, si más de un servicio es partícipe, depurar el caso de uso al completo requiere una mayor comprensión y un uso de recursos superior.
+
+\vspace{2mm}
+\tabitem \textbf{Consistencia eventual}: no se pueden realizar transacciones como se realiza en la base de datos monolítica. Se tienen que implementar mecanismos de compensación para que, en caso de que parte de la antigua transacción falle en uno de los microservicios, se restauren los valores modificados en el resto. La integridad referencial no se puede realizar a través de claves ajenas porque existe más de una base de datos implicada, lo que significa que se tienen que implementar mecanismos para asegurar la integridad de los datos \cite{Newman2015a, DelaTorre2018, Lewis2014}.
+
+\vspace{2mm}
+\tabitem \textbf{Código duplicado}:
+
+\vspace{2mm}
+\tabitem \textbf{Mayores necesidades de recursos}: \cite{DelaTorre2018}
+
+\vspace{2mm}
+\tabitem \textbf{Incremento de la deuda técnica}: cuando se desarrolla un sistema completo empleando microservicios, para finalizar el desarrollo de un microservicio completo se pueden tomar atajos. Estos atajos representan trabajo que se debe realizar en un futuro por no haber implementado la mejor solución posible \cite{Newman2015a, FowlerSusan}.
 
 \\
 \hline
+
+\multicolumn{2}{ |p{14cm}| }
+{
+\vspace{2mm}
+\tabitem \textbf{Organización alrededor de las capacidades del negocio}: un equipo puede encargarse del desarrollo completo de un servicio. Esto puede ser práctico en organizaciones grandes, pero en organizaciones más pequeñas es probable que sea un único programador el encargado de un microservicio, que deberá reunir todas las cualidades necesarias \cite{Lewis2014, DelaTorre2018}.
+
+\vspace{2mm}
+\tabitem \textbf{Integración de servicios}: se debe estandarizar en toda la solución los mecanismos para que dos servicios comuniquen. De cualquier otra forma, comunicar dos servicios será más costoso si emplean protocolos distintos. Además, se deben exponer operaciones agregadas y seguir los principios de DDD para evitar la comunicación continuada entre dos servicios \cite{Newman2015a, DelaTorre2018}.
+}
+
+\\
+\hline
+
 \end{tabular}
 \end{table}
 
