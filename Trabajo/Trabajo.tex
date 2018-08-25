@@ -1683,65 +1683,80 @@ No obstante, podemos plantearnos si realmente vale la pena representar estos com
 
 Otra consideración a tener en cuenta a la hora de transformar un servicio en una librería es que las librerías están ligadas a una única plataforma. Por ejemplo, el servicio de notificaciones está desarrollado en Java y gracias a que se ejecuta en otro proceso puede ser invocado por cualquier servicio, da igual su lenguaje de programación, a través de llamadas HTTP. La implementación del servicio tal como está en Java no puede desplegarse como una librería y emplearse en los servicios desarrollados en .NET porque no son plataformas compatibles. Por tanto, para cada servicio que desea consumir este componente se debería dar una implementación compatible con la plataforma del consumidor.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
 \section{Ventajas e inconvenientes de los microservicios}
 
-\begin{table}
-\centering
-\begin{tabular}{|p{7cm}|p{7cm}|}
+A continuación, presentamos una recopilación de las ventajas e inconvenientes del uso de microservicios obtenidos a partir de algunas referencias consultadas y del desarrollo del caso de estudio:
+
+\begin{center}
+\begin{tabular}{|p{7.1cm}|p{7.1cm}|}
 \hline
 
 \textbf{ Ventajas } & \textbf{ Inconvenientes } \\
-
 \hline
 
-\vspace{2mm}
-\tabitem \textbf{Escalabilidad}: en las arquitecturas monolíticas, para escalar una funcionalidad concreta hace falta escalar el sistema completo. Empleando microservicios, se puede escalar cada servicio de forma distinta según sus necesidades. Esto produce un mejor aprovechamiento de los recursos y un ahorro en los costes \cite{Newman2015a, DelaTorre2018, Lewis2014}.
+\vspace{0.25mm}
+\tabitem \textbf{Escalabilidad}: en lugar de escalar el monolito al completo, se puede escalar cada servicio de forma distinta según sus necesidades. Esto produce un mejor aprovechamiento de los recursos y un ahorro en los costes \cite{Newman2015a, DelaTorre2018, Lewis2014}.
 
 \vspace{2mm}
-\tabitem \textbf{Facilidad para evolucionar}: un cambio en una línea de código de una aplicación monolítica supone el despliegue del sistema completo para publicar dicho cambio. El riesgo que supone el despliegue es mayor porque comprende una mayor base de código. Empleando microservicios, un cambio en un único servicio se despliega de manera independiente, haciendo que los cambios lleguen al cliente final de forma más rápida \cite{Newman2015a, DelaTorre2018, Lewis2014}.
+\tabitem \textbf{Facilidad para evolucionar}: un cambio en una aplicación monolítica supone el despliegue del sistema completo para publicarlo. Empleando microservicios, un cambio en un único servicio se despliega de manera independiente, haciendo que los cambios lleguen al cliente final de forma más rápida \cite{Newman2015a, DelaTorre2018, Lewis2014}.
 
 \vspace{2mm}
-\tabitem \textbf{Programación y persistencia políglota}: se puede escoger una tecnología diferente para cada uno de los servicios. De esta manera, se escoge aquella que mejor se adecue a las necesidades concretas del servicio y no una tecnología estándar válida para todos ellos. Esto se aplica tanto al lenguaje de programación empleado, la arquitectura del servicio o la tecnología de base de datos empleada \cite{Newman2015a, DelaTorre2018, Lewis2014}.
+\tabitem \textbf{Programación y persistencia políglota}: se puede escoger una tecnología diferente para cada uno de los servicios. Esto se aplica tanto al lenguaje de programación empleado, la arquitectura del servicio o la tecnología de base de datos empleada \cite{Newman2015a, DelaTorre2018, Lewis2014}.
 
 \vspace{2mm}
-\tabitem \textbf{Facilidad para reemplazar}: el sistema se divide en componentes que pueden ser reescritos en pocos días. Gracias al uso de contratos, basta con seguir ofreciendo la misma interfaz para que ningún consumidor se rompa \cite{Newman2015a, Lewis2014}.
+\tabitem \textbf{Facilidad para ser reemplazado}: el sistema se divide en componentes que pueden ser reescritos en pocos días. \cite{Newman2015a, Lewis2014}.
 
 &
 
-\vspace{2mm}
-\tabitem \textbf{Depuración}: encontrar un defecto es sencillo si la funcionalidad que se ve afectada no involucra a más de un servicio. Sin embargo, si más de un servicio es partícipe, depurar el caso de uso al completo requiere una mayor comprensión y un uso de recursos superior.
+\vspace{0.25mm}
+\tabitem \textbf{Descomposición en microservicios}: no es una tarea que se complete de forma acertada a la primera. Los requisitos del sistema evolucionan, añadiendo nuevas relaciones entre servicios. Se debe minimizar la comunicación entre ellos \cite{Newman2015a, Lewis2014, DelaTorre2018}.
 
 \vspace{2mm}
-\tabitem \textbf{Consistencia eventual}: no se pueden realizar transacciones como se realiza en la base de datos monolítica. Se tienen que implementar mecanismos de compensación para que, en caso de que parte de la antigua transacción falle en uno de los microservicios, se restauren los valores modificados en el resto. La integridad referencial no se puede realizar a través de claves ajenas porque existe más de una base de datos implicada, lo que significa que se tienen que implementar mecanismos para asegurar la integridad de los datos \cite{Newman2015a, DelaTorre2018, Lewis2014}.
+\tabitem \textbf{Depuración}: encontrar un defecto es sencillo si la funcionalidad que se ve afectada no involucra a más de un servicio. Sin embargo, si más de un servicio es partícipe, depurar el caso de uso al completo requiere mayor comprensión y un uso de recursos superior.
 
 \vspace{2mm}
-\tabitem \textbf{Código duplicado}:
+\tabitem \textbf{Consistencia eventual}: no se pueden realizar transacciones atómicas. Se tienen que implementar mecanismos de compensación para revertir la transacción distribuida en caso de fallo. Mientras esto ocurre, se pueden obtener datos inconsistentes \cite{Newman2015a, DelaTorre2018, Lewis2014}.
 
 \vspace{2mm}
-\tabitem \textbf{Mayores necesidades de recursos}: \cite{DelaTorre2018}
+\tabitem \textbf{Integridad de los datos}: la integridad referencial no se puede realizar a través de claves ajenas porque existe más de una BD. Se tienen que implementar mecanismos para asegurar la integridad de datos localizados en otros servicios. \cite{Newman2015a, DelaTorre2018}.
 
 \vspace{2mm}
-\tabitem \textbf{Incremento de la deuda técnica}: cuando se desarrolla un sistema completo empleando microservicios, para finalizar el desarrollo de un microservicio completo se pueden tomar atajos. Estos atajos representan trabajo que se debe realizar en un futuro por no haber implementado la mejor solución posible \cite{Newman2015a, FowlerSusan}.
-
-\\
-\hline
-
-\multicolumn{2}{ |p{14cm}| }
-{
-\vspace{2mm}
-\tabitem \textbf{Organización alrededor de las capacidades del negocio}: un equipo puede encargarse del desarrollo completo de un servicio. Esto puede ser práctico en organizaciones grandes, pero en organizaciones más pequeñas es probable que sea un único programador el encargado de un microservicio, que deberá reunir todas las cualidades necesarias \cite{Lewis2014, DelaTorre2018}.
+\tabitem \textbf{Código duplicado}: clases para el acceso a datos o la configuración del servicio están presentes en todos los microservicios del caso de estudio. Parte de este código duplicado se puede reducir mediante el uso de librerías.
 
 \vspace{2mm}
-\tabitem \textbf{Integración de servicios}: se debe estandarizar en toda la solución los mecanismos para que dos servicios comuniquen. De cualquier otra forma, comunicar dos servicios será más costoso si emplean protocolos distintos. Además, se deben exponer operaciones agregadas y seguir los principios de DDD para evitar la comunicación continuada entre dos servicios \cite{Newman2015a, DelaTorre2018}.
-}
+\tabitem \textbf{Mayor necesidad de recursos}: desplegar el sistema sin atender al consumo de recursos y a las necesidades reales del sistema hace que el consumo de recursos sea superior al indispensable \cite{DelaTorre2018}.
 
 \\
 \hline
 
 \end{tabular}
-\end{table}
+\end{center}
 
 \section{Consideraciones finales}
+
+\begin{center}
+\begin{tabular}{|p{14cm}|}
+\hline
+
+\textbf{ Otras consideraciones } \\
+\hline
+
+\vspace{2mm}
+\tabitem \textbf{Organización alrededor de las capacidades del negocio}: un equipo puede encargarse del desarrollo completo de un servicio. Esto puede ser práctico en organizaciones grandes, pero en organizaciones más pequeñas es probable que sea un único programador el encargado de un microservicio, que deberá reunir todas las cualidades necesarias \cite{Lewis2014, DelaTorre2018}.
+
+\vspace{2mm}
+\tabitem \textbf{Integración de servicios}: se debe estandarizar en toda la solución los mecanismos para que dos servicios comuniquen. De cualquier otra forma, comunicar dos servicios será más costoso si emplean protocolos distintos. Además, se deben exponer operaciones agregadas y seguir los principios de DDD para evitar la comunicación continuada entre dos servicios \cite{Newman2015a, DelaTorre2018}.
+
+\\
+\hline
+
+\end{tabular}
+\end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      CONCLUSIONES                                 %
