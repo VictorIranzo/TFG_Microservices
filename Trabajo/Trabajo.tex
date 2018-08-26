@@ -1703,10 +1703,16 @@ A continuación, presentamos una recopilación de las ventajas e inconvenientes 
 \tabitem \textbf{Escalabilidad}: en lugar de escalar el monolito al completo, se puede escalar cada servicio de forma distinta según sus necesidades. Esto produce un mejor aprovechamiento de los recursos y un ahorro en los costes \cite{Newman2015a, DelaTorre2018, Lewis2014}.
 
 \vspace{2mm}
-\tabitem \textbf{Facilidad para evolucionar}: un cambio en una aplicación monolítica supone el despliegue del sistema completo para publicarlo. Empleando microservicios, un cambio en un único servicio se despliega de manera independiente, haciendo que los cambios lleguen al cliente final de forma más rápida \cite{Newman2015a, DelaTorre2018, Lewis2014}.
+\tabitem \textbf{Alta cohesión y bajo acoplamiento}: un microservicio expone una interfaz muy concreta y contiene código relacionado que será modificado por el mismo motivo. Además, conoce lo mínimo posible de otros servicios con los que colabora. Normalmente, un cambio a realizar se localiza en el contexto de un microservicio y no requiere que otros se modifiquen \cite{Newman2015a, DelaTorre2018, Hunter2017}.
 
 \vspace{2mm}
-\tabitem \textbf{Programación y persistencia políglota}: se puede escoger una tecnología diferente para cada uno de los servicios. Esto se aplica tanto al lenguaje de programación empleado, la arquitectura del servicio o la tecnología de base de datos empleada \cite{Newman2015a, DelaTorre2018, Lewis2014}.
+\tabitem \textbf{Facilidad para evolucionar}: un cambio en una aplicación monolítica supone el despliegue del sistema completo para publicarlo. Empleando microservicios, un cambio en un único servicio se despliega de manera independiente, haciendo que los cambios lleguen al cliente final de forma más rápida \cite{Newman2015a, DelaTorre2018, Lewis2014, Hunter2017}.
+
+\vspace{2mm}
+\tabitem \textbf{Programación y persistencia políglota}: se puede escoger una tecnología diferente para cada uno de los servicios. Esto se aplica tanto al lenguaje de programación empleado, la arquitectura del servicio o la tecnología de base de datos empleada \cite{Newman2015a, DelaTorre2018, Lewis2014, Hunter2017}.
+
+\vspace{2mm}
+\tabitem \textbf{Tolerancia a fallos}: el fallo de un microservicio puede aislarse y no se propaga a otros. Además, el tiempo de recuperación de un servicio es menor al empleado para recuperar el monolito al completo, incrementando su disponibilidad. \cite{Newman2015a, Lewis2014, DelaTorre2018}.
 
 \vspace{2mm}
 \tabitem \textbf{Facilidad para ser reemplazado}: el sistema se divide en componentes que pueden ser reescritos en pocos días. \cite{Newman2015a, Lewis2014}.
@@ -1714,7 +1720,7 @@ A continuación, presentamos una recopilación de las ventajas e inconvenientes 
 &
 
 \vspace{0.25mm}
-\tabitem \textbf{Descomposición en microservicios}: no es una tarea que se complete de forma acertada a la primera. Los requisitos del sistema evolucionan, añadiendo nuevas relaciones entre servicios. Se debe minimizar la comunicación entre ellos \cite{Newman2015a, Lewis2014, DelaTorre2018}.
+\tabitem \textbf{Descomposición en microservicios}: no es una tarea que se complete de forma acertada a la primera. Los requisitos del sistema evolucionan, añadiendo nuevos servicios y  relaciones entre ellos. Microservicios que interaccionan demasiado pueden combinarse. Otros que acumuluman demasiadas responsabilidades pueden particionarse. \cite{Newman2015a, Lewis2014, DelaTorre2018}.
 
 \vspace{2mm}
 \tabitem \textbf{Depuración}: encontrar un defecto es sencillo si la funcionalidad que se ve afectada no involucra a más de un servicio. Sin embargo, si más de un servicio es partícipe, depurar el caso de uso al completo requiere mayor comprensión y un uso de recursos superior.
@@ -1727,9 +1733,6 @@ A continuación, presentamos una recopilación de las ventajas e inconvenientes 
 
 \vspace{2mm}
 \tabitem \textbf{Código duplicado}: clases para el acceso a datos o la configuración del servicio están presentes en todos los microservicios del caso de estudio. Parte de este código duplicado se puede reducir mediante el uso de librerías.
-
-\vspace{2mm}
-\tabitem \textbf{Mayor necesidad de recursos}: desplegar el sistema sin atender al consumo de recursos y a las necesidades reales del sistema hace que el consumo de recursos sea superior al indispensable \cite{DelaTorre2018}.
 
 \\
 \hline
@@ -1747,7 +1750,7 @@ A continuación, presentamos una recopilación de las ventajas e inconvenientes 
 \hline
 
 \vspace{2mm}
-\tabitem \textbf{Organización alrededor de las capacidades del negocio}: un equipo puede encargarse del desarrollo completo de un servicio. Esto puede ser práctico en organizaciones grandes, pero en organizaciones más pequeñas es probable que sea un único programador el encargado de un microservicio, que deberá reunir todas las cualidades necesarias \cite{Lewis2014, DelaTorre2018}.
+\tabitem \textbf{Organización alrededor de las capacidades del negocio}: un equipo puede encargarse del desarrollo completo de un servicio. Esto puede ser práctico en organizaciones grandes, pero en organizaciones más pequeñas es probable que sea un único programador el encargado de un microservicio, que deberá reunir todas las cualidades necesarias \cite{Newman2015a, Lewis2014, DelaTorre2018, Hunter2017}.
 
 \vspace{2mm}
 \tabitem \textbf{Integración de servicios}: se debe estandarizar en toda la solución los mecanismos para que dos servicios comuniquen. De cualquier otra forma, comunicar dos servicios será más costoso si emplean protocolos distintos. Además, se deben exponer operaciones agregadas y seguir los principios de DDD para evitar la comunicación continuada entre dos servicios \cite{Newman2015a, DelaTorre2018}.
