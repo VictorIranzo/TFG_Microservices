@@ -20,6 +20,8 @@ $ docker rmi nombre_imagen
 $ docker rmi $(docker images -a -q)
 
 
+https://medium.com/@PamRucinque/qu%C3%A9-es-eso-de-serverless-f4f6c8949b87
+
 az login
 az resource list --resource-group MicroservicesBackend
 az acr login --name MicroservicesContainterRegistry
