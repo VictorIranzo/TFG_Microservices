@@ -1723,7 +1723,7 @@ A continuación, presentamos una recopilación de las ventajas e inconvenientes 
 \tabitem \textbf{Descomposición en microservicios}: no es una tarea que se complete de forma acertada a la primera. Los requisitos del sistema evolucionan, añadiendo nuevos servicios y  relaciones entre ellos. Microservicios que interaccionan demasiado pueden combinarse. Otros que acumuluman demasiadas responsabilidades pueden particionarse. \cite{Newman2015a, Lewis2014, DelaTorre2018}.
 
 \vspace{2mm}
-\tabitem \textbf{Depuración}: encontrar un defecto es sencillo si la funcionalidad que se ve afectada no involucra a más de un servicio. Sin embargo, si más de un servicio es partícipe, depurar el caso de uso al completo requiere mayor comprensión y un uso de recursos superior.
+\tabitem \textbf{Depuración}: encontrar un defecto es sencillo si la funcionalidad que se ve afectada no involucra a más de un servicio. Sin embargo, si más de un servicio es partícipe, depurar el caso de uso al completo requiere mayor comprensión y un uso de recursos superior. \cite{Newman2015a}
 
 \vspace{2mm}
 \tabitem \textbf{Consistencia eventual}: no se pueden realizar transacciones atómicas. Se tienen que implementar mecanismos de compensación para revertir la transacción distribuida en caso de fallo. Mientras esto ocurre, se pueden obtener datos inconsistentes \cite{Newman2015a, DelaTorre2018, Lewis2014}.
@@ -1742,8 +1742,10 @@ A continuación, presentamos una recopilación de las ventajas e inconvenientes 
 
 \section{Consideraciones finales}
 
+En esta sección recogeremos algunas consideraciones finales acerca de los microservicios. Algunas de ellas se recogen en la literatura como ventajas de las arquitecturas basadas en microservicios, pero hemos optado por no considerarlas como tal y reflexionar mejor acerca de ellas. Dada su relevancia hemos optado por recogerlas en la siguiente tabla, que acompaña a la recopilación hecha anteriormente de ventajas e inconvenientes.
+
 \begin{center}
-\begin{tabular}{|p{14cm}|}
+\begin{tabular}{|p{14.2cm}|}
 \hline
 
 \textbf{ Otras consideraciones } \\
@@ -1754,6 +1756,15 @@ A continuación, presentamos una recopilación de las ventajas e inconvenientes 
 
 \vspace{2mm}
 \tabitem \textbf{Integración de servicios}: se debe estandarizar en toda la solución los mecanismos para que dos servicios comuniquen. De cualquier otra forma, comunicar dos servicios será más costoso si emplean protocolos distintos. Además, se deben exponer operaciones agregadas y seguir los principios de DDD para evitar la comunicación continuada entre dos servicios \cite{Newman2015a, DelaTorre2018}.
+
+\vspace{2mm}
+\tabitem \textbf{Monitorización}: es un aspecto clave para detectar y corregir problemas rápidamente. Se debe ofrecer una vista agregada que contenga el estado de salud  de todos los servicios e informes de los fallos ocurridos. Si se emplea un orquestador, este puede recoger información sobre el estado de salud de los servicios \cite{Newman2015a, DelaTorre2018}.
+
+\vspace{2mm}
+\tabitem \textbf{Estandarizar una tecnología}: en el desarrollo de un sistema puede ser una garantía para facilitar la cooperación entre los diferentes equipos. También se hace más sencilla la transferencia de personas entre distintos equipos \cite{Newman2015a}.
+
+\vspace{2mm}
+\tabitem \textbf{Generación automática de código}: en productos software de uso profesional, la división de un sistema en microservicios puede dar lugar a cientos de estos. Para facilitar la evolución de los servicios manteniendo constante su calidad y mantenibilidad, se puede invertir en técnicas de la ingeniería de software como el desarrollo guiado por modelos (MDD). Gracias a las prácticas del DDD, cada microservicio consiste en un contexto bien delimitado con unas pocas entidades. Estas entidades pueden recogerse en un modelo a partir del cual pueda generarse código de forma automática. De esta forma, un cambio en las propiedades de una entidad se puede implementar más rápido a través de la actualización del modelo y la regeneración del código a partir de este.
 
 \\
 \hline
