@@ -64,3 +64,55 @@ az acr repository list --name MicroservicesContainterRegistry --output table
 az aks create --name KubernetesCluster2 --resource-group MicroservicesBackend --node-count 1 --generate-ssh-keys --service-principal c328cbc4-36f8-4082-8d8a-8eded646f4fd --client-secret 0f7a0b65-5dbe-434b-9a26-f12e7d34a8f2
 
 az aks get-credentials --name myAKSCluster --resource-group myResourceGroup
+
+
+vicirji@Azure:~$ az aks create --resource-group MicroservicesBackend  --name MicroservicesCluster --node-count 1 --service-principal a46204e4-66d6-4aa8-bbae-b3186b64854e --client-secret 714ac430-6226-4397-a81c-5f31bd70a30 --generate-ssh-keys{
+  "aadProfile": null,
+  "addonProfiles": null,
+  "agentPoolProfiles": [
+    {
+      "count": 1,
+      "maxPods": 110,
+      "name": "nodepool1",
+      "osDiskSizeGb": null,
+      "osType": "Linux",
+      "storageProfile": "ManagedDisks",
+      "vmSize": "Standard_DS1_v2",
+      "vnetSubnetId": null
+    }
+  ],
+  "dnsPrefix": "Microservi-MicroservicesBac-ca3627",
+  "enableRbac": true,
+  "fqdn": "microservi-microservicesbac-ca3627-8885d6c9.hcp.westeurope.azmk8s.io",
+  "id": "/subscriptions/ca362761-30ba-43d8-89db-430f3c95640f/resourcegroups/MicroservicesBackend/providers/Microsoft.ContainerService/managedClusters/MicroservicesCluster",
+  "kubernetesVersion": "1.9.9",
+  "linuxProfile": {
+    "adminUsername": "azureuser",
+    "ssh": {
+      "publicKeys": [
+        {
+          "keyData": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDIeLtOGVdPVHrkJLl4z7M005JTvzUdkcz4QTaVqii/Mdllmk6RZFZdj6yWP7ZykR4qogNI7xfUAUUFXkjHe1yGbooddOLlXkcA5oSOSHB8hAEcOuAxFa0hliVyxzEXstDBGIt12eIm0IuFAf63EMXBcg0mBJmcaoLhk2N/hk2A30EfOBuWd1qti4sl2tUqTUjK8Vb9YWqoT054UTdTwIbRZNHonilIo4x8c3P68gnrEksIThTdUdSWsf+bf6NJqzUnP3tzUf063BHghtLXg/vVdrvgT/c06NxmmTJY59ADe6/Gv79N9OOVhUuU68IQjP0LOhmJUqER9JjYFjv6QVM5"
+        }
+      ]
+    }
+  },
+  "location": "westeurope",
+  "name": "MicroservicesCluster",
+  "networkProfile": {
+    "dnsServiceIp": "10.0.0.10",
+    "dockerBridgeCidr": "172.17.0.1/16",
+    "networkPlugin": "kubenet",
+    "networkPolicy": null,
+    "podCidr": "10.244.0.0/16",
+    "serviceCidr": "10.0.0.0/16"
+  },
+  "nodeResourceGroup": "MC_MicroservicesBackend_MicroservicesCluster_westeurope",
+  "provisioningState": "Succeeded",
+  "resourceGroup": "MicroservicesBackend",
+  "servicePrincipalProfile": {
+    "clientId": "a46204e4-66d6-4aa8-bbae-b3186b64854e",
+    "secret": null
+  },
+  "tags": null,
+  "type": "Microsoft.ContainerService/ManagedClusters"
+}
