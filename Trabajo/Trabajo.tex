@@ -519,9 +519,12 @@ El proceso de desarrollo también se simplifica: en aproximaciones como la de mi
 Si se integra dentro del proceso de despliegue, cada cambio que pasa por una pipeline puede construir una nueva imagen Docker sobre la que se ejecutan pruebas de forma automatizada para después ser publicada a producción. De esta forma el equipo puede asegurarse de que el artefacto sobre el que se han ejecutado las pruebas es el mismo que se publica más tarde. 
 
 \section{Orquestadores}
+%TODO https://medium.com/@PamRucinque/qu%C3%A9-es-eso-de-serverless-f4f6c8949b87
+%TODO https://rancher.com/load-balancing-in-kubernetes/
 
 \subsection{Kubernetes}
 %TODO Definir cluster.
+%TODO Rancher. 
 Kubernetes es una herramienta diseñada por Google para el despliegue y orquestación de aplicaciones en contenedores Docker de forma resilente. Cada una de las máquinas que aloja uno o más contenedores Docker se denomina \textbf{nodo}. La unidad más pequeña con la que trabaja Kubernetes no son los contenedores, sino los pods. Un \textbf{pod} es una colección de contendores y volúmenes agrupados juntos en un nodo. Los \textbf{volúmenes} son sistemas de archivos virtuales que se pueden emplear para comunicar entre ellos a los contenedores de un nodo. Kubernetes orquesta a nivel de los pods, por lo que dos contenedores en el mismo pod serán administrados igual \cite{Rensin2015}.
 
 \begin{figure}[h]
@@ -1899,15 +1902,35 @@ Con este propósito, desde la línea de comandos del portal de Azure crearemos u
 \caption{Creación de una entidad de servicio de Azure AD y asignación al registro ACR.}
 \end{figure}
 
-A continuación, para la creación del clúster emplearemos el comando de la figura \ref{fig:CreateCluster}. En él especificaremos el grupo de recursos donde residirá el clúster y el número de nodos en el clúster (este valor se puede modificar más tarde empleando el comando ``az aks scale"). Como servidor principal para la autenticación de las aplicaciones se usará la entidad de servicio creada, a través de la propiedad \textit{appId}. También se deberá indicar la contraseña de este servicio, que se ha marcado con color gris en la imagen \ref{fig:ActiveDirectory}.
+A continuación, para la creación del clúster emplearemos el comando de la figura \ref{fig:CreateCluster}. En él especificaremos el grupo de recursos donde residirá el clúster y el número de nodos en el clúster (este valor se puede modificar más tarde empleando el comando ``az aks scale"). Como servidor principal para la autenticación de las aplicaciones se usará la entidad de servicio creada, a través de la propiedad \textit{appId}. También se deberá indicar la contraseña de este servicio, que se ha marcado con color gris en la imagen \ref{fig:ActiveDirectory}. La ejecución de este comando puede llegar a prolongarse más de cinco  minutos.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.5]{CreateCluster} \label{fig:CreateCluster}
+\includegraphics[scale=0.7]{CreateCluster} \label{fig:CreateCluster}
 \caption{Creación del clúster de Kubernetes.}
 \end{figure}
 
 \section{Ejecución e integración de los microservicios}
+
+%TODO Ingress https://dzone.com/articles/quick-guide-to-microservices-with-kubernetes-sprin
+
+En primer lugar, para acceder al clúster que se ha creado en el paso anterior debemos ejecutar el comando que se ilustra en la figura \ref{AccessCluster}, que recibe como parámetro el nombre del clúster creado y el grupo de recursos donde se encuentra. Una vez ejecutado, podemos comprobar la conexión con el clúster mediante un comando de Kubernetes, como el que se emplea para obtener los nodos del clúster. En nuestro caso, solo hemos creado un nodo en el clúster.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{AccessCluster} \label{fig:AccessCluster}
+\caption{Acceso al clúster de Kubernetes.}
+\end{figure}
+
+En segundo lugar, una vez se establezca la conexión con el clúster, debemos crear un archivo YAML que especificará las imágenes Docker que Kubernetes debe desplegar, el número de replicadas que debe gestionar de cada contenedor, los puertos expuestos, etc. Como estamos trabajando desde la terminal del portal de Azure, deberemos editar este archivo a través de un editor de texto como vi. En la figura \ref{fig:KubernetesSecurity} se muestra un fragmento de este archivo relacionado con el microservicio de seguridad.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{KubernetesSecurity} \label{fig:KubernetesSecurity}
+\caption{Fragmento del archivo YAML de Kubernetes.}
+\end{figure}
+
+Como se comenta en el libro \cite{Rensin2015}, es una buena práctica situar un balanceador de carga frente a cada servicio para garantizar que siempre existe el número de replicas correcto.
 
 \section{Otras consideraciones}
 

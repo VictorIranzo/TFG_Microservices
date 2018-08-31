@@ -19,9 +19,6 @@ $ docker images -a
 $ docker rmi nombre_imagen
 $ docker rmi $(docker images -a -q)
 
-
-https://medium.com/@PamRucinque/qu%C3%A9-es-eso-de-serverless-f4f6c8949b87
-
 az login
 az resource list --resource-group MicroservicesBackend
 az acr login --name MicroservicesContainterRegistry
@@ -53,7 +50,7 @@ kubectl cp ~/.ssh/id_rsa aks-ssh-7b5b5856cd-k74hd:/id_rsa
 
 kubectl replace --force -f kubernetes.yaml
 
-az acr login --name MicroservicesContainterRegistry
+az acr login --name BackendMicroservicesContainterRegistry
 
 az login
 
@@ -66,7 +63,8 @@ az aks create --name KubernetesCluster2 --resource-group MicroservicesBackend --
 az aks get-credentials --name myAKSCluster --resource-group myResourceGroup
 
 
-vicirji@Azure:~$ az aks create --resource-group MicroservicesBackend  --name MicroservicesCluster --node-count 1 --service-principal a46204e4-66d6-4aa8-bbae-b3186b64854e --client-secret 714ac430-6226-4397-a81c-5f31bd70a30 --generate-ssh-keys{
+vicirji@Azure:~$ az aks create --resource-group MicroservicesBackend  --name MicroservicesCluster --node-count 1 --service-principal a46204e4-66d6-4aa8-bbae-b3186b64854e --client-secret 714ac430-6226-4397-a81c-5f31bd70a30 --generate-ssh-keys
+{
   "aadProfile": null,
   "addonProfiles": null,
   "agentPoolProfiles": [
@@ -116,3 +114,7 @@ vicirji@Azure:~$ az aks create --resource-group MicroservicesBackend  --name Mic
   "tags": null,
   "type": "Microsoft.ContainerService/ManagedClusters"
 }
+
+az role assignment create --assignee "805b9bb0-885d-4a67-9b6a-cc4933d819fd" --scope /subscriptions/ca362761-30ba-43d8-89db-430f3c95640f/resourceGroups/MicroservicesBackend/providers/Microsoft.ContainerRegistry/registries/BackendMicroservicesContainerRegistry --role Reader
+
+az aks create --resource-group MicroservicesBackend --name MicroservicesCluster2 --node-count 1 --service-principal "805b9bb0-885d-4a67-9b6a-cc4933d819fd" --client-secret "70824326-2674-4285-b0e0-99e6ed0dba5e" --generate-ssh-keys
