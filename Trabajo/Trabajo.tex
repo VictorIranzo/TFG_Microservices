@@ -82,13 +82,11 @@
 
 \begin{abstract}[spanish]
 
-Las arquitecturas basadas en microservicios son una tendencia actual asociada a conceptos como el desarrollo centrado en el dominio del problema o el despliegue en contenedores. En estas arquitecturas, una aplicación software se compone de servicios pequeños y autónomos que colaboran entre ellos.
+Las arquitecturas basadas en microservicios son una tendencia actual donde una aplicación software se compone de servicios pequeños y autónomos que cooperan entre ellos para ofrecer diversas funcionalidades. El objetivo de este trabajo es validar las ventajas e inconvenientes de una arquitectura basada en microservicios frente a una arquitectura tradicional o monolítica mediante la evaluación de un caso de estudio. Con este propósito, se hará una revisión de la influencia de los microservicios en el proceso de desarrollo de software y se repasarán las principales herramientas asociadas a su despliegue. 
 
-El objetivo de este trabajo es validar con un caso de estudio las ventajas e inconvenientes de una arquitectura basada en microservicios frente a una arquitectura tradicional o monolítica. Se hará una revisión de la influencia de los microservicios en el proceso de desarrollo de software y se repasarán las principales herramientas asociadas a su despliegue. 
+El caso de estudio consistirá en el diseño e implementación de una aplicación móvil para el comercio electrónico (e-shop). La parte servidora se implementará dos veces siguiendo arquitecturas diferentes: una basada en microservicios y otra monolítica. Para el despliegue del sistema se emplearán contenedores Docker orquestados por la herramienta Kubernetes, dentro de la plataforma Microsoft Azure. 
 
-Posteriormente, se diseñará e implementará una misma aplicación móvil de comercio electrónico (e-shop) empleando en su parte servidora dos arquitecturas diferentes: una basada en microservicios y otra monolítica. Para su despliegue se empleará Microsoft Azure a través de contenedores Docker orquestados por la herramienta Kubernetes. 
-
-Finalmente, ambas soluciones se compararán frente a diferentes requisitos no funcionales, como la disponibilidad o la tolerancia a fallos, y distintas situaciones de mantenimiento para extraer conclusiones.
+Finalmente, ambas soluciones se compararán frente a diferentes requisitos no funcionales, como la disponibilidad o la tolerancia a fallos, y distintas situaciones de mantenimiento.
 
 \end{abstract}
 
@@ -1365,7 +1363,7 @@ En cuanto a las restricciones de integridad referencial, en una base de datos re
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.7]{Comment}
-\caption{Clases de dominio de la entidad comentario en la solución monolítica (derecha) y la basada en microservicios (izquierda).}
+\caption{Clases de dominio de la entidad comentario en la solución monolítica (izquierda) y la basada en microservicios (derecha).}
 \label{fig:Comment}
 \end{figure}
 
@@ -1376,7 +1374,7 @@ En cuanto a las restricciones de integridad referencial, en una base de datos re
 
 \subsection{Microservicio de notificaciones}
 
-El microservicio de notificaciones ahora está desarrollado en dos lenguajes de programación distintos: Java y C\#:
+El microservicio de notificaciones ahora está desarrollado en dos lenguajes de programación distintos: Java y C\#.
 
 En C\# está desarrollado todo lo necesario para el consumo del servicio. Esto incluye la capa de contratos (donde se define su interfaz y el DTO que se empleará en la parte C\#) y la de proxy (donde se indica que la interfaz de contratos se resuelve a través del proxy, que recurre al cliente HTTP para realizar peticiones al microservicio).
 
@@ -1858,7 +1856,7 @@ En este apéndice presentamos el modelo de navegación de la aplicación móvil 
 
 \chapter{Despliegue en producción del sistema basado en microservicios} \label{chap:Despliegue}
 
-A continuación, detallaremos los pasos seguidos para el despliegue del sistema en producción. Las tecnologías que se van a emplear son las asociadas a la plataforma de Microsoft Azure, principalmente Azure Kubernetes Service. Una parte del proceso que detallaremos se puede encontrar en su documentación oficial. \footnote{Documentación oficial de AKS: https://docs.microsoft.com/es-es/azure/aks/}
+A continuación, detallaremos los pasos seguidos para el despliegue del sistema en producción. Las tecnologías que se van a emplear son las asociadas a la plataforma de Microsoft Azure, principalmente Azure Kubernetes Service. Una parte del proceso que detallaremos se puede encontrar en su documentación oficial. \footnote{ Documentación oficial de AKS: https://docs.microsoft.com/es-es/azure/aks/}
 
 \section{Registro de las imágenes de los microservicios}
 
@@ -1876,7 +1874,7 @@ Para crear el registro iremos al portal de Azure y desde un nuevo terminal ejecu
 
 Ahora, en la máquina de desarrollo donde tenemos el repositorio de código de la solución basada en microservicios, abriremos una nueva terminal. Haciendo uso del archivo docker-compose.yml que hemos mostrado en la sección \ref{sect:DespliegueMicroservicios} \nameref{sect:DespliegueMicroservicios} vamos a construir las imágenes de todos los contenedores a través del comando ``docker-compose build".
 
-En esta máquina será necesario tener instalada la línea de comandos de Azure para la realización de los siguientes pasos. \footnote{Instalación de la CLI de Azure 2.0: https://docs.microsoft.com/es-es/cli/azure/install-azure-cli?view=azure-cli-latest} Se debe iniciar sesión tanto con las credenciales del usuario de Azure a través del comando ``az login" como en en el registro de imágenes creado, tal y como muestra la figura \ref{fig:LoginAcr}.
+En esta máquina será necesario tener instalada la línea de comandos de Azure para la realización de los siguientes pasos. \footnote{ Instalación de la CLI de Azure 2.0: https://docs.microsoft.com/es-es/cli/azure/install-azure-cli?view=azure-cli-latest} Se debe iniciar sesión tanto con las credenciales del usuario de Azure a través del comando ``az login" como en en el registro de imágenes creado, tal y como muestra la figura \ref{fig:LoginAcr}.
 
 \begin{figure}[h]
 \centering
@@ -1884,7 +1882,7 @@ En esta máquina será necesario tener instalada la línea de comandos de Azure 
 \caption{Inicio de sesión en ACR.}
 \end{figure}
 
-Para que las imágenes sean almacenadas en el registro que hemos creado, debemos etiquetar las imágenes que ha creado el comando ``docker-compose build" con la propiedad ``loginServer" del registro que se muestra en la figura \ref{fig:CreateACR}. Esto se puede realiza a través del comando ``docker tag" como se muestra en la figura \ref{fig:PushImage} o directamente poniendo el tag en de cada imagen creada en el archivo docker-compose.yml. \footnote{Añadir una etiqueta en Docker Compose: https://docs.docker.com/compose/compose-file/\#build} Finalmente, cada una de las imágenes etiquetadas deberá ser subido al repositorio a través del comando ``docker push".
+Para que las imágenes sean almacenadas en el registro que hemos creado, debemos etiquetar las imágenes que ha creado el comando ``docker-compose build" con la propiedad ``loginServer" del registro que se muestra en la figura \ref{fig:CreateACR}. Esto se puede realiza a través del comando ``docker tag" como se muestra en la figura \ref{fig:PushImage} o directamente poniendo el tag en de cada imagen creada en el archivo docker-compose.yml. \footnote{ Añadir una etiqueta en Docker Compose: https://docs.docker.com/compose/compose-file/\#build} Finalmente, cada una de las imágenes etiquetadas deberá ser subido al repositorio a través del comando ``docker push".
 
 \begin{figure}[h]
 \centering
@@ -1941,11 +1939,11 @@ En segundo lugar, una vez se establezca la conexión con el clúster, debemos cr
 \caption{Fragmento del archivo YAML de Kubernetes.}
 \end{figure}
 
-Vamos a hacer un paréntesis para explicar en detalle parte de este archivo. Cada uno de los microservicios está formado por dos componentes: un servicio de Kubernetes y un balanceador de carga. Como hemos comentado en la sección \ref{subsect:Kubernetes} \nameref{subsect:Kubernetes}, los pods son la unidad de trabajo de Kubernetes, que son construidos y destruidos continuamente de forma transparente. En Kubernetes, un servicio es una abstracción que define un conjunto de pods. Aunque cada pod obtiene su propia dirección IP interna, no se puede garantizar que el servicio vaya a estar a la escucha siempre en esta IP debido a la naturaleza volátil del pod. \footnote{Servicios en Kubernetes: https://kubernetes.io/docs/concepts/services-networking/service/} 
+Vamos a hacer un paréntesis para explicar en detalle parte de este archivo. Cada uno de los microservicios está formado por dos componentes: un servicio de Kubernetes y un balanceador de carga. Como hemos comentado en la sección \ref{subsect:Kubernetes} \nameref{subsect:Kubernetes}, los pods son la unidad de trabajo de Kubernetes, que son construidos y destruidos continuamente de forma transparente. En Kubernetes, un servicio es una abstracción que define un conjunto de pods. Aunque cada pod obtiene su propia dirección IP interna, no se puede garantizar que el servicio vaya a estar a la escucha siempre en esta IP debido a la naturaleza volátil del pod. \footnote{ Servicios en Kubernetes: https://kubernetes.io/docs/concepts/services-networking/service/} 
 
-En los servicios desplegados hemos seguido el caso de uso más común en relación entre pods y contenedores: cada pod representa un único contenedor Docker. A su vez, cada servicio está formado por un solo pod. \footnote{Pods en Kubernetes: https://kubernetes.io/docs/concepts/workloads/pods/pod/} En la figura \ref{fig:KubernetesSecurity} se muestra en la sección \textit{containers} que solo hay un pod, basado en la imagen Docker del microservicio de seguridad.
+En los servicios desplegados hemos seguido el caso de uso más común en relación entre pods y contenedores: cada pod representa un único contenedor Docker. A su vez, cada servicio está formado por un solo pod. \footnote{ Pods en Kubernetes: https://kubernetes.io/docs/concepts/workloads/pods/pod/} En la figura \ref{fig:KubernetesSecurity} se muestra en la sección \textit{containers} que solo hay un pod, basado en la imagen Docker del microservicio de seguridad.
 
-Si solo definieramos un servicio, la dirección IP que se le da es interna y no queda expuesta fuera del clúster para su consumo por aplicaciones frontend. Existen varias posibilidades para alcanzar este propósito. Vamos a repasar algunas de ellas en la sección \ref{sect:DespliegueOtros} \nameref{sect:DespliegueOtros}, pero entre ellas la que vamos a presentar ahora es el uso de un balanceador de carga externo. Como se comenta en el libro \cite{Rensin2015}, es una buena práctica situar un balanceador de carga frente a cada servicio aunque el número de replicas del servicio sea solo uno. Para seleccionar que servicios gestiona el balanceador de carga se hace uso de un selector de etiquetas definido en la sección \textit{selector} de la figura, que debe coincidir con la etiqueta dada al servicio en su sección \textit{labels}. \footnote{Balanceadores de carga en Kubernetes: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/}
+Si solo definieramos un servicio, la dirección IP que se le da es interna y no queda expuesta fuera del clúster para su consumo por aplicaciones frontend. Existen varias posibilidades para alcanzar este propósito. Vamos a repasar algunas de ellas en la sección \ref{sect:DespliegueOtros} \nameref{sect:DespliegueOtros}, pero entre ellas la que vamos a presentar ahora es el uso de un balanceador de carga externo. Como se comenta en el libro \cite{Rensin2015}, es una buena práctica situar un balanceador de carga frente a cada servicio aunque el número de replicas del servicio sea solo uno. Para seleccionar que servicios gestiona el balanceador de carga se hace uso de un selector de etiquetas definido en la sección \textit{selector} de la figura, que debe coincidir con la etiqueta dada al servicio en su sección \textit{labels}. \footnote{ Balanceadores de carga en Kubernetes: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/}
 
 Tanto para la comunicación entre el backend y el frontend como para la comunicación entre microservicios emplearemos la dirección IP externa que el balanceador de carga da. Esta decisión surge para hacer más sencilla la configuración de los microservicios, pero provoca que servicios internos como el de notificaciones o informes que no necesitan ser consumidos por el frontend sean también expuestos fuera del clúster.
 
@@ -1975,7 +1973,7 @@ Por último, si empleando el navegador accedemos a la dirección ``DIRECCIÓN\_S
 
 \section{Integración de los microservicios}
 
-En la sección anterior hemos mencionado que los microservicios comunican entre ellos a través de la dirección IP del balanceador de carga de cada uno de ellos. Esta dirección se especifica en los archivos de configuración \textit{appsettings.json} que se localizan en la capa de servicios. Se pueden definir diferentes archivos de configuración, uno para cada uno de los entornos que se emplea. Esto se puede observar en la figura \ref{fig:appsettings}, donde se muestra para el microservicio de pedidos el archivo de configuración global y el del entorno de desarrollo, \textit{appsettings.Development.json}, que se consulta solo cuando la aplicación se despliega en el entorno de desarrollo y sobreescribe las propiedades que tiene en común con el archivo de configuración global. \footnote{Configuración en ASP.NET Core
+En la sección anterior hemos mencionado que los microservicios comunican entre ellos a través de la dirección IP del balanceador de carga de cada uno de ellos. Esta dirección se especifica en los archivos de configuración \textit{appsettings.json} que se localizan en la capa de servicios. Se pueden definir diferentes archivos de configuración, uno para cada uno de los entornos que se emplea. Esto se puede observar en la figura \ref{fig:appsettings}, donde se muestra para el microservicio de pedidos el archivo de configuración global y el del entorno de desarrollo, \textit{appsettings.Development.json}, que se consulta solo cuando la aplicación se despliega en el entorno de desarrollo y sobreescribe las propiedades que tiene en común con el archivo de configuración global. \footnote{ Configuración en ASP.NET Core
 : https://docs.microsoft.com/es-es/aspnet/core/fundamentals/configuration/?view=aspnetcore-2.1} 
 
 Existen muchas formas de que un microservicio descubra donde se encuentran otros con los que ha de colaborar, como puede ser el uso de archivos de configuración. El microservicio de pedidos necesita comunicar con el de seguridad, pedidos y notificaciones, por lo que necesita conocer y almacenar la dirección donde estos se despliegan. Esta configuración será leída por los diferentes proxies que el servicio de pedidos emplea para comunicar con los otros.
