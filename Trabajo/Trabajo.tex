@@ -569,7 +569,29 @@ Los usuarios pueden crear, desplegar y gestionar aplicaciones  servicios a trav�
 % Trabajos presentados en la ETSINF.
 % Gonzalez en Docs.
 
-El éxito en el uso de los microservicios está ligado a principios como la división de responsabilidades en el código, la organización de los equipos de trabajo o una correcta metodología en el proceso de desarrollo y no tanto al uso de una tecnología específica. Existen un gran número de herramientas que se pueden emplear en su desarrollo. Su uso facilita alcanzar requisitos no funcionales como los citados en la sección \ref{sect:RNF}. Sin embargo, las diferencias entre herramientas son mínimas, como prueba el gran número de funcionalidades similares que ofrecen AWS y Azure, por lo que no tiene relevancia emplear una u otra. 
+\subsection{Uso de las diferentes tecnologías}
+
+El éxito en el uso de los microservicios está ligado a principios como la división de responsabilidades en el código, la organización de los equipos de trabajo o una correcta metodología en el proceso de desarrollo y no tanto al uso de una tecnología específica. 
+
+Existen un gran número de herramientas que se pueden emplear en su desarrollo. Su uso facilita alcanzar requisitos no funcionales como los citados en la sección \ref{sect:RNF}. Sin embargo, las diferencias entre herramientas son mínimas, como prueba el gran número de funcionalidades similares que ofrecen AWS y Azure, por lo que no tiene relevancia emplear una u otra. 
+
+Por lo general, ninguna herramienta se impone a sus competidoras a excepción de los contenedores Docker. Según el artículo \footnote{ 8 surprising facts about real Docker adoption: https://www.datadoghq.com/docker-adoption/} realizado por la compañía Datadog, que ofrece herramientas para la monitorización y análisis de aplicaciones, cerca del 25\% de las empresas emplean Docker. Además, en la mitad de ellas se emplea junto con algún tipo de orquestador. 
+
+En \footnote{ Container Trends: Plans, Orchestration and CI – A Dataset from Bitnami: https://redmonk.com/fryan/2016/06/21/container-trends-plans-orchestration-and-ci-a-dataset-from-bitnami/} se realiza un estudio relativo al uso de orquestadores en compañías según su tamaño. En la gráfica de la figura \ref{fig:Orquestadores_ES} se observan los orquestadores que las compañías emplean. En la gráfica se agrupan las compañías según su número de empleados. Cada columna representa el número de compañías dentro de esa categoría que emplean una determinada herramienta. Se observa que las herramientas más populares son Kubernetes y Docker Swarm, siendo la primera más empleada en todas las categorías salvo en la de empresas con más de 1000 empleados.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.6]{Comparativa_Orquestadores_ES} \label{fig:Comparativa_Orquestadores_ES}
+\caption{Orquestadores empleados por compañías según su tamaño (en número de empleados).}
+\end{figure}
+
+\subsection{Revisión de trabajos realizados en la ETSInf}
+
+En esta sección revisaremos diferentes trabajos de final de grado realizados por alumnos de la Escuela Técnica Superior de Ingeniería Informática (ETSInf). No son muchos los trabajos en la escuela relacionados con los microservicios debido a que su complejidad y a que estos son una tendencia muy actual. Queremos poner en valor dos trabajos, los realizados por Mompó \cite{Mompo2017} y Roig\cite{Roig2017}.
+
+En el trabajo de Mompó se propone una nueva metodología de trabajo para disminuir el retrabajo e incrementar el código compartido en una organización. La memoria repasa prácticas como la integración continua, donde se comparan las herramientas de Jenkins y Bamboo. Esta nueva metodología incluye también el uso de una herramienta para integración continua. También realiza una comparativa entre una arquitectura basadas en microservicios y una monolítica frente a diferentes características como la escalabilidad o su complejidad. Entre las mayores diferencias que pueden observarse entre esta comparativa y la que realizamos en la sección \ref{sect:Comparativa} \nameref{sect:Comparativa} podemos citar la relacionada a la evolución de los microservicios. Según Mompó, introducir una modificación atañe solo al servicio al que se le aplica, cuando en este trabajo se presentan ejemplos de que esto no siempre es así.
+
+En cuanto al trabajo de Roig, recoge en el estado del arte las principales características de los contenedores Docker y LXC. Sin embargo, muestra predilección por los segundos, cuando son los primeros los más adoptados en la industria.
 
 \section{Propuesta} \label{sect:Propuesta}
 %TODO Revisar
@@ -1702,7 +1724,7 @@ Otra consideración a tener en cuenta a la hora de transformar un servicio en un
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 
-\section{Ventajas e inconvenientes de los microservicios}
+\section{Ventajas e inconvenientes de los microservicios} \label{sect:Comparativa}
 
 A continuación, presentamos una recopilación de las ventajas e inconvenientes del uso de microservicios obtenidos a partir de algunas referencias consultadas y del desarrollo del caso de estudio:
 
