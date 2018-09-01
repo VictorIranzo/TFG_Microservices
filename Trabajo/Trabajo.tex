@@ -1230,7 +1230,7 @@ Para la realización de las pruebas se ha empleado una base de datos en memoria.
 \caption{Ejemplo de método Setup donde se emplea una base de datos en memoria.}
 \end{figure}
 
-\section{Despliegue}
+\section{Despliegue de la solución monolítica}
 
 Como hemos mencionado en la sección \ref{sect:Propuesta} \nameref{sect:Propuesta}, para el despliegue de la aplicación se va a emplear Azure App Service. No se va a implementar ninguna pipeline para desplegar automáticamente y todos los pasos que se detallan se deben hacer manualmente, aunque sean muy sencillos:
 
@@ -1556,7 +1556,7 @@ Otras pruebas que se han modificado son las del microservicio de incidencias. En
 
 Otra posible opción habría sido crear una base de datos de Firebase distinta la de producción y a la que apuntaran las pruebas. Con esta solución se habría tenido que implementar igualmente un método para eliminar el contenido escrito durante la prueba o de otra forma se crearía contenido duplicado en esta BD.
 
-\section{Despliegue} \label{sect:DespliegueMicroservicios}
+\section{Despliegue de la solución basada en microservicios} \label{sect:DespliegueMicroservicios}
 
 Una de las características de los microservicios que más se ha repetido en la memoria es que se pueden desplegar de forma independiente. Esto es así porque cada uno de los microservicios se va a desplegar como un contenedor independiente, a diferencia de la solución monolítica donde sólo había un Dockerfile y un contenedor. Por eso, en total existirán simultáneamente un total de 5 contenedores. Para agilizar el proceso de construcción de las imágenes e inicio de los contenedores haremos uso de Docker Compose. 
 
