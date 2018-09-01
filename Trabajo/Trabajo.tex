@@ -1977,7 +1977,35 @@ Como se muestra en la figura, el archivo de configuración de desarrollo contien
 \caption{Fragmento de los archivos de configuración del microservicio de pedidos.}
 \end{figure}
 
-\section{Otras consideraciones} \label{sect:DespliegueOtros}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 
+\section{Otras configuraciones para el despliegue} \label{sect:DespliegueOtros}
+
+Tras seguir los pasos que hemos mencionado previamente, habremos obtenido un despliegue como el que se muestra en la figura \ref{fig:DespliegueProduccion}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.65]{DespliegueProduccion} \label{fig:DespliegueProduccion}
+\caption{Representación del despliegue en producción.}
+\end{figure}
+
+Este despliegue puede ser excesivo debido al elevado número de componentes que conlleva, pero nos permite desplegar cada servicio de forma independiente. El balanceador de carga (LoadBalancer) crea automáticamente dos componentes: un ClusterIp y un NodePort. Por un lado, el primero se emplea para redireccionar servicios únicamente desde el interior del clúster, haciendo el servicio inaccesible desde fuera. Por otro lado, NodePort se emplea para hacer accesible el servicio desde el exterior del clúster. Como mejora, se podría emplear un ClusterIP en lugar de un LoadBalancer en los microservicios de notificaciones e informes ya que estos no deberían ser accesibles desde fuera del clúster. Esto se representa en la figura \ref{fig:ClusterIP}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.65]{ClusterIP} \label{fig:ClusterIP}
+\caption{Uso de ClusterIP en el microservicio de informes.}
+\end{figure}
+
+En \footnote{Quick Guide to Microservices With Kubernetes, Spring Boot 2.0, and Docker: https://dzone.com/articles/quick-guide-to-microservices-with-kubernetes-sprin} se muestra un ejemplo completo de desarrollo de un sistema de microservicios en Java que se despliega sobre Kubernetes. En lugar de emplear balanceador de carga, emplea un único componente Ingress para hacer públicos los servicios. Este es un objeto que se emplea para hacer accesibles los servicios desde el exterior a través de reglas. \footnote{Ingress en Kubernetes: https://kubernetes.io/docs/concepts/services-networking/ingress/} En el ejemplo de la figura \ref{fig:Ingress}, se especifica una dirección base a través de la anotación \textit{host} y se accede a los servicios a través de esta dirección más la ruta que representa a cada uno de los servicios.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{Ingress} \label{fig:Ingress}
+\caption{Despliegue empleando un objeto Ingress.}
+\end{figure}
 
 \end{document}
