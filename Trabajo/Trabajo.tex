@@ -1018,14 +1018,7 @@ Identity es el sistema de ASP.NET Core para administrar los usuarios registrados
 
 \begin{itemize}
 
-\item En la capa de dominio, se debe crear una entidad que represente al usuario de la aplicación y que herede de la clase \textit{IdentityUser}. La clase \textit{IdentityUser} provee numerosos atributos, como el nombre o el correo electrónico. Se puede añadir cualquier atributo más asociado al usuario de la aplicación dentro de la clase \textit{User} que muestra la figura \ref{fig:User}.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.8]{User}
-\caption{La clase User.}
-\label{fig:User}
-\end{figure}
+\item En la capa de dominio, se debe crear una entidad que represente al usuario de la aplicación y que herede de la clase \textit{IdentityUser}. La clase \textit{IdentityUser} provee numerosos atributos, como el nombre o el correo electrónico.
 
 \item En la capa de persistencia, para asegurar la creación de las tablas asociadas a Identity, el contexto de la aplicación que representa a la BD debe extender la clase \textit{IdentityDbContext<User>}. En la base de datos, las tablas de datos creadas automáticamente por Identity se identifican por el prefijo AspNet. En la figura \ref{fig:BDMonolitica} se muestra la BD de la solución monolítica, resaltando las tablas asociadas a Identity.
 
@@ -1043,15 +1036,6 @@ Identity es el sistema de ASP.NET Core para administrar los usuarios registrados
 \includegraphics[scale=0.7]{Authorize}
 \caption{Ejemplo de métodos de la clase de servicios.}
 \label{fig:Authorize}
-\end{figure}
-
-\item Por último, en la capa de servicios se debe especificar que el mecanismo por el cual el usuario proveerá su identidad será a través de \textit{tokens} JWT. Para ello, en la clase \textit{Startup} se debe añadir a la colección de servicios el servicio de autenticación con este tipo de \textit{tokens}, indicando que los únicos tokens válidos son los firmados con la clave provista en el archivo de configuración. \footnote{ Securing ASP.NET Core 2.0 Applications with JWTs: https://auth0.com/blog/securing-asp-dot-net-core-2-applications-with-jwts/} Esto puede verse en las tres líneas finales código presentado en la figura \ref{fig:jwt}.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.7]{jwt}
-\caption{Pieza de código para añadir la autenticación usando tokens JWT.}
-\label{fig:jwt}
 \end{figure}
 
 \end{itemize}
@@ -1105,14 +1089,10 @@ En la clase \textit{ShopContext} debemos indicar cuáles son las entidades del d
 
 Por último, para que desde otras capas accedan a los datos emplearemos el \textbf{patrón DAO}. Exponer el contexto entero fuera de la capa de persistencia puede ser peligroso porque permitiría modificar desde otras capas aspectos que solo deben conocerse en esta capa. Por ello, se definirá para cada entidad del dominio una interfaz para acceder a sus datos donde las operaciones permitidas están acotadas.
 
-La clase \textit{ICrudDAO} de la figura \ref{fig:ICrudDAO} es una interfaz de la capa de servicios que representa las operaciones permitidas en un DAO genérico. Estas operaciones se implementan en una clase base llamada \textit{CrudDaoBase}. Las diferentes entidades deben extender esta base (por ejemplo, \textit{PurchasesDAO}) para exponer las operaciones CRUD. Si es necesario, pueden sobreescribir la implementación por defecto que se da en la clase base.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.8]{ICrudDAO}
-\caption{Interfaz genérica para los DAOs que exponen operaciones CRUD.}
-\label{fig:ICrudDAO}
-\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 
 \subsection{Informes empleando la librería Open XML PowerTools}
 
@@ -1131,20 +1111,16 @@ La figura \ref{fig:Factura} muestra la plantilla para generar una factura. La an
 
 Las plantillas se almacenarán en la base de datos y cuando se quiera generar un informe se recuperará esta para ensamblar el informe. Los métodos para generar un informe concreto estarán expuestos en los \textit{managers} de la entidad asociada al informe. Por ejemplo, el método para generar la factura de un pedido se situará en el \textit{OrdersManager}. En su implementación, se recuperarán los datos para generar la factura y se enviarán estos al \textit{manager} de informes para que los combine con la plantilla de la factura.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
 \subsection{Notificaciones con la librería MailKit}
 
 Con las notificaciones ocurre lo mismo que con los informes: solo existe un caso de uso que envíe una notificación al cliente, pero para segregar responsabilidades vamos a crear un \textit{manager} específico para este propósito. Para enviar notificaciones se va a hacer uso de la librería \textbf{MailKit}, una librería multiplataforma con utilidades sobre los protocolos IMAP, POP3 y SMTP.
 
-Para desacoplar los mensajes a enviar y el código para enviarlo se hará uso de un DTO que contenga el usuario destinatario, el asunto del correo y el cuerpo del mismo. Tanto el cuerpo como el asunto de la notificación se definirán en archivos de recursos en la capa de aplicación. 
-
-En la figura \ref{fig:NotificationsMessage} se muestran dos recursos de este archivo que representan el mensaje que se envía al cliente cuando un empleado programa la entrega de un pedido. En el mensaje enviado se reemplazarán los números marcados entre corchetes por los datos del cliente y el pedido.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=1]{NotificationsMessage}
-\caption{Archivo de recursos para las notificaciones.}
-\label{fig:NotificationsMessage}
-\end{figure}
+Para desacoplar los mensajes a enviar y el código para enviarlo se hará uso de un DTO que contenga el usuario destinatario, el asunto del correo y el cuerpo del mismo. Tanto el cuerpo como el asunto de la notificación se definirán en archivos de recursos en la capa de aplicación.
 
 \subsection{Inyección de dependencias}
 
@@ -1157,16 +1133,7 @@ La \textbf{inyección de dependencias} (DI) es un mecanismo para desacoplar un o
 \label{fig:ProductsManager}
 \end{figure}
 
-El uso de interfaces reduce el acoplamiento entre la definición de las operaciones de una clase y las implementaciones concretas que esta definición puede tener. Sin embargo, es necesario indicar con qué implementación se resuelve una interfaz cuando esta se inyecta en el constructor de una clase. Para ellos, se emplean una serie de métodos sobre la colección de servicios donde el sistema busca sus dependencias para indicar cómo resolver cada interfaz. El método más utilizado es \textit{AddScoped}. Este método instancia el objeto de la dependencia una vez por cada petición que el servidor recibe y comparte este mismo objeto entre todas las clases que dependan de él.
-
-En nuestra solución, cada capa es responsable de registrar las diferentes interfaces que contiene junto con la clase que la implementa. De esta forma, desde otras capas se podrán usar las interfaces resultas. En la figura \ref{fig:ResolucionDependencias} se muestra como se resuelven las interfaces definidas en la capa de aplicación.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.9]{ResolucionDependencias}
-\caption{Registro de interfaces en la capa de persistencia.}
-\label{fig:ResolucionDependencias}
-\end{figure}
+El uso de interfaces reduce el acoplamiento entre la definición de las operaciones de una clase y las implementaciones concretas que esta definición puede tener. Sin embargo, es necesario indicar con qué implementación se resuelve una interfaz cuando esta se inyecta en el constructor de una clase. Para ellos, se emplean una serie de métodos sobre la colección de servicios donde el sistema busca sus dependencias para indicar cómo resolver cada interfaz. En nuestra solución, cada capa es responsable de registrar las diferentes interfaces que contiene junto con la clase que la implementa. De esta forma, desde otras capas se podrán usar las interfaces resultas.
 
 \subsection{Documentando la API con Swagger UI}
 
@@ -1217,16 +1184,9 @@ Para asegurar la calidad del código se ha hecho uso de dos herramientas: CodeMa
 
 \item \textbf{StyleCop}: es un analizador estático de código C\# desarrollado por Microsoft. Se basa en reglas centradas en aspectos como la documentación, la ordenación de los elementos o el estilo de código. Además, permite configurar las reglas que se aplican, definir excepciones a una de ellas o la creación de reglas propias. \footnote{Página de la Wikipedia de StyleCop: https://en.wikipedia.org/wiki/StyleCop} 
 
-En la mayoría de proyectos se ha configurado para que las alertas que devuelve StyleCop cuando no se cumple una regla se trate como un error y no como una alerta. Esto se puede conseguir añadiendo la opción TreatWarningsAsErrors en los archivos .csproj, tal y como muestra la figura \ref{fig:TreatWarning}.
-
 \end{itemize}
 
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.9]{TreatWarning}
-\caption{Fragmento de un proyecto donde se añade la opción TreatWarningsAsErrors.}
-\label{fig:TreatWarning}
-\end{figure}
+En la mayoría de proyectos se ha configurado para que las alertas que devuelve StyleCop cuando no se cumple una regla se trate como un error y no como una alerta. Esto se puede conseguir añadiendo la opción TreatWarningsAsErrors en los archivos .csproj.
 
 \section{Interfaz de usuario}
 
@@ -1252,9 +1212,9 @@ A nivel de UI se ha implementado de tal forma que se soliciten al \textit{back-e
 
 
 %TODO Interesante https://msdn.microsoft.com/en-us/magazine/dd419663.aspx https://blogs.msdn.microsoft.com/johngossman/2005/10/08/introduction-to-modelviewviewmodel-pattern-for-building-wpf-apps/
-\item \textbf{Uso de ViewModels}: la separación de responsabilidades no es un principio que se deba aplicar solo en el back-end. El patrón arquitectónico \textbf{Model-View-ViewModel} (MVVM) divide la interfaz de usuario en 3 capas: la vista, empleando páginas XAML, los datos tal como se obtienen en su origen, también llamados el modelo, y el modelo de la vista, que conecta ambos y se utiliza para rellenar la vista. \footnote{From Data Bindings to MVVM: https://docs.microsoft.com/es-es/xamarin/xamarin-forms/xaml/xaml-basics/data-bindings-to-mvvm} 
+\item \textbf{Uso de \textit{ViewModels}}: la separación de responsabilidades no es un principio que se deba aplicar solo en el back-end. El patrón arquitectónico \textbf{\textit{Model-View-ViewModel}} (MVVM) divide la interfaz de usuario en 3 capas: la vista, empleando páginas XAML, los datos tal como se obtienen en su origen, también llamados el modelo, y el modelo de la vista, que conecta ambos y se utiliza para rellenar la vista. \footnote{From Data Bindings to MVVM: https://docs.microsoft.com/es-es/xamarin/xamarin-forms/xaml/xaml-basics/data-bindings-to-mvvm} 
 
-La diferencia entre este patrón y otros como el Model-View-Controller(MVC) es que en MVC los datos con los que se llena la vista son los que se obtienen en el origen y es el controlador quien ha de adaptarlos a cómo se visualizan en la vista. En cambio, en MVVM la vista y el modelo de la vista suelen relacionarse a través de enlaces (\textit{bindings}) en el propio XAML y se notifican mutuamente cuando alguna de sus propiedades cambia. \footnote{ Patterns - WPF Apps With The Model-View-ViewModel Design Pattern: https://msdn.microsoft.com/en-us/magazine/dd419663.aspx}
+La diferencia entre este patrón y otros como el \textit{Model-View-Controller} (MVC) es que en MVC los datos con los que se llena la vista son los que se obtienen en el origen y es el controlador quien ha de adaptarlos a cómo se visualizan en la vista. En cambio, en MVVM la vista y el modelo de la vista suelen relacionarse a través de enlaces (\textit{bindings}) en el propio XAML y se notifican mutuamente cuando alguna de sus propiedades cambia. \footnote{ Patterns - WPF Apps With The Model-View-ViewModel Design Pattern: https://msdn.microsoft.com/en-us/magazine/dd419663.aspx}
 
 Sin embargo, usar este patrón puede ser excesivo para UIs muy sencillas. \footnote{Advantages and disadvantages of M-V-VM: https://blogs.msdn.microsoft.com/johngossman/2006/03/04/advantages-and-disadvantages-of-m-v-vm/} Por este motivo, hemos usado objetos \textit{ViewModel} en solo aquellos casos que era necesario adaptar los datos del modelo a la vista. Lo que aquí definimos como modelo es un DTO que devuelve la parte servidora y ya está diseñado para que contenga solo la información estrictamente necesaria. Un ejemplo en el que se emplea un \textit{ViewModel} es el \textit{ProductViewModel} (figura \ref{fig:ProductViewModel}), donde se tiene que transformar la imagen que se recibe del ProductDTO de una \textit{byte array} a un \textit{ImageSource}.
 
@@ -1266,15 +1226,6 @@ Sin embargo, usar este patrón puede ser excesivo para UIs muy sencillas. \footn
 \end{figure}
 
 \item \textbf{Código específico de plataforma}: existen algunos servicios que no se pueden implementar en el proyecto compartido por todas las plataformas. Estos servicios están relacionados con aspectos muy ligados a cada plataforma, como puede ser el sistema de archivos. Para este propósito se define una interfaz en el proyecto compartido. Cada una de las plataformas debe dar una implementación concreta a esta interfaz. Desde el proyecto genérico, se hace uso de la interfaz y será el sistema quien se encargará de dirigir la operación que se invoca sobre la interfaz a la implementación de la plataforma. \footnote{Native Services with Xamarin.Forms? It's DependencyService to the Rescue: https://visualstudiomagazine.com/articles/2015/09/01/native-services-with-xamarinforms.aspx}
-
-En la figura \ref{fig:AndroidFileManager} se presenta la implementación específica hecha en la plataforma Android para la interfaz \textit{IFileManager}, que ofrece diversas operaciones relacionadas con el sistema de archivos.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.8]{AndroidFileManager}
-\caption{Servicio concreto del proyecto de Android para la gestión de archivos.}
-\label{fig:AndroidFileManager}
-\end{figure}
 
 \end{itemize}
 
@@ -1294,14 +1245,19 @@ No se han podido probar todos los métodos expuestos en la interfaz del \textit{
 
 Para la realización de las pruebas se ha empleado una base de datos en memoria. Así, las pruebas son más cercanas a una situación real. A la vez, no añade un sobrecoste asociado al acceso a datos de una base de datos real, que haría más lenta la ejecución de las pruebas. \footnote{ Pruebas con InMemory: https://docs.microsoft.com/es-es/ef/core/miscellaneous/testing/in-memory} Además, en el método \textit{Setup} que se invoca antes de cada prueba es donde se resuelven las dependencias declaradas en los constructores de las clases invocando a los métodos \textit{AddDependencies} de las capas de aplicación y persistencia, como muestra la figura \ref{fig:SetupTest}. 
 
-Por último, para algunos servicios provistos por las herramientas utilizadas se han tenido que implementar \textit{fakes}. Es el caso del manager de Identity para hacer login en la aplicación, que se debe sobreescribir para devolver que el usuario ha hecho login correctamente sin acceder a la base de datos de usuarios.
-
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{SetupTest}
 \caption{Ejemplo de método Setup donde se emplea una base de datos en memoria.}
 \label{fig:SetupTest}
 \end{figure}
+
+Por último, para algunos servicios provistos por las herramientas utilizadas se han tenido que implementar \textit{fakes}. Es el caso del manager de Identity para hacer login en la aplicación, que se debe sobreescribir para devolver que el usuario ha hecho login correctamente sin acceder a la base de datos de usuarios.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 
 \section{Despliegue de la solución monolítica}
 
