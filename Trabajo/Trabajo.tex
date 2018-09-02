@@ -1376,6 +1376,11 @@ En cuanto a la organización en soluciones en Visual Studio, en \cite{DelaTorre2
 \label{fig:MicroservicesSolution}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
 \section{Diferencias en la implementación respecto a la solución monolítica}
 
 \subsection{Consumo de otros microservicios} \label{subsect:Consumo}
@@ -1426,11 +1431,6 @@ En cuanto a las restricciones de integridad referencial, en una base de datos re
 \label{fig:Comment}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SALTO DE PAGINA
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-
 \subsection{Microservicio de notificaciones}
 
 El microservicio de notificaciones ahora está desarrollado en dos lenguajes de programación distintos: Java y C\#.
@@ -1444,25 +1444,11 @@ En C\# está desarrollado todo lo necesario para el consumo del servicio. Esto i
 \label{fig:NotificationsC}
 \end{figure}
 
-En Java se han desarrollado la capa de aplicación y servicios. La implementación de la capa de aplicación para mandar un correo electrónico es trivial. Para la capa de servicios, se crea e inicia un objeto HttpServer al que se le asigna un handler (clase SendNotificationHandler de la figura \ref{fig:NotificationsJava}).
+En Java se han desarrollado la capa de aplicación y servicios. La implementación de la capa de aplicación para mandar un correo electrónico es trivial. Para la capa de servicios, se crea e inicia un objeto HttpServer al que se le asigna un handler.
 
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.85]{NotificationsJava}
-\caption{Parte del microservicio de notificaciones desarrollada en Java.}
-\label{fig:NotificationsJava}
-\end{figure}
+El handler es similar a lo que en .NET llamábamos controlador. En nuestro caso, deserializará el cuerpo (\textit{body}) de la petición en un objeto empleando la librería Gson y delegará en la capa de aplicación la operación a realizar. Cuando se quiere consumir otro microservicio no podemos utilizar los proxies que hemos creado para C\# porque es otro lenguaje de programación. En nuestro ejemplo, queremos contactar con el servicio de seguridad para obtener el correo electrónico de un usuario.
 
-El handler es similar a lo que en .NET llamábamos controlador. En nuestro caso, deserializará el cuerpo (\textit{body}) de la petición en un objeto empleando la librería Gson y delegará en la capa de aplicación la operación a realizar. Cuando se quiere consumir otro microservicio no podemos utilizar los proxies que hemos creado para C\# porque es otro lenguaje de programación. En nuestro ejemplo, queremos contactar con el servicio de seguridad para obtener el correo electrónico de un usuario. Debemos crear un objeto para conectar a través del protocolo HTTP con el microservicio de seguridad y leer la respuesta obtenida, como se ilustra en la figura \ref{fig:JavaProxy}.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.85]{JavaProxy}
-\caption{Proxy del microservicio de seguridad para su consumo en Java.}
-\label{fig:JavaProxy}
-\end{figure}
-
-Por último, el archivo Dockerfile (figura \ref{fig:JavaDockerfile}) para el despliegue del servicio también varía. Vamos a seguir el mismo criterio que en los contenedores de microservicios .NET de usar los ensamblados (en este caso, un archivo *.jar) para generar la imagen con el menor número de recursos posibles. Tanto el comando para iniciar el proceso del contenedor como la imagen base se verán afectados.
+Por último, el archivo Dockerfile (figura \ref{fig:JavaDockerfile}) para el despliegue del servicio también varía. Vamos a seguir el mismo criterio que en los contenedores de microservicios .NET de usar los ensamblados (en este caso, un archivo *.jar) para generar la imagen con el menor número de recursos posibles. Tanto el comando para iniciar el proceso del contenedor como la imagen base se verán modificados.
 
 \begin{figure}[h]
 \centering
@@ -1470,12 +1456,6 @@ Por último, el archivo Dockerfile (figura \ref{fig:JavaDockerfile}) para el des
 \caption{Dockerfile del microservicio de notificaciones.}
 \label{fig:JavaDockerfile}
 \end{figure}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SALTO DE PAGINA
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-
 
 \subsection{Persistencia en microservicio de incidencias}
 
@@ -1490,19 +1470,7 @@ Una de las principales ventajas de las bases de datos NoSQL es su escalabilidad 
 \label{fig:Firebase}
 \end{figure}
 
-Gracias a la arquitectura interna basada en capas, el uso de esta BD solo implica dejar de usar la implementación que se da por defecto al DAO en la librería común y programar una implementación propia que acceda a los datos de Firebase a través de llamadas HTTP. Un ejemplo de estas invocaciones se puede ver en el código de la figura \ref{fig:IncidencesDAO}.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.8]{IncidencesDAO}
-\caption{Fragmento de DAO que accede a una base de datos de Firebase.}
-\label{fig:IncidencesDAO}
-\end{figure}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SALTO DE PAGINA
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
+Gracias a la arquitectura interna basada en capas, el uso de esta BD solo implica dejar de usar la implementación que se da por defecto al DAO en la librería común y programar una implementación propia que acceda a los datos de Firebase a través de llamadas HTTP.
 
 \section{Versionado de servicios}
 % https://www.thomaslevesque.com/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/
@@ -1557,14 +1525,7 @@ A estas variables se les da valor en un archivo llamado \textit{Versions.props}.
 
 Para que la UI emplee los microservicios que se han creado se debe sustituir el proxy monolítico por los proxies de los microservicios de Seguridad, Incidencias y Pedidos. Esto se hace eliminando el paquete NuGet del proxy monolítico e instalando los tres paquetes nuevos.
 
-Una vez hecho esto, habrá que corregir las referencias a diferentes espacios de nombres. Los espacios de nombre de la solución monolítica a la solución basada en microservicios se han modificado para distinguir clases de ambas soluciones que se llaman igual. Otro cambio que se debe realizar, como muestra la figura \ref{fig:ChangesUI}, es invocar el código para resolver las interfaces de contratos con los proxies.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.9]{ChangesUI}
-\caption{Cambios en la UI para emplear la solución basada en microservicios.}
-\label{fig:ChangesUI}
-\end{figure}
+Una vez hecho esto, habrá que corregir las referencias a diferentes espacios de nombres. Los espacios de nombre de la solución monolítica a la solución basada en microservicios se han modificado para distinguir clases de ambas soluciones que se llaman igual. Otro cambio que se debe realizar, es invocar el código para resolver las interfaces de contratos con los nuevos proxies. Como se puede ver, los cambios asociados a emplear una u otra solución han sido mínimos.
 
 \section{Adaptación de las pruebas}
 
@@ -1589,16 +1550,7 @@ Algunas pruebas han tenido que implementarse obligatoriamente como pruebas de ex
 \caption{Uso de TestServer para simular el microservicio de informes.}
 \end{figure}
 
-Otras pruebas que se han modificado son las del microservicio de incidencias. En las pruebas de servicios que emplean SQL se crea una base de datos de este tipo en memoria. La base de datos de incidencias ahora es Firebase y en Entity Framework no existe la funcionalidad de hacer BD en memoria para este proveedor. Para que las pruebas del servicio no dejen de cubrir código de la capa de persistencia, las pruebas escribirán en la base de datos de Firebase y eliminarán el contenido que han escrito en un método \textit{tear down} (figura \ref{fig:TearDown}). Esto no es necesario en las bases de datos en memoria porque son eliminadas al final de cada prueba.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.6]{TearDown}
-\caption{Método para eliminar registros escritos durante las pruebas del servicio de incidencias.}
-\label{fig:TearDown}
-\end{figure}
-
-Otra posible opción habría sido crear una base de datos de Firebase distinta la de producción y a la que apuntaran las pruebas. Con esta solución se habría tenido que implementar igualmente un método para eliminar el contenido escrito durante la prueba o de otra forma se crearía contenido duplicado en esta BD.
+Otras pruebas que se han modificado son las del microservicio de incidencias. En las pruebas de servicios que emplean SQL se crea una base de datos de este tipo en memoria. La base de datos de incidencias ahora es Firebase y en Entity Framework no existe la funcionalidad de hacer BD en memoria para este proveedor. Para que las pruebas del servicio no dejen de cubrir código de la capa de persistencia, las pruebas escribirán en la base de datos de Firebase y eliminarán el contenido que han escrito en un método \textit{tear down}. Esto no es necesario en las bases de datos en memoria porque son eliminadas al final de cada prueba.
 
 \section{Despliegue de la solución basada en microservicios} \label{sect:DespliegueMicroservicios}
 
@@ -1613,20 +1565,6 @@ En la figura \ref{fig:Compose} se puede ver un extracto de este archivo. En él 
 \includegraphics[scale=0.6]{Compose}
 \caption{Extracto del archivo docker-compose.yml de la solución basada en microservicios.}
 \label{fig:Compose}
-\end{figure}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SALTO DE PAGINA
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-
-
-En la siguiente figura se muestra el resultado de ejecutar el comando ``docker-compose up", tras el cual se inicia cada servicio en los puertos que se han especificado. Para la comunicación entre los diferentes servicios, un servicio que desea comunicar con otro almacena en su archivo de configuración la dirección URL donde se ubica este.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.8]{docker-compose-up}
-\caption{Resultado de ejecutar docker-compuse up en el entorno de desarrollo.}
 \end{figure}
 
 Docker Compose es una herramienta excepcional para agilizar el despliegue de la aplicación en un entorno de desarrollo. Sin embargo, en un entorno de producción se desean propiedades como la escalabilidad de los contenedores desplegados de acuerdo a su demanda o la recuperación automática de estos ante un fallo. Docker Compose no nos provee estas funcionalidades, que sí nos puede ofrecer un orquestador como Kubernetes. En el apéndice \ref{chap:Despliegue} \nameref{chap:Despliegue} recogemos paso por paso como se despliega la aplicación en un entorno de producción empleando Azure Kubernetes Services.
