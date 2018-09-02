@@ -887,23 +887,23 @@ El proceso de desarrollo se puede visualizar en los diferentes repositorios a tr
 
 \section{Diseño de la solución} \label{sct:DiseñoMonolitico}
 
-A nivel arquitectónico, la aplicación monolítica va a seguir una arquitectura de 6 capas, que detallamos a continuación:
+A nivel arquitectónico, la aplicación monolítica va a seguir una arquitectura de 6 capas, que es la que se emplea en la empresa donde el autor trabaja actualmente. Detallamos a continuación sus detalles:
 
 \begin{itemize}
 
-\item \textbf{Capa de contratos}: en esta capa se situarán las interfaces que contienen todas las acciones del back-end que pueden ser invocadas desde el exterior a través de la API. Estas interfaces se implementarán tanto en las capas de Aplicación, Servicios y Proxy. 
+\item \textbf{Capa de contratos}: en esta capa se situarán las interfaces que contienen todas las acciones del \textit{back-end} que pueden ser invocadas desde el exterior a través de la API. Estas interfaces se implementarán tanto en las capas de aplicación, servicios y proxy. 
 
-También se situarán en esta capa los objetos para la transferencia de datos (DTO). Los DTOs se emplean para desacoplar los servicios que ofrece una API de la representación interna que da el sistema a sus entidades. En lugar de devolver al cliente una entidad tal y como se almacena en base de datos, los DTOs representan una entidad ocultando aquellas propiedades que no necesitan ser transferidas o cambian su formato para que sea más cómodo para el cliente su procesamiento. \footnote{ Crear objetos de transferencia de datos (DTO): https://docs.microsoft.com/es-es/aspnet/web-api/overview/data/using-web-api-with-entity-framework/part-5}
+También se situarán en esta capa los objetos para la transferencia de datos (DTO). Los DTOs se emplean para desacoplar los servicios que ofrece una API de la representación interna que da el sistema a sus entidades. En lugar de devolver al cliente una entidad tal y como se almacena en base de datos, los DTOs representan una entidad ocultando aquellas propiedades que no necesitan ser transferidas. También pueden cambiar el formato de algunas propiedades para que sea más cómodo para el cliente su procesamiento. \footnote{ Crear objetos de transferencia de datos (DTO): https://docs.microsoft.com/es-es/aspnet/web-api/overview/data/using-web-api-with-entity-framework/part-5}
 
 \item \textbf{Capa de aplicación}: en esta capa es donde se implementa la lógica de la parte servidora. Aquí se da implementación a las interfaces que se sitúan en la capa de contratos. Es en esta capa donde se validan los permisos de un usuario que ha realizado una petición al servidor sobre la acción que desea realizar. En caso de que se trate de hacer una operación no válida será esta capa la encarga de lanzar la excepción oportuna. También aquí se situarán los conversores para transformar una entididad en un DTO, que se emplearán principalmente en las operaciones CRUD.
 
-\item \textbf{Capa de servicios}: contiene el punto de entrada del proceso que representa al back-end (el método Main). En esta capa se encuentran los controladores, donde se definen todas las acciones de la API. Cada acción se define a través de un verbo HTTP, la URL donde se localiza y sus parámetros obtenidos a partir del cuerpo o las cabeceras de una petición. La capa de servicios delega en la capa de aplicación para devolver un resultado a cada una de las peticiones que atiende. \footnote{ Control de solicitudes con controladores en ASP.NET Core MVC: https://docs.microsoft.com/es-ES/aspnet/core/mvc/controllers/actions?view=aspnetcore-2.1}
+\item \textbf{Capa de servicios}: contiene el punto de entrada del proceso que representa al \textit{back-end} (el método Main). En esta capa se encuentran los controladores, donde se definen todas las acciones de la API. Cada acción se define a través de un verbo HTTP, la URL donde se localiza y sus parámetros, que pueden ser obtenidos a partir del cuerpo o la cabecera de una petición. La capa de servicios delega en la capa de aplicación para devolver un resultado a cada una de las peticiones que atiende. \footnote{ Control de solicitudes con controladores en ASP.NET Core MVC: https://docs.microsoft.com/es-ES/aspnet/core/mvc/controllers/actions?view=aspnetcore-2.1}
 
 \item \textbf{Capa de dominio}: contiene las entidades del dominio del sistema junto con sus propiedades y los estados asociados a estas. Esta capa es referenciada tanto por la capa de aplicación como por la capa de persistencia.
 
-\item \textbf{Capa de persistencia}: la capa de persistencia ofrece operaciones CRUD para cada una de las entidades que se almacenan en BD a través objetos para el acceso a datos (DAO). La capa de persistencia no trabaja con DTOs: cuando la capa de aplicación le solicita una entidad la devuelve completa y es la capa de aplicación quien a través de los conversores la transforma en un DTO para devolver una representación de la entidad al usuario.
+\item \textbf{Capa de persistencia}: la capa de persistencia ofrece operaciones CRUD para cada una de las entidades que se almacenan en BD a través objetos para el acceso a datos (DAO). La capa de persistencia no trabaja con DTOs: cuando la capa de aplicación le solicita una entidad, la devuelve completa. Es la capa de aplicación quien a través de los conversores transforma la entidad en un DTO para devolver una representación de esta al usuario.
 
-\item \textbf{Capa de proxy}: esta capa contiene clientes necesarios para invocar al back-end a través de llamadas HTTP realizadas por código C\#. Esta capa será referenciada por el front-end a través de un paquete NuGet para comunicar con el back-end. El front-end es quien ejecutará el código contenido en esta capa: cuando se desee comunicar con la parte servidor, en el proceso del front-end se invocará al proxy para realizar una llamada HTTP al back-end. Como debe ofrecer todas las operaciones de la API, implementa las interfaces de la capa de contratos.
+\item \textbf{Capa de proxy}: esta capa contiene los clientes necesarios para invocar al \textit{back-end} a través de llamadas HTTP realizadas por código C\#. Esta capa será referenciada por el \textit{front-end} a través de un paquete NuGet para comunicar con el \textit{back-end}. El \textit{front-end} es quien ejecutará el código contenido en esta capa. Cuando se desee comunicar con la parte servidor, en el proceso del \textit{front-end} se invocará al proxy para realizar una llamada HTTP al \textit{back-end}. Como debe ofrecer todas las operaciones de la API, implementa las interfaces de la capa de contratos.
 
 \end{itemize}
 
@@ -911,21 +911,25 @@ También se situarán en esta capa los objetos para la transferencia de datos (D
 \centering
 \includegraphics[scale=0.5]{capas}
 \caption{Capas del back-end monolítico.}
+\label{fig:capas}
 \end{figure}
 
-A nivel de la solución en Visual Studio, cada capa consistirá en un proyecto distinto. Un proyecto consiste en un archivo XML con extensión *.csproj que tiene una plataforma y dependencias específicas y que se puede compilar de forma independiente. Cada proyecto es un contenedor que organiza sus clases y otros archivos de forma jerárquica. \footnote{ Soluciones y proyectos en Visual Studio: https://docs.microsoft.com/es-es/visualstudio/ide/solutions-and-projects-in-visual-studio} Adicionalmente, existe un proyecto que contiene las pruebas del sistema. Todos los proyectos son .NET Standard 2.0 salvo los de las capa de servicios y pruebas, cuya plataforma es .NET Core 2.1 porque no son librerías y pueden ser ejecutados.
+En la figura \ref{fig:capas} se representa la arquitectura de 6 capas. Mediante flechas se señala que una capa depende de otra. También se ha representado la base de datos, a la que solo se accede desde la capa de persistencia. De cada capa se ha especificado el estándar usado para nombrar de las clases más importantes en el código. Por ejemplo, de la capa de aplicación se señala \textit{\_Manager}; los \textit{managers} serán las clases donde se implemente la lógica para cada una de las entidades del dominio, dando lugar a clases como \textit{ProductsManager} o \textit{IncidencesManager}. Lo mismo ocurre con el patrón \textit{I\_DAO} en la persistencia, que define una interfaz para el acceso a datos de una entidad y que da lugar a clases como \textit{IOrdersDAO}.
+
+A nivel de la solución en Visual Studio, cada capa consistirá en un proyecto distinto, tal como se muestra en la figura \ref{fig:MonolithicSolution}. Un proyecto consiste en un archivo XML con extensión *.csproj que tiene una plataforma y dependencias específicas y que se puede compilar de forma independiente. Cada proyecto es un contenedor que organiza sus clases y otros archivos de forma jerárquica. \footnote{ Soluciones y proyectos en Visual Studio: https://docs.microsoft.com/es-es/visualstudio/ide/solutions-and-projects-in-visual-studio} Adicionalmente, existe un proyecto que contiene las pruebas del sistema. Todos los proyectos son .NET Standard 2.0 salvo los de las capa de servicios y pruebas, cuya plataforma es .NET Core 2.1 porque no son librerías y pueden ser ejecutados.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{MonolithicSolution}
 \caption{Solución del sistema monolítico.}
+\label{fig:MonolithicSolution}
 \end{figure}
 
-A nivel de diseño, se van a definir las siguientes entidades en la capa de dominio: pedido (Order), producto (Product), compra (Purchase), incidencia (Incidence) y comentario (Comment). Estas entidades se pueden obtener a partir del modelo de dominio. Sin embargo, algunos conceptos que aparecen en el modelo de dominio como los informes o las notificaciones no vamos a modelarlas como entidades. No son entidades como tal porque no necesitamos almacenarlas o ofrecer operaciones CRUD sobre ellas, así que vamos a modelarlas como acciones. Simplemente ofreceremos métodos para generar un informe (GenerateReport) y enviar notificaciones (SendNotification).
+A nivel de diseño, se van a definir las siguientes entidades en la capa de dominio: pedido (\textit{Order}), producto (\textit{Product}), compra (\textit{Purchase}), incidencia (\textit{Incidence}) y comentario (\textit{Comment}). Estas entidades se pueden obtener a partir del modelo de dominio. Sin embargo, algunos conceptos que aparecen en el modelo de dominio como los informes o las notificaciones no vamos a modelarlas como entidades. No son entidades como tal porque no necesitamos almacenarlas o ofrecer operaciones CRUD sobre ellas, así que vamos a modelarlas como acciones. Simplemente ofreceremos métodos para generar un informe (\textit{GenerateReport}) y enviar notificaciones (\textit{SendNotification}).
 
-La relación que existe entre un pedido y un producto es de muchos a muchos: un pedido está formado por múltiples productos y un producto puede estar incluido en diferentes pedidos. Además, la relación cuenta con una propiedad que es el número de unidades del producto en el pedido, que se puede modelar como una clase asociación. Si razonamos a nivel de base de datos, la clase asociación se implementará como una tabla intermedia entre las tablas de pedidos y productos. En nuestro código también lo modelaremos así para emplear la librería de Entity Framework para el mapeo objeto-relacional (ORM).
+Cabe destacar en el diseño la relación que existe entre un pedido y un producto. Esta relación es de muchos a muchos: un pedido está formado por múltiples productos y un producto puede estar incluido en diferentes pedidos. Además, la relación cuenta con una propiedad que es el número de unidades del producto en el pedido, que se puede modelar como un atributo en una clase asociación. Si razonamos a nivel de base de datos, la clase asociación se implementará como una tabla intermedia entre las tablas de pedidos y productos. En nuestro código, también lo modelaremos así, dando lugar a la entidad intermedia \textit{Purchase}. Esto lo hacemos para emplear la librería de Entity Framework en el mapeo objeto-relacional (ORM), que nos facilitará el acceso a la base de datos.
 
-Con todo esto, el diagrama de clases que se encuentran en la capa de dominio será el siguiente:
+Con todo esto, el diagrama de clases que se encuentran en la capa de dominio será el que se ilustra en la siguiente figura. En esta figura ya se ilustran las propiedades de las entidades de dominio.
 
 \begin{figure}[h]
 \centering
@@ -942,27 +946,31 @@ Con todo esto, el diagrama de clases que se encuentran en la capa de dominio ser
 
 \subsection{Operaciones CRUD} \label{subsect:CRUD}
 
-Para la mayoría de entidades que hemos modelado vamos a ofrecer operaciones CRUD. Esto se hará a través de las interfaces que expone la parte servidora en la capa de contratos. Con este propósito vamos a definir una interfaz que exponga estas de forma unitaria y agregada. En los servicios, las operaciones agregadas son un mecanismo para evitar que dos componentes tengan que comunicarse continuamente. Si se tienen que crear una colección de entidades, en lugar de crear una petición al servidor para cada entidad, se envía una única petición con toda la colección\cite{Newman2015a}.
+Para la mayoría de entidades que hemos modelado vamos a ofrecer operaciones CRUD. Esto se hará a través de las interfaces que expone la parte servidora en la capa de contratos (\textit{IOrdersManager} o \textit{ICommentsManager} son algunos ejemplos). Con este propósito, vamos a definir una interfaz genérica que exponga estas operaciones de forma unitaria y agregada. En los servicios, las operaciones agregadas son un mecanismo para evitar que dos componentes tengan que comunicarse continuamente. Si se tienen que crear una colección de entidades, en lugar de crear una petición al servidor para cada entidad, se envía una única petición con toda la colección \cite{Newman2015a}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{ICrudManager}
 \caption{Interfaz interna para las operaciones CRUD.}
+\label{fig:ICrudManager}
 \end{figure}
 
-La interfaz es interna porque no debe ser visible fuera de la solución del back-end. Además, es genérica: se define en base a DTOs con diferentes propósitos. Para la creación de una entidad son necesarias solo algunas propiedades y otras como la fecha de creación son calculadas por el sistema y no deben ser provistas en el \textbf{CreateDTO} de la petición. Lo mismo ocurre con la lectura y la actualización de una entidad. Por ejemplo, de una entidad algunas propiedades no está permitido actualizarlas, por lo que no deben incluirse estas en el \textbf{UpdateDTO} de la entidad. 
+En la figura \ref{fig:ICrudManager} se muestra la interfaz genérica que hemos mencionado. La interfaz \textit{ICrudManager} es interna porque no debe ser visible fuera de la solución del back-end. Es genérica porque se define en base a DTOs con diferentes propósitos. Para la creación de una entidad son necesarias solo algunas propiedades y otras como la fecha de creación son calculadas por el sistema y no deben ser provistas en el \textbf{\textit{CreateDTO}} de la petición. Lo mismo ocurre con la lectura y la actualización de una entidad. Por ejemplo, de una entidad algunas propiedades no está permitido actualizarlas, por lo que no deben incluirse estas en el \textbf{\textit{UpdateDTO}} de la entidad. 
 
-Sin embargo, no se van a definir únicamente operaciones CRUD para una entidad. Cada entidad tiene una serie de operaciones asociadas, como puede ser generar la factura de un pedido o obtener la lista de incidencias de un usuario. Tanto estas acciones como las CRUD se definen en la interfaz de contratos de la entidad. Si para una entidad se quieren exponer operaciones CRUD, se deben definir los DTOs específicos para las operaciones de lectura, escritura y actualización y se debe extender la interfaz genérica.
+Sin embargo, no se van a definir únicamente operaciones CRUD para una entidad. Cada entidad tiene una serie de operaciones asociadas, como puede ser generar la factura de un pedido o obtener la lista de incidencias de un usuario. Tanto estas acciones como las CRUD se definen en la interfaz de contratos de la entidad. Si para una entidad se quieren exponer operaciones CRUD, se deben definir los DTOs específicos para las operaciones de lectura, escritura y actualización y se debe extender la interfaz genérica. 
+
+En la interfaz de la figura \ref{fig:IOrdersManager} se observa la interfaz de contratos de la entidad pedido, que extiende la interfaz genérica \textit{ICrudManager} con los DTOs \textit{OrderDTO}, \textit{OrderCreateDTO} y \textit{OrderUpdateDTO}. Por ejemplo, \textit{OrderUpdateDTO} no cuenta con ningún atributo que represente la fecha en la que se creó el pedido porque esta propiedad de la entidad no puede ser modificada. También se puede observar el método definido para la generación de una factura, \textit{GenerateOrderReportAsync}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{IOrdersManager}
 \caption{Interfaz en la capa de contratos asociada a la entidad Pedido.}
+\label{fig:IOrdersManager}
 \end{figure}
 
-La implementación de las operaciones CRUD en la capa de aplicación también se realizará de forma genérica. Si la implementación de una de las operaciones no se ajusta a la que una entidad necesita, esta puede ser sobreescrita en el manager de la entidad.
+La implementación de las operaciones CRUD en la capa de aplicación también se realizará de forma genérica, a través de la clase llamada \textit{CrudManager}. Si la implementación de una de las operaciones no se ajusta a la que una entidad necesita, esta puede ser sobreescrita en el \textit{manager} de la entidad.
 
-Por último, algunas entidades en lugar de ofrecer operaciones CRUD solo ofrecen \textbf{operaciones CUD} (crear, actualizar y eliminar). Estas entidades son las de Comentario y Compra porque podemos considerarlas como secundarias. No tiene sentido exponer un método en la interfaz de back-end para leer un único comentario o obtener el número de unidades de un producto en un pedido. No obstante, si que tiene sentido exponer un método para, por ejemplo, crear o eliminar un comentario dentro de una incidencia. Las operaciones de lectura de estas entidades se realizan a través de la entidad principal asociada. Por ejemplo, cuando solicitamos una incidencia obtendremos todos los comentarios que en la incidencia se han hecho aunque sea una entidad independiente.
+Por último, algunas entidades en lugar de ofrecer operaciones CRUD solo ofrecen \textbf{operaciones CUD} (crear, actualizar y eliminar). Estas entidades son las de Comentario y Compra porque podemos considerarlas como secundarias. No tiene sentido exponer un método en la interfaz de \textit{back-end} para leer un único comentario o obtener el número de unidades de un producto en un pedido. No obstante, si que tiene sentido exponer un método para, por ejemplo, crear o eliminar un comentario dentro de una incidencia. Las operaciones de lectura de estas entidades se realizan a través de su entidad principal asociada. Por ejemplo, cuando solicitamos una incidencia obtendremos todos los comentarios que en la incidencia se han hecho aunque los comentarios sean objetos de una entidad independiente.
 
 \subsection{Seguridad}
 %TODO Ha faltado mencionar registro en la clase PersistenceDependencies.
@@ -971,52 +979,57 @@ Por último, algunas entidades en lugar de ofrecer operaciones CRUD solo ofrecen
 % https://docs.microsoft.com/es-es/aspnet/core/security/authorization/simple?view=aspnetcore-2.1
 % https://docs.microsoft.com/es-es/aspnet/core/security/authentication/identity?view=aspnetcore-2.1&tabs=visual-studio%2Caspnetcore2x
 
-La mayoría de métodos expuestos en la API del backend requieren de mecanismos de autorización para establecer si la persona que realiza una petición puede acceder o no a los datos que solicita. Con este propósito, vamos a hacer uso de \textbf{ASP.NET Core Identity} y de tokens de seguridad JWT (JSON Web Token). 
+La mayoría de métodos expuestos en la API del \textit{back-end} requieren de mecanismos de autorización para establecer si la persona que realiza una petición puede acceder o no a los datos que solicita. Con este propósito, vamos a hacer uso de \textbf{ASP.NET Core Identity} y de \textit{tokens} de seguridad JWT (JSON Web Token). 
 
 Identity es el sistema de ASP.NET Core para administrar los usuarios registrados de una aplicación a través de proveedores externos como Google y Facebook o a través de una base de datos de usuarios propia. \footnote{ Introducción a la identidad en ASP.NET Core: https://docs.microsoft.com/es-es/aspnet/core/security/authentication/identity} Atendiendo a los requisitos especificados, no necesitamos que nuestros usuarios se puedan autenticar a través de proveedores externos, por lo que vamos a optar por gestionar los usuarios de la aplicación nosotros mismos. Los pasos para conseguirlo se resumen a continuación:
 
 \begin{itemize}
 
-\item En la capa de dominio, se debe crear una entidad que represente al usuario de la aplicación y que herede de la clase IdentityUser. La clase IdentityUser provee numerosos atributos, como el nombre o el correo electrónico. Se puede añadir cualquier atributo más asociado al usuario de la aplicación dentro de la clase User.
+\item En la capa de dominio, se debe crear una entidad que represente al usuario de la aplicación y que herede de la clase \textit{IdentityUser}. La clase \textit{IdentityUser} provee numerosos atributos, como el nombre o el correo electrónico. Se puede añadir cualquier atributo más asociado al usuario de la aplicación dentro de la clase \textit{User} que muestra la figura \ref{fig:User}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{User}
 \caption{La clase User.}
+\label{fig:User}
 \end{figure}
 
-\item En la capa de persistencia, para asegurar la creación de las tablas asociadas a Identity, el contexto de la aplicación que representa a la base de datos debe extender la clase IdentityDbContext<User>. En la base de datos, las tablas de datos creadas automáticamente por Identity se identifican por el prefijo AspNet.
+\item En la capa de persistencia, para asegurar la creación de las tablas asociadas a Identity, el contexto de la aplicación que representa a la BD debe extender la clase \textit{IdentityDbContext<User>}. En la base de datos, las tablas de datos creadas automáticamente por Identity se identifican por el prefijo AspNet. En la figura \ref{fig:BDMonolitica} se muestra la BD de la solución monolítica, resaltando las tablas asociadas a Identity.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{BDMonolitica}
 \caption{Tablas creadas por ASP.NET Core Identity.}
+\label{fig:BDMonolitica}
 \end{figure}
 
-\item En la capa de servicios, a los métodos de la API que requieran de autorización se les ha de añadir el atributo Authorize. Con esto, cuando se realice una petición sin proveer un token de autorización se devolverá automáticamente un error 401: Unauthorized. En el atributo Authorize se puede especificar si el método puede ser ejecutado solo por los usuarios que tengan cierto rol. \footnote{ Autorización basada en roles en ASP.NET Core: https://docs.microsoft.com/es-es/aspnet/core/security/authorization/roles?view=aspnetcore-2.1} Por ejemplo, podemos establecer que las operaciones agregadas de tipo CRUD solo puedan ser invocadas por los usuarios con el rol Administrador.
+\item En la capa de servicios, a los métodos de la API que requieran de autorización se les ha de añadir el atributo \textit{Authorize}. Con esto, cuando se realice una petición sin proveer un \textit{token} de autorización se devolverá automáticamente un error 401: Unauthorized. En el atributo \textit{Authorize} se puede especificar si el método puede ser ejecutado solo por los usuarios que tengan cierto rol. \footnote{ Autorización basada en roles en ASP.NET Core: https://docs.microsoft.com/es-es/aspnet/core/security/authorization/roles?view=aspnetcore-2.1} Por ejemplo, podemos establecer que las operaciones agregadas de tipo CRUD solo puedan ser invocadas por los usuarios con el rol Administrador, como muestra la figura \ref{fig:Authorize}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.7]{Authorize}
 \caption{Ejemplo de métodos de la clase de servicios.}
+\label{fig:Authorize}
 \end{figure}
 
-\item Por último, en la capa de servicios se debe especificar que el mecanismo por el cual el usuario proveerá su identidad será a través de tokens JWT. Para ello, en la clase Startup se debe añadir a la colección de servicios el servicio de autenticación con este tipo de tokens, indicando que los únicos tokens válidos son los firmados con la clave provista en el archivo de configuración. \footnote{ Securing ASP.NET Core 2.0 Applications with JWTs: https://auth0.com/blog/securing-asp-dot-net-core-2-applications-with-jwts/}
+\item Por último, en la capa de servicios se debe especificar que el mecanismo por el cual el usuario proveerá su identidad será a través de \textit{tokens} JWT. Para ello, en la clase \textit{Startup} se debe añadir a la colección de servicios el servicio de autenticación con este tipo de \textit{tokens}, indicando que los únicos tokens válidos son los firmados con la clave provista en el archivo de configuración. \footnote{ Securing ASP.NET Core 2.0 Applications with JWTs: https://auth0.com/blog/securing-asp-dot-net-core-2-applications-with-jwts/} Esto puede verse en las tres líneas finales código presentado en la figura \ref{fig:jwt}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.7]{jwt}
 \caption{Pieza de código para añadir la autenticación usando tokens JWT.}
+\label{fig:jwt}
 \end{figure}
 
 \end{itemize}
 
-El usuario podrá obtener el token que le identifica a través del método Login del manager de Seguridad. Para hacerlo, deberá proveer su correo electrónico y contraseña. En la implementación de este método en la capa de aplicación se comprueba que el correo electrónico y contraseña coinciden con los almacenados en las tablas de Identity. Si coinciden, el método devuelve un token JWT donde se incluirán los datos del usuario y la fecha en la que el token expira. En cada petición HTTP que haga el usuario a la parte servidora deberá proveer este en la cabecera.
+El usuario podrá obtener el \textit{token} que le identifica a través del método \textit{Login} del \textit{manager} de Seguridad. Para hacerlo, deberá proveer su correo electrónico y contraseña. En la implementación de este método en la capa de aplicación se comprueba que el correo electrónico y contraseña coinciden con los almacenados en las tablas de Identity. Si coinciden, el método devuelve un \textit{token} JWT donde se incluirán los datos del usuario y la fecha en la que el \textit{token} expira. En cada petición HTTP que haga el usuario a la parte servidora deberá proveer este en la cabecera, como muestra el ejemplo de la figura \ref{fig:http}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{http}
 \caption{Ejemplo de petición HTTP donde se incluye un token de seguridad.}
+\label{fig:http}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1028,64 +1041,76 @@ El usuario podrá obtener el token que le identifica a través del método Login
 
 Para la persistencia se va a emplear \textbf{Entity Framework Core} para el mapeo objeto-relacional y una base de datos SQL en la nube de \textbf{Microsoft Azure}. Entity Framework Core es una versión multiplataforma del ORM Entity Framework (EF) para trabajar con una base de datos mediante objetos .NET. \footnote{Descripción general de Entity Framework Core: https://docs.microsoft.com/es-es/ef/core/}
 
-Vamos a emplear una aproximación Code-First para el diseño de la base de datos. Esta aproximación nos permite diseñar primero las entidades de nuestro dominio a través de las clases en la capa de dominio y luego trasladar sus atributos y relaciones a un esquema de base de datos gracias a EF. \footnote{What is Code-First?: http://www.entityframeworktutorial.net/code-first/what-is-code-first.aspx}
+Vamos a emplear una aproximación \textit{Code-First} para el diseño de la base de datos. Esta aproximación nos permite diseñar primero las entidades de nuestro dominio a través de las clases en la capa de dominio y luego trasladar sus atributos y relaciones a un esquema de base de datos gracias a EF. \footnote{What is Code-First?: http://www.entityframeworktutorial.net/code-first/what-is-code-first.aspx}
 
-Para la creación de la base de datos se debe ir al portal de Azure \footnote{ Portal de Azure: https://portal.azure.com/} y navegar hasta la página SQL Databases. Para la creación de la base de datos hay que proveer principalmente su nombre, la suscripción a la que se redirigirán los costes asociados, el grupo de recursos en el que se incluirá y el servidor donde se emplazará.
+Para la creación de la base de datos se debe ir al portal de Azure \footnote{ Portal de Azure: https://portal.azure.com/} y navegar hasta la página SQL Databases. Se debe proveer principalmente su nombre, la suscripción a la que se redirigirán los costes asociados, el grupo de recursos en el que se incluirá y el servidor donde se emplazará. En la figura \ref{fig:CreateDB} se muestra el formulario principal para proveer estos datos.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.4]{CreateDB}
 \caption{Creación de una base de datos SQL en Azure.}
+\label{fig:CreateDB}
 \end{figure}
 
-Una vez creada, debemos ir al recurso y en la pestaña de cadenas de conexión copiar la asociada a .NET. La cadena de conexión la pegaremos en el archivo de configuración de la capa de servicios. En la clase Startup del mismo proyecto leeremos la cadena de conexión para configurar la clase ShopContext.
+Una vez creada, debemos ir al recurso y en la pestaña de cadenas de conexión copiar la asociada a .NET. La cadena de conexión la pegaremos en el archivo de configuración (\textit{appsettings.json}) de la capa de servicios. En la clase \textit{Startup} del mismo proyecto leeremos la cadena de conexión para configurar la clase \textit{ShopContext}, como se observa en la figura \ref{fig:AddDbContext}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.7]{AddDbContext}
 \caption{Configuración del contexto de la capa de persistencia para apuntar a la BD en Azure.}
+\label{fig:AddDbContext}
 \end{figure}
 
-En la clase ShopContext debemos indicar cuáles son las entidades del dominio que se añadirán como tablas a la BD. Para cada entidad del dominio se creará un DbSet distinto.
+En la clase \textit{ShopContext} debemos indicar cuáles son las entidades del dominio que se añadirán como tablas a la BD. Para cada entidad del dominio se creará un \textit{DbSet} distinto. Se puede ver un fragmento de esta clase en la figura \ref{fig:ShopContext}, que es interna al proyecto para evitar que desde otras capas se realicen operaciones no permitidas.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{ShopContext}
 \caption{Clase ShopContext.}
+\label{fig:ShopContext}
 \end{figure}
 
-Por último, para que desde otras capas accedan a los datos emplearemos el \textbf{patrón DAO}. Exponer el contexto entero fuera de la capa de persistencia puede ser peligroso porque permitiría modificar desde otras capas aspectos que solo deben conocerse en esta capa. Por ello, se definirá para cada entidad del dominio una interfaz para acceder a sus datos donde las operaciones permitidas están acotadas. De nuevo, tanto estas interfaces como su implementación se pueden definir de forma genérica y si se desea se puede extender o sobreescribir su comportamiento.
+Por último, para que desde otras capas accedan a los datos emplearemos el \textbf{patrón DAO}. Exponer el contexto entero fuera de la capa de persistencia puede ser peligroso porque permitiría modificar desde otras capas aspectos que solo deben conocerse en esta capa. Por ello, se definirá para cada entidad del dominio una interfaz para acceder a sus datos donde las operaciones permitidas están acotadas.
+
+La clase \textit{ICrudDAO} de la figura \ref{fig:ICrudDAO} es una interfaz de la capa de servicios que representa las operaciones permitidas en un DAO genérico. Estas operaciones se implementan en una clase base llamada \textit{CrudDaoBase}. Las diferentes entidades deben extender esta base (por ejemplo, \textit{PurchasesDAO}) para exponer las operaciones CRUD. Si es necesario, pueden sobreescribir la implementación por defecto que se da en la clase base.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{ICrudDAO}
 \caption{Interfaz genérica para los DAOs que exponen operaciones CRUD.}
+\label{fig:ICrudDAO}
 \end{figure}
 
 \subsection{Informes empleando la librería Open XML PowerTools}
 
-La generación de informes es una de las funcionalidades más empleadas en los software de gestión. En los requisitos de nuestro sistema solo se ha establecido un informe: la factura de un pedido. Esto no implica que debamos dejar de seguir el principio de responsabilidad única. La lógica para generar un informe debe ser genérica para que no dependa del tipo de informe que se va a generar y así pueda ser invocada desde diferentes sitios. Vamos a hacer uso de una librería para la generación de informes con estas librerías: \textbf{Open XML PowerTools}.
+La generación de informes es una de las funcionalidades más empleadas en los software de gestión. En los requisitos de nuestro sistema solo se ha establecido un informe: la factura de un pedido. Esto no implica que debamos dejar de seguir el principio de responsabilidad única. La lógica para generar un informe debe ser genérica para que no dependa del tipo de informe que se va a generar y así pueda ser invocada desde diferentes sitios. Vamos a hacer uso de la librería \textbf{Open XML PowerTools} para la generación de informes.
 
-Open XML PowerTools provee funcionalidades para la combinación de documentos, la conversión de estos a diferentes formatos y la creación de informes a partir de plantillas. \footnote{ Página de GitHub de Open XML PowerTools: https://github.com/OfficeDev/Open-Xml-PowerTools}. Para generar un informe se separan explícitamente los datos que lo originan y la plantilla del documento. En las plantillas se define cómo se van a renderizar los datos mediante un lenguaje basado en anotaciones. Este lenguaje nos permite renderizar contenido en base a condiciones, iterar sobre las colecciones en los datos, crear tablas, etc.
+Open XML PowerTools provee funcionalidades para la combinación de documentos, la conversión de estos a diferentes formatos y la creación de informes a partir de plantillas. \footnote{ Página de GitHub de Open XML PowerTools: https://github.com/OfficeDev/Open-Xml-PowerTools}. Para generar un informe se separan explícitamente los datos que lo originan y la plantilla del documento. En las plantillas se define cómo se van a renderizar los datos mediante un lenguaje basado en anotaciones. Este lenguaje nos permite escribir contenido en base a condiciones, iterar sobre las colecciones en los datos, crear tablas, etc.
+
+La figura \ref{fig:Factura} muestra la plantilla para generar una factura. La anotación que más se emplea es \textit{Content Select}, que obtiene, a partir de un camino, una cadena de texto (\textit{string}) localizada en los datos provistos. Por ejemplo, el camino \textit{``./Client"} atraviesa los datos ordenados de forma jerárquica hasta alcanzar el nodo etiquetado como Client, donde se almacena el nombre del cliente.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{Factura}
 \caption{Plantilla para la creación de facturas.}
+\label{fig:Factura}
 \end{figure}
 
-Las plantillas se almacenarán en la base de datos y cuando se quiera generar un informe se recuperará esta para ensamblar el informe. Los métodos para generar un informe concreto estarán expuestos en los managers de la entidad asociada al informe. Por ejemplo, el método para generar la factura de un pedido se situará en el OrdersManager. En este método se recuperarán los datos para generar la factura y se enviarán estos al manager de informes para que los combine con la plantilla de la factura.
+Las plantillas se almacenarán en la base de datos y cuando se quiera generar un informe se recuperará esta para ensamblar el informe. Los métodos para generar un informe concreto estarán expuestos en los \textit{managers} de la entidad asociada al informe. Por ejemplo, el método para generar la factura de un pedido se situará en el \textit{OrdersManager}. En su implementación, se recuperarán los datos para generar la factura y se enviarán estos al \textit{manager} de informes para que los combine con la plantilla de la factura.
 
 \subsection{Notificaciones con la librería MailKit}
 
-Con las notificaciones ocurre lo mismo que con los informes: solo existe un caso de uso que envíe una notificación al cliente, pero para segregar responsabilidades vamos a crear un manager específico para este propósito. Para enviar notificaciones se va emplear la librería \textbf{MailKit}, una librería multiplataforma con utilidades sobre los protocolos IMAP, POP3 y SMTP.
+Con las notificaciones ocurre lo mismo que con los informes: solo existe un caso de uso que envíe una notificación al cliente, pero para segregar responsabilidades vamos a crear un \textit{manager} específico para este propósito. Para enviar notificaciones se va emplear la librería \textbf{MailKit}, una librería multiplataforma con utilidades sobre los protocolos IMAP, POP3 y SMTP.
 
-Para desacoplar los mensajes a enviar y el código para enviarlo se hará uso de un DTO que contenga el usuario destinatario, el asunto del correo y el cuerpo del mismo. Tanto el cuerpo como el asunto de la notificación se definirán en archivos de recursos en la capa de aplicación.
+Para desacoplar los mensajes a enviar y el código para enviarlo se hará uso de un DTO que contenga el usuario destinatario, el asunto del correo y el cuerpo del mismo. Tanto el cuerpo como el asunto de la notificación se definirán en archivos de recursos en la capa de aplicación. 
+
+En la figura \ref{fig:NotificationsMessage} se muestran dos recursos de este archivo que representan el mensaje que se envía al cliente cuando un empleado programa la entrega de un pedido. En el mensaje enviado se reemplazarán los números marcados entre corchetes por los datos del cliente y el pedido.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=1]{NotificationsMessage}
 \caption{Archivo de recursos para las notificaciones.}
+\label{fig:NotificationsMessage}
 \end{figure}
 
 \subsection{Inyección de dependencias}
