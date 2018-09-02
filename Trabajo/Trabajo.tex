@@ -178,9 +178,9 @@ Según Newman, \cite{Newman2015a} los microservicios son servicios pequeños y a
 
 \item Un \textbf{servicio} es un conjunto de funcionalidades que se expone a los clientes para que las empleen con diferentes propósitos \cite{Wikipedia}. La programación orientada a servicios es un paradigma que se aplica en las arquitecturas orientadas a servicios (SOA) \cite{Arsanjani2009a}. El objetivo principal de SOA es desarrollar servicios que aporten valor al negocio y se adapten a los cambios en las necesidades de los clientes, de forma ágil y con el menor coste posible. Las arquitecturas orientadas a servicios no están asociadas a ninguna tecnología específica. En líneas generales, dividen un sistema en componentes que cambian por el mismo motivo y promueven la flexibilidad y los servicios compartidos frente a implementaciones específicas y óptimas. Son muchos los beneficios de estas arquitecturas, sin embargo existe una falta de consenso sobre cómo debe llevarse a cabo este tipo de arquitecturas en aspectos como los protocolos de comunicación a emplear o la granularidad de los servicios. Los microservicios pueden entenderse como una aproximación específica de las arquitecturas SOA. \footnote{ NOTA: A partir de este punto, se emplearán los términos servicio y microservicio como sinónimos para hacer más ligera la lectura.}
 
-\item Diseñar microservicios con el menor \textbf{tamaño} posible no debe ser el foco principal. En todo momento han de cumplirse los principios de cohesión y coherencia: el código relacionado debe agruparse conjuntamente porque será modificado por el mismo motivo.
+\item Diseñar microservicios con el menor \textbf{tamaño} posible no debe ser el foco principal. En todo momento han de cumplirse los principios de cohesión y coherencia: el código relacionado debe agruparse conjuntamente porque será modificado por el mismo motivo. \cite{Newman2015a}
 
-\item  Los servicios han de ser lo menos acoplados posibles para garantizar la \textbf{autonomía} de cada uno. Cada microservicio es una entidad separada: cambian de forma independiente al resto y al hacerlo sus consumidores no necesiten ser modificados, a menos que se modifique el contrato entre ambas partes. Para lograrlo, lo más habitual es que cada servicio exponga una interfaz (API) y todas las comunicaciones se realicen mediante llamadas a través de la red.
+\item  Los servicios han de ser lo menos acoplados posibles para garantizar la \textbf{autonomía} de cada uno. Cada microservicio es una entidad separada: cambian de forma independiente al resto y al hacerlo sus consumidores no necesiten ser modificados, a menos que se modifique el contrato entre ambas partes. Para lograrlo, lo más habitual es que cada servicio exponga una interfaz (API) y todas las comunicaciones se realicen mediante llamadas a través de la red. \cite{Newman2015a, Hunter2017}
 
 \end{itemize}
 
@@ -195,7 +195,7 @@ Otra definición interesante es la que aportan Lewis y Fowler \cite{Lewis2014}. 
 
 \section{Los microservicios en la especificación de requisitos}
 
-La especificación de requisitos del software es una actividad en la que se elicitan, analizan, documentan, validan y mantienen los requisitos del sistema. Los requisitos del software expresan las necesidades y restricciones asociadas a un sistema \cite{Fernandes2016}. El artefacto principal que se produce en esta actividad es el documento con la especificación de requisitos software (ERS). Una vez validado dicho documento por los \textit{stakeholders} se puede iniciar el diseño de la solución. Esto no significa el final de esta actividad: la gestión de los requisitos continúa durante el resto del desarrollo del producto.
+La especificación de requisitos del software es una actividad en la que se elicitan, analizan, documentan, validan y mantienen los requisitos del sistema. Los requisitos del software expresan las necesidades y restricciones asociadas a un sistema \cite{Fernandes2016}. El artefacto principal que se produce en esta actividad es el documento con la especificación de requisitos software (ERS). Una vez validado dicho documento por los \textit{stakeholders} se puede iniciar el diseño de la solución. Esto no significa el final de esta actividad: la gestión de los requisitos continúa durante el resto del desarrollo del producto. \cite{Bourque2014}
 
 \subsection{Requisitos funcionales y no funcionales} \label{subsect:RNF}
 
@@ -244,7 +244,7 @@ Uno de los motivos por los que se recomienda emplear servicios frente a librerí
 
 \subsection{Diseño guiado por el dominio (DDD)}
 
-El \textbf{diseño guiado por el dominio} (DDD) \cite{Vaughn2013} es un enfoque para el desarrollo de software que propone un modelado rico, expresivo y evolutivo basado en la realidad del negocio. El dominio representa lo que hace una organización y la forma en qué lo hace.
+El \textbf{diseño guiado por el dominio} (DDD) \cite{Vaughn2013} es un enfoque para el desarrollo de software que propone un modelado rico, expresivo y evolutivo basado en la realidad del negocio. El dominio representa lo que hace una organización y la forma en que lo hace.
 
 Con esta aproximación los expertos del dominio y los desarrolladores se sitúan en el mismo nivel empleando un \textbf{lenguaje ubicuo}. No hace falta ninguna traducción de términos entre ellos porque todos hablan un lenguaje común, que se plasma hasta en el código de programación. El lenguaje no tiene porque seguir los estándares de la industria que representa: emplea los términos y acciones que en el negocio se dan.
 
@@ -273,7 +273,7 @@ Cuando se razona sobre los límites de un servicio no se debe pensar en los dato
 
 Una descomposición temprana de un sistema en microservicios puede conllevar ciertos riesgos. Si el equipo a cargo del desarrollo tiene pocos conocimientos del dominio del problema a resolver, puede  ser buena idea comenzar la implementación como si de un sistema monolítico se tratara. Un mal diseño inicial puede desenvocar en que dos servicios se tengan que combinar porque exista un exceso de interacciones entre ellos. 
 
-Es aconsejable dividir la solución en grandes servicios que poco a poco se vayan dividiendo en más pequeños conforme se estudien las ventajas de hacer cada nueva extracción. Una vez sean conocidos los límites de cada servicio, se pueden refactorizar el código y los datos hacia una granularidad más fina. Como se puede ver en la figura \ref{fig:refactoring}, se puede migrar primero solo la funcionalidad del servicio sin preocuparse por sus límites en base de datos para no tener que realizar simultáneamente dos migraciones. Una vez nos aseguremos de que el servicio funciona correctamente, podemos migrar sus datos a una base de datos diferentes ya que cada servicio ha de ser dueño de sus propios datos \cite{Richards2016}.
+Es aconsejable dividir la solución en grandes servicios que poco a poco se vayan dividiendo en más pequeños conforme se estudien las ventajas de hacer cada nueva extracción. Una vez sean conocidos los límites de cada servicio, se pueden refactorizar los datos y el código hacia una granularidad más fina. Como se puede ver en la figura \ref{fig:refactoring}, se puede migrar primero solo la funcionalidad del servicio sin preocuparse por sus límites en base de datos para no tener que realizar simultáneamente dos migraciones. Una vez nos aseguremos de que el servicio funciona correctamente, podemos migrar sus datos a una base de datos diferentes ya que cada servicio ha de ser dueño de sus propios datos \cite{Richards2016}.
 
 \begin{figure}[h]
 \centering
@@ -288,7 +288,7 @@ Cuando sea necesario realizar un cambio por nuevos requisitos del negocio, estos
 
 El software ha de ser diseñado para ser flexible, adaptarse y evolucionar en función de los requisitos de los usuarios. En lugar de centrarse en diseñar un producto final perfecto, el arquitecto debe crear un entorno donde el sistema correcto pueda emerger creciendo progresivamente a medida que se descubren nuevos requisitos. Gracias a su modularidad, los microservicios son el entorno perfecto para que esto ocurra.
 
-El arquitecto de software debe preocuparse más por como interaccionan los servicios entre ellos y no tanto en lo que ocurre dentro de sus límites. En organizaciones grandes, cada microservicio puede estar desarrollado por un equipo distinto y es el arquitecto quien debe hacer de puente entre ellos \cite{Newman2015a}.
+El arquitecto de software debe preocuparse más por cómo interaccionan los servicios entre ellos y no tanto en lo que ocurre dentro de sus límites. En organizaciones grandes, cada microservicio puede estar desarrollado por un equipo distinto y es el arquitecto quien debe hacer de puente entre ellos \cite{Newman2015a}.
 
 Una de las ventajas de las arquitecturas basadas en microservicios es la \textbf{heterogeneidad tecnol\'ogica}: cada servicio puede ser desarrollado empleando una pila tecnológica distinta. No obstante, dejar plena libertad a cada equipo para elegir la tecnología del servicio que va a desarrollar puede traer problemas a la hora de integrarlo con el resto del sistema. El uso de contratos o establecer normas en aspectos clave como el protocolo de comunicación entre los servicios facilitará su consumo. Las decisiones de diseño de un servicio en particular pueden recaer en el equipo responsable. En este caso, el arquitecto solo juega un papel de supervisor y asesor para evitar que se pierda la imagen del sistema completo.
 
@@ -484,11 +484,11 @@ En la mayoría de empresas abundan los sistemas legados que nadie desea mantener
 
 En muchas organizaciones, el desarrollo de sistemas se hace a través de proyectos: piezas de software que una vez desarrolladas se consideran completadas. En una aproximación basada en microservicios, cada equipo es responsable del ciclo de vida completo de un producto o servicio. Esto sigue la filosofía de Amazon: \textbf{\textit{``you build it, you run it"}} \cite{Lewis2014}.
 
-No hay necesidad de distinguir entre quien construye un sistema y quien lo ejecuta y posteriormente mantiene. Esta filosofía aproxima a desarralloradores y clientes: los desarrolladores están en contacto directo con los clientes día tras día, lo que les proporciona retroalimentación para mejorar la calidad de sus servicios. Tampoco hay necesidad de contar en la organización con un equipo centrado en la infraestructura (IT). Contar con un equipo así distribuye la responsabilidad de hacer un servicio funcionar entre diferentes equipos y añade un sobreesfuerzo de coordinación y comunicación cuando un problema aparece \cite{Vliet2011}.
+No hay necesidad de distinguir entre quien construye un sistema y quien lo ejecuta y posteriormente mantiene. Esta filosofía aproxima a desarralloradores y clientes: los desarrolladores están en contacto directo con los clientes día tras día, lo que les proporciona retroalimentación para mejorar la calidad de sus servicios. Tampoco hay necesidad de contar en la organización con un equipo centrado en la infraestructura (IT). Contar con un equipo así distribuye la responsabilidad de hacer un servicio funcionar entre diferentes equipos y añade un sobresfuerzo de coordinación y comunicación cuando un problema aparece \cite{Vliet2011}.
 
-\subsection{Documentación}
+\subsection{Documentación y deuda técnica}
 
-Una de las ventajas de los microservicios es que acelara el proceso de desarrollo. Sin embargo, cuanto más rápido tratamos de implementar un servicio más probable es que tomemos atajos para poder desplegar antes una iteración del producto, lo que se traduce en un aumento de la \textbf{deuda técnica} \cite{FowlerSusan}.
+Una de las ventajas de los microservicios es que acelara el proceso de desarrollo. Sin embargo, cuanto más rápido tratamos de implementar un servicio más probable es que tomemos atajos para poder desplegar antes una iteración del producto, lo que se traduce en un aumento de la \textbf{deuda técnica} \cite{FowlerSusan}. La deuda técnica \cite{Garzas} se puede definir como el sobresfuerzo que debe llevarse a cabo por  haber tomado una mala decisión en el desarrollo del software.
 
 En un equipo de desarrollo el conocimiento de cómo funciona un sistema se reparte entre los miembros que lo forman. Nadie es capaz de conocer completamente su funcionamiento y lo más probable es que cada desarrollador conozca mejor la parte donde más tiempo ha invertido. A la hora de realizar un cambio, el entendimiento de cómo funciona el sistema tiene que ser compartido por todos sus miembros para asegurar que el cambio a implementar es el correcto.
 
@@ -618,7 +618,7 @@ En cuanto al trabajo de Roig, recoge en el estado del arte las principales carac
 
 En el caso de estudio, en el desarrollo de la solución basada en microservicios se van a emplear contenedores Docker. Para su orquestación, en producción se hará uso de Kubernetes. En desarrollo, se empleará Docker Compose para agilizar la creación de los diferentes contenedores. 
 
-En cuanto a la comunicación entre los servicios y con la interfaz de usuario, en la sección \ref{subsect:Integracion} \nameref{subsect:Integracion} hemos presentado tres posibles alternativas. Hemos optado por la que la literatura considera más sencilla, la integración REST a través de HTTP.
+En cuanto a la comunicación entre los servicios y con la interfaz de usuario, en la sección \ref{subsect:Integracion} \nameref{subsect:Integracion} hemos presentado tres posibles alternativas. Se ha optado por la que la literatura considera más sencilla, la integración REST a través de HTTP.
 
 En cuanto a aspectos más técnicos, el lenguaje de programación que se va a emplear principalmente es C\# junto con el entorno de desarrollo (IDE) Visual Studio Enterprise 2017. Entre las plataformas de destino que ofrece la tecnología .NET vamos a utilizar tanto .NET Standard 2.0 como .NET Core en su versión 2.1, publicada en Mayo de 2018. \footnote{ Versiones de .NET Core 2.1: https://www.microsoft.com/net/download/dotnet-core/2.1} El uso de librerías distintas a las provistas por la plataforma se realizará a través de paquetes NuGet, un mecanismo sencillo que envuelve el código compilado de una librería y fácil de referenciar. \footnote{ Una introducción a NuGet: https://docs.microsoft.com/es-es/nuget/what-is-nuget}
 
@@ -643,7 +643,7 @@ Se desea desarrollar un sistema para la venta de productos electrónicos a trav�
 
 Los clientes podrán consultar los \textbf{productos} disponibles en la tienda junto con su precio, descripción y número de unidades en stock. Un \textbf{pedido} se define como un conjunto de productos que el cliente ha seleccionado junto con el número de unidades de cada uno. Mientras no se haya confirmado el pedido, se podrán añadir y eliminar productos al pedido en elaboración.
 
-Todos los pedidos realizados por un cliente se mostrarán en un listado junto con el estado de los mismos. Para cada pedido, el cliente podrá generar una \textbf{factura} donde se listen los productos que lo componen y el precio total.
+Todos los pedidos realizados por un cliente se mostrarán en un listado junto con el estado de los mismos. Para cada pedido, el cliente podrá generar una \textbf{factura} donde se listan los productos que lo componen y el precio total.
 
 Una vez un cliente haya confirmado un pedido, este deberá ser aprobado por un empleado para ser entregado. Cuando esto suceda, se enviará una \textbf{notificación} al correo electrónico del cliente. Mientras que el empleado no lo apruebe, el pedido podrá ser cancelado. Además, cuando el pedido sea entregado físicamente al cliente, este deberá marcar el pedido como entregado.
 
@@ -864,7 +864,7 @@ En los repositorios de GitHub vamos a emplear un proyecto. Un proyecto de GitHub
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.35]{GitHubProject}
+\includegraphics[scale=0.6]{GitHubProject}
 \caption{Proyecto de GitHub asociado al desarrollo del \textit{front-end}.}
 \label{fig:GitHubProject}
 \end{figure}
@@ -1382,7 +1382,7 @@ En el apartado \ref{subsec:Poliglota} \nameref{subsec:Poliglota} se ha reflexion
 \label{fig:Componentes}
 \end{figure}
 
-En la mayoría de microservicios vamos a seguir la arquitectura de 6 capas que se describe en la sección \ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}. Esto hará que su refactorización sea más sencilla ya que sólo debemos copiar las clases relacionadas al microservicio en cada una de las capas. 
+En la mayoría de microservicios vamos a seguir la arquitectura de 6 capas que se describe en la sección \ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}. Esto hará que su refactorización sea más sencilla ya que solo debemos copiar las clases relacionadas al microservicio en cada una de las capas. 
 
 Cada microservicio tendrá su propia base de datos, aunque estas pueden localizarse dentro del mismo servidor. Para evaluar otra tecnología de base de datos, la BD del servicio de incidencias la vamos a implementar con \textbf{Firebase}.
 
@@ -1638,7 +1638,7 @@ Otra posible opción habría sido crear una base de datos de Firebase distinta l
 
 \section{Despliegue de la solución basada en microservicios} \label{sect:DespliegueMicroservicios}
 
-Una de las características de los microservicios que más se ha repetido en la memoria es que se pueden desplegar de forma independiente. Esto es así porque cada uno de los microservicios se va a desplegar como un contenedor independiente, a diferencia de la solución monolítica donde sólo había un Dockerfile y un contenedor. Por eso, en total existirán simultáneamente un total de 5 contenedores. Para agilizar el proceso de construcción de las imágenes e inicio de los contenedores haremos uso de Docker Compose. 
+Una de las características de los microservicios que más se ha repetido en la memoria es que se pueden desplegar de forma independiente. Esto es así porque cada uno de los microservicios se va a desplegar como un contenedor independiente, a diferencia de la solución monolítica donde solo había un Dockerfile y un contenedor. Por eso, en total existirán simultáneamente un total de 5 contenedores. Para agilizar el proceso de construcción de las imágenes e inicio de los contenedores haremos uso de Docker Compose. 
 
 Docker Compose es una herramienta para definir y ejecutar aplicaciones formadas por más de un contenedor Docker. Los servicios que forman la aplicación tienen su propio Dockerfile y se definen dentro de un archivo YAML para que con un único comando se inicie la aplicación al completo. \footnote{ Overview of Docker Compose: https://docs.docker.com/compose/overview/} 
 
