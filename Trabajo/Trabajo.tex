@@ -474,7 +474,7 @@ Los productos software cambian y evolucionan. Una vez están desplegados en el e
 
 El mantenimiento de software es la fase del desarrollo que más recursos consume, alrededor del 60\% o 70\% del coste de un proyecto. La mayoría del software que hoy se emplea tiene entre 10 y 15 años, tiempo en el cual ha sufrido muchas modificaciones hasta alcanzar un diseño pobre y difícil de mantener. Se puede definir el software mantenible como aquel que se diseña de forma modular, siguiendo patrones de diseño y estándares de calidad y que se documenta de tal forma que es explicativo por si mismo \cite{Pressman}.
 
-Gracias a su diseño modular, los microservicios son una arquitectura que se puede seguir para hacer más sencillo el mantenimiento de un sistema. Sin embargo, las consecuencias de elegir un estilo arquitectónico no son evidente hasta años más tarde de haber sido tomadas, por lo que hasta que no se vean sistemas maduros que empleen microservicios no se debe afirmar a ciencia cierta que garantizan estas características. \cite{Lewis2014}
+Gracias a su diseño modular, los microservicios son una arquitectura que se puede seguir para hacer más sencillo el mantenimiento de un sistema. Sin embargo, las consecuencias de elegir un estilo arquitectónico no son evidente hasta años más tarde de haber sido desarrollado, por lo que hasta que no se vean sistemas maduros que empleen microservicios no se debe afirmar a ciencia cierta que garantizan estas características. \cite{Lewis2014}
 
 \subsection{Refactorización}
 
@@ -500,9 +500,9 @@ La documentación es una de las mejores maneras de solventar la deuda técnica y
 
 Durante el mantenimiento se debe asegurar la disponibilidad de los microservicios. Las herramientas de monitorización son clave para garantizar los \textbf{acuerdos de nivel de un servicio} (SLA) y el estudio de errores cuando estos ocurren.
 
-Con este propósito, se debe registrar toda aquella información relevante que ocurra. Los microservicios colaboran entre ellos para ofrecer funcionalidades concretas y recrear un sistema donde ha ocurrido un error puede ser complejo debido a que cada uno se versiona de forma independiente. Por ello, lo mejor es contar con toda la información necesaria registrada para determinar la causa del problema.
+Con este fin, se debe registrar toda aquella información relevante que ocurra. Los microservicios colaboran entre ellos para ofrecer funcionalidades concretas y recrear un sistema donde ha ocurrido un error puede ser complejo debido a que cada uno se versiona de forma independiente. Por ello, lo mejor es contar con toda la información necesaria registrada para determinar la causa del problema.
 
-La información más útil se debe mostrar de forma gráfica a través de dashboards que reflejen el estado de salud de los servicios. Así, la informacón más consultada se puede visualizar de forma rápida y fácil de entender para ahorrar tiempo. No obstante, cuando un problema ocurre se debe hacer uso de alertas para atenderlo de forma prioritaria. Estas alertas han de ser accionadas automáticamente por métricas que superen un límite establecido, como puede ser el uso de recursos, o por la ocurrencia de excepeciones en el servicio \cite{FowlerSusan}. 
+La información más útil se debe mostrar de forma gráfica a través de \textit{dashboards} que reflejen el estado de salud de los servicios. Así, la informacón más consultada se puede visualizar de forma rápida y fácil de entender para ahorrar tiempo. No obstante, cuando un problema ocurre se debe hacer uso de alertas para atenderlo de forma prioritaria. Estas alertas han de ser accionadas automáticamente por métricas que superen un límite establecido, como puede ser el uso de recursos, o por la ocurrencia de excepeciones en el servicio \cite{FowlerSusan}. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %              					Estado del arte
@@ -517,26 +517,28 @@ La información más útil se debe mostrar de forma gráfica a través de dashbo
 
 Los contenedores Linux (LXC) permite crear un espacio de procesos separado en el que puede ejecutarse de forma aislada un servicio. Cada contenedor es un subárbol del principal y puede tener asociado recursos físicos gestionados por el kernel \cite{Newman2015a}.
 
-Estos contenedores se fundamentan en los espacios de nombre de Linux y lod grupos de control (cgroups). Los espacios de nombre aísla el conjunto del sistema de archivos que un grupo de procesos puede ver. Los grupos de control organizan los procesos en un árbol de forma jerárquica, donde se pueden definir límites y políticas para el uso de los recursos \cite{Amaral2016}.
+Estos contenedores se fundamentan en los espacios de nombre de Linux y los grupos de control (\textit{cgroups}). Los espacios de nombre disminuyen el conjunto del sistema de archivos que un grupo de procesos puede ver. Los grupos de control organizan los procesos en un árbol de forma jerárquica, donde se pueden definir límites y políticas para el uso de los recursos \cite{Amaral2016}.
 
-La principal ventaja de los LXC es que son una implementación muy ligera que se ejecuta a velocidades muy similares a las de la máquina donde se ejecuta. Sin embargo, está limitado al uso de Linux como base del entorno, estando muy acoplado a su kernel, y presenta problemas en cuanto a la seguridad y aislamiento de los contenedores \cite{Dua2014}. Una solución pasa por usar contenedores Linux contenidos en máquinas virtuales para establecer los límites de seguridad a través de la MV y los límites de los recursos empleados por la aplicación a través de los contenedores \cite{DeAlfonso2017}.
+La principal ventaja de los LXC es que son una implementación muy ligera que se ejecuta a velocidades muy similares a las de la máquina donde se despliegan. Sin embargo, limitan al uso de Linux como base del entorno porque están muy acoplado a su kernel. También presentan problemas en cuanto a la seguridad y aislamiento de los contenedores \cite{Dua2014}. 
+
+Una solución a estos problemas pasa por usar contenedores Linux desplegados en máquinas virtuales. De esta forma, los límites de seguridad se establecen a nivel de la MV mientras que los límites de los recursos empleados por la aplicación se establecen en base a sus contenedores \cite{DeAlfonso2017}.
 
 \subsection{Docker}
 
-Docker es una herramienta basada en contenedores Linux para la creación de artefactos que se pueden desplegar en cualquier entorno y se pueden distribuir y escalar bajo demanda \cite{Matthias}. Su funcionamiento es sencillo: en un fichero llamado \textbf{Dockerfile} se especifican las dependencias del servicio en distintos pasos y un comando que inicia el servicio. De la compilación del Dockerfile se origina una \textbf{imagen}, un paquete con todas las dependencias e información necesaria para crear un contenedor. Las imágenes permiten empaquetar un servicio para desplegarlo de forma confiable y reproducible tantas veces como se desee \cite{DelaTorre2018}.
+Docker es una herramienta basada en contenedores Linux para la creación de artefactos que se pueden desplegar en cualquier entorno y se pueden distribuir y escalar bajo demanda \cite{Matthias}. Su funcionamiento es sencillo: en un fichero llamado \textbf{Dockerfile} se especifican las dependencias del servicio en distintos pasos y un comando que inicia el servicio. De la compilación del Dockerfile se origina una \textbf{imagen}: un paquete con todas las dependencias e información necesaria para crear un contenedor. Las imágenes permiten empaquetar un servicio para desplegarlo de forma confiable y reproducible tantas veces como se desee \cite{DelaTorre2018}.
 
-La filosofía de Docker se centra en los contenedores desechables. Nada en el entorno donde se ejecuta la aplicación permanecerá ahí más allá de lo que viva la aplicación, por lo que no se delegará en entornos donde se encuentra casualmente una dependencia no especificada en la imagen. Docker promueve las arquitecturas sin estado (stateless) o que externalizan este a otras infraestructuras como bases de datos. Las aplicaciones así se hacen más portables, escalables y confiables \cite{Matthias}.
+La filosofía de Docker se centra en los contenedores desechables. Nada en el entorno donde se ejecuta la aplicación permanecerá ahí más allá de lo que viva la aplicación. Esto implica que no se delegará en entornos donde se encuentra casualmente una dependencia no especificada en la imagen. Docker promueve las arquitecturas sin estado (\textit{stateless}) o que externalizan este a otras infraestructuras como bases de datos. Las aplicaciones así se hacen más portables, escalables y confiables \cite{Matthias}.
 
-El proceso de desarrollo también se simplifica: en aproximaciones como la de microservicios, un equipo encargado de un servicio solo necesita la imagen de otro para integrarlo con el suyo y no necesita conocer detalles internos de este. Además, las tareas de construcción de la imagen, provisión de la configuración y despliegue pueden ser realizadas por diferentes personas, como se muestra en la figura. 
+El proceso de desarrollo también se simplifica: en aproximaciones como la de microservicios, un equipo encargado de un servicio solo necesita la imagen de otro para integrarlo con el suyo y no necesita conocer detalles internos de este. Además, las tareas de construcción de la imagen, provisión de la configuración y despliegue pueden ser realizadas por diferentes personas, como se muestra en la figura. Este flujo de trabajo se representa en la figura \ref{fig:docker_process_ES}, donde dos equipos se dividen las tareas para publicar un contenedor en producción. 
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.7]{docker_process_ES}
 \caption{Proceso de despliegue con Docker \cite{Matthias}.}
+\label{fig:docker_process_ES}
 \end{figure}
 
-
-Si se integra dentro del proceso de despliegue, cada cambio que pasa por una pipeline puede construir una nueva imagen Docker sobre la que se ejecutan pruebas de forma automatizada para después ser publicada a producción. De esta forma el equipo puede asegurarse de que el artefacto sobre el que se han ejecutado las pruebas es el mismo que se publica más tarde. 
+Si se integra dentro del proceso de despliegue, cada cambio que pasa por una \textit{pipeline} puede construir una nueva imagen Docker. Sobre ella se ejecutarán pruebas de forma automatizada para después ser publicada a producción. De esta forma, el equipo puede asegurarse de que el artefacto sobre el que se han ejecutado las pruebas es el mismo que se publica más tarde. 
 
 \section{Orquestadores}
 %TODO https://medium.com/@PamRucinque/qu%C3%A9-es-eso-de-serverless-f4f6c8949b87
@@ -545,21 +547,22 @@ Si se integra dentro del proceso de despliegue, cada cambio que pasa por una pip
 \subsection{Kubernetes} \label{subsect:Kubernetes}
 %TODO Definir cluster.
 %TODO Rancher. 
-Kubernetes es una herramienta diseñada por Google para el despliegue y orquestación de aplicaciones en contenedores Docker de forma resilente. Cada una de las máquinas que aloja uno o más contenedores Docker se denomina \textbf{nodo}. La unidad más pequeña con la que trabaja Kubernetes no son los contenedores, sino los pods. Un \textbf{pod} es una colección de contendores y volúmenes agrupados juntos en un nodo. Los \textbf{volúmenes} son sistemas de archivos virtuales que se pueden emplear para comunicar entre ellos a los contenedores de un nodo. Kubernetes orquesta a nivel de los pods, por lo que dos contenedores en el mismo pod serán administrados igual \cite{Rensin2015}.
+Kubernetes es una herramienta diseñada por Google para el despliegue y orquestación de aplicaciones en contenedores Docker de forma resiliente. Cada una de las máquinas que aloja uno o más contenedores Docker se denomina \textbf{nodo}. La unidad más pequeña con la que trabaja Kubernetes no son los contenedores, sino los pods. Un \textbf{pod} es una colección de contendores y volúmenes agrupados juntos en un nodo. Los \textbf{volúmenes} son sistemas de archivos virtuales que se pueden emplear para comunicar entre ellos a los contenedores de un nodo. Kubernetes orquesta a nivel de los pods, por lo que dos contenedores en el mismo pod serán administrados igual \cite{Rensin2015}. La relación de continencia entre estos componentes se plasma en la figura \ref{fig:kubernetes_ES}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.9]{kubernetes_ES}
 \caption{Un nodo de Kubernetes \cite{Rensin2015}.}
+\label{fig:kubernetes_ES}
 \end{figure}
 
 Kubernetes se emplea principalmente para especificar el número de replicas que se desea tener simultánemanete de un pod. La herramienta es buena para asegurar la disponiblidad de un servicio, pero no garantizan la escalabilidad de esta, que consistiría en modificar el número de replicas de un pod de forma dinámica en función de su demanda. Para este propósito se deben introducir balanceadores de carga como puntos de entrada al sistema. Estos balanceadores redirigirían cada petición al pod correspondiente y se encargarán de ajustar el número de replicas de un pod según una serie de reglas.
 
 \subsection{Docker Swarm}
 
-Docker Swarm es la aproximación nativa propuesta por Docker para la creación de clústeres, donde un conjunto de contenedores Docker aparentan formar uno único de forma virtual. En Docker Swarm, los nodos ejecutan un agente llamado \textbf{Swarm} y uno de ellos ejecuta un gestor para su coordinación.
+Docker Swarm es la aproximación nativa propuesta por Docker para la creación de clústeres. Un clúster consiste en un conjunto de contenedores Docker que aparentan formar uno único de forma virtual.
 
-Cuando un contenedor es creado, este se despliega en cualquiera de los nodos gestionados por el Swarm. El conjunto de contenedores son gestionados por el Swarm como una única entidad.
+En cuanto a la arquitectura de Docker Swarm, los nodos ejecutan un agente para atender a los cambios en su configuración y uno de ellos ejecuta un gestor llamado \textit{Swarm} para la coordinación de los nodos. Cuando un contenedor es creado, este se despliega en cualquiera de los nodos gestionados por el Swarm. El conjunto de contenedores son gestionados por el \textit{Swarm} como una única entidad.
 
 Docker Swarm se puede ejecutar para ofrecer servicios con alta disponibilidad a través de herramientas como etcd, Consul o ZooKeeper para la gestión y recuperación de los fallos. Además, está complementamenta integrado dentro de la interfaz de línea de comandos de Docker \cite{DeAlfonso2017}.
 
@@ -568,7 +571,7 @@ Docker Swarm se puede ejecutar para ofrecer servicios con alta disponibilidad a 
 \subsection{Amazon Web Services (AWS)}
 Amazon es el líder en el mercado de computación en la nube con su producto Amazon Web Services (AWS), lanzado en 2006. Fue el primer proveedor en ofrecer infraestructura como servicio (IaaS), permitiendo el alquiler de máquinas virtuales.
 
-Amazon Elastic Compute Cloud (EC2) permite a sus usuarios la creación de las máquinas necesarias para la ejecución de una aplicación. Este servicio es capaz de escalar las aplicaciones de acuerdo a las necesidades de sus usuarios. La creación, ejecución y destrucción de máquinas virtuales o instancias puede ser controlada a demanda del usuario de AWS. El pago de esta plataforma se realiza por horas, a diferencia de Azure, donde se paga por minutos y el pago es más exacto con el uso realizado \cite{Qaisi2016}.
+\textit{Amazon Elastic Compute Cloud} (EC2) permite a sus usuarios la creación de las máquinas necesarias para la ejecución de una aplicación. Este servicio es capaz de escalar las aplicaciones de acuerdo a las necesidades de sus usuarios. La creación, ejecución y destrucción de máquinas virtuales o instancias puede ser controlada a demanda del usuario de AWS. El pago de esta plataforma se realiza por horas, a diferencia de Azure, donde se paga por minutos y el pago es más exacto de acuerdo al uso realizado \cite{Qaisi2016}.
 
 \subsection{Microsoft Azure}
 
@@ -612,14 +615,14 @@ En el caso de estudio, en el desarrollo de la solución basada en microservicios
 
 En cuanto a la comunicación entre los servicios y con la interfaz de usuario, en la sección \ref{subsect:Integracion} \nameref{subsect:Integracion} hemos presentado tres posibles alternativas. Hemos optado por la que la literatura considera más sencilla, la integración REST a través de HTTP.
 
-En cuanto a aspectos más técnicos, el lenguaje de programación que se va a emplear principalmente es C\# junto con el entorno de desarrollo (IDE) Visual Studio Enterprise 2017. Entre las plataformas de destino que ofrece la tecnología .NET vamos a utilizar tanto .NET Standard 2.0 como .NET Core en su versión 2.1, publicada en Mayo de 2018. \footnote{ Versiones de .NET Core 2.1: https://www.microsoft.com/net/download/dotnet-core/2.1} El uso de librerías distintas a las provistas por la plataforma se realizará a través de paquetes NuGet, un mecanismo sencillo que envuelve el código compilado de una librería y referencia a las dependencias de esta. \footnote{ Una introducción a NuGet: https://docs.microsoft.com/es-es/nuget/what-is-nuget}
+En cuanto a aspectos más técnicos, el lenguaje de programación que se va a emplear principalmente es C\# junto con el entorno de desarrollo (IDE) Visual Studio Enterprise 2017. Entre las plataformas de destino que ofrece la tecnología .NET vamos a utilizar tanto .NET Standard 2.0 como .NET Core en su versión 2.1, publicada en Mayo de 2018. \footnote{ Versiones de .NET Core 2.1: https://www.microsoft.com/net/download/dotnet-core/2.1} El uso de librerías distintas a las provistas por la plataforma se realizará a través de paquetes NuGet, un mecanismo sencillo que envuelve el código compilado de una librería y fácil de referenciar. \footnote{ Una introducción a NuGet: https://docs.microsoft.com/es-es/nuget/what-is-nuget}
 
-Para el desarrollo de la interfaz de usuario se va a utilizar Xamarin.Forms. Xamarin es una plataforma que permite desarrollar aplicaciones móviles para dispositivos Universal Windows Platform (UWP), Android y iOS empleando código C\#. Xamarin.Forms es un conjunto de herramientas para Xamarin centrado en el desarrollo multiplataforma. Su propósito que se pueda compartir la mayor cantidad de código posible en el desarrollo de una aplicación para las distintas plataformas que hemos mencionado. \footnote{ Introducción a Xamarin.Forms
+Para el desarrollo de la interfaz de usuario se va a utilizar Xamarin.Forms. Xamarin es una plataforma que permite desarrollar aplicaciones móviles  empleando código C\# para dispositivos Universal Windows Platform (UWP), Android y iOS. Xamarin.Forms es un conjunto de herramientas para Xamarin centrado en el desarrollo multiplataforma. Su propósito es que se pueda compartir la mayor cantidad de código posible en el desarrollo de una aplicación para las distintas plataformas que hemos mencionado. \footnote{ Introducción a Xamarin.Forms
 : https://docs.microsoft.com/es-es/xamarin/xamarin-forms/get-started/introduction-to-xamarin-forms}
 
 A nivel de infraestructura se ha empleado Microsoft Azure para la persistencia de datos en la nube y para la exposición de servicios a través de Azure App Service y Azure Kubernetes Service (AKS). Hemos decidido emplear esta tecnología porque es la mejor soportada por el IDE en el que vamos a trabajar, ofreciendo funcionalidades para desplegar una nueva versión simplemente pulsando un botón. Tanto App Service como AKS son parte de los servicios de Azure. El primero se emplea para crear aplicaciones en la nube de forma rápida sin necesidad de administrar la infraestructura sobre la que se hospeda. En cuanto al segundo, permite la orquestación de contenedores Docker a través de Kubernetes dentro de la infraestructura de Azure. \footnote{ Página oficial de Microsoft Azure: https://azure.microsoft.com/es-es/}
 
-Para terminar, para las pruebas a nivel de API se ha empleado Postman. Postman es un entorno para el desarrollo de APIs (ADE) que nos va a permitir crear y almacenar de forma sencilla llamadas HTTP hacia la API del back-end. \footnote{ Página oficial de Postman: https://www.getpostman.com/}
+Para terminar, para las pruebas a nivel de API se ha empleado Postman. Postman es un entorno para el desarrollo de APIs (ADE) que nos va a permitir crear y almacenar de forma sencilla llamadas HTTP hacia la API del \textit{back-end}. \footnote{ Página oficial de Postman: https://www.getpostman.com/}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       Especificación de requisitos                                 %
@@ -627,7 +630,7 @@ Para terminar, para las pruebas a nivel de API se ha empleado Postman. Postman e
 
 \chapter{Especificación de requisitos del caso de estudio}
 
-A continuación, presentaremos la descripción y especificación del caso de estudio. Los siguientes capítulos se enfocarán en la arquitectura de las soluciones y las tecnologías empleadas. Para centrarnos en esto, en lugar de pensar en un dominio de negocio hipotético que quizás no conozca, hemos seleccionado un dominio de negocio bien conocido. En concreto, una aplicación simplificada de comercio electrónico (e-shop) para la toma de pedidos y la gestión de incidencias.
+A continuación, presentaremos la descripción y especificación del caso de estudio. Los siguientes capítulos se enfocarán en la arquitectura de las soluciones y las tecnologías empleadas. Para centrarnos en esto, en lugar de pensar en un dominio de negocio hipotético que quizás no conozca, hemos seleccionado un dominio de negocio bien conocido. En concreto, una aplicación simplificada de comercio electrónico (\textit{e-shop}) para la toma de pedidos y la gestión de incidencias.
 
 \section{Descripción del caso de estudio}
 
@@ -640,6 +643,14 @@ Todos los pedidos realizados por un cliente se mostrarán en un listado junto co
 Una vez un cliente haya confirmado un pedido, este deberá ser aprobado por un empleado para ser entregado. Cuando esto suceda, se enviará una \textbf{notificación} al correo electrónico del cliente. Mientras que el empleado no lo apruebe, el pedido podrá ser cancelado. Además, cuando el pedido sea entregado físicamente al cliente, este deberá marcar el pedido como entregado.
 
 Un cliente puede crear una \textbf{incidencia} si tiene algún problema con un pedido o quiere consultar una duda con los empleados de la tienda. Dentro de una incidencia, tanto el cliente como los empleados se comunicarán a través de \textbf{comentarios}. Cuando lo considere oportuno, el cliente podrá cerrar la incidencia creada, que podrá volver a consultar en cualquier momento.
+
+A partir de la descripción del sistema podemos definir el siguiente modelo de dominio:
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.5]{modelo_dominio_final}
+\caption{Modelo de dominio del sistema.}
+\end{figure}
 
 \section{Casos de uso y modelo de dominio} \label{sect:CUs}
 
@@ -814,14 +825,6 @@ Se pueden consultar todas las incidencias creadas por el cliente en un listado d
 \end{tabular}
 \end{center}
 
-A partir de la descripción del sistema y de los casos de uso podemos definir el siguiente modelo de dominio:
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.5]{modelo_dominio_final}
-\caption{Modelo de dominio del sistema.}
-\end{figure}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       Proceso de desarrollo
 %
@@ -831,32 +834,34 @@ A partir de la descripción del sistema y de los casos de uso podemos definir el
 
 \section{Plan de trabajo} \label{sct:PlanTrabajo}
 
-El sistema a implementar se puede dividir en dos partes: front-end y back-end. En lo referente al back-end, este se va a implementar siguiendo dos arquitecturas distintas: una monolítica y otra basada en microservicios. Existirá una gran cantidad de código compartido entre ambas soluciones y las mayores diferencias entre ellas serán las relacionadas con la organización del código. Por este motivo, primero se va a implementar la solución monolítica y una vez implementada se creará una nueva solución donde se refactorizará el código para obtener la solución basada en microservicios, siguiendo los principios que en la sección \ref{sct:FaseDiseño} \nameref{sct:FaseDiseño} se han mencionado.
+El sistema a implementar se puede dividir en dos partes: \textit{front-end} y \textit{back-end}. En lo referente al \textit{back-end}, este se va a implementar siguiendo dos arquitecturas distintas: una monolítica y otra basada en microservicios. Existirá una gran cantidad de código compartido entre ambas soluciones y las mayores diferencias entre ellas serán las relacionadas con la organización del código. Por este motivo, primero se va a implementar la solución monolítica y una vez implementada se creará una nueva solución donde se refactorizará el código para obtener la solución basada en microservicios, siguiendo los principios que en la sección \ref{sct:FaseDiseño} \nameref{sct:FaseDiseño} se han mencionado.
 
-Una vez se implemente la solución monolítica, se comenzará la implementación de la aplicación front-end. Las llamadas a la parte servidora van a realizarse a través de invocaciones HTTP. En consecuencia, el front-end va a estar desacoplado de la implementación que elijamos para el back-end y va a poder emplearse la misma solución, con muy pequeñas modificaciones, para comunicarse con ambas partes servidoras.
+Una vez se implemente la solución monolítica, se comenzará la implementación de la aplicación front-end. Las llamadas a la parte servidora van a realizarse a través de invocaciones HTTP. En consecuencia, el \textit{front-end} va a estar desacoplado de la implementación que elijamos para el \textit{back-end} y va a poder emplearse la misma solución, con muy pequeñas modificaciones, para comunicarse con ambas partes servidoras.
 
 La organización de la memoria en los siguientes capítulos es acorde a este proceso. Primero, presentaremos la solución monolítica centrándonos sobretodo en aspectos de implementación, que son comunes a los de la solución basada en servicios. Después, explicaremos la solución basada en microservicios, centrándonos sobretodo en aspectos de diseño y modificaciones que se han realizado frente a la monolítica.
 
 \section{Organización del trabajo}
 
-El proceso de desarrollo se ha desglosado en grandes tareas, muy ligadas a las entidades del dominio que existen en el caso de estudio. En el siguiente cronograma se pueden observar estas tareas y su evolución a lo largo del tiempo que ha durado el desarrollo de las soluciones. En azul se han representado las tareas asociadas a la solución monolítica, en verde las asociadas al front-end y en naranja las asociadas a la solución basada en microservicios.
+El proceso de desarrollo se ha desglosado en grandes tareas, muy ligadas a las entidades del dominio que existen en el caso de estudio. En el siguiente cronograma de la figura \ref{fig:Cronograma} se pueden observar estas tareas y su evolución a lo largo del tiempo que ha durado el desarrollo de las soluciones. En azul se han representado las tareas asociadas a la solución monolítica, en verde las asociadas al front-end y en naranja las asociadas a la solución basada en microservicios.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{Cronograma}
 \caption{Cronograma del proceso de desarrollo del caso de estudio.}
+\label{fig:Cronograma}
 \end{figure}
 
-Se puede observar como de las 3 fases del desarrollo donde más esfuerzo se ha dedicado es en la solución monolítica. Esto es porque es aquí donde se ha implementado casi la totalidad del código del sistema y donde se han evaluado muchas de las tecnologías empleadas. La fase de desarrollo de la solución basada en microservicios se prolonga menos porque únicamente ha involucrado refactorizar el diseño monolítico y a penas se ha modificado la implementación del sistema. En un sistema real, esta tarea sería mucho más costosa que en nuestro caso de estudio.
+Se puede observar como de las tres fases del desarrollo donde más esfuerzo se ha dedicado es en la solución monolítica. Esto es porque es aquí donde se ha implementado casi la totalidad del código del sistema y donde se han evaluado muchas de las tecnologías empleadas. La fase de desarrollo de la solución basada en microservicios se prolonga menos porque únicamente ha involucrado refactorizar el diseño monolítico y a penas se ha modificado la implementación del sistema. En un sistema real, esta tarea sería mucho más costosa que en nuestro caso de estudio.
 
-Todo el código desarrollado se va a almacenar en un repositorio de código de GitHub. Se han creado tres repositorios: uno para el back-end monolítico, otro para la interfaz de usuario y otro para el back-end basado en servicios. Adicionalmente, se ha creado un repositorio para el desarrollo de la memoria de este TFG.
+Todo el código desarrollado se va a almacenar en un repositorio de código de GitHub. Se han creado tres repositorios: uno para el \textit{back-end} monolítico, otro para la interfaz de usuario y otro para el \textit{back-end} basado en servicios. Adicionalmente, se ha creado un repositorio para el desarrollo de la memoria de este TFG.
 
-En los repositorios de GitHub vamos a emplear un proyecto. Un proyecto de GitHub es similar a un Trello. Aquí podemos crear columnas, que representan un estado del trabajo, y tarjetas, que representan tareas a realizar y que van transitando de una columna a otra conforme se van completando. En nuestro caso, las tareas que vamos a incluir en el proyecto son de un detalle más bajo a las que hemos incluido en el cronograma, más cercanas a las tareas que debe llevar a cabo el programador. El proyecto lo hemos dividido en 4 columnas: TODO, que contiene las tareas pendientes, TODO - Priority, que contiene también tareas pendientes pero que urge resolver, DONE, para las tareas ya realizadas, y DISCARD, para las tareas que se han descartado y ya no se van a implementar.
+En los repositorios de GitHub vamos a emplear un proyecto. Un proyecto de GitHub es similar a un Trello. Aquí podemos crear columnas, que representan un estado del trabajo, y tarjetas, que representan tareas a realizar y que van transitando de una columna a otra conforme se van completando. En nuestro caso, las tareas que vamos a incluir en el proyecto son de un detalle más bajo a las que hemos incluido en el cronograma, más cercanas a las tareas que debe llevar a cabo el programador. El proyecto lo hemos dividido en 4 columnas: TODO, que contiene las tareas pendientes, TODO - Priority, que contiene también tareas pendientes pero que urge resolver, DONE, para las tareas ya realizadas, y DISCARD, para las tareas que se han descartado y ya no se van a implementar. La figura \ref{fig:GitHubProject} ilustra estas columnas para el proyecto de la aplicación móvil en un estado casi final de su desarrollo.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.35]{GitHubProject}
-\caption{Proyecto de GitHub asociado al desarrollo del front-end.}
+\caption{Proyecto de GitHub asociado al desarrollo del \textit{front-end}.}
+\label{fig:GitHubProject}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -865,12 +870,12 @@ En los repositorios de GitHub vamos a emplear un proyecto. Un proyecto de GitHub
 \newpage
 
 
-El proceso de desarrollo se puede visualizar en los diferentes repositorios a través de los commits que en ellos se hacen. En el siguiente gráfico se muestra el número de commits realizados cada día sobre los tres repositorios mencionados. Como en el cronograma, se puede ver como las fases de front-end e implementación de la solución monolítica se superponen en la mitad del proceso de desarrollo. También se puede ver como la fase de la solución monolítica es la que más commits ha requerido porque ha sido la más inestable respecto a defectos corregidos y detalles de implementación.
+El proceso de desarrollo se puede visualizar en los diferentes repositorios a través de los \textit{commits} que en ellos se hacen. En el siguiente gráfico se muestra el número de \textit{commits} realizados cada día sobre los tres repositorios mencionados. Como en el cronograma, se puede ver como las fases de \textit{front-end} e implementación de la solución monolítica se superponen en la mitad del proceso de desarrollo. También se puede ver como la fase de la solución monolítica es la que más \textit{commits} ha requerido porque ha sido la más inestable respecto a defectos corregidos y detalles de implementación.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{commits}
-\caption{Número de commits realizados cada día en los repositorios del caso de estudio.}
+\caption{Número de \textit{commits} realizados cada día en los repositorios del caso de estudio.}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
