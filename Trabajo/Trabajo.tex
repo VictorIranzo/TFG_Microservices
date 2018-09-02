@@ -1190,26 +1190,6 @@ La documentación de la API se genera en la dirección formada por la unión de 
 \label{fig:SwaggerAPI}
 \end{figure}
 
-\subsection{Logging}
-%TODO Decidir si eliminarlo.
-En el entorno de desarrollo puede ser útil emplear \textit{logs} que capturen todo lo que sucede en el proceso del servidor. Para hacerlo, simplemente se deben añadir las líneas de código de la figura \ref{fig:loggingDev} en la clase \textit{Startup} de la capa de servicios.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.7]{loggingDev}
-\caption{Añadir servicios para el logging.}
-\label{fig:loggingDev}
-\end{figure}
-
-Información como el entorno donde se ejecuta el servidor, las peticiones HTTP que se realicen al servidor o las consultas a base de datos quedarán registrados en la consola del proceso. Un ejemplo de la información que se imprime se puede ver en la figura \ref{fig:logging}.
-
-\begin{figure}[h]
-\centering
-\includegraphics[scale=0.5]{logging}
-\caption{Ejemplo del contenido de un log.}
-\label{fig:logging}
-\end{figure}
-
 \subsection{Generación de la capa de proxy}
 %TODO Incluir algo más de NSwag.
 
