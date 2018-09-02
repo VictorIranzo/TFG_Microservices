@@ -289,11 +289,11 @@ Cuando se razona sobre los límites de un servicio no se debe pensar en los dato
 
 Una descomposición temprana de un sistema en microservicios puede conllevar ciertos riesgos. Si el equipo a cargo del desarrollo tiene pocos conocimientos del dominio del problema a resolver, puede  ser buena idea comenzar la implementación como si de un sistema monolítico se tratara. Un mal diseño inicial puede desenvocar en que dos servicios se tengan que combinar porque exista un exceso de interacciones entre ellos. 
 
-Es aconsejable dividir la solución en grandes servicios que poco a poco se vayan dividiendo en más pequeños conforme se estudien las ventajas de hacer cada nueva extracción. Una vez sean conocidos los límites de cada servicio, se pueden refactorizar los datos y el código hacia una granularidad más fina. Como se puede ver en la figura \ref{fig:refactoring}, se puede migrar primero solo la funcionalidad del servicio sin preocuparse por sus límites en base de datos para no tener que realizar simultáneamente dos migraciones. Una vez nos aseguremos de que el servicio funciona correctamente, podemos migrar sus datos a una base de datos diferentes ya que cada servicio ha de ser dueño de sus propios datos \cite{Richards2016}.
+Es aconsejable dividir la solución en grandes servicios que poco a poco se vayan dividiendo en más pequeños conforme se estudien las ventajas de hacer cada nueva extracción. Una vez sean conocidos los límites de cada servicio, se pueden refactorizar los datos y el código hacia una granularidad más fina. Como se puede ver en la figura \ref{fig:refactoring}, se puede migrar primero solo la funcionalidad del servicio sin preocuparse por sus límites en base de datos para no tener que realizar simultáneamente dos migraciones. Una vez nos aseguremos de que el microservicio funciona correctamente, podemos migrar sus datos a una base de datos diferentes ya que cada microservicio ha de ser dueño de sus propios datos \cite{Richards2016}.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.4]{refactoring}
+\includegraphics[scale=0.45]{refactoring}
 \caption{Descomposición de un servicio en dos \cite{Richards2016}.}
 \label{fig:refactoring}
 \end{figure}
