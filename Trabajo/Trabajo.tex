@@ -1869,7 +1869,7 @@ Una de las ventajas de la tecnología de contenedores es que una vez se genera u
 
 En nuestro ejemplo, emplearemos nuestro propio registro privado para gestionar las imágenes de los microservicios a través de Azure Container Registry (ACR). \cite{DelaTorre2018}
 
-Para crear el registro iremos al portal de Azure y desde un nuevo terminal ejecutaremos el comando que se muestra en la figura \ref{fig:CreateACR}. Consideramos como punto de partida la existencia de un grupo de recursos llamado MicroservicesBackend.
+Para crear el registro iremos al portal de Azure y desde un nuevo terminal ejecutaremos el comando que se muestra en la figura \ref{fig:CreateACR}. Consideramos como punto de partida la existencia de un grupo de recursos llamado \textit{MicroservicesBackend}.
 
 \begin{figure}[h]
 \centering
@@ -1878,7 +1878,7 @@ Para crear el registro iremos al portal de Azure y desde un nuevo terminal ejecu
 \label{fig:CreateACR}
 \end{figure}
 
-Ahora, en la máquina de desarrollo donde tenemos el repositorio de código de la solución basada en microservicios, abriremos una nueva terminal. Haciendo uso del archivo docker-compose.yml que hemos mostrado en la sección \ref{sect:DespliegueMicroservicios} \nameref{sect:DespliegueMicroservicios} vamos a construir las imágenes de todos los contenedores a través del comando ``docker-compose build".
+Ahora, en la máquina de desarrollo donde tenemos el repositorio de código de la solución basada en microservicios, abriremos una nueva terminal. Haciendo uso del archivo \textit{docker-compose.yml} que hemos mostrado en la sección \ref{sect:DespliegueMicroservicios} \nameref{sect:DespliegueMicroservicios} vamos a construir las imágenes de todos los contenedores a través del comando ``docker-compose build".
 
 En esta máquina será necesario tener instalada la línea de comandos de Azure para la realización de los siguientes pasos. \footnote{ Instalación de la CLI de Azure 2.0: https://docs.microsoft.com/es-es/cli/azure/install-azure-cli?view=azure-cli-latest} Se debe iniciar sesión tanto con las credenciales del usuario de Azure a través del comando ``az login" como en en el registro de imágenes creado, tal y como muestra la figura \ref{fig:LoginAcr}.
 
@@ -1889,7 +1889,7 @@ En esta máquina será necesario tener instalada la línea de comandos de Azure 
 \label{fig:LoginAcr}
 \end{figure}
 
-Para que las imágenes sean almacenadas en el registro que hemos creado, debemos etiquetar las imágenes que ha creado el comando ``docker-compose build" con la propiedad ``loginServer" del registro que se muestra en la figura \ref{fig:CreateACR}. Esto se puede realiza a través del comando ``docker tag" como se muestra en la figura \ref{fig:PushImage} o directamente poniendo el tag en de cada imagen creada en el archivo docker-compose.yml. \footnote{ Añadir una etiqueta en Docker Compose: https://docs.docker.com/compose/compose-file/\#build} Finalmente, cada una de las imágenes etiquetadas deberá ser subido al repositorio a través del comando ``docker push".
+Para que las imágenes sean almacenadas en el registro que hemos creado, debemos etiquetar las imágenes que ha creado el comando ``docker-compose build" con la propiedad \textit{loginServer} del registro que se muestra en la figura \ref{fig:CreateACR}. Esto se puede realiza a través del comando ``docker tag" como se muestra en la figura \ref{fig:PushImage} o directamente poniendo el tag en de cada imagen creada en el archivo docker-compose.yml. \footnote{ Añadir una etiqueta en Docker Compose: https://docs.docker.com/compose/compose-file/\#build} Finalmente, cada una de las imágenes etiquetadas deberá ser subido al repositorio a través del comando ``docker push".
 
 \begin{figure}[h]
 \centering
@@ -1918,7 +1918,7 @@ Con este propósito, desde la línea de comandos del portal de Azure crearemos u
 \label{fig:ActiveDirectory}
 \end{figure}
 
-A continuación, para la creación del clúster emplearemos el comando de la figura \ref{fig:CreateCluster}. En él especificaremos el grupo de recursos donde residirá el clúster y el número de nodos en el clúster (este valor se puede modificar más tarde empleando el comando ``az aks scale"). Como servidor principal para la autenticación de las aplicaciones se usará la entidad de servicio creada, a través de la propiedad \textit{appId}. También se deberá indicar la contraseña de este servicio, que se ha marcado con color gris en la imagen \ref{fig:ActiveDirectory}. La ejecución de este comando puede llegar a prolongarse más de cinco  minutos.
+A continuación, para la creación del clúster emplearemos el comando de la figura \ref{fig:CreateCluster}. En él especificaremos el grupo de recursos donde residirá el clúster y el número de nodos en el clúster (este valor se puede modificar más tarde empleando el comando ``az aks scale"). Como servidor principal para la autenticación se usará la entidad de servicio creada, a través de su propiedad \textit{appId}. También se deberá indicar la contraseña de este servicio, que se ha marcado con color gris en la imagen \ref{fig:ActiveDirectory}. La ejecución de este comando puede llegar a prolongarse más de cinco minutos.
 
 \begin{figure}[h]
 \centering
@@ -1940,7 +1940,7 @@ En primer lugar, para acceder al clúster que se ha creado en el paso anterior d
 \label{fig:AccessCluster}
 \end{figure}
 
-En segundo lugar, una vez se establezca la conexión con el clúster, debemos crear un archivo YAML que especificará las imágenes Docker que Kubernetes debe desplegar, el número de replicadas que debe gestionar de cada contenedor, los puertos expuestos, etc. Como estamos trabajando desde la terminal del portal de Azure, deberemos editar este archivo a través de un editor de texto como vi. En la figura \ref{fig:KubernetesSecurity} se muestra un fragmento de este archivo relacionado con el microservicio de seguridad. Para que cada servicio se pueda desplegar de forma independiente, hemos creado un archivo YAML diferente para cada uno.
+En segundo lugar, una vez se establezca la conexión con el clúster, debemos crear un archivo YAML que especificará las imágenes Docker que Kubernetes debe desplegar, el número de replicadas que debe gestionar de cada contenedor, los puertos expuestos, etc. Como estamos trabajando desde la terminal del portal de Azure, deberemos editar este archivo a través de un editor de texto como \textit{vi}. En la figura \ref{fig:KubernetesSecurity} se muestra un fragmento de este archivo relacionado con el microservicio de seguridad. Para que cada servicio se pueda desplegar de forma independiente, hemos creado un archivo YAML diferente para cada uno.
 
 \begin{figure}[h]
 \centering
@@ -1955,9 +1955,9 @@ En los servicios desplegados hemos seguido el caso de uso más común en relaci�
 
 Si solo definieramos un servicio, la dirección IP que se le da es interna y no queda expuesta fuera del clúster para su consumo por aplicaciones frontend. Existen varias posibilidades para alcanzar este propósito. Vamos a repasar algunas de ellas en la sección \ref{sect:DespliegueOtros} \nameref{sect:DespliegueOtros}, pero entre ellas la que vamos a presentar ahora es el uso de un balanceador de carga externo. Como se comenta en el libro \cite{Rensin2015}, es una buena práctica situar un balanceador de carga frente a cada servicio aunque el número de replicas del servicio sea solo uno. Para seleccionar que servicios gestiona el balanceador de carga se hace uso de un selector de etiquetas definido en la sección \textit{selector} de la figura, que debe coincidir con la etiqueta dada al servicio en su sección \textit{labels}. \footnote{ Balanceadores de carga en Kubernetes: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/}
 
-Tanto para la comunicación entre el backend y el frontend como para la comunicación entre microservicios emplearemos la dirección IP externa que el balanceador de carga da. Esta decisión surge para hacer más sencilla la configuración de los microservicios, pero provoca que servicios internos como el de notificaciones o informes que no necesitan ser consumidos por el frontend sean también expuestos fuera del clúster.
+Tanto para la comunicación entre el \textit{back-end} y el \textit{fron-tend} como para la comunicación entre microservicios emplearemos la dirección IP externa que el balanceador de carga tiene. Esta decisión surge para hacer más sencilla la configuración de los microservicios, pero provoca que servicios internos como el de notificaciones o informes que no necesitan ser consumidos por el frontend sean también expuestos fuera del clúster.
 
-Continuando con el proceso de ejecución de los microservicios, una vez definidos todos los servicios y balanceadores de carga podemos ejecutar el comando \textit{kubectl apply} para generar todos estos componentes a partir de su configuración. El resultado de la ejecución de este comando se muestra en la figura \ref{fig:KubernetesApply}. En caso de modificar la configuración y querer volver a desplegar los componentes basta con ejecutar de nuevo este comando o ``kubectl replace", que elimina los servicios existentes y los vuelve a crear.
+Continuando con el proceso de ejecución de los microservicios, una vez definidos todos los servicios y balanceadores de carga podemos ejecutar el comando ``kubectl apply" para generar todos estos componentes a partir de su configuración. El resultado de la ejecución de este comando se muestra en la figura \ref{fig:KubernetesApply}. En caso de modificar la configuración y querer volver a desplegar los componentes basta con ejecutar de nuevo este comando o ``kubectl replace", que elimina los servicios existentes y los vuelve a crear.
 
 \begin{figure}[h]
 \centering
@@ -1980,7 +1980,7 @@ Tras la ejecución de este comando, podemos ver los servicios que se han creado 
 \label{fig:ServiciosKubernetes}
 \end{figure}
 
-Por último, si a través del navegador accedemos a la dirección ``DIRECCIÓN\_SERVICIO/swagger", veremos como el servicio se ha desplegado correctamente porque se muestra la documentación de la API autogenerada por Swagger UI. Esto se ilustra en la figura \ref{fig:MicroservicioDesplegado} para el microservicio de seguridad.
+Por último, si a través del navegador accedemos a la dirección del balanceador de carga de un servicio, veremos como el servicio se ha desplegado correctamente porque se muestra la documentación de la API autogenerada por Swagger UI. Esto se ilustra en la figura \ref{fig:MicroservicioDesplegado} para el microservicio de seguridad.
 
 \begin{figure}[h]
 \centering
@@ -2026,12 +2026,12 @@ Tras seguir los pasos que hemos mencionado previamente, habremos obtenido un des
 \label{fig:DespliegueProduccion}
 \end{figure}
 
-Este despliegue puede ser excesivo debido al elevado número de componentes que conlleva, pero nos permite desplegar cada servicio de forma independiente. El balanceador de carga (LoadBalancer) crea automáticamente dos componentes: un ClusterIp y un NodePort. Por un lado, el primero se emplea para redireccionar servicios únicamente desde el interior del clúster, haciendo el servicio inaccesible desde fuera. Por otro lado, NodePort se utiliza para hacer accesible el servicio desde el exterior del clúster. Como mejora, se podría emplear un ClusterIP en lugar de un LoadBalancer en los microservicios de notificaciones e informes ya que estos no deberían ser accesibles desde fuera del clúster. Esto se representa en la figura \ref{fig:ClusterIP}.
+Este despliegue puede ser excesivo debido al elevado número de componentes que conlleva, pero nos permite desplegar cada servicio de forma independiente. El balanceador de carga (\textit{LoadBalancer}) crea automáticamente dos componentes: un \textit{ClusterIp} y un \textit{NodePort}. Por un lado, el primero se emplea para redireccionar servicios únicamente desde el interior del clúster, haciendo el servicio inaccesible desde fuera. Por otro lado, \textit{NodePort} se utiliza para hacer accesible el servicio desde el exterior del clúster. Como mejora, se podría emplear un \textit{ClusterIP} en lugar de un LoadBalancer en los microservicios de notificaciones e informes ya que estos no deberían ser accesibles desde fuera del clúster. Esto se representa en la figura \ref{fig:ClusterIP}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.65]{ClusterIP}
-\caption{Uso de ClusterIP en el microservicio de informes.}
+\caption{Uso de \textit{ClusterIP} en el microservicio de informes.}
 \label{fig:ClusterIP}
 \end{figure}
 
@@ -2040,12 +2040,12 @@ Este despliegue puede ser excesivo debido al elevado número de componentes que 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 
-En \footnote{Quick Guide to Microservices With Kubernetes, Spring Boot 2.0, and Docker: https://dzone.com/articles/quick-guide-to-microservices-with-kubernetes-sprin} se muestra un ejemplo completo de desarrollo de un sistema de microservicios en Java que se despliega sobre Kubernetes. En lugar de emplear balanceadores de carga, emplea un único componente Ingress para hacer públicos los servicios. Este es un objeto que se emplea para hacer accesibles los servicios desde el exterior a través de reglas. \footnote{Ingress en Kubernetes: https://kubernetes.io/docs/concepts/services-networking/ingress/} En el ejemplo de la figura \ref{fig:Ingress}, se especifica una dirección base a través de la anotación \textit{host} y se accede a los servicios a través de esta dirección más la ruta que representa a cada uno de los servicios.
+En \footnote{Quick Guide to Microservices With Kubernetes, Spring Boot 2.0, and Docker: https://dzone.com/articles/quick-guide-to-microservices-with-kubernetes-sprin} se muestra un ejemplo completo de desarrollo de un sistema de microservicios en Java que se despliega sobre Kubernetes. En lugar de emplear balanceadores de carga, emplea un único componente \textit{Ingress} para hacer públicos los servicios. Este es un objeto que se emplea para hacer accesibles los servicios desde el exterior a través de reglas. \footnote{Ingress en Kubernetes: https://kubernetes.io/docs/concepts/services-networking/ingress/} En el ejemplo de la figura \ref{fig:Ingress}, se especifica una dirección base a través de la anotación \textit{host} y se accede a los servicios a través de esta dirección más la ruta que representa a cada uno de los servicios.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.7]{Ingress}
-\caption{Despliegue empleando un objeto Ingress.}
+\caption{Despliegue empleando un objeto \textit{Ingress}.}
 \label{fig:Ingress}
 \end{figure}
 
