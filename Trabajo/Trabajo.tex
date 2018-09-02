@@ -556,6 +556,11 @@ El proceso de desarrollo también se simplifica: en aproximaciones como la de mi
 
 Si se integra dentro del proceso de despliegue, cada cambio que pasa por una \textit{pipeline} puede construir una nueva imagen Docker. Sobre ella se ejecutarán pruebas de forma automatizada para después ser publicada a producción. De esta forma, el equipo puede asegurarse de que el artefacto sobre el que se han ejecutado las pruebas es el mismo que se publica más tarde. 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
 \section{Orquestadores}
 %TODO https://medium.com/@PamRucinque/qu%C3%A9-es-eso-de-serverless-f4f6c8949b87
 %TODO https://rancher.com/load-balancing-in-kubernetes/
@@ -576,6 +581,8 @@ Kubernetes \cite{Rensin2015} es una herramienta diseñada por Google para el des
 
 Kubernetes se emplea principalmente para especificar el número de replicas que se desea tener simultánemanete de un pod. La herramienta es buena para asegurar la disponiblidad de un servicio, pero no garantizan la escalabilidad de esta, que consistiría en modificar el número de replicas de un pod de forma dinámica en función de su demanda. Para este propósito se deben introducir balanceadores de carga como puntos de entrada al sistema. Estos balanceadores redirigirían cada petición al pod correspondiente y se encargarán de ajustar el número de replicas de un pod según una serie de reglas.
 
+En el apéndice \ref{chap:Despliegue} \nameref{chap:Despliegue} se dan algunos detalles más acerca de Kubernetes ya que es el orquestador empleado por el caso de estudio en el entorno de producción. Entre la información que aquí se puede encontrar está el uso de los servicios \textit{LoadBalancer} e \textit{Ingress}.
+
 \subsection{Docker Swarm}
 
 Docker Swarm \cite{DeAlfonso2017} es la aproximación nativa propuesta por Docker para la creación de clústeres. Un clúster consiste en un conjunto de contenedores Docker que aparentan formar uno único de forma virtual.
@@ -586,7 +593,7 @@ Docker Swarm se puede ejecutar para ofrecer servicios con alta disponibilidad a 
 
 \section{Proveedores de servicios en la nube}
 
-Un proveedor de servicios en la nube \footnote{ What is a cloud service provider?
+Un \textbf{proveedor de servicios en la nube} \footnote{ What is a cloud service provider?
 : https://azure.microsoft.com/en-gb/overview/what-is-a-cloud-provider/} es una compañía de terceros que ofrece servicios en la nube de plataforma (PaaS), infraestructura (IaaS), aplicación (SaaS) o persistencia. Solo se deben pagar los servicios que una organización consume, bajo el modelo de pago por uso. Entre los beneficios que supone para una compañía están la escalabilidad y flexibilidad entre diferentes centros de datos, la seguridad por almacenar los datos de forma replicada o la comodidad que supone olvidarse de servidores físicos.
 
 \subsection{Amazon Web Services (AWS)}
@@ -599,6 +606,11 @@ Amazon es el líder en el mercado de computación en la nube con su producto Ama
 Microsoft Azure \cite{Qaisi2016} es una plataforma que ofrece un conjunto de herramientas y servicios en la nube. Es el segundo mayor proveedor de servicios en la nube y fue lanzado en 2010. Ofrece tanto funcionalidades de plataforma como servicio (PaaS) como IaaS.
 
 Los usuarios pueden crear, desplegar y gestionar aplicaciones  servicios a través de la red global de los centros de datos de Microsoft. Aunque el pago de sus servicios sea más cercano a la realidad, los modos de pago son manejados de forma poco transparente.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 
 \section{Crítica al estado del arte}
 % Trabajos presentados en la ETSINF.
