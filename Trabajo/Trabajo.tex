@@ -1115,60 +1115,66 @@ En la figura \ref{fig:NotificationsMessage} se muestran dos recursos de este arc
 
 \subsection{Inyección de dependencias}
 
-La \textbf{inyección de dependencias} (DI) es un mecanismo para desacoplar un objeto de sus colaboradores. En lugar de instanciar o obtener una referencia a los objetos de los que depende una clase, estos se declaran en el constructor de la clase y es el sistema quien automáticamente los resuelve e instancia. \footnote{ Inserción de dependencias en ASP.NET Core: https://docs.microsoft.com/es-es/aspnet/core/fundamentals/dependency-injection} 
+La \textbf{inyección de dependencias} (DI) es un mecanismo para desacoplar un objeto de sus colaboradores. En lugar de instanciar o obtener una referencia a los objetos de los que depende una clase, estos se declaran en el constructor de la clase y es el sistema quien automáticamente los resuelve e instancia. \footnote{ Inserción de dependencias en ASP.NET Core: https://docs.microsoft.com/es-es/aspnet/core/fundamentals/dependency-injection} En la figura \ref{fig:ProductsManager} se puede ver como se inyecta en el constructor del \textit{manager} de productos el conversor de entidad a DTO y el DAO de la entidad.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{ProductsManager}
 \caption{Constructor de la clase ProductsManager donde se aplica DI.}
+\label{fig:ProductsManager}
 \end{figure}
 
-El uso de interfaces reduce el acoplamiento entre la definición de las operaciones de una clase y las implementaciones concretas que esta definición puede tener. Sin embargo, es necesario indicar con qué implementación se resuelve una interfaz cuando esta se inyecta en el constructor de una clase. Para ellos, se emplean una serie de métodos sobre la colección de servicios donde el sistema busca sus dependencias para indicar cómo resolver cada interfaz. El método más empleado es AddScoped. Este método instancia el objeto de la dependencia una vez por cada petición que el servidor recibe y comparte este mismo objeto entre todas las clases que dependan de él.
+El uso de interfaces reduce el acoplamiento entre la definición de las operaciones de una clase y las implementaciones concretas que esta definición puede tener. Sin embargo, es necesario indicar con qué implementación se resuelve una interfaz cuando esta se inyecta en el constructor de una clase. Para ellos, se emplean una serie de métodos sobre la colección de servicios donde el sistema busca sus dependencias para indicar cómo resolver cada interfaz. El método más empleado es \textit{AddScoped}. Este método instancia el objeto de la dependencia una vez por cada petición que el servidor recibe y comparte este mismo objeto entre todas las clases que dependan de él.
 
-En nuestra solución, cada capa es responsable de registrar las diferentes interfaces que contiene junto con la clase que la implementa. De esta forma, desde otras capas se podrán emplear las interfaces resultas.
+En nuestra solución, cada capa es responsable de registrar las diferentes interfaces que contiene junto con la clase que la implementa. De esta forma, desde otras capas se podrán emplear las interfaces resultas. En la figura \ref{fig:ResolucionDependencias} se muestra como se resuelven las interfaces definidas en la capa de aplicación.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.9]{ResolucionDependencias}
 \caption{Registro de interfaces en la capa de persistencia.}
+\label{fig:ResolucionDependencias}
 \end{figure}
 
 \subsection{Documentando la API con Swagger UI}
 
 \textbf{Swagger} es un conjunto de herramientas de código abierto para describir la estructura de una API, crear clientes para consumirla en diferentes lenguajes (Swagger CodeGen) y documentarla para que los usuarios puedan emplearla de forma interactiva (Swagger UI). \footnote{ Documentación oficial de Swagger: https://swagger.io/docs/specification/2-0/what-is-swagger/}
 
-En este apartado nos centraremos en la construcción de la API interactiva. Para hacerlo, basta con añadir la siguiente pieza de código en la clase Startup de la capa de servicios. Aparte de proveer algunos metadatos como la versión de la API o su mantenedor, se debe indicar que los controladores para generar la documentación se encuentran en el ensamblado actual.
+En este apartado nos centraremos en la construcción de la API interactiva. Para hacerlo, basta con añadir la siguiente pieza de código (figura \ref{fig:SwaggerUI}) en la clase \textit{Startup} de la capa de servicios. Aparte de proveer algunos metadatos como la versión de la API o su mantenedor, se debe indicar que los controladores para generar la documentación se encuentran en el ensamblado actual.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.9]{SwaggerUI}
 \caption{Metadatos de la API especificados en la clase Startup.}
+\label{fig:SwaggerUI}
 \end{figure}
 
-La documentación de la API se genera en la dirección formada por la unión de la URL del servidor y el recurso con nombre swagger. Para generar la documentación de los métodos, Swagger hace uso de la documentación del método del controlador de la capa de servicios que la origina. En la documentación de cada método se incluye información como la descripción de los parámetros o el tipo de respuesta que da el método.
+La documentación de la API se genera en la dirección formada por la unión de la URL del servidor y el recurso con nombre swagger, como se muestra en la figura \ref{fig:SwaggerAPI}. Para generar la documentación de los métodos, Swagger hace uso de la documentación del método del controlador de la capa de servicios que la origina. En la documentación de cada método se incluye información como la descripción de los parámetros o el tipo de respuesta que da el método.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.4]{SwaggerAPI}
 \caption{Documentación de la API generada con Swagger UI.}
+\label{fig:SwaggerAPI}
 \end{figure}
 
 \subsection{Logging}
 %TODO Decidir si eliminarlo.
-En el entorno de desarrollo puede ser útil emplear logs que capturen todo lo que sucede en el proceso del servidor. Para hacerlo, simplemente se deben añadir las siguientes líneas de código en la clase Startup de la capa de servicios.
+En el entorno de desarrollo puede ser útil emplear \textit{logs} que capturen todo lo que sucede en el proceso del servidor. Para hacerlo, simplemente se deben añadir las líneas de código de la figura \ref{fig:loggingDev} en la clase \textit{Startup} de la capa de servicios.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.7]{loggingDev}
 \caption{Añadir servicios para el logging.}
+\label{fig:loggingDev}
 \end{figure}
 
-Información como el entorno donde se ejecuta el servidor, las peticiones HTTP que se realicen al servidor o las consultas a base de datos quedarán registrados en la consola del proceso.
+Información como el entorno donde se ejecuta el servidor, las peticiones HTTP que se realicen al servidor o las consultas a base de datos quedarán registrados en la consola del proceso. Un ejemplo de la información que se imprime se puede ver en la figura \ref{fig:logging}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{logging}
 \caption{Ejemplo del contenido de un log.}
+\label{fig:logging}
 \end{figure}
 
 \subsection{Generación de la capa de proxy}
@@ -1176,12 +1182,15 @@ Información como el entorno donde se ejecuta el servidor, las peticiones HTTP q
 
 Como hemos comentado en la sección \ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}, la capa de proxy se emplea para invocar a la API de la parte servidora a través de llamadas HTTP. Para cada una de las interfaces de contratos vamos a crear un proxy, que implementará sus métodos delegando en un cliente HTTP generado automáticamente con \textbf{NSwag}. NSwag es un conjunto de herramientas para varias plataformas, entre ellas .NET Core, para la generación de especificaciones Swagger a partir de los controladores definidos en C\# y la generación de clientes HTTP para el consumo de estos controladores. \footnote{ Página de GitHub de NSwag: https://github.com/RSuter/NSwag} \footnote{ NSwag Tutorial: How to integrate NSwag into your ASP.NET Core Web API project: https://www.youtube.com/watch?v=lF9ZZ8p2Ciw}
 
-El cliente HTTP autogenerado es inyectado en el proxy a través del constructor. El proxy también es el encargado de adaptar los parámetros de la interfaz de contratos a los parámetros que espera el cliente HTTP. Esta adaptación es necesaria porque, por ejemplo, en las peticiones HTTP para los métodos GET no se puede especificar un Body y todos los parámetros se deben pasar a través de la cabecera de la petición. Como consecuencia, los parámetros solo pueden ser de tipos simples como una cadena (string) y objetos muy empleados como los identificadores (Guid) han de ser transformados a tipos más simples.
+El cliente HTTP autogenerado es inyectado en el proxy a través del constructor. El proxy también es el encargado de adaptar los parámetros de la interfaz de contratos a los parámetros que espera el cliente HTTP. Esta adaptación es necesaria porque, por ejemplo, en las peticiones HTTP para los métodos GET no se puede especificar un Body. Como consecuencia, todos los parámetros se deben pasar a través de la cabecera de la petición. De esta forma, los parámetros solo pueden ser de tipos simples como una cadena (\textit{string}) y objetos muy empleados como los identificadores (\textit{Guid}) han de ser transformados a tipos más simples. 
+
+En la figura \ref{fig:OrdersProxy} se muestra el proxy de pedidos, donde los parámetros de tipo \textit{Guid} son transformados a una cadena de texto mediante la invocación del método \textit{ToString}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.7]{OrdersProxy}
 \caption{Fragmento del proxy de pedidos donde se adaptan los parámetros a tipos simples.}
+\label{fig:OrdersProxy}
 \end{figure}
 
 \subsection{Calidad del código}
@@ -1195,7 +1204,7 @@ Para asegurar la calidad del código se ha hecho uso de dos herramientas: CodeMa
 
 \item \textbf{StyleCop}: es un analizador estático de código C\# desarrollado por Microsoft. Se basa en reglas centradas en aspectos como la documentación, la ordenación de los elementos o el estilo de código. Además, permite configurar las reglas que se aplican, definir excepciones a una de ellas o la creación de reglas propias. \footnote{Página de la Wikipedia de StyleCop: https://en.wikipedia.org/wiki/StyleCop} 
 
-En la mayoría de proyectos se ha configurado para que las alertas que devuelve StyleCop cuando no se cumple una regla se trate como un error y no como una alerta. Esto se puede conseguir añadiendo la opción TreatWarningsAsErrors en los archivos .csproj.
+En la mayoría de proyectos se ha configurado para que las alertas que devuelve StyleCop cuando no se cumple una regla se trate como un error y no como una alerta. Esto se puede conseguir añadiendo la opción TreatWarningsAsErrors en los archivos .csproj, tal y como muestra la figura \ref{fig:TreatWarning}.
 
 \end{itemize}
 
@@ -1203,49 +1212,55 @@ En la mayoría de proyectos se ha configurado para que las alertas que devuelve 
 \centering
 \includegraphics[scale=0.9]{TreatWarning}
 \caption{Fragmento de un proyecto donde se añade la opción TreatWarningsAsErrors.}
+\label{fig:TreatWarning}
 \end{figure}
 
 \section{Interfaz de usuario}
 
-Como hemos comentado en la sección \ref{sct:PlanTrabajo} \nameref{sct:PlanTrabajo}, vamos a implementar una interfaz de usuario que cumpla con los casos de uso y se pueda emplear para comunicar tanto con la solución monolítica como con la basada en microservicios. Para desacoplar el desarrollo del back-end y el front-end, la aplicación móvil va a desarrollarse en un repositorio de código distinto.
+Como hemos comentado en la sección \ref{sct:PlanTrabajo} \nameref{sct:PlanTrabajo}, vamos a implementar una interfaz de usuario que cumpla con los casos de uso y se pueda emplear para comunicar tanto con la solución monolítica como con la basada en microservicios. Para desacoplar el desarrollo del \textit{back-end} y el \textit{front-end}, la aplicación móvil va a desarrollarse en un repositorio de código distinto.
 
 %TODO Decidir si poner esto. https://techcrunch.com/2017/05/11/microsoft-now-lets-ios-developers-deploy-run-and-test-their-apps-directly-from-windows/
-La solución de la UI está compuesta por dos proyectos. El primero es en el que se localiza la mayoría del código que se ha implementado, un proyecto .NET Standard con el código compartido por todas las plataformas. El segundo es el proyecto específico para la plataforma Android. Los proyectos asociados a las plataformas UWP y iOS han sido eliminados para hacer más simple su desarrollo.
+Como se observa en la figura \ref{fig:ShopFrontEnd}, la solución de la UI está compuesta por dos proyectos. El primero es en el que se localiza la mayoría del código que se ha implementado, un proyecto .NET Standard con el código compartido por todas las plataformas. El segundo es el proyecto específico para la plataforma Android. Los proyectos asociados a las plataformas UWP y iOS han sido eliminados para hacer más simple su desarrollo.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{ShopFrontEnd}
 \caption{Solución de la interfaz de usuario hecha con Xamarin.Forms.}
+\label{fig:ShopFrontEnd}
 \end{figure}
 
 Podemos citar las siguientes características que se desean poner en valor de la implementación de la interfaz de usuario:
 
 \begin{itemize}
 
-\item \textbf{Presentación de resultados de forma paginada}: en el back-end se han implementado diferentes métodos para obtener resultados (como la lista de incidencias de un usuario o la lista de productos) de forma paginada, ordenada y a través de filtros. La paginación en las invocaciones a una API son una forma de mejorar el rendimiento de una aplicación porque evita traer más resultados de los que luego se consultan. El filtrado y la ordenación de los datos están más centrados en mejor la experiencia del usuario (UX).\footnote{ REST API Design: Filtering, Sorting, and Pagination: https://www.moesif.com/blog/technical/api-design/REST-API-Design-Filtering-Sorting-and-Pagination/} 
+\item \textbf{Presentación de resultados de forma paginada}: en el \textit{back-end} se han implementado diferentes métodos para obtener resultados (como la lista de incidencias de un usuario o la lista de productos) de forma paginada, ordenada y a través de filtros. La paginación en las invocaciones a una API son una forma de mejorar el rendimiento de una aplicación porque evita traer más resultados de los que luego se consultan. El filtrado y la ordenación de los datos están más centrados en mejor la experiencia del usuario (UX).\footnote{ REST API Design: Filtering, Sorting, and Pagination: https://www.moesif.com/blog/technical/api-design/REST-API-Design-Filtering-Sorting-and-Pagination/} 
 
-A nivel de UI se ha implementado de tal forma que se soliciten al back-end una cantidad de datos aproximada a la que se puede mostrar en la pantalla de un dispositivo. Cuando el usuario haga scroll para mostrar más resultados, se realizará una nueva petición en segundo plano a la parte servidora solicitando el siguiente bloque de datos. Mientras se cargan los datos, el usuario visualizará un elemento que indica que el sistema está trabajando en segundo plano para traer más datos.
+A nivel de UI se ha implementado de tal forma que se soliciten al \textit{back-end} una cantidad de datos aproximada a la que se puede mostrar en la pantalla de un dispositivo. Cuando el usuario haga \textit{scroll} para mostrar más resultados, se realizará una nueva petición en segundo plano a la parte servidora solicitando el siguiente bloque de datos. Mientras se cargan los datos, el usuario visualizará un elemento que indica que el sistema está trabajando en segundo plano para traer más datos.
 
 
 %TODO Interesante https://msdn.microsoft.com/en-us/magazine/dd419663.aspx https://blogs.msdn.microsoft.com/johngossman/2005/10/08/introduction-to-modelviewviewmodel-pattern-for-building-wpf-apps/
 \item \textbf{Uso de ViewModels}: la separación de responsabilidades no es un principio que se deba aplicar solo en el back-end. El patrón arquitectónico \textbf{Model-View-ViewModel} (MVVM) divide la interfaz de usuario en 3 capas: la vista, empleando páginas XAML, los datos tal como se obtienen en su origen, también llamados el modelo, y el modelo de la vista, que conecta ambos y se emplea para rellenar la vista. \footnote{From Data Bindings to MVVM: https://docs.microsoft.com/es-es/xamarin/xamarin-forms/xaml/xaml-basics/data-bindings-to-mvvm} 
 
-La diferencia entre este patrón y otros como el Model-View-Controller(MVC) es que en MVC los datos con los que se llena la vista son los que se obtienen en el origen y es el controlador quien ha de adaptarlos a cómo se visualizan en la vista. En cambio, en MVVM la vista y el modelo de la vista suelen relacionarse a través de enlaces (bindings) en el propio XAML y se notifican mutuamente cuando alguna de sus propiedades cambia. \footnote{ Patterns - WPF Apps With The Model-View-ViewModel Design Pattern: https://msdn.microsoft.com/en-us/magazine/dd419663.aspx}
+La diferencia entre este patrón y otros como el Model-View-Controller(MVC) es que en MVC los datos con los que se llena la vista son los que se obtienen en el origen y es el controlador quien ha de adaptarlos a cómo se visualizan en la vista. En cambio, en MVVM la vista y el modelo de la vista suelen relacionarse a través de enlaces (\textit{bindings}) en el propio XAML y se notifican mutuamente cuando alguna de sus propiedades cambia. \footnote{ Patterns - WPF Apps With The Model-View-ViewModel Design Pattern: https://msdn.microsoft.com/en-us/magazine/dd419663.aspx}
 
-Sin embargo, usar este patrón puede ser excesivo para UIs muy sencillas. \footnote{Advantages and disadvantages of M-V-VM: https://blogs.msdn.microsoft.com/johngossman/2006/03/04/advantages-and-disadvantages-of-m-v-vm/} Por este motivo, hemos empleado objetos ViewModel en solo aquellos casos que era necesario adaptar los datos del modelo a la vista. Lo que aquí definimos como modelo es un DTO que devuelve la parte servidora y ya está diseñado para que contenga solo la información estrictamente necesaria. Un ejemplo en el que se emplea un ViewModel es el ProductViewModel, donde se tiene que transformar la imagen que se recibe del ProductDTO de byte[] a un ImageSource.
+Sin embargo, usar este patrón puede ser excesivo para UIs muy sencillas. \footnote{Advantages and disadvantages of M-V-VM: https://blogs.msdn.microsoft.com/johngossman/2006/03/04/advantages-and-disadvantages-of-m-v-vm/} Por este motivo, hemos empleado objetos \textit{ViewModel} en solo aquellos casos que era necesario adaptar los datos del modelo a la vista. Lo que aquí definimos como modelo es un DTO que devuelve la parte servidora y ya está diseñado para que contenga solo la información estrictamente necesaria. Un ejemplo en el que se emplea un \textit{ViewModel} es el \textit{ProductViewModel} (figura \ref{fig:ProductViewModel}), donde se tiene que transformar la imagen que se recibe del ProductDTO de una \textit{byte array} a un \textit{ImageSource}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{ProductViewModel}
 \caption{Método para transformar de un DTO a un modelo de una vista.}
+\label{fig:ProductViewModel}
 \end{figure}
 
 \item \textbf{Código específico de plataforma}: existen algunos servicios que no se pueden implementar en el proyecto compartido por todas las plataformas. Estos servicios están relacionados con aspectos muy ligados a cada plataforma, como puede ser el sistema de archivos. Para este propósito se define una interfaz en el proyecto compartido. Cada una de las plataformas debe dar una implementación concreta a esta interfaz. Desde el proyecto genérico, se hace uso de la interfaz y será el sistema quien se encargará de dirigir la operación que se invoca sobre la interfaz a la implementación de la plataforma. \footnote{Native Services with Xamarin.Forms? It's DependencyService to the Rescue: https://visualstudiomagazine.com/articles/2015/09/01/native-services-with-xamarinforms.aspx}
 
+En la figura \ref{fig:AndroidFileManager} se presenta la implementación específica hecha en la plataforma Android para la interfaz \textit{IFileManager}, que ofrece diversas operaciones relacionadas con el sistema de archivos.
+
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{AndroidFileManager}
-\caption{Servicio concreto del proyecto de Android.}
+\caption{Servicio concreto del proyecto de Android para la gestión de archivos.}
+\label{fig:AndroidFileManager}
 \end{figure}
 
 \end{itemize}
@@ -1256,7 +1271,7 @@ Como material adicional, en el apéndice \ref{ch:ModeloNavegacion} \nameref{ch:M
 
 Se han realizado un total de 16 pruebas automatizadas mediante el framework \textbf{NUnit}. NUnit es una librería para la implementación de pruebas unitarias en todos los lenguajes .NET al igual que JUnit lo es para el lenguaje Java. \footnote{ Página de GitHub de NUnit: https://github.com/nunit/nunit}. La mayoría de las pruebas realizadas se clasifican como pruebas de integración porque involucran a más de una clase. 
 
-No se han podido probar todos los métodos expuestos en la interfaz del back-end, pero gracias a que existe mucho código genérico para la realización de operaciones CRUD y la persistencia de datos, podemos considerar el sistema como fiable. Algunas de las pruebas que si se han hecho son las asociadas a los casos de uso CU003, CU004, CU005, CU007, CU009 y CU013 que se encuentran en la sección \ref{sect:CUs} \nameref{sect:CUs}.
+No se han podido probar todos los métodos expuestos en la interfaz del \textit{back-end}, pero gracias a que existe mucho código genérico para la realización de operaciones CRUD y la persistencia de datos, podemos considerar el sistema como fiable. Algunas de las pruebas que si se han hecho son las asociadas a los casos de uso CU003, CU004, CU005, CU007, CU009 y CU013 que se encuentran en la sección \ref{sect:CUs} \nameref{sect:CUs}. El resumen de las pruebas realizadas y su correcta ejecución se muestran en la siguiente figura.
 
 \begin{figure}[h]
 \centering
@@ -1264,47 +1279,53 @@ No se han podido probar todos los métodos expuestos en la interfaz del back-end
 \caption{Pruebas realizadas en la solución monolítica.}
 \end{figure}
 
-Para la realización de las pruebas se ha empleado una base de datos en memoria. Así, las pruebas son más cercanas a una situación real. A la vez, no añade un sobrecoste asociado al acceso a datos de una base de datos real, que haría más lenta la ejecución de las pruebas. \footnote{ Pruebas con InMemory: https://docs.microsoft.com/es-es/ef/core/miscellaneous/testing/in-memory} Además, en el método Setup que se invoca antes de cada prueba es donde se resuelven las dependencias declaradas en los constructores de las clases invocando a los métodos AddDependencies() de las capas de aplicación y persistencia. Por último, para algunos servicios provistos por las herramientas utilizadas se han tenido que implementar fakes. Es el caso del manager de Identity para hacer login en la aplicación, que se debe sobreescribir para devolver que el usuario ha hecho login correctamente sin acceder a la base de datos de usuarios.
+Para la realización de las pruebas se ha empleado una base de datos en memoria. Así, las pruebas son más cercanas a una situación real. A la vez, no añade un sobrecoste asociado al acceso a datos de una base de datos real, que haría más lenta la ejecución de las pruebas. \footnote{ Pruebas con InMemory: https://docs.microsoft.com/es-es/ef/core/miscellaneous/testing/in-memory} Además, en el método \textit{Setup} que se invoca antes de cada prueba es donde se resuelven las dependencias declaradas en los constructores de las clases invocando a los métodos \textit{AddDependencies} de las capas de aplicación y persistencia, como muestra la figura \ref{fig:SetupTest}. 
+
+Por último, para algunos servicios provistos por las herramientas utilizadas se han tenido que implementar \textit{fakes}. Es el caso del manager de Identity para hacer login en la aplicación, que se debe sobreescribir para devolver que el usuario ha hecho login correctamente sin acceder a la base de datos de usuarios.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{SetupTest}
 \caption{Ejemplo de método Setup donde se emplea una base de datos en memoria.}
+\label{fig:SetupTest}
 \end{figure}
 
 \section{Despliegue de la solución monolítica}
 
-Como hemos mencionado en la sección \ref{sect:Propuesta} \nameref{sect:Propuesta}, para el despliegue de la aplicación se va a emplear Azure App Service. No se va a implementar ninguna pipeline para desplegar automáticamente y todos los pasos que se detallan se deben hacer manualmente, aunque sean muy sencillos:
+Como hemos mencionado en la sección \ref{sect:Propuesta} \nameref{sect:Propuesta}, para el despliegue de la aplicación se va a emplear Azure App Service. No se va a implementar ninguna \textit{pipeline} para desplegar automáticamente y todos los pasos que se detallan se deben hacer manualmente, aunque sean muy sencillos:
 
 \begin{enumerate}
 
 \item \textbf{Creación de un Dockerfile}: en la capa de servicios se debe crear un Dockerfile. En la mayoría de ejemplos encontrados se ha visto que la imagen de Docker se genera básicamente mediante dos pasos del Dockerfile: se copian todos los archivos de la solución a la imagen y se compila la solución completo. Cuando se crea y arranca un contenedor, se inicia el proceso del servicio a través de la DLL que se ha generado tras la compilación. \footnote{ Dockerize a .NET Core application
-: https://docs.docker.com/engine/examples/dotnetcore/\#create-a-dockerfile-for-an-aspnet-core-application} Este Dockerfile es más fiable en cuanto a que los ensamblados necesarios se generan dentro de la propia imagen. Sin embargo, la creación de la imagen es más lenta. Por ello, para entornos de desarrollo vamos a simplificar el Dockerfile para que simplemente copie los ensamblados, que se han generado previamente en el entorno de desarrollo, de aquí a la imagen. Los ensamblados se publican dentro de una carpeta que hemos llamado PublishOutput. En el Dockerfile tampoco hace falta exponer ningún puerto porque esto ya lo hace la imagen base.
+: https://docs.docker.com/engine/examples/dotnetcore/\#create-a-dockerfile-for-an-aspnet-core-application} Este Dockerfile es más fiable en cuanto a que los ensamblados necesarios se generan dentro de la propia imagen. Sin embargo, la creación de la imagen es más lenta. Por ello, para entornos de desarrollo vamos a simplificar el Dockerfile para que simplemente copie los ensamblados en la imagen, que se han generado previamente en el entorno de desarrollo. La figura \ref{fig:Dockerfile} muestra su contenido. Los ensamblados se publican dentro de una carpeta que hemos llamado PublishOutput. En el Dockerfile tampoco hace falta exponer ningún puerto porque esto ya lo hace la imagen base.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{Dockerfile}
 \caption{Dockerfile de la solución monolítica.}
+\label{fig:Dockerfile}
 \end{figure}
 
 \item \textbf{Crear un App Service}: en el portal de Azure, seleccionar la pestaña de nuevo recurso y marcar Web App. Se debe proveer el nombre de la aplicación, que será la URL donde luego encontraremos nuestro servicio, la suscripción y el grupo de recursos. También se debe crear un plan de App Service, donde se establecerán las prestaciones del servidor donde se desplegará y las tarifas asociadas. 
 
-\item \textbf{Obtener perfil de publicación}: una vez creado el recurso nos podemos descargar el perfil de publicación. Desde el panel del recurso podemos iniciar y detener el servicio.
+\item \textbf{Obtener perfil de publicación}: una vez creado el recurso nos podemos descargar el perfil de publicación desde el panel del recurso. Desde aquí también  podemos iniciar y detener el servicio (figura \ref{fig:AppService2}).
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.6]{AppService2}
 \caption{Recurso App Service en el portal de Azure.}
+\label{fig:AppService2}
 \end{figure}
 
 \item \textbf{Importar perfil de publicación}: desde la solución de Visual Studio, abrir el menú contextual del proyecto de la capa de servicios y seleccionar la opción ``Publish". En la ventana que se abre seleccionar ``New profile" y luego ``Import profile", donde seleccionaremos el archivo que nos hemos descargado.
 
-\item \textbf{Desplegar el servicio}: cada vez que queramos desplegar a producción una nueva versión de la API nos iremos al proyecto de servicios, abriremos el menú de publicación a través del menú contextual y seleccionaremos el perfil de AppService. Si accedemos a la URL que antes hemos señalado, veremos la documentación de la API generada por Swagger UI.
+\item \textbf{Desplegar el servicio}: cada vez que queramos desplegar a producción una nueva versión de la API nos iremos al proyecto de servicios en Visual Studio, abriremos el menú de publicación a través del menú contextual y seleccionaremos el perfil de AppService. Las opciones principales que desde este formulario se pueden realizar se han resaltado en la figura \ref{fig:AppService3}. Si accedemos a la URL que antes hemos señalado, veremos la documentación de la API generada por Swagger UI.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.6]{AppService3}
 \caption{Despliegue a través de App Service.}
+\label{fig:AppService3}
 \end{figure}
 
 \end{enumerate}
