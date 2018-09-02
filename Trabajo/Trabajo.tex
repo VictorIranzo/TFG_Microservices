@@ -870,7 +870,7 @@ En los repositorios de GitHub vamos a emplear un proyecto. Un proyecto de GitHub
 \newpage
 
 
-El proceso de desarrollo se puede visualizar en los diferentes repositorios a través de los \textit{commits} que en ellos se hacen. En el siguiente gráfico se muestra el número de \textit{commits} realizados cada día sobre los tres repositorios mencionados. Como en el cronograma, se puede ver como las fases de \textit{front-end} e implementación de la solución monolítica se superponen en la mitad del proceso de desarrollo. También se puede ver como la fase de la solución monolítica es la que más \textit{commits} ha requerido porque ha sido la más inestable respecto a defectos corregidos y detalles de implementación.
+El proceso de desarrollo se puede visualizar en los diferentes repositorios a través de los \textit{commits} (la unidad de los repositorios de código git que representa los cambios que se guardan en el repositorio) realizados. En el siguiente gráfico se muestra el número de \textit{commits} realizados cada día sobre los tres repositorios mencionados. Como en el cronograma, se puede ver como las fases de \textit{front-end} e implementación de la solución monolítica se superponen en la mitad del proceso de desarrollo. También se puede ver como la fase de la solución monolítica es la que más \textit{commits} ha requerido porque ha sido la más inestable respecto a defectos corregidos y detalles de implementación.
 
 \begin{figure}[h]
 \centering
@@ -1343,89 +1343,94 @@ A lo largo del capítulo anterior nos hemos centrado sobretodo en aspectos de im
 
 Para la descomposición de la solución en microservicios vamos a aplicar los principios que hemos explicado en el apartado \ref{sct:FaseDiseño} \nameref{sct:FaseDiseño}. Se tienen que extraer contextos bien delimitados sin importar en un primer momento el tamaño de estos. Aunque contemos con la experiencia del desarrollo de la solución monolítica, el tamaño de los microservicios se puede ajustar más adelante evaluando si vale la pena dividir un microservicio.
 
-Concretamente, para representar visualmente la división en contextos delimitados se va emplear el modelo de dominio del caso de estudio de forma similar a como se ha hecho en la figura \ref{fig:BoundedContexts}. A continuación, detallamos cada uno de ellos, centrándonos en las capacidades que ofrece al negocio y no tanto en las entidades que maneja:
+Concretamente, para representar visualmente la división en contextos delimitados se va emplear el modelo de dominio del caso de estudio, como se muestra en la figura \ref{fig:ShopBoundedContexts}. A continuación, detallamos cada uno de ellos, centrándonos en las capacidades que ofrece al negocio y no tanto en las entidades que maneja:
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=1]{ShopBoundedContexts}
 \caption{División del modelo de dominio en contextos delimitados.}
+\label{fig:ShopBoundedContexts}
 \end{figure}
 
 \begin{itemize}
 
 \item \textbf{Incidencias}: permite la creación de incidencias, obtener las incidencias de un cliente y añadir comentarios dentro de una incidencia.
 
-\item \textbf{Seguridad}: ofrece las funcionalidades de registro de nuevos clientes y login. Además, persiste los datos de los clientes, por lo que algunos de los microservicios tendrán una referencia a este, por ejemplo, para obtener el cliente o empleado que escribió un comentario.
+\item \textbf{Seguridad}: ofrece las funcionalidades de registro de nuevos clientes y \textit{login}. Además, persiste los datos de los clientes, por lo que algunos de los microservicios tendrán una referencia a este, por ejemplo, para obtener el cliente o empleado que escribió un comentario.
 
-\item \textbf{Informes}: es un motor que almacena las plantillas de los informes que se pueden generar y simplemente combina esta con los datos que recibe para generar un documento de salida. No ofrece directamente ninguna funcionalidad al cliente: se trata de un \textbf{microservicio interno} que otros servicios emplean.
+\item \textbf{Informes}: es un motor que almacena las plantillas de los informes que se pueden generar y combina estas con los datos que recibe para generar un documento de salida. No ofrece directamente ninguna funcionalidad al cliente: se trata de un \textbf{microservicio interno} que otros servicios emplean.
 
 \item \textbf{Notificaciones}: al igual que el microservicio de informes, no está ligado a ningún tipo de dato. Simplemente, ofrece la funcionalidad de enviar una notificación con el contenido que recibe como parámetro al destinatario especificado. También es un microservicio interno.
 
-\item \textbf{Pedidos}: permite obtener los pedidos de un cliente, generar una factura de un pedido, añadir productos...En este servicio se ha incluido la entidad Producto. Podríamos considerar un microservicio de catálogo al que solo tuvieran acceso los empleados del comercio para gestionar el número de unidades en stock o la creación de nuevos productos. Sin embargo, ninguna funcionalidad fuera del contexto de los pedidos se relaciona con los productos, por lo que la incluiremos en este servicio y más adelante evaluaremos si vale la pena representarla como un microservicio independiente. 
+\item \textbf{Pedidos}: permite obtener los pedidos de un cliente, generar la factura de un pedido, añadir productos...En este servicio se ha incluido la entidad Producto. Podríamos diseñar un microservicio de catálogo aparte. A este servicio solo tendrían acceso los empleados del comercio para gestionar el número de unidades en stock o la creación de nuevos productos. Sin embargo, ninguna funcionalidad fuera del contexto de los pedidos se relaciona con los productos, por lo que en este servicio la entidad producto y más adelante evaluaremos si vale la pena representarla dentro de un microservicio independiente. 
 
 \end{itemize}
 
 \subsection{Arquitectura interna de los microservicios}
 
-En el apartado \ref{subsec:Poliglota} \nameref{subsec:Poliglota} se ha reflexionado sobre que una arquitectura basada en microservicios permite emplear diferentes tecnologías, arquitecturas y bases de datos en cada microservicio. Para validar lo que en este apartado se dice, vamos a desarrollar algunos microservicios con diferentes combinaciones de estas 3 características.
+En el apartado \ref{subsec:Poliglota} \nameref{subsec:Poliglota} se ha reflexionado sobre que una arquitectura basada en microservicios permite emplear diferentes tecnologías, arquitecturas y bases de datos en cada microservicio. Para validar lo que en este apartado se dice, vamos a desarrollar algunos microservicios con diferentes combinaciones de estas 3 características. Las arquitecturas de cada uno de los servicios así como las relaciones de dependencias que existen entre ellos se pueden ver en el diagrama de la figura \ref{fig:Componentes}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.35]{Componentes}
 \caption{Diagrama de componentes de la solución basada en microservicios.}
+\label{fig:Componentes}
 \end{figure}
 
 En la mayoría de microservicios vamos a seguir la arquitectura de 6 capas que se describe en la sección \ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}. Esto hará que su refactorización sea más sencilla ya que sólo debemos copiar las clases relacionadas al microservicio en cada una de las capas. 
 
-Cada microservicio tendrá su propia base de datos, aunque estas pueden localizarse dentro del mismo servidor. Para evaluar otra tecnología de base de datos, la BD del servicio de incidencias la vamos a implementar con Firebase.
+Cada microservicio tendrá su propia base de datos, aunque estas pueden localizarse dentro del mismo servidor. Para evaluar otra tecnología de base de datos, la BD del servicio de incidencias la vamos a implementar con \textbf{Firebase}.
 
 Las necesidades de cada microservicio de nuestro caso de estudio son diferentes: algunos como el de informes o notificaciones no requieren persistir datos, por lo que aplicar una arquitectura de 6 capas en ellos no es necesario. 
 
-En el microservicio de informes vamos a seguir una arquitectura más sencilla. Su lógica se situará directamente en la capa de servicios, eliminando la capa de aplicación. Las capas de dominio y persistencia también pueden ser eliminadas porque las plantillas de los informes se van a almacenar como un recurso y no en una base de datos. 
+En el microservicio de informes vamos a seguir una arquitectura más sencilla. Su lógica se situará directamente en la capa de servicios, eliminando la capa de aplicación. Las capas de dominio y persistencia también pueden ser eliminadas porque las plantillas de los informes se van a almacenar ahora como un recurso y no en una base de datos. 
 
-En cuanto al servicio de notificaciones, vamos a implementarlo en el lenguaje Java. Sin embargo, como debe ser consumido por microservicios en lenguaje C\#, construiremos un proxy en este lenguaje para hacer más fácil su consumo.
+En cuanto al servicio de notificaciones, vamos a implementarlo en el lenguaje \textbf{Java}. Sin embargo, como debe ser consumido por microservicios en lenguaje C\#, construiremos un proxy en este lenguaje para hacer más fácil su consumo.
 
-En el capítulo anterior, en las secciones \ref{subsect:CRUD} \nameref{subsect:CRUD} y \ref{subsect:Persistencia} \nameref{subsect:Persistencia} hemos nombrado algunas interfaces e implementaciones genéricas relacionadas con las entidades de dominio. Los microservicios de pedidos e incidencias deben seguir haciendo uso de estas implementaciones. En el apartado \ref{subsect:librerias} \nameref{subsect:librerias} hemos reflexionado sobre las formas de realizar componentes software. Hacer de este código común un servicio no tiene sentido porque está relacionado con el acceso a datos y cada microservicio es dueño de sus propios datos. En este caso, este código genérico lo referenciarán como una librería a través de paquetes NuGet.
+En el capítulo anterior, en las secciones \ref{subsect:CRUD} \nameref{subsect:CRUD} y \ref{subsect:Persistencia} \nameref{subsect:Persistencia} hemos nombrado algunas interfaces e implementaciones genéricas relacionadas con las entidades de dominio. Los microservicios de pedidos e incidencias deben seguir haciendo uso de estas implementaciones. Hacer de este código común un servicio no tiene sentido porque está relacionado con el acceso a datos y cada microservicio es dueño de sus propios datos. En este caso, este código genérico se referencia como una \textbf{librería} a través de paquetes NuGet, que en el diagrama de componentes se muestra con la etiqueta ``Código común".
 
 Por último, indicar que el consumo de cualquier microservicio, ya sea desde la interfaz de usuario o desde otros servicios, se realizará a través de las capas de proxy. En el diagrama de componentes no se ha incluido esta capa en la arquitectura interna de ninguno de los microservicios porque esta capa no se ejecuta en el proceso del servicio.
 
 \subsection{Organización de los microservicios}
 %Cesar de la Torre.
 
-En cuanto a la organización de los microservicios, vamos a emplear un único repositorio de código que contenga el código de todos los microservicios. Como en la solución monolítica, cada capa se representará a través de un proyecto .NET y cada microservicio tendrá una solución de VS distinta.
+En cuanto a la organización de los microservicios, vamos a emplear un único repositorio de código que contenga el código de todos los microservicios. Como en la solución monolítica, cada capa se representará a través de un proyecto .NET y cada microservicio tendrá una solución de Visual Studio distinta.
 
-En "Building Microservices", Newman reflexiona sobre esto en relación a las compilaciones de integración continua. Según él, la mejor opción es tener un repositorio y una compilación diferente para cada microservicio. De esta forma, existe una mayor correspondencia entre los servicios y los equipos encargados de cada uno porque cada equipo realiza cambios en un único repositorio. Además, se evita que un simple cambio en un microservicio lance la compilación de toda la solución \cite{Newman2015a}. En nuestro caso, no vamos a aplicar las prácticas de integración continua y tampoco tenemos equipos de trabajo distintos, por lo que será más cómodo emplear un único repositorio. Como consecuencia, esto implica que en un mismo commit (la unidad de los repositorios de código git que representa los cambios que se guardan en el repositorio) se puedan incluir cambios de diferentes microservicios.
+Newman \cite{Newman2015a} reflexiona sobre esto en relación a las compilaciones de integración continua. Según él, la mejor opción es tener un repositorio y una compilación diferente para cada microservicio. De esta forma, existe una mayor correspondencia entre los servicios y los equipos encargados de cada uno porque cada equipo realiza cambios en un único repositorio. Además, se evita que un simple cambio en un microservicio lance la compilación de toda la solución \cite{Newman2015a}. En nuestro caso, no vamos a aplicar las prácticas de integración continua y tampoco tenemos equipos de trabajo distintos, por lo que será más cómodo emplear un único repositorio. Como consecuencia, esto implica que en un mismo \textit{commit} se puedan incluir cambios de diferentes microservicios.
 
-En cuanto a la organización en soluciones en Visual Studio, en "Microservicios .NET: Arquitectura para Aplicaciones .NET Contenerizadas" se organiza el código de la aplicación desarrollada en un único repositorio con una única solución \cite{DelaTorre2018}. Creemos que esta aproximación no es la mejor. Si consideramos una solución de Visual Studio como una vista de un repositorio de código, no tiene sentido que un desarrollador que trabaja en un único repositorio vea en su solución otros microservicios distintos al suyo. Además, incluir tantos archivos en la solución aumenta su tiempo de compilación, cuando jamás se van a realizar cambios o ejecutar algunos de ellos. Por ello, hemos optado por una solución diferente para cada servicio.
+En cuanto a la organización en soluciones en Visual Studio, en \cite{DelaTorre2018} se organiza el código de la aplicación desarrollada en un único repositorio con una única solución. Creemos que esta aproximación no es la mejor. No tiene sentido que un desarrollador que trabaja en un único repositorio vea en su solución otros microservicios distintos al suyo. Además, incluir tantos archivos en la solución aumenta su tiempo de compilación, cuando jamás se van a realizar cambios o ejecutar algunos de ellos. Por ello, hemos optado por una solución diferente para cada servicio, como se muestra en la figura \ref{fig:MicroservicesSolution}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.85]{MicroservicesSolution}
 \caption{Organización de la solución basada en microservicios.}
+\label{fig:MicroservicesSolution}
 \end{figure}
 
 \section{Diferencias en la implementación respecto a la solución monolítica}
 
 \subsection{Consumo de otros microservicios} \label{subsect:Consumo}
 
-Para que un microservicio pueda hacer peticiones a otro se deben seguir los siguientes pasos:
+Para que un microservicio pueda hacer peticiones a otro, se deben seguir los siguientes pasos:
 
 \begin{enumerate}
 
-\item Instalar el paquete NuGet del microservicio a consumir en la capa de aplicación.
+\item Instalar el paquete NuGet del microservicio a consumir en la capa de aplicación (figura \ref{fig:OrdersApplicationDependencies}).
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.85]{OrdersApplicationDependencies}
 \caption{Dependencias del microservicio de pedidos en la capa de aplicación.}
+\label{fig:OrdersApplicationDependencies}
 \end{figure}
 
-\item Al registrar las dependencias de la capa de aplicación, invocar al código de la capa de proxy donde se registran las interfaces del microservicio a consumir. En la capa de proxy, las interfaces de la capa de contratos se resuelven con un proxy. Esto significa que en un microservicio cuando hagamos una petición a otro servicio a través de la interfaz se realizará una llamada HTTP a través de su proxy.
+\item Al registrar las dependencias de la capa de aplicación, invocar al código de la capa de proxy donde se registran las interfaces del microservicio a consumir (figura \ref{fig:UsingMicroservices}). Esto significa que en un microservicio cuando hagamos una petición a otro servicio a través de la interfaz se realizará una llamada HTTP a través de su proxy.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.85]{UsingMicroservices}
 \caption{Código para resolver otros microservicios consumidos.}
+\label{fig:UsingMicroservices}
 \end{figure}
 
 \item En el microservicio, inyectar en el constructor la interfaz de contratos del servicio que se desea consumir.
@@ -1439,11 +1444,11 @@ Cada servicio es soberano de sus datos y la mejor manera de conseguir esto es se
 
 No se puede realizar una transacción única que involucre a diferentes microservicios, sobretodo porque cada uno puede utilizar una tecnología de BD diferente. Las transacciones se deben implementar en la capa de aplicación y en caso de que una operación falle, se deben establecer mecanismos de compensación que reviertan los cambios hechos hasta ese punto \cite{DelaTorre2018}.
 
-Por suerte, las únicas referencias en los datos que hay entre diferentes servicios son las que hay desde incidencias y pedidos al servicio de seguridad. Tanto los pedidos, las incidencias y los comentarios están asociados a un cliente. En caso de que se borre un cliente, en cascada se deben borrar las instancias de estas entidades que tenga asociadas como si de una transacción se tratara. La operación de eliminar un cliente no está soportada por la API, por lo que no ha sido necesario implementar ninguna transacción entre microservicios.
+Por suerte, las únicas referencias en los datos que hay entre diferentes servicios son las que hay desde incidencias y pedidos al servicio de seguridad. Tanto los pedidos, las incidencias y los comentarios están asociados a un cliente. En caso de que se borre un cliente, se deben borrar en cascada las instancias de estas entidades que tenga asociadas, como si de una transacción se tratara. La operación de eliminar un cliente no está soportada por la API, por lo que no ha sido necesario implementar ninguna transacción entre microservicios.
 
-En caso de que estuviera soportada, no se puede realizar de forma atómica y la consistencia sería eventual. Un usuario podría ver un estado inconsistente del sistema si se ha eliminado un cliente en el microservicio de seguridad pero sus pedidos todavía no en el microservicio de pedidos. Se denomina eventual porque en algún punto próximo del tiempo la transacción que se ha iniciado entre diferentes microservicios para eliminar a un usuario se completará en todo el sistema.
+En caso de que estuviera soportada, no se puede realizar de forma atómica y la consistencia sería eventual. Un usuario podría ver un estado inconsistente del sistema si se ha eliminado un cliente en el microservicio de seguridad pero sus pedidos todavía no. Se denomina eventual porque en algún punto próximo del tiempo la transacción que se ha iniciado entre diferentes microservicios para eliminar a un usuario se completará en todo el sistema.
 
-En cuanto a las restricciones de integridad referencial, en una base de datos relacional se modela a través de claves externas (foreign key, FK). Dentro de la base de datos de un servicio podemos emplear FKs, como ocurre en las relaciones entre pedido y compra. Sin embargo, en las relaciones que hemos comentado con el módulo de seguridad, no se pueden emplear como tal FKs porque se referenciaría a otra base de datos. En su lugar, se almacena únicamente el identificador de la entidad referenciada y cuando se quiere acceder a ella se debe hacer una petición al servicio que la gestiona. Esto se refleja en las entidades de la capa de dominio, como se ve en la figura \ref{fig:Comment}.
+En cuanto a las restricciones de integridad referencial, en una base de datos relacional se modela a través de claves externas (\textit{foreign key}, FK). Dentro de la base de datos de un servicio podemos emplear FKs, como ocurre en las relaciones entre pedido y compra. Sin embargo, en las relaciones que hemos comentado con el módulo de seguridad, no se pueden emplear como tal FKs porque se referenciaría a otra base de datos. En su lugar, se almacena únicamente el identificador de la entidad referenciada y cuando se quiere acceder a ella se debe hacer una petición al servicio que la gestiona. Esto se refleja en las entidades de la capa de dominio, como se ve en la figura \ref{fig:Comment}.
 
 \begin{figure}[h]
 \centering
@@ -1461,36 +1466,40 @@ En cuanto a las restricciones de integridad referencial, en una base de datos re
 
 El microservicio de notificaciones ahora está desarrollado en dos lenguajes de programación distintos: Java y C\#.
 
-En C\# está desarrollado todo lo necesario para el consumo del servicio. Esto incluye la capa de contratos (donde se define su interfaz y el DTO que se empleará en la parte C\#) y la de proxy (donde se indica que la interfaz de contratos se resuelve a través del proxy, que recurre al cliente HTTP para realizar peticiones al microservicio).
+En C\# está desarrollado todo lo necesario para el consumo del servicio. Esto incluye la capa de contratos (donde se define su interfaz y el DTO que se empleará en la parte C\#) y la de proxy (donde se encuentra el cliente HTTP para realizar peticiones al microservicio). El proyecto C\# del microservicio de notificaciones se muestra en la figura \ref{fig:NotificationsC}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.85]{NotificationsC}
 \caption{Parte del microservicio de notificaciones desarrollada en C\#.}
+\label{fig:NotificationsC}
 \end{figure}
 
-En Java se han desarrollado la capa de aplicación y servicios. La implementación de la capa de aplicación para mandar un correo electrónico es trivial. Para la capa de servicios, se crea e inicia un objeto HttpServer al que se le asigna un handler.
+En Java se han desarrollado la capa de aplicación y servicios. La implementación de la capa de aplicación para mandar un correo electrónico es trivial. Para la capa de servicios, se crea e inicia un objeto HttpServer al que se le asigna un handler (clase SendNotificationHandler de la figura \ref{fig:NotificationsJava}).
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.85]{NotificationsJava}
 \caption{Parte del microservicio de notificaciones desarrollada en Java.}
+\label{fig:NotificationsJava}
 \end{figure}
 
-El handler es similar a lo que en .NET llamábamos controlador. En nuestro caso, deserializará el cuerpo (body) de la petición en un objeto empleando la librería Gson y delegará en la capa de aplicación la operación a realizar. Cuando se quiere consumir otro microservicio no podemos emplear los proxies que hemos creado para C\# porque es otro lenguaje de programación. En nuestro ejemplo, queremos contactar con el servicio de seguridad para obtener el correo electrónico de un usuario. Debemos crear un objeto para conectar a través del protocolo HTTP con el microservicio de seguridad y leer la respuesta obtenida.
+El handler es similar a lo que en .NET llamábamos controlador. En nuestro caso, deserializará el cuerpo (\textit{body}) de la petición en un objeto empleando la librería Gson y delegará en la capa de aplicación la operación a realizar. Cuando se quiere consumir otro microservicio no podemos emplear los proxies que hemos creado para C\# porque es otro lenguaje de programación. En nuestro ejemplo, queremos contactar con el servicio de seguridad para obtener el correo electrónico de un usuario. Debemos crear un objeto para conectar a través del protocolo HTTP con el microservicio de seguridad y leer la respuesta obtenida, como se ilustra en la figura \ref{fig:JavaProxy}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.85]{JavaProxy}
 \caption{Proxy del microservicio de seguridad para su consumo en Java.}
+\label{fig:JavaProxy}
 \end{figure}
 
-Por último, el archivo Dockerfile para el despliegue del servicio también varía. Vamos a seguir el mismo criterio que en los contenedores de microservicios .NET de usar los ensamblados (en este caso, un archivo *.jar) para generar la imagen con el menor número de recursos posibles. Tanto el comando para iniciar el proceso del contenedor como la imagen base se verán afectados.
+Por último, el archivo Dockerfile (figura \ref{fig:JavaDockerfile}) para el despliegue del servicio también varía. Vamos a seguir el mismo criterio que en los contenedores de microservicios .NET de usar los ensamblados (en este caso, un archivo *.jar) para generar la imagen con el menor número de recursos posibles. Tanto el comando para iniciar el proceso del contenedor como la imagen base se verán afectados.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=1]{JavaDockerfile}
 \caption{Dockerfile del microservicio de notificaciones.}
+\label{fig:JavaDockerfile}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1503,20 +1512,22 @@ Por último, el archivo Dockerfile para el despliegue del servicio también var�
 
 En el microservicio de incidencias vamos a emplear una base de datos en la plataforma Firebase. \textbf{Firebase} es una plataforma para el desarrollo de aplicaciones. Uno de los servicios que ofrece es una base de datos NoSQL en la nube en tiempo real. Los datos se almacenan en formato JSON y su acceso puede realizarse a través de peticiones HTTP. \footnote{ Documentación de Firebase Realtime Database: https://firebase.google.com/docs/database/} 
 
-Una de las principales ventajas de las bases de datos NoSQL es su escalabilidad horizontal. En lugar de tener un gran servidor para alojar una base de datos relacional, una base de datos NoSQL se puede distribuir entre diferentes máquinas. Esta funcionalidad en Firebase es de pago, por lo que no vamos a obtener grandes beneficios por emplear esta BD. Nuestro objetivo simplemente es validar que diferentes microservicios pueden emplear tecnologías de bases de datos distintas.
+Una de las principales ventajas de las bases de datos NoSQL es su escalabilidad horizontal. En lugar de tener un gran servidor para alojar una base de datos relacional, una base de datos NoSQL se puede distribuir entre diferentes máquinas. Esta funcionalidad en Firebase es de pago y no la vamos a emplear. Nuestro objetivo  es validar que diferentes microservicios pueden emplear tecnologías de bases de datos distintas. En la figura \ref{fig:Firebase} se muestra la estructura jerárquica de la BD de incidencias.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.85]{Firebase}
 \caption{Base de datos de incidencias en Firebase.}
+\label{fig:Firebase}
 \end{figure}
 
-Gracias a la arquitectura interna basada en capas, el uso de esta BD solo implica dejar de usar la implementación que se da por defecto al DAO en la librería común y programar una implementación propia que acceda a los datos a través de llamadas HTTP.
+Gracias a la arquitectura interna basada en capas, el uso de esta BD solo implica dejar de usar la implementación que se da por defecto al DAO en la librería común y programar una implementación propia que acceda a los datos de Firebase a través de llamadas HTTP. Un ejemplo de estas invocaciones se puede ver en el código de la figura \ref{fig:IncidencesDAO}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{IncidencesDAO}
 \caption{Fragmento de DAO que accede a una base de datos de Firebase.}
+\label{fig:IncidencesDAO}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1533,9 +1544,9 @@ Cada uno de los microservicios se va a desplegar de forma independiente. El cons
 
 \item  La primera situación es que el cambio \textbf{no haya supuesto un cambio en la interfaz} de la capa de contratos. En este caso, se habrá realizado un cambio a nivel de la lógica del servicio o su persistencia, como puede ser la corrección de un defecto. El cambio realizado no necesita ser conocido por sus consumidores porque están desacoplados de la implementación específica del servicio. 
 
-Los consumidores pueden seguir consumiendo la misma interfaz del servicio. Solo en caso de que se haya modificado el comportamiento del servicio (su especificación) los consumidores deberán ser notificados para adaptarse a cambios en las respuestas del servidor. Por ejemplo, se puede haber cambiado la política de permisos de un método sin haber cambiado su interfaz y ahora devuelve un error 401:Unauthorized porque es necesario otro rol para invocarlo.
+Los consumidores pueden seguir consumiendo la misma versión del servicio. Solo en caso de que se haya modificado el comportamiento del servicio (su especificación) los consumidores deberán ser notificados para adaptarse a cambios en las respuestas del servidor. Por ejemplo, se puede haber cambiado la política de permisos de un método sin haber cambiado su interfaz y ahora devuelve un error 401:Unauthorized porque es necesario otro rol para invocarlo.
 
-\item Una segunda situación consiste en que el cambio \textbf{haya significado un cambio en la interfaz} de contratos. Por ejemplo, puede ocurrir que se haya añadido un nuevo parámetro a un método o se haya cambiado el DTO de respuesta de un método. En este caso, los consumidores deben actualizar el proxy que emplean para comunicar con la nueva versión del servicio. Para asegurar que ningún consumidor se rompe por la actualización se pueden seguir dos aproximaciones según la literatura:
+\item Una segunda situación consiste en que el cambio \textbf{haya significado un cambio en la interfaz} de contratos. Por ejemplo, puede ocurrir que se haya añadido un nuevo parámetro a un método o se haya cambiado el DTO de respuesta de un método. En este caso, los consumidores deben actualizar el proxy que emplean para comunicar con la nueva versión del servicio. Para asegurar que ningún consumidor se rompe por la actualización se pueden seguir dos aproximaciones, según la literatura:
 
 %TODO Esto está muy relacionado con los despliegues V-A y canary releases.
 \begin{itemize}
@@ -1559,12 +1570,13 @@ En nuestro caso de estudio, tenemos control de todos los consumidores ya que la 
 \label{fig:Csproj}
 \end{figure}
 
-A estas variables se les da valor en un archivo llamado Versions.props. Este archivo está centralizado y es común para todos los servicios para que todos ellos referencien a la misma versión de otro microservicio. \footnote{ Common MSBuild properties and items with Directory.Build.props: https://www.thomaslevesque.com/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/} Cuando se realice un cambio que cambie la interfaz de un servicio, la versión de este se incrementará en una unidad. Los consumidores deberán ser modificados para adaptarse al cambio de la interfaz y deberán desplegarse también. Como se puede ver en el archivo, la versión de cada servicio evoluciona de forma separada.
+A estas variables se les da valor en un archivo llamado \textit{Versions.props}. Este archivo está centralizado y es común para todos los servicios para que todos ellos referencien a la misma versión de otro microservicio. \footnote{ Common MSBuild properties and items with Directory.Build.props: https://www.thomaslevesque.com/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/} Cuando se realice un cambio que cambie la interfaz de un servicio, la versión de este se incrementará en una unidad. Los consumidores deberán ser modificados para adaptarse al cambio de la interfaz y deberán desplegarse también. Como se puede ver en el archivo (figura \ref{fig:Versionsprops}), la versión de cada servicio evoluciona de forma separada.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.9]{Versionsprops}
 \caption{Archivo Versions.props con las versiones de los microservicios.}
+\label{fig:Versionsprops}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1576,7 +1588,7 @@ A estas variables se les da valor en un archivo llamado Versions.props. Este arc
 
 Para que la UI emplee los microservicios que se han creado se debe sustituir el proxy monolítico por los proxies de los microservicios de Seguridad, Incidencias y Pedidos. Esto se hace eliminando el paquete NuGet del proxy monolítico e instalando los tres paquetes nuevos.
 
-Una vez hecho esto, habrá que corregir las referencias a diferentes espacios de nombres. Los espacios de nombre de la solución monolítica a la solución basada en microservicios se han modificado para distinguir clases de ambas soluciones que se llaman igual. Otro cambio que se debe realizar, como muestra la figura \ref{fig:ChangesUI} es invocar el código para resolver las interfaces de contratos con los proxies.
+Una vez hecho esto, habrá que corregir las referencias a diferentes espacios de nombres. Los espacios de nombre de la solución monolítica a la solución basada en microservicios se han modificado para distinguir clases de ambas soluciones que se llaman igual. Otro cambio que se debe realizar, como muestra la figura \ref{fig:ChangesUI}, es invocar el código para resolver las interfaces de contratos con los proxies.
 
 \begin{figure}[h]
 \centering
@@ -1585,36 +1597,36 @@ Una vez hecho esto, habrá que corregir las referencias a diferentes espacios de
 \label{fig:ChangesUI}
 \end{figure}
 
-%TODO Explicar appsettings
-
 \section{Adaptación de las pruebas}
 
 De la misma forma que se han migrado las clases de cada una de las entidades a un microservicio específico, las pruebas también se situarán en el contexto de un servicio.
 
 En la sección \ref{sect:MonoPruebas} \nameref{sect:MonoPruebas} hemos visto que la mayoría de pruebas realizadas eran de integración porque representaban un caso de uso de la aplicación. Vamos a emplear la clasificación de pruebas hemos presentado en el apartado \ref{sect:FasePruebas} \nameref{sect:FasePruebas}. Las pruebas de integración pasarán ahora a denominarse pruebas de servicio, si toda la lógica que necesita se encuentra en un único servicio, o de extremo a extremo, si involucra para su ejecución más de un servicio.
 
-De las pruebas realizadas en la solución monolítica, la mayoría se transformarán en pruebas de servicio. Sin embargo, servicios como los de incidencias o pedidos dependen del de seguridad para realizar muchos de los casos de uso en los que se requiere obtener datos de un cliente. Para evitar tener que representar estas pruebas como de extremo a extremo, mucho más costosas, se empleará un fake del servicio de seguridad. Si recordamos, en la solución monolítica ya hemos tenido que emplear un fake porque algunas clases de Identity trataban de acceder a la base de datos de usuarios. Ahora, el fake será de la interfaz de contratos de seguridad y devolverá, por ejemplo, los datos de un usuario falso cuando se requiera uno por su identificador.
+De las pruebas realizadas en la solución monolítica, la mayoría se transformarán en pruebas de servicio. Sin embargo, servicios como los de incidencias o pedidos dependen del de seguridad para realizar muchos de los casos de uso en los que se requiere obtener datos de un cliente. Para evitar tener que representar estas pruebas como de extremo a extremo (mucho más costosas) se empleará un \textit{fake} del servicio de seguridad. Si recordamos, en la solución monolítica ya hemos tenido que emplear un \textit{fake} porque algunas clases de Identity trataban de acceder a la base de datos de usuarios. Ahora, el \textit{fake} será de la interfaz de contratos de seguridad y devolverá, por ejemplo, los datos de un usuario falso cuando se requiera uno por su identificador. Esto se ilustra en el código de la figura \ref{fig:FakeSecurityManager}.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{FakeSecurityManager}
 \caption{Fake de la interfaz de contratos del servicio de seguridad.}
+\label{fig:FakeSecurityManager}
 \end{figure}
 
-Algunas pruebas han tenido que implementarse obligatoriamente como pruebas de extremo a extremo. Es el caso de la prueba para la generación de una factura. En este tipo de prueba se hará uso de la clase de ASP .NET Core TestServer. TestServer permite la creación de un servidor en memoria para pruebas que redirige las peticiones que recibe hacia los controladores que representa. \footnote{ In-Memory ASP.NET Core Integration Tests with TestServer: https://visualstudiomagazine.com/articles/2017/07/01/testserver.aspx} De esta forma, las depenendencias que tiene un servicio como pedidos para las pruebas quedan suplidas con un servidor que responde tal y como lo haría el servicio de informes y no como un fake.
+Algunas pruebas han tenido que implementarse obligatoriamente como pruebas de extremo a extremo. Es el caso de la prueba para la generación de una factura. En este tipo de prueba se hará uso de la clase de ASP .NET Core \textit{TestServer}. \textit{TestServer} permite la creación de un servidor en memoria para pruebas, que redirige las peticiones que recibe hacia los controladores que representa. \footnote{ In-Memory ASP.NET Core Integration Tests with TestServer: https://visualstudiomagazine.com/articles/2017/07/01/testserver.aspx} De esta forma, las depenendencias que tiene un servicio como el de pedidos para las pruebas quedan suplidas con un servidor que responde tal y como lo haría el servicio de informes y no como un \textit{fake}. En la siguiente figura se muestra un ejemplo de uso de la clase \textit{TestServer} en las pruebas.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.7]{TestServer}
-\caption{Fake de la interfaz de contratos del servicio de seguridad.}
+\caption{Uso de TestServer para simular el microservicio de informes.}
 \end{figure}
 
-Otras pruebas que se han modificado son las del microservicio de incidencias. En las pruebas de servicios que emplean SQL se crea una base de datos de este tipo en memoria. La base de datos de incidencias ahora es Firebase y en Entity Framework no existe la funcionalidad de hacer BD en memoria para este proveedor. Para que las pruebas del servicio no dejen de cubrir código de la capa de persistencia, las pruebas escribirán en la base de datos de Firebase y eliminarán el contenido que han escrito en un método tear down. Esto no es necesario en las bases de datos en memoria porque son eliminadas al final de cada prueba.
+Otras pruebas que se han modificado son las del microservicio de incidencias. En las pruebas de servicios que emplean SQL se crea una base de datos de este tipo en memoria. La base de datos de incidencias ahora es Firebase y en Entity Framework no existe la funcionalidad de hacer BD en memoria para este proveedor. Para que las pruebas del servicio no dejen de cubrir código de la capa de persistencia, las pruebas escribirán en la base de datos de Firebase y eliminarán el contenido que han escrito en un método \textit{tear down} (figura \ref{fig:TearDown}). Esto no es necesario en las bases de datos en memoria porque son eliminadas al final de cada prueba.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.6]{TearDown}
 \caption{Método para eliminar registros escritos durante las pruebas del servicio de incidencias.}
+\label{fig:TearDown}
 \end{figure}
 
 Otra posible opción habría sido crear una base de datos de Firebase distinta la de producción y a la que apuntaran las pruebas. Con esta solución se habría tenido que implementar igualmente un método para eliminar el contenido escrito durante la prueba o de otra forma se crearía contenido duplicado en esta BD.
@@ -1623,8 +1635,7 @@ Otra posible opción habría sido crear una base de datos de Firebase distinta l
 
 Una de las características de los microservicios que más se ha repetido en la memoria es que se pueden desplegar de forma independiente. Esto es así porque cada uno de los microservicios se va a desplegar como un contenedor independiente, a diferencia de la solución monolítica donde sólo había un Dockerfile y un contenedor. Por eso, en total existirán simultáneamente un total de 5 contenedores. Para agilizar el proceso de construcción de las imágenes e inicio de los contenedores haremos uso de Docker Compose. 
 
-Docker Compose es una herramienta para definir y ejecutar aplicaciones formadas por más de un contenedor Docker. Los servicios que forman la aplicación tienen su propio Dockerfile y se definen dentro de un archivo YAML para que con un único comando se inicie la aplicación al completo. \footnote{ Overview of Docker Compose
-: https://docs.docker.com/compose/overview/} 
+Docker Compose es una herramienta para definir y ejecutar aplicaciones formadas por más de un contenedor Docker. Los servicios que forman la aplicación tienen su propio Dockerfile y se definen dentro de un archivo YAML para que con un único comando se inicie la aplicación al completo. \footnote{ Overview of Docker Compose: https://docs.docker.com/compose/overview/} 
 
 En la figura \ref{fig:Compose} se puede ver un extracto de este archivo. En él se ve como para cada contenedor que se debe ejecutar se especifica un nombre para la imagen que se va crear a partir del Dockerfile y la ubicación de este. Además, se pueden añadir parámetros, como los que se añaden al comando ``docker run" para la ejecución de un contenedor, para relacionar los puertos que emplea el contenedor y los del host donde se ejecuta.
 
@@ -1664,19 +1675,21 @@ A continuación, revisaremos como una arquitectura monolítica y una basada en m
 
 \subsection{Mantenimiento correctivo}
 
-El mantenimiento correctivo consiste en una modificación del producto software una vez se ha entregado para corregir un error detectado \cite{Bourque2014}. En piezas de código muy largas resulta difícil encontrar dónde se encuentra un defecto. Gracias al diseño modular de las arquitecturas orientadas a servicios, un defecto será más fácil de localizar. A nivel de código, clases que deben modificarse como un conjunto para corregir un defecto estarán en el mismo microservicio.
+El \textbf{mantenimiento correctivo} consiste en una modificación del producto software una vez se ha entregado para corregir un error detectado \cite{Bourque2014}. En piezas de código muy largas resulta difícil encontrar dónde se encuentra un defecto. Gracias al diseño modular de las arquitecturas orientadas a servicios, un defecto será más fácil de localizar. A nivel de código, clases que deben modificarse como un conjunto para corregir un defecto estarán en el mismo microservicio.
 
 En el caso de estudio, un fallo, por ejemplo, en la creación de un pedido se localizará en el microservicio de pedidos. En la misma solución monolítica, si las responsabilidades de las clases no están bien delimitadas, se deberá buscar entre más código para encontrar el defecto.
 
-Sin embargo, esto no siempre es así: dependerá de la interacción entre los servicios. Si para ofrecer una funcionalidad se encadenan muchas peticiones entre servicios diferentes, entender el flujo de invocaciones será más difícil. La interacción basada en eventos también disminuye la comprensión de las comunicaciones. En consecuencia, el proceso de depuración para detectar un defecto será más costoso. Los tokens de correlación son un mecanismo que pueden facilitar esta tarea. Con ellos, se pasa el mismo identificador en cada invocación que se realiza a otro servicio para obtener trazabilidad \cite{Baum2016}.
+Sin embargo, esto no siempre es así: dependerá de la interacción entre los servicios. Si para ofrecer una funcionalidad se encadenan muchas peticiones entre servicios diferentes, entender el flujo de invocaciones será más difícil. La interacción basada en eventos también disminuye la comprensión de las comunicaciones. En consecuencia, el proceso de depuración para detectar un defecto será más costoso. 
 
-Por ejemplo, si se observa un fallo de que no se genera correctamente una factura para un cliente, existirán tres microservicios implicados: los de seguridad, informes y pedidos. Para depurar la funcionalidad hace falta una instancia de cada uno de ellos en ejecución. En cambio, en la solución monolítica basta con instanciar un único servicio, el del monolito completo. Además, en él todas las llamadas se realizarán en el mismo proceso.
+Los tokens de correlación son un mecanismo que pueden facilitar esta tarea. Con ellos, se pasa el mismo identificador en cada invocación que se realiza a otro servicio para obtener trazabilidad \cite{Baum2016}.
+
+Por ejemplo, si se observa un fallo de que no se genera correctamente una factura para un cliente, existirán tres microservicios implicados: los de seguridad, informes y pedidos. Para depurar la funcionalidad hace falta una instancia de cada uno de ellos en ejecución. En cambio, en la solución monolítica basta con instanciar un único servicio, el del monolito completo, donde todas las llamadas se realizarán en el mismo proceso.
 
 \subsection{Mantenimiento perfectivo}
 
 %TODO Añadir la defincion de Sommerville
 
-Según la ISO/IEC 14764, el mantenimiento pefectivo es una modificación de un producto software una vez se ha entregado para proveer mejoras a sus usuarios, mejorar la documentación del programa o atributos del software como el rendimiento o la mantenibilidad \cite{Bourque2014}. Según Sommerville, este tipo de mantenimiento se origina cuando los requisitos del sistema cambian para responder a un cambio en el negocio. Además, el tamaño de la modificación a realizar es normalmente superior al de modificaciones asociadas al del resto de tipos de mantenimiento \cite{Sommerville2010}.
+Según la ISO/IEC 14764, el \textbf{mantenimiento pefectivo} es una modificación de un producto software una vez se ha entregado para proveer mejoras a sus usuarios, mejorar la documentación del programa o atributos del software como el rendimiento o la mantenibilidad \cite{Bourque2014}. Según Sommerville, este tipo de mantenimiento se origina cuando los requisitos del sistema cambian para responder a un cambio en el negocio. Además, el tamaño de la modificación a realizar es normalmente superior al de modificaciones asociadas al del resto de tipos de mantenimiento \cite{Sommerville2010}.
 
 Como hemos comentado en el apartado \ref{subsect:Descomposicion} \nameref{subsect:Descomposicion}, el hecho de que se divida la solución en contextos bien delimitados hará que los nuevos requisitos encajen mejor en uno de ellos.
 
@@ -1686,20 +1699,20 @@ En caso de que no se pueda situar en ninguno de los contextos delimitados, es pr
 
 El problema al que nos podemos enfrentar es que un nuevo requisito nos haga plantearnos nuestro diseño. En la solución basada en microservicios, si se desea añadir una nueva funcionalidad tal que una incidencia tenga que tener siempre asociado un pedido, se estarán relacionando entidades de distintos contextos. 
 
-Esto no es un problema y puede gestionarse a través de mecanismos para la consistencia eventual. Con estos mecanismos, si se elimina por ejemplo un pedido, el cambio se propagaría hasta el microservicio de incidencias para que actuase en consecuencia borrando las incidencias asociadas. En definitiva, aunque se puedan implementar manteniendo los límites de los servicios, puede ser interesante replantearse estos límites de acuerdo a los nuevos requisitos funciones.
+Esto no es un problema y puede gestionarse a través de mecanismos para la consistencia eventual. Con estos mecanismos, si se elimina por ejemplo un pedido, el cambio se propagaría hasta el microservicio de incidencias para que actuase en consecuencia borrando las incidencias asociadas. En definitiva, aunque se puedan implementar estos cambios manteniendo los mismos límites en los servicios, puede ser interesante replantearse estos límites de acuerdo a los nuevos requisitos funcionales.
 
 \subsection{Mantenimiento adaptativo}
 % Migrar a una nueva plataforma
 
-El mantenimiento adaptativo se define como la modificación de un producto software tras su entrega para que sea utilizable en un nuevo entorno \cite{Bourque2014}. Según Sommerville, estos cambios pueden deberse, por ejemplo, a cambios en el hardware, la plataforma donde opera el sistema o cambios en productos software de los que se depende \cite{Sommerville2010}. En este tipo de mantenimiento, una arquitectura basada en microservicios presenta grandes beneficios que vamos a explicar siguiendo los 3 ejemplos de Sommerville.
+El \textbf{mantenimiento adaptativo} se define como la modificación de un producto software tras su entrega para que sea utilizable en un nuevo entorno \cite{Bourque2014}. Según Sommerville, estos cambios pueden deberse, por ejemplo, a cambios en el hardware, la plataforma donde opera el sistema o cambios en productos software de los que se depende \cite{Sommerville2010}. En este tipo de mantenimiento, una arquitectura basada en microservicios presenta grandes beneficios que vamos a explicar siguiendo los 3 ejemplos de Sommerville.
 
-En primer lugar, al poderse desplegar de forma independiente, el alcance de un cambio en el hardware influirá será menor. Cada servicio se puede desplegar en un hardware diferente de acuerdo a sus necesidades. En consecuencia, el aprovechamiento de los recursos es mayor. Microservicios que requieren mayor rendimiento se pueden ubicar en servidores con mayores prestaciones. Si nos situamos en el contexto de nuestro caso de estudio, los microservicios de incidencias y pedidos pueden situarse en un servidor con mayor CPU y RAM. En caso de que se detecte que las prestaciones hardware comienzan a deteriorarse para albergar ambos servicios en el mismo servidor, podemos migrar uno de ellos a otro servidor. 
+En primer lugar, al poderse desplegar de forma independiente, el alcance de un cambio en el hardware será menor. Cada servicio se puede desplegar en un hardware diferente de acuerdo a sus necesidades. En consecuencia, el aprovechamiento de los recursos es mayor. Microservicios que requieren mayor rendimiento se pueden ubicar en servidores con mayores prestaciones. Si nos situamos en el contexto de nuestro caso de estudio, los microservicios de incidencias y pedidos pueden situarse en un servidor con mayor CPU y RAM. En caso de que se detecte que las prestaciones hardware comienzan a deteriorarse por albergar ambos servicios en el mismo servidor, podemos migrar uno de ellos a otro servidor. 
 
 En una arquitectura monolítica, al desplegarse todo el back-end como un conjunto las prestaciones hardware del servidor han de ser superiores para soportar todas las peticiones que recibe el monolito. En caso de que se requiera migrar a otro servidor, se ha de migrar todo el sistema como un conjunto.
 
-En segundo lugar, en un sistema basado en microservicios, gracias a su integración interprocedural, la plataforma donde operan diferentes servicios puede ser distintos. Por ejemplo, el microservicio de incidencias podría ejecutarse en AWS mientras que el resto del sistema se encontrara en la plataforma de Azure. Obviamente, no podemos decir lo mismo de un sistema monolítico.
+En segundo lugar, en un sistema basado en microservicios, gracias a su integración interprocedural, la plataforma donde operan diferentes servicios puede ser distinta. Por ejemplo, el microservicio de incidencias podría ejecutarse en AWS mientras que el resto del sistema se encontrara en la plataforma de Azure. Obviamente, no podemos decir lo mismo de un sistema monolítico.
 
-En tercer lugar, las dependencias del software se pueden gestionar a un nivel más granular en un sistema basado en microservicios. Por ejemplo, puede ocurrir que un sistema necesite ejecutarse en .NET Framework para emplear una librería que no sea multiplataforma. En una arquitectura basada en microservicios, esa librería solo se empleará en un contexto bien delimitado, por lo que solo hará falta tener un servicio en este framework. En cambio, en un sistema monolítico para poder emplearla todo el sistema debería estar en este framework, lo que resulta muy restrictivo si se desea hacer un sistema multiplataforma.
+En tercer lugar, las dependencias del software se pueden gestionar a un nivel más granular en un sistema basado en microservicios. Por ejemplo, puede ocurrir que un sistema necesite ejecutarse en .NET Framework para emplear una librería que no sea multiplataforma. En una arquitectura basada en microservicios, esa librería solo se empleará en un servicio bien delimitado, por lo que solo hará falta tener este servicio en .NET Framework. En cambio, en un sistema monolítico para poder emplear la librería, todo el sistema debería estar en este framework, lo que resulta muy restrictivo si se desea hacer un sistema multiplataforma.
 
 Lo mismo ocurre con la versión de una librería. Diferentes servicios pueden emplear versiones diferentes de ella. Así, si se tiene que actualizar la librería, solo hará falta hacerlo en un microservicio y no en todo el sistema, disminuyendo sus posibles efectos secundarios.
 
@@ -1709,7 +1722,7 @@ Ahora, revisaremos las soluciones frente a diferentes requisitos no funcionales 
 
 \subsection{Disponibilidad}
 
-La disponibilidad de un servicio se puede definir como la habilidad de un consumidor para conectarse a él y enviarle peticiones \cite{Richards2016}. Para que un sistema esté disponible se han de implementar mecanismos conformes a sus necesidades para reaccionar automáticamente al incremento de carga o a un fallo \cite{Newman2015a}.
+La \textbf{disponibilidad} de un servicio se puede definir como la habilidad de un consumidor para conectarse a él y enviarle peticiones \cite{Richards2016}. Para que un sistema esté disponible se han de implementar mecanismos conformes a sus necesidades para reaccionar automáticamente al incremento de carga o a un fallo \cite{Newman2015a}.
 
 En la solución basada en microservicios, se ha garantizado la disponibilidad frente a algunas situaciones gracias a Kubernetes. Para cada uno de los microservicios desplegados se puede establecer el número de replicas que en todo momento se desea tener de él. Esto nos garantiza que en caso de fallo el microservicio se recupere rápidamente. 
 
@@ -1717,15 +1730,15 @@ Sin embargo, no se ha implementado ningún mecanismo para reaccionar automática
 
 \subsection{Tolerancia a fallos}
 
-Un sistema debe ser capaz de tolerar fallos y continuar trabajando. En las arquitecturas SOA, la integración entre servicios está muy ligada a como se gestionan los fallos: se debe asumir que cualquier servicio puede estar inoperativo. Por ejemplo, cuando se realiza una petición, no se puede esperar indefinidamente a que un servicio responda \cite{Newman2015a}.
+Un sistema debe ser capaz de \textbf{tolerar fallos} y continuar trabajando. En las arquitecturas SOA, la integración entre servicios está muy ligada a como se gestionan los fallos: se debe asumir que cualquier servicio puede estar inoperativo. Por ejemplo, cuando se realiza una petición, no se puede esperar indefinidamente a que un servicio responda \cite{Newman2015a}.
 
-En nuestro caso de estudio, este problema está presente en las dos soluciones implementadas. El front-end comunica con el back-end a través de llamadas HTTP, al igual que ocurre entre los propios microservicios de la segunda solución. En ambas soluciones, para limitar el tiempo de espera se emplean timeouts, tal que si una petición no obtiene una respuesta esta se considera un fallo.
+En nuestro caso de estudio, este problema está presente en las dos soluciones implementadas. El \textit{front-end} comunica con el \textit{back-end} a través de llamadas HTTP, al igual que ocurre entre los propios microservicios de la segunda solución. En ambos sistemas, para limitar el tiempo de espera se emplean \textit{timeouts}, tal que si una petición no obtiene una respuesta esta se considera un fallo.
 
-Sin embargo, el uso de timeotus no es una solución aconsejable debido al valor que se le debe dar a la espera. No se puede poner un límite demasiado bajo porque trataría como errores respuestas que han tardado más de lo debido. Tampoco puede ser muy alto, o se tardaría mucho en devolver un error, sobretodo cuando se encadenan diferentes llamadas.
+Sin embargo, el uso de \textit{timeotus} no es una solución aconsejable debido al valor que se le debe dar a la espera. No se puede poner un límite demasiado bajo porque trataría como errores respuestas que han tardado más de lo debido. Tampoco puede ser muy alto, o se tardaría mucho en devolver un error, sobretodo cuando se encadenan diferentes llamadas.
 
 Una solución pasa por usar un patrón de cortocircuitos. Los cortocircuitos monitorizan continuamente el estado de un servicio. Si detectan que un servicio no responde cierto número de peticiones, el cortocircuito pasa a un estado en el que rechaza cualquier petición para que estas fallen rápidamente. Cuando el servicio vuelve a estar operativo, el cortocircuito comienza a aceptar de nuevo peticiones \cite{Richards2016}.
 
-También se ha de proteger el sistema de los fallos de infraestructura. La mejor manera de hacer un sistema tolerante a este tipo de fallos es no situar todos sus servicios en una misma infraestructura, ya sea una máquina física, red, etc. Así, se consigue que no haya un único punto de fallo \cite{Newman2015a}. En la solución del caso de estudio basada en microservicios, esto se consigue gracias al uso de Kubernetes, como hemos comentado en el apartado anterior.
+También se ha de proteger el sistema de los fallos de infraestructura. La mejor manera de hacer un sistema tolerante a este tipo de fallos es no situar todos sus servicios en una misma infraestructura, ya sea una máquina física, red, etc. Así, se consigue que no haya un único punto de fallo \cite{Newman2015a}. En la solución del caso de estudio basada en microservicios, esto se consigue gracias al uso de Kubernetes.
 
 El uso de diferentes bases de datos y no una única como hay en la solución monolítica también hace que en los datos no haya un único punto de fallo. No obstante, se podrían haber empleado tecnologías de bases de datos distribuidas (BDD) como MongoDB para garantizar esta característica a nivel de cada microservicio.
 
@@ -1736,9 +1749,9 @@ Por último, organizaciones como Netflix prueban la tolerancia a fallos de sus s
 
 Los microservicios son una solución para afrontar problemas inherentes a productos de software de gran tamaño. Estos sistemas pueden llegar a descomponerse en cientos de pequeños servicios. Mientras que, según la teoría, en estos sistemas si que se observa un mejor aprovechamiento de los recursos por emplear microservicios \cite{DelaTorre2018}, en nuestro caso de estudio no. Por ejemplo, aunque hayamos hecho una solución basada en microservicios no hemos desplegado el servicio de pedidos en un hardware con mejores prestaciones, al igual que tampoco hemos hecho la situación inversa con los servicios que reciben menos peticiones.
 
-En el siguiente estudio \cite{Amaral2016}, realizado en la Universidad Politécnica de Cataluña junto con la organización IBM, se evalúa el uso de recursos de un servicio desplegado en diferentes configuraciones de contenedores y en una máquina virtual. En su primer experimento se evalúa el uso que hacen de CPU, que es similar tanto en la MV como en los contenedores. También se evalúa el tiempo que consume la creación del servicio, donde en todos los escenarios el tiempo de desplegar el servicio en un MV es al menos es el doble que en un contenedor. En los últimos experimentos se evalúa el uso que hacen de la red. En este aspecto se puede concluir que, para las invocaciones que se hacen dentro del mismo host, los contenedores ofrecen un mejor rendimiento, mientras que para las llamadas fuera del host, el rendimiento de ambas tecnologías es similar.
+En el siguiente estudio \cite{Amaral2016}, realizado en la Universidad Politécnica de Cataluña junto con la organización IBM, se evalúa el uso de recursos de un servicio desplegado en diferentes configuraciones de contenedores y en una máquina virtual. En su primer experimento, se evalúa el uso que hacen de CPU, que es similar tanto en la MV como en los contenedores. También se evalúa el tiempo que consume la creación del servicio, donde en todos los escenarios el tiempo de desplegar el servicio en un MV es al menos es el doble que en un contenedor. En los últimos experimentos se evalúa el uso que hacen de la red. En este aspecto se puede concluir que, para las invocaciones que se hacen dentro del mismo host, los contenedores ofrecen un mejor rendimiento, mientras que para las llamadas fuera del host, el rendimiento de ambas tecnologías es similar.
 
-Durante el desarrollo, tanto el sistema basado en microservicios como el monolítico se han desplegado en contenedores. Con el comando \textbf{docker stats} podemos obtener estadísticas sobre el uso de recursos que hacen los contenedores en ejecución. El resultado de aplicarlo en el entorno de desarrollo y con los servicios sin recibir peticiones se puede ver en la figura \ref{fig:UsoRecursos}. No se aprecia una gran diferencia en el uso de recursos del contenedor monolítico (shopmonolithic) y un contenedor de un microservicio. Los contenedores basados en una imagen .NET hacen un mayor uso de memoria. Estos también tienen un tamaño de la imagen Docker superior: alrededor de 1,8 GB frente a los 644 MB que emplea el microservicio de notificaciones, basado en una imagen java.
+Durante el desarrollo, tanto el sistema basado en microservicios como el monolítico se han desplegado en contenedores. Con el comando \textbf{docker stats} podemos obtener estadísticas sobre el uso de recursos que hacen los contenedores en ejecución. El resultado de aplicarlo en el entorno de desarrollo y con los servicios sin recibir peticiones se puede ver en la figura \ref{fig:UsoRecursos}. No se aprecia una gran diferencia en el uso de recursos del contenedor monolítico (shopmonolithic) y un contenedor de un microservicio. Los contenedores basados en una imagen .NET hacen un mayor uso de memoria. Estos también tienen un tamaño de la imagen Docker superior: alrededor de 1,8 GB frente a los 644 MB que emplea el microservicio de notificaciones, basado en una imagen Java.
 
 \begin{figure}[h]
 \centering
@@ -1755,32 +1768,32 @@ En resumen, en el caso de estudio no se han apreciado grandes diferencias en el 
 
 Los microservicios incrementan la facilidad de cambio de un producto software. Un cambio en un único servicio se despliegue de manera independiente y llega al cliente final de forma más rápida si se siguen prácticas como las de entrega continua.
 
-La capacidad para ser reemplazado está estrechamente relacionada con la facilidad de cambio. El uso de interfaces en la capa de contratos, por ejemplo, hace que un microservicio pueda ser modificado y reemplazado fácilmente. El componente sustituto puede estar implementada con otra tecnología si respeta la vieja interfaz. 
+La \textbf{capacidad para ser reemplazado} está estrechamente relacionada con la facilidad de cambio. El uso de interfaces en la capa de contratos, por ejemplo, hace que un microservicio pueda ser modificado y reemplazado fácilmente. El componente sustituto puede estar implementada con otra tecnología si respeta la vieja interfaz.
 
 Si recordamos el cronograma que hemos explicado en el apartado \ref{sct:PlanTrabajo} \nameref{sct:PlanTrabajo}, la refactorización de la solución monolítica para generar cualquiera de los servicios apenas se ha prolongado por más de un día (las tareas que empiezan su nombre con la palabra ``microservicio"). A esto habría que incluirle el tiempo que se ha tardado en desarrollar la lógica del servicio durante el desarrollo de la solución monolítica (las tareas que empiezan su nombre con la palabra ``implementación"). En comparación, el desarrollo de la solución monolítica en su totalidad se ha prolongado durante casi un mes (desde el día 19 de Junio hasta el día 16 de Julio).
 
-El desarrollo de cada microservicio apenas ha costado dos semanas, tal y como dice la regla de Jon Eaves que hemos explicado en el apartado \ref{subsect:RNF} \nameref{subsect:RNF}. Si un componente del software debe ser reemplazado, puede ocurrir que en la solución basada en microservicios solo se tenga que reemplazar un microservicio mientras que en la solución monolítica se tenga que adaptar todo el monolito. Si consideramos que el tiempo para desarrollar un componente software que remplaza a otro es similar al tiempo que costó desarrollar el segundo, reemplazar la solución monolítica será más costoso que reemplazar un único microservicio. Si nos situamos en un caso más extremo en el que se tuviera que reemplazar todo el sistema basado en microservicios, este problema podría abordarse de forma incremental por la modularidad de la solución. De nuevo, no se puede afirmar lo mismo de la solución monolítica.
+Tras sumar estos tiempos, se observa que el desarrollo de cada microservicio apenas ha costado dos semanas, tal y como se estima que debería ser en el apartado \ref{subsect:RNF} \nameref{subsect:RNF}. Si un componente del software debe ser reemplazado, puede ocurrir que en la solución basada en microservicios solo se tenga que reemplazar un microservicio mientras que en la solución monolítica se tenga que adaptar todo el monolito. Si consideramos que el tiempo para desarrollar un componente software que remplaza a otro es similar al tiempo que costó desarrollar al original, reemplazar la solución monolítica será más costoso que reemplazar un único microservicio. Si nos situamos en un caso más extremo en el que se tuviera que reemplazar todo el sistema basado en microservicios, este problema podría abordarse de forma incremental por la modularidad de la solución. De nuevo, no se puede afirmar lo mismo de la solución monolítica.
 
 \section{Otras posibles soluciones}
 %Reports y notifications como una librería porque no requieren desplegarse frecuentemente y ahorras en llamadas HTTP.
 %Services y application combinados
 %Notificaciones como una librería: tendría que estar desarrollado en C# para poderse usar por los microservicios de esta tecnología
 
-Tanto el back-end monolítico como el basado en microservicios representan uno de los posibles diseños que se pueden emplear para implementar el sistema especificado. Otras soluciones pueden ofrecer los mismos requisitos funcionales pero con distintos atributos de calidad.
+Tanto el \textit{back-end} monolítico como el basado en microservicios representan uno de los posibles diseños que se pueden emplear para implementar el sistema especificado. Otras soluciones pueden ofrecer los mismos requisitos funcionales pero con distintos atributos de calidad.
 
 Respecto a la solución monolítica, para un caso de estudio como el que hemos presentado es posible que no sea necesario una arquitectura de 6 capas. Se podía haber seguido un diseño más simple, como el que se presenta para el microservicio de informes en la solución basada en servicios. 
 
-Las capas de aplicación y servicios se podían haber combinado en una única siempre que se mantenga el principio de responsabilidad única de una clase. Los controladores de la capa de servicios definían el método HTTP expuesto en la API del back-end, mientras que los managers de aplicación contenían la lógica de la operación. Aunque se combinasen ambas capas, se debería seguir manteniendo este criterio y mantener ambos tipos de clases.
+Las capas de aplicación y servicios se podían haber combinado en una única siempre que se mantenga el principio de responsabilidad única de una clase. Los controladores de la capa de servicios definían el método HTTP expuesto en la API del \textit{back-end}, mientras que los \textit{managers} de aplicación contenían la lógica de la operación. Aunque se combinasen ambas capas, se debería seguir manteniendo este criterio y mantener ambos tipos de clases.
 
 Las capas de persistencia y dominio también podrían combinarse en una única. La capa de aplicación depende de ambas y la capa de persistencia depende de la de dominio. En nuestro caso de estudio, la capa de dominio solo contiene las entidades que hemos identificado en el modelo de dominio. Almacenarlas en la capa de persistencia, que es la capa que principalmente las emplea para implementar las operaciones CRUD a través de Entity Framework, no traería efectos adversos.
 
 En cuanto a la solución basada en microservicios, se puede ver claramente que algunos de los servicios desarrollados solo son invocados por un consumidor. Concretamente, los servicios de informes y notificaciones son solo invocados por el servicio de pedidos. Esto debería conducirnos a razonar sobre si es beneficiosos combinar los tres en un único servicio. 
 
-Gracias a su implementación, tanto el servicio de informes como el de notificaciones están desacoplados de los datos que requieren para realizar su función porque estos son transferidos como parámetros del método. Esto se ha hecho así para facilitar su invocación por cualquier servicio. Por ejemplo, el servicio de informes se podría haber implementado para que expusiera él directamente todos los informes que puede generar. Sin embargo, esto habría supuesto que tuviera una dependencia con todos los servicios de los que necesitara obtener datos. Como se desea mantener que puedan seguir siendo invocados desde cualquier otro servicio, no vamos a combinarlos con el servicio de pedidos.
+Gracias a su implementación, tanto el servicio de informes como el de notificaciones están desacoplados de los datos que requieren para realizar su trabajo porque estos son transferidos como parámetros del método. Se ha hecho así para facilitar su invocación por cualquier servicio. Por ejemplo, el servicio de informes se podría haber implementado para que expusiera él directamente todos los informes que puede generar. Sin embargo, esto habría supuesto que tuviera una dependencia con todos los servicios de los que necesitara obtener datos. Como se desea mantener que puedan seguir siendo invocados desde cualquier otro servicio, no vamos a combinarlos con el servicio de pedidos.
 
 No obstante, podemos plantearnos si realmente vale la pena representar estos componentes de software como microservicios. Por ejemplo, si observamos que apenas se modifican una vez implementados, sería buena idea representarlos como una librería y no como un servicio. Así, el sobrecoste asociado a las invocaciones a través de la red se reduciría a cambio de no poder desplegarlos de forma independiente.
 
-Otra consideración a tener en cuenta a la hora de transformar un servicio en una librería es que las librerías están ligadas a una única plataforma. Por ejemplo, el servicio de notificaciones está desarrollado en Java y gracias a que se ejecuta en otro proceso puede ser invocado por cualquier servicio, da igual su lenguaje de programación, a través de llamadas HTTP. La implementación del servicio tal como está en Java no puede desplegarse como una librería y emplearse en los servicios desarrollados en .NET porque no son plataformas compatibles. Por tanto, para cada servicio que desea consumir este componente se debería dar una implementación compatible con la plataforma del consumidor.
+Otra consideración a tener en cuenta a la hora de transformar un servicio en una librería es que las librerías están ligadas a una única plataforma. Por ejemplo, el servicio de notificaciones está desarrollado en Java y gracias a que se ejecuta en otro proceso puede ser invocado por cualquier servicio, da igual su lenguaje de programación, a través de llamadas HTTP. La implementación del servicio, tal como está en Java, no puede desplegarse como una librería y emplearse en los servicios desarrollados en .NET porque no son plataformas compatibles. Por tanto, para cada servicio que desea consumir este componente se debería dar una implementación compatible con la plataforma del consumidor.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SALTO DE PAGINA
@@ -1885,7 +1898,7 @@ En cuanto a los objetivos de esta memoria, podemos hacer las siguientes reflexio
 
 \item Se ha desarrollado satisfactoriamente la aplicación descrita en el caso de estudio siguiendo dos arquitecturas distintas. Para hacerlo se han empleado tecnologías que se emplean en el desarrollo profesional de productos software para aportar al caso de estudio un enfoque lo más realista posible.
 
-\item En cuanto al proceso de desarrollo, a partir de una misma especificación hemos desarrollado una misma aplicación de dos formas distintas. Fases como las de despliegue o pruebas han resultado ser más desafiantes en una solución basada en microservicios debido al incremento en el número de piezas de software que participan. Fases como las de diseño cobran mayor relevancia porque un fallo en la descomposición del sistema en servicios es más costoso de reparar. Las fases de mantenimiento e implementación son más fáciles de gestionar porque las bases de código son menores y más flexibles.
+\item En cuanto al proceso de desarrollo, a partir de una misma especificación hemos desarrollado una misma aplicación de dos formas distintas. Actividades como las de despliegue o pruebas han resultado ser más desafiantes en una solución basada en microservicios debido al incremento en el número de piezas de software que participan. Otras como las de diseño cobran mayor relevancia porque un fallo en la descomposición del sistema en servicios es más costoso de reparar. Las actividades de mantenimiento e implementación son más fáciles de gestionar porque las bases de código son menores y más flexibles.
 
 \item En el apartado \ref{sect:Mantenimiento} \nameref{sect:Mantenimiento} se han planteado diferentes situaciones que acreditan que, durante esta fase del ciclo del software, los beneficios de una arquitectura basada en microservicios son superiores a los de una arquitectura monolítica. Estos beneficios se plasman sobretodo dentro del marco del mantenimiento adaptativo.
 
@@ -1893,7 +1906,7 @@ En cuanto a los objetivos de esta memoria, podemos hacer las siguientes reflexio
 
 \end{itemize}
 
-A lo largo de todo el proceso de desarrollo me he enfrentado a diversos problemas, de los que voy a destacar dos. El primero de ellos está asociado al despliegue de las soluciones. Mi experiencia con Microsoft Azure hasta la fecha era escasa y en una plataforma con tantas funcionalidades me he visto necesitado de una mejor guía en cuanto a documentación. Además, el proceso de despliegue se ha realizado de forma manual, por lo que un fallo en un paso del proceso de despliegue suponía mucho esfuerzo adicional. Como mejora, se podía haber invertido parte del tiempo del proyecto en desarrollar una pipeline para la integración continua.
+A lo largo de todo el proceso de desarrollo me he enfrentado a diversos problemas, de los que voy a destacar dos. El primero de ellos está asociado al despliegue de las soluciones. Mi experiencia con Microsoft Azure hasta la fecha era escasa y en una plataforma con tantas funcionalidades me he visto necesitado de una mejor guía en cuanto a documentación. Además, el proceso de despliegue se ha realizado de forma manual, por lo que un fallo en un paso del proceso de despliegue suponía mucho esfuerzo adicional. Como mejora, se podía haber invertido parte del tiempo del proyecto en desarrollar una \textit{pipeline} para la integración continua.
 
 En segundo lugar, la integración de los microservicios ha sido más costosa de lo que en un principio suponía. Desacoplar los microservicios a nivel de diseño ha supuesto realizar varias refactorizaciones durante la fase de implementación. Hay que ser consciente de que realizar un buen diseño a la primera es prácticamente imposible. Además, la comunicación entre los servicios en el entorno de producción ha requerido varios días de esfuerzo, sobretodo por la falta de conocimiento en herramientas para su depuración.
 
