@@ -82,12 +82,11 @@
 
 \begin{abstract}[spanish]
 
-Las arquitecturas basadas en microservicios son una tendencia actual donde una aplicacion software se compone de servicios pequeños y autonomos que cooperan entre ellos para ofrecer diversas funcionalidades.  El objectivo de este trabajo es validar las ventajas e inconvenientes de una arquitectura basada en microservicios frente a una arquitectura tradicional o monolítica mediante la evaluación de un caso de estudio. Con este propósito, se hará una revisión de la influencia de los microservicios en el proceso de desarrollo de software y se repasarán las principales herramientas asociadas a su despliegue.
+Las arquitecturas basadas en microservicios son una tendencia actual en la cual una aplicación software se compone de servicios pequeños y autónomos que cooperan entre ellos para ofrecer diversas funcionalidades.  El objetivo de este trabajo es validar las ventajas e inconvenientes de una arquitectura basada en microservicios frente a una arquitectura tradicional o monolítica mediante la evaluación de un caso de estudio. Con este propósito, se hará una revisión de la influencia de los microservicios en el proceso de desarrollo de software y se repasarán las principales herramientas asociadas a su despliegue.
 
 El caso de estudio consistirá en el diseño e implementación de una aplicación móvil para el comercio electrónico (e-shop). La parte servidora se implementará dos veces siguiendo arquitecturas diferentes: una basada en microservicios y otra monolítica. Para el despliegue del sistema se emplearán contenedores Docker orquestados por la herramienta Kubernetes, dentro de la plataforma Microsoft Azure.
 
 Finalmente, ambas soluciones se compararán frente a diferentes requisitos no funcionales, como la disponibilidad o la tolerancia a fallos, y distintas situaciones de mantenimiento. 
-
 
 \end{abstract}
 
@@ -98,7 +97,6 @@ Architectures based on microservices are a latest trend where software applicati
 The study case consisted of the design and implementation of a mobile application for electronic commerce (e-shop) purposes. The server-side was twice implemented following different architectures: one microservices-based and a monolithic one. The system deployment employed Docker containers orchestrated by Kubernetes tool within Microsoft Azure platform.
 
 Finally, both solutions were compared in front of diverse non-functional requirements, such us availability or fault tolerance, and several maintenance situations.
-
 
 \end{abstract}
 
@@ -117,11 +115,11 @@ Finally, both solutions were compared in front of diverse non-functional require
 \section{Motivaci\'on}
 
 % Referencia a The Clean Architecture.
-En la actualidad, no es necesario un alto grado de conocimientos en ingeniería del software para desarrollar una aplicación o sistema. Personas que no tienen estudios relacionados con la informática pueden producir código que, sin ser limpio y elegante, funciona. Desarrollar sistemas de calidad requiere de grandes conocimientos, pero minimiza los costes y aumenta la productividad de una organización. Se debe poner el foco en emplear una arquitectura de software que se adapte a las necesidades del negocio. De lo contrario, el futuro mantenimiento será más costoso y repercutirá en la confianza de los clientes y en la moral del equipo \cite{Martin2017}.
+En la actualidad, no es necesario un alto grado de conocimientos en ingeniería del software para desarrollar una aplicación o sistema. Personas que no tienen estudios relacionados con la informática pueden producir código que, sin ser limpio y elegante, funciona. Sin embargo, desarrollar sistemas de calidad requiere de grandes conocimientos, pero minimiza los costes y aumenta la productividad de una organización. Se debe poner el foco en emplear una arquitectura de software que se adapte a las necesidades del negocio; de lo contrario, el futuro mantenimiento será más costoso y repercutirá en la confianza de los clientes y en la moral del equipo \cite{Martin2017}.
 
-Las arquitecturas basadas en microservicios son una tendencia actual donde diferentes funcionalidades se encapsulan en servicios pequeños y autónomos que cooperan entre ellos. Existe una gran cantidad de bibliografía que ilustra los beneficios de este tipo de arquitecturas. Este trabajo pretende aplicar un enfoque práctico a través de un caso de estudio para comparar de primera mano la realidad de este tipo de arquitecturas. Para ello, se desarrollará una aplicación de forma integral empleando tecnologías lo más cercanas posibles a las que se emplearían en el desarrollo profesional de un producto software.
+El presente trabajo se ha desarrollado en el contexto de una colaboración con una PYME dedicada al desarrollo software. Esta empresa desarrolla un ERP para el sector socio-sanitario a la vez que apuesta por el uso de las tecnologías más punteras, como es el uso de microservicios. El autor de esta memoria ha colaborado en este espacio desarrollando algunos microservicios y herramientas que facilitan su construcción a través de la generación automática de código. La realización de este trabajo tiene como motivación profundizar en el conocimiento de las tecnologías asociadas a los microservicios, más allá de las empleadas por esta organización.
 
-El presente trabajo se ha desarrollado en el contexto de una colaboración con una PYME dedicada al desarrollo software. Esta empresa desarrolla un ERP para el sector socio-sanitario a la vez que apuesta por el uso de las tecnologías más punteras, como es el uso de microservicios. El autor de esta memoria ha colaborado en este espacio desarrollando algunos microservicios y herramientas que facilitan su construcción a través de la generación automática de código.
+Si bien ya existe bastante bibliografía destacando los beneficios de este tipo de arquitecturas, los ejemplos que se ilustran son muy básicos. Por este motivo, este trabajo pretende conocer de primera mano la realidad de este tipo de arquitecturas mediante la realización de un caso de estudio de tamaño superior a los presentados en la literatura. Para ello, se desarrollará una aplicación de forma integral empleando tecnologías lo más cercanas posibles a las que se emplearían en el desarrollo profesional de un producto software.
 
 \section{Objetivos}
 %TODO Revisar.
@@ -195,9 +193,9 @@ Otra definición interesante es la que aportan Lewis y Fowler \cite{Lewis2014}. 
 \label{fig:microservices_escaling_ES}
 \end{figure}
 
-\section{Los microservicios en la fase de requisitos}
+\section{Los microservicios en la especificación de requisitos}
 
-La fase de requisitos del software es aquella en la que se elicitan, analizan, documentan, validan y mantienen los requisitos del sistema. Los requisitos del software expresan las necesidades y restricciones asociadas a un sistema \cite{Fernandes2016}. El artefacto principal que se produce en esta fase es el documento con la especificación de requisitos software (ERS). Una vez validado dicho documento por los \textit{stakeholders} se puede iniciar la fase de diseño la solución. Esto no significa el final de esta fase del proceso: la gestión de los requisitos continúa durante el resto del desarrollo del producto.
+La especificación de requisitos del software es una actividad en la que se elicitan, analizan, documentan, validan y mantienen los requisitos del sistema. Los requisitos del software expresan las necesidades y restricciones asociadas a un sistema \cite{Fernandes2016}. El artefacto principal que se produce en esta actividad es el documento con la especificación de requisitos software (ERS). Una vez validado dicho documento por los \textit{stakeholders} se puede iniciar el diseño de la solución. Esto no significa el final de esta actividad: la gestión de los requisitos continúa durante el resto del desarrollo del producto.
 
 \subsection{Requisitos funcionales y no funcionales} \label{subsect:RNF}
 
@@ -232,11 +230,11 @@ Pongamos un ejemplo en el que un microservicio está replicado y se produce un f
 
 En el primer tipo, las replicas continuarían operativas, pero como los datos entre las replicas no se sincronizan se pueden obtener datos incorrectos al hacer una consulta. Cuando la comunicación se restablece, los cambios entre las replicas se sincronizarán. En los sistemas CP, para mantener la consistencia entre las replicas se tiene que rechazar cualquier petición, con lo que el servicio deja de estar disponible.
 
-Los sistemas AP escalan más fácilmente y son más sencillos de construir, pero nos obligan a una consistencia eventual de los datos. Los segundos son los únicos que nos aseguran una consistencia fuerte, pero son más difíciles de construir. A la hora de optar por una solución u otra se debe tener en cuenta la especificación de requisitos, donde se debe detallar de forma específica y cuantitativa cuánto tiempo puede nuestro servicio estar inoperativo o con un dato obsoleto. Si en las fases siguientes se opta por una arquitectura basada en microservicios, no será necesario implementar el sistema completo de una u otra forma. Cada microservicio tendrá necesidades diferentes y podrá seguir la aproximación que mejor le convenga \cite{Newman2015a}.
+Los sistemas AP escalan más fácilmente y son más sencillos de construir, pero nos obligan a una consistencia eventual de los datos. Los segundos son los únicos que nos aseguran una consistencia fuerte, pero son más difíciles de construir. A la hora de optar por una solución u otra se debe tener en cuenta la especificación de requisitos, donde se debe detallar de forma específica y cuantitativa cuánto tiempo puede nuestro servicio estar inoperativo o con un dato obsoleto. Si en las actividades posteriores se opta por una arquitectura basada en microservicios, no será necesario implementar el sistema completo de una u otra forma. Cada microservicio tendrá necesidades diferentes y podrá seguir la aproximación que mejor le convenga \cite{Newman2015a}.
 
-\section{Los microservicios en la fase de diseño} \label{sct:FaseDiseño}
+\section{Los microservicios en el diseño del sistema} \label{sct:FaseDiseño}
 
-En la fase de diseño se definen la arquitectura, componentes e interfaces del sistema. La especificación de requisitos es analizada para producir una descripción de la estructura interna del sistema, con el suficiente nivel de detalle para que sirva como base en su construcción. En esta fase se plantean diferentes diseños como alternativas de las que se debe hacer balance. Los modelos que se generan se emplearán para validar que se cumplen los requisitos establecidos y para planificar la fase de implementación \cite{Bourque2014}.
+En la actividad de diseño se definen la arquitectura, componentes e interfaces del sistema. La especificación de requisitos es analizada para producir una descripción de la estructura interna del sistema, con el suficiente nivel de detalle para que sirva como base en su construcción. Diferentes diseños se plantean como alternativas, entre las que se debe hacer balance. Los modelos que se generan se emplearán para validar que se cumplen los requisitos establecidos y para planificar la implementación del sistema \cite{Bourque2014}.
 
 \subsection{Librerías versus servicios} \label{subsect:librerias}
 
@@ -246,9 +244,9 @@ Uno de los motivos por los que se recomienda emplear servicios frente a librerí
 
 \subsection{Diseño guiado por el dominio (DDD)}
 
-El \textbf{diseño guiado por el dominio} (DDD) es un enfoque para el desarrollo de software que propone un modelado rico, expresivo y evolutivo basado en la realidad del negocio. El dominio representa lo que hace una organización y la forma en qué lo hace.
+El \textbf{diseño guiado por el dominio} (DDD) \cite{Vaughn2013} es un enfoque para el desarrollo de software que propone un modelado rico, expresivo y evolutivo basado en la realidad del negocio. El dominio representa lo que hace una organización y la forma en qué lo hace.
 
-Con esta aproximación los expertos del dominio y los desarrolladores se sitúan en el mismo nivel empleando un \textbf{lenguaje ubicuo}. No hace falta ninguna traducción de términos entre ellos porque todos hablan un lenguaje común, que se plasma hasta en el código de programación. El lenguaje no tiene porque seguir los estándares de la industria que representa: emplea los términos y acciones que en el negocio se dan \cite{Vaughn2013}.
+Con esta aproximación los expertos del dominio y los desarrolladores se sitúan en el mismo nivel empleando un \textbf{lenguaje ubicuo}. No hace falta ninguna traducción de términos entre ellos porque todos hablan un lenguaje común, que se plasma hasta en el código de programación. El lenguaje no tiene porque seguir los estándares de la industria que representa: emplea los términos y acciones que en el negocio se dan.
 
 El lenguaje ubicuo que se emplea crece y cambia con el paso del tiempo. Nadie es capaz de conocer el dominio de un negocio completo porque este forma parte de un proceso de descubrimiento continuo. Si la organización sigue una estrategia de desarrollo ágil, en cada iteración se refina el modelo de forma incremental y este plasma en todo momento el software en funcionamiento.
 
@@ -280,7 +278,7 @@ Es aconsejable dividir la solución en grandes servicios que poco a poco se vaya
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.4]{refactoring}
-\caption{Primero, se dividen los grandes servicios en microservicios. Una vez hecho esto, se migran sus datos \cite{Richards2016}.}
+\caption{Descomposición de un servicio en dos \cite{Richards2016}.}
 \label{fig:refactoring}
 \end{figure}
 
@@ -294,9 +292,9 @@ El arquitecto de software debe preocuparse más por como interaccionan los servi
 
 Una de las ventajas de las arquitecturas basadas en microservicios es la \textbf{heterogeneidad tecnol\'ogica}: cada servicio puede ser desarrollado empleando una pila tecnológica distinta. No obstante, dejar plena libertad a cada equipo para elegir la tecnología del servicio que va a desarrollar puede traer problemas a la hora de integrarlo con el resto del sistema. El uso de contratos o establecer normas en aspectos clave como el protocolo de comunicación entre los servicios facilitará su consumo. Las decisiones de diseño de un servicio en particular pueden recaer en el equipo responsable. En este caso, el arquitecto solo juega un papel de supervisor y asesor para evitar que se pierda la imagen del sistema completo.
 
-\section{Los microservicios en la fase de implementaci\'on}
+\section{Los microservicios en la implementaci\'on del sistema}
 
-La fase de implementación consiste en la creación de un sistema o componente software combinando técnicas de programación, verificación y depuración. Esta fase emplea la salida de la fase de diseño y sirve como entrada para la de pruebas. Los límites entre estas tres fases varían en función del proceso seguido \cite{Bourque2014}.
+La actividad de implementación consiste en la creación de un sistema o componente software combinando técnicas de programación, verificación y depuración. Esta actividad emplea los modelos producidos durante el diseño del sistema y sirve como entrada para la de pruebas. Los límites entre estas tres actividades varían en función del proceso seguido \cite{Bourque2014}.
 
 \subsection{Integración de microservicios} \label{subsect:Integracion}
 
@@ -310,7 +308,7 @@ Por un lado, la tecnología empleada para la comunicación entre servicios no de
 
 El formato de los mensajes también varía de una tecnología a otra. SOAP (proviene del inglés \textit{Simple Object Access Protocol}) emplea XML (también del inglés \textit{eXtensible Markup Language}) mientras que por ejemplo Java RMI transmite mensajes binarios.
 
-\item \textbf{REST} (\textit{Representational State Transfer}): la transferencia de estado representacional es un estilo arquitectónico inspirado en la Web. Se basa en el concepto de recurso, un objeto que el servicio conoce y del que puede crear diferentes representaciones bajo demando. La representación del recurso está completamente desacoplada de como se almacena.
+\item \textbf{REST} (\textit{Representational State Transfer}): la transferencia de estado representacional es un estilo arquitectónico inspirado en la Web. Se basa en el concepto de recurso, un objeto que el servicio conoce y del que puede crear diferentes representaciones bajo demanda. La representación del recurso está completamente desacoplada de como se almacena.
 
 La arquitectura REST es ampliamente usada junto con HTTP (término que proviene del inglés \textit{Hypertext Transfer Protocol}). Los verbos que se definen en HTTP actúan sobre recursos: por ejemplo, con el verbo GET se puede obtener una representación del recurso y con el POST crear uno nuevo.
 
@@ -323,7 +321,7 @@ La arquitectura REST es ampliamente usada junto con HTTP (término que proviene 
 \label{fig:rabbitmq}
 \end{figure}
 
-Un bróker de mensajería es un patrón arquitectónico para la validación, la transformación y el enrutamiento de mensajes. RabbitMQ es un ejemplo de este patrón. En esta herramienta, el productor de un evento publica este a través de una API, donde será tramitado por el bróker para hacerlo llegar a todos los consumidores suscritos, como se representa en la figura \ref{fig:rabbitmq}.
+Un bróker de mensajería es un patrón arquitectónico para la validación, la transformación y el enrutamiento de mensajes. RabbitMQ es un ejemplo de este patrón. En esta herramienta, el productor de un evento publica este a través de una API, donde será tramitado por el bróker para hacerlo llegar a todos los consumidores suscritos, como se representa en la figura \ref{fig:rabbitmq}. En el mismo servidor de RabbitMQ se pueden hospedar diferentes colas, haciendo que cada servicio solo se suscriba a la que le interesa (en el ejemplo, cada servicio se suscribe a una cola diferente).
  
 \end{itemize}
 
@@ -347,24 +345,24 @@ El término también se puede extrapolar a la persistencia. La \textbf{persisten
 
 En ambos casos, se debe hacer balance entre los beneficios que puede aportar un diseño políglota y sus costes asociados, por ejemplo, de aprendizaje. En la figura \ref{fig:poliglota} se representa un sistema políglota donde se emplean diferentes lenguajes (Java, Javascript, C\#) y diferentes tecnologías de BD en diferentes microservicios.
 
-\subsection{La ley de Conway}
+\subsection{La ley de Conway \cite{Conway1968}}
 
 Problemas asociados a bases de código inmensas donde colabora un gran equipo pueden ser evitados empleando microservicios. Si el código está repartido entre diferentes componentes, equipos pequeños pueden encargarse de mantener cada uno de ellos. De esta manera, la organización del trabajo adquiere un enfoque más ágil al estar formado por equipos independientes y auto-organizados \cite{Newman2015a}.
 
-En las aplicaciones monolíticas, normalmente los equipos de trabajo que se forman están asociados la interfaz de usuario, la base de datos y la parte servidora. Cualquier cambio simple involucra la coordinación entre diferentes equipos. De acuerdo a la \textbf{ley de Conway}, una organización que diseña un sistema producirá un diseño para la aplicación que será una copia de su estructura organizacional.
+En las aplicaciones monolíticas, normalmente los equipos de trabajo que se forman están asociados la interfaz de usuario, la base de datos y la parte servidora. Cualquier cambio simple involucra la coordinación entre diferentes equipos. De acuerdo a la \textbf{ley de Conway}, una organización que diseña un sistema producirá un diseño para la aplicación que será una copia de su estructura organizacional \cite{Conway1968}. Así, es natural que la organización de los microservicios se realice de acuerdo con el negocio. Los equipos que se encargan de cada servicio son multifuncionales y se pueden autogestionar. En cada equipo están presentes, entre la totalidad de sus miembros, todas las habilidades necesarias para el desarrollo completo del servicio \cite{Lewis2014}.
 
-La organización en los microservicios se realiza alrededor de las capacidades de negocio. Los equipos que se encargan de cada servicio son multifuncionales y se pueden autogestionar. En cada equipo están presentes, entre la totalidad de sus miembros, todas las habilidades necesarias para el desarrollo completo del servicio \cite{Lewis2014}.
-
-\section{Los microservicios en la fase de pruebas} \label{sect:FasePruebas}
+\section{Los microservicios en la actividad de pruebas} \label{sect:FasePruebas}
 % Art of unit testing
 % Building microservices
 % Simian army
 
-Las pruebas de software consisten en la verificación dinámica de que un programa produce las salidas esperadas para un conjunto finito de casos de prueba. Las pruebas son dinámicas porque se verifica el programa en ejecución. Los casos de prueba son finitos porque el número posible de pruebas es infinito y estos se seleccionan en función de la prioridad y riesgo del código bajo pruebas. Además, se debe comprobar la salida obtenida con el resultado esperado para comprobar si esta es o no aceptable \cite{Bourque2014}.
+Las pruebas de software consisten en la verificación de que un programa produce las salidas esperadas para un conjunto finito de casos de prueba. Los casos de prueba son finitos porque el número posible de pruebas es infinito y estos se seleccionan en función de la prioridad y riesgo del código bajo pruebas. Además, se debe comprobar la salida obtenida con el resultado esperado para comprobar si esta es o no aceptable \cite{Bourque2014}.
+
+En esta sección presentaremos la clasificación de pruebas que Newman \cite{Newman2015a} realiza. Se enfoca en clasificar las pruebas en base a su alcance respecto a los microservicios que involucran, a diferencia de como se clasifican las pruebas tradicionalmente según las clases o métodos que se invocan.
 
 \subsection{Pruebas unitarias}
 
-Una \textbf{prueba unitaria} es una pieza de código que invoca al método o clase bajo prueba y que comprueba ciertas asunciones sobre su lógica. Se ejecutan de forma rápida y sencilla, están automatizados y son fácilmente mantenibles \cite{Osherove2014}. En general, se prefiere tener un gran número de este tipo de pruebas por su rapidez, porque pueden ayudar a la refactorización del código y porque es donde mayor cantidad de defectos se suele capturar.
+Una \textbf{prueba unitaria} es una pieza de código que invoca al método o clase bajo prueba y que comprueba ciertas asunciones sobre su lógica. Se ejecutan de forma rápida y sencilla, están automatizados y son fácilmente mantenibles \cite{Osherove2014}. En general, se prefiere tener un gran número de este tipo de pruebas por su rapidez, porque pueden ayudar a la refactorización del código y porque es donde mayor cantidad de defectos se suele detectar.
 
 \begin{figure}[h]
 \centering
@@ -386,7 +384,7 @@ Encajan dentro de las pruebas de integración, que se definen como la prueba com
 
 \subsection{Pruebas de extremo a extremo}
 
-Las \textbf{pruebas de extremo} a extremo (en inglés, \textit{end to end} o E2E) son pruebas que se ejecutan sobre todo el sistema. Cubren gran parte de código, por lo que su correcta ejecución dan mucho grado de confianza. En su ejecución se levantan varios servicios diferentes.
+Las \textbf{pruebas de extremo a extremo} (en inglés, \textit{end to end} o E2E) \cite{Newman2015a} son pruebas que se ejecutan sobre todo el sistema. Cubren gran parte de código, por lo que su correcta ejecución dan mucho grado de confianza. En su ejecución se levantan varios servicios diferentes.
 
 Son pruebas frágiles: conforme el alcance de la prueba aumenta más son las partes sobre las que no se puede tener control. Estas partes pueden introducir fallos que no demuestran que la funcionalidad tenga un defecto y hacen la prueba menos determinista. Si la prueba falla continuamente, el equipo encargado puede llegar a asumir como normal está situación. Su tiempo de ejecución es mayor y en consecuencia, más tarde se detecta si un cambio ha introducido un defecto \cite{Newman2015a}.
 
@@ -407,9 +405,9 @@ A medida que aumenta el alcance de las pruebas lo hace el nivel de confianza que
 \label{fig:Cohn_Pyramid_ES}
 \end{figure}
 
-El número de pruebas que se aconseja tener de cada tipo aumenta conforme descendemos por la pirámide. El número de servicios que participan para ofrecer una funcionalidad al usuario puede ser muy alto y en una prueba no se deberían de levantar más de 3 o 4 servicios para no potenciar las desventajas que hemos mencionado. Por este motivo, las pruebas de extremo a extremo deben ser las mínimas posibles y se deben refactorizar en pruebas de servicios que empleen fakes siempre que se pueda.
+El número de pruebas que se aconseja tener de cada tipo aumenta conforme descendemos por la pirámide. El número de servicios que participan para ofrecer una funcionalidad al usuario puede ser muy alto y en una prueba no se deberían de levantar más de 3 o 4 servicios para no potenciar las desventajas que hemos mencionado. Por este motivo, las pruebas de extremo a extremo deben ser las mínimas posibles y se deben organizar en pruebas de servicios que empleen fakes siempre que se pueda.
 
-\section{Los microservicios en la fase de despliegue}
+\section{Los microservicios en el despliegue}
 % Docker
 % Kubernetes
 % Orquestadores (¿Moltó?)
@@ -472,7 +470,7 @@ Ambas soluciones se pueden combinar para obtener las ventajas de las dos. Se pue
 
 Los productos software cambian y evolucionan. Una vez están desplegados en el entorno donde operan se dan situaciones en las que se detectan errores o los requisitos de los usuarios se ven modificados. Es una fase que debe comenzar de forma temprana para garantizar la mantenibilidad del sistema a desarrollar \cite{Bourque2014}.
 
-El mantenimiento de software es la fase del desarrollo que más recursos consume, alrededor del 60\% o 70\% del coste de un proyecto. La mayoría del software que hoy se emplea tiene entre 10 y 15 años, tiempo en el cual ha sufrido muchas modificaciones hasta alcanzar un diseño pobre y difícil de mantener. Se puede definir el software mantenible como aquel que se diseña de forma modular, siguiendo patrones de diseño y estándares de calidad y que se documenta de tal forma que es explicativo por si mismo \cite{Pressman}.
+El mantenimiento de software es la fase del desarrollo que más recursos consume, alrededor del 60\% o 70\% del coste original de un proyecto. La mayoría del software que hoy se emplea tiene entre 10 y 15 años, tiempo en el cual ha sufrido muchas modificaciones hasta alcanzar un diseño pobre y difícil de mantener. Se puede definir el software mantenible como aquel que se diseña de forma modular, siguiendo patrones de diseño y estándares de calidad y que se documenta de tal forma que es explicativo por si mismo \cite{Pressman}.
 
 Gracias a su diseño modular, los microservicios son una arquitectura que se puede seguir para hacer más sencillo el mantenimiento de un sistema. Sin embargo, las consecuencias de elegir un estilo arquitectónico no son evidente hasta años más tarde de haber sido desarrollado, por lo que hasta que no se vean sistemas maduros que empleen microservicios no se debe afirmar a ciencia cierta que garantizan estas características. \cite{Lewis2014}
 
@@ -480,11 +478,11 @@ Gracias a su diseño modular, los microservicios son una arquitectura que se pue
 
 %TODO Característica del ISO 25010
 
-En la mayoría de empresas abundan los sistemas legados que nadie desea mantener. La \textbf{refactorización} de estos sistemas es imposible por su tamaño y riesgo. Si en lugar de haber empleado una arquitectura monolítica para su diseño se emplearan microservicios se observaría como los barreras para la refactorización no existen al poderse reescribir el microservicio al completo en pocos días. \cite{Eaves2014}
+En la mayoría de empresas abundan los sistemas legados que nadie desea mantener. La \textbf{refactorización} de estos sistemas suele ser muy difícil por su tamaño y riesgo. Si en lugar de haber empleado una arquitectura monolítica para su diseño se emplearan microservicios se observaría como los barreras para la refactorización no existen al poderse reescribir el microservicio al completo en pocos días. \cite{Eaves2014}
 
-\subsection{You Build It, You Run It}
+\subsection{\textit{You Build It, You Run It}}
 
-En muchas organizaciones, el desarrollo de sistemas se hace a través de proyectos: piezas de software que una vez desarrolladas se consideran completadas. En una aproximación basada en microservicios, cada equipo es responsable del ciclo de vida completo de un producto o servicio. Esto sigue la filosofía de Amazon: \textbf{``you build, you run it"} \cite{Lewis2014}.
+En muchas organizaciones, el desarrollo de sistemas se hace a través de proyectos: piezas de software que una vez desarrolladas se consideran completadas. En una aproximación basada en microservicios, cada equipo es responsable del ciclo de vida completo de un producto o servicio. Esto sigue la filosofía de Amazon: \textbf{\textit{``you build it, you run it"}} \cite{Lewis2014}.
 
 No hay necesidad de distinguir entre quien construye un sistema y quien lo ejecuta y posteriormente mantiene. Esta filosofía aproxima a desarralloradores y clientes: los desarrolladores están en contacto directo con los clientes día tras día, lo que les proporciona retroalimentación para mejorar la calidad de sus servicios. Tampoco hay necesidad de contar en la organización con un equipo centrado en la infraestructura (IT). Contar con un equipo así distribuye la responsabilidad de hacer un servicio funcionar entre diferentes equipos y añade un sobreesfuerzo de coordinación y comunicación cuando un problema aparece \cite{Vliet2011}.
 
@@ -513,9 +511,11 @@ La información más útil se debe mostrar de forma gráfica a través de \texti
 
 \section{Contenedores}
 
+Un contenedor \cite{Hunter2017} es una unidad de aislamiento que existe dentro de un sistema operativo. Mientras que una máquina virtual requiere tener su propio SO, un contenedor puede acceder al sistema operativo de la máquina donde reside, eliminando la necesidad de tener sistemas operativos redundantes. En esta sección revisaremos dos de los más empleados: los contenedores Docker y los contenedores Linux. Existen otros contenedores, como los contenedores Warden y OpenVZ. Si se desea obtener más información sobre ellos, en \cite{Dua2014} se realiza una comparación entre todos ellos en cuanto al aislamiento que ofrecen y su ciclo de vida.
+
 \subsection{Contenedores Linux}
 
-Los contenedores Linux (LXC) permite crear un espacio de procesos separado en el que puede ejecutarse de forma aislada un servicio. Cada contenedor es un subárbol del principal y puede tener asociado recursos físicos gestionados por el kernel \cite{Newman2015a}.
+Los \textbf{contenedores Linux} (LXC) \cite{Amaral2016} permiten crear un espacio de procesos separado en el que puede ejecutarse de forma aislada un servicio. Cada contenedor es un subárbol del principal y puede tener asociado recursos físicos gestionados por el kernel \cite{Newman2015a}.
 
 Estos contenedores se fundamentan en los espacios de nombre de Linux y los grupos de control (\textit{cgroups}). Los espacios de nombre disminuyen el conjunto del sistema de archivos que un grupo de procesos puede ver. Los grupos de control organizan los procesos en un árbol de forma jerárquica, donde se pueden definir límites y políticas para el uso de los recursos \cite{Amaral2016}.
 
@@ -525,7 +525,7 @@ Una solución a estos problemas pasa por usar contenedores Linux desplegados en 
 
 \subsection{Docker}
 
-Docker es una herramienta basada en contenedores Linux para la creación de artefactos que se pueden desplegar en cualquier entorno y se pueden distribuir y escalar bajo demanda \cite{Matthias}. Su funcionamiento es sencillo: en un fichero llamado \textbf{Dockerfile} se especifican las dependencias del servicio en distintos pasos y un comando que inicia el servicio. De la compilación del Dockerfile se origina una \textbf{imagen}: un paquete con todas las dependencias e información necesaria para crear un contenedor. Las imágenes permiten empaquetar un servicio para desplegarlo de forma confiable y reproducible tantas veces como se desee \cite{DelaTorre2018}.
+Docker \cite{Matthias} es una herramienta basada en contenedores Linux para la creación de artefactos que se pueden desplegar en cualquier entorno y se pueden distribuir y escalar bajo demanda. Su funcionamiento es sencillo: en un fichero llamado \textbf{Dockerfile} se especifican las dependencias del servicio en distintos pasos y un comando que inicia el servicio. De la compilación del Dockerfile se origina una \textbf{imagen}: un paquete con todas las dependencias e información necesaria para crear un contenedor. Las imágenes permiten empaquetar un servicio para desplegarlo de forma confiable y reproducible tantas veces como se desee \cite{DelaTorre2018}.
 
 La filosofía de Docker se centra en los contenedores desechables. Nada en el entorno donde se ejecuta la aplicación permanecerá ahí más allá de lo que viva la aplicación. Esto implica que no se delegará en entornos donde se encuentra casualmente una dependencia no especificada en la imagen. Docker promueve las arquitecturas sin estado (\textit{stateless}) o que externalizan este a otras infraestructuras como bases de datos. Las aplicaciones así se hacen más portables, escalables y confiables \cite{Matthias}.
 
@@ -544,10 +544,12 @@ Si se integra dentro del proceso de despliegue, cada cambio que pasa por una \te
 %TODO https://medium.com/@PamRucinque/qu%C3%A9-es-eso-de-serverless-f4f6c8949b87
 %TODO https://rancher.com/load-balancing-in-kubernetes/
 
+Un orquestador \cite{DelaTorre2018} es una herramienta para la gestión de clústeres y contenedores. Permiten gestionar las imágenes que originan los contenedores, los \textit{hosts}, las redes de contenedores, el balanceo de carga o el descubrimiento de servicios. De nuevo, nos centraremos solo en dos: Kubernetes y Docker Swarm. Estos son los dos más empleados por la industria, aunque podemos nombrar otros como  Apache Mesos.
+
 \subsection{Kubernetes} \label{subsect:Kubernetes}
 %TODO Definir cluster.
 %TODO Rancher. 
-Kubernetes es una herramienta diseñada por Google para el despliegue y orquestación de aplicaciones en contenedores Docker de forma resiliente. Cada una de las máquinas que aloja uno o más contenedores Docker se denomina \textbf{nodo}. La unidad más pequeña con la que trabaja Kubernetes no son los contenedores, sino los pods. Un \textbf{pod} es una colección de contendores y volúmenes agrupados juntos en un nodo. Los \textbf{volúmenes} son sistemas de archivos virtuales que se pueden emplear para comunicar entre ellos a los contenedores de un nodo. Kubernetes orquesta a nivel de los pods, por lo que dos contenedores en el mismo pod serán administrados igual \cite{Rensin2015}. La relación de continencia entre estos componentes se plasma en la figura \ref{fig:kubernetes_ES}.
+Kubernetes \cite{Rensin2015} es una herramienta diseñada por Google para el despliegue y orquestación de aplicaciones en contenedores Docker de forma resiliente. Cada una de las máquinas que aloja uno o más contenedores Docker se denomina \textbf{nodo}. La unidad más pequeña con la que trabaja Kubernetes no son los contenedores, sino los pods. Un \textbf{pod} es una colección de contendores y volúmenes agrupados juntos en un nodo. Los \textbf{volúmenes} son sistemas de archivos virtuales que se pueden emplear para comunicar entre ellos a los contenedores de un nodo. Kubernetes orquesta a nivel de los pods, por lo que dos contenedores en el mismo pod serán administrados igual. La relación de continencia entre estos componentes se plasma en la figura \ref{fig:kubernetes_ES}.
 
 \begin{figure}[h]
 \centering
@@ -560,11 +562,11 @@ Kubernetes se emplea principalmente para especificar el número de replicas que 
 
 \subsection{Docker Swarm}
 
-Docker Swarm es la aproximación nativa propuesta por Docker para la creación de clústeres. Un clúster consiste en un conjunto de contenedores Docker que aparentan formar uno único de forma virtual.
+Docker Swarm \cite{DeAlfonso2017} es la aproximación nativa propuesta por Docker para la creación de clústeres. Un clúster consiste en un conjunto de contenedores Docker que aparentan formar uno único de forma virtual.
 
 En cuanto a la arquitectura de Docker Swarm, los nodos ejecutan un agente para atender a los cambios en su configuración y uno de ellos ejecuta un gestor llamado \textit{Swarm} para la coordinación de los nodos. Cuando un contenedor es creado, este se despliega en cualquiera de los nodos gestionados por el Swarm. El conjunto de contenedores son gestionados por el \textit{Swarm} como una única entidad.
 
-Docker Swarm se puede ejecutar para ofrecer servicios con alta disponibilidad a través de herramientas como etcd, Consul o ZooKeeper para la gestión y recuperación de los fallos. Además, está complementamenta integrado dentro de la interfaz de línea de comandos de Docker \cite{DeAlfonso2017}.
+Docker Swarm se puede ejecutar para ofrecer servicios con alta disponibilidad a través de herramientas como etcd, Consul o ZooKeeper para la gestión y recuperación de los fallos. Además, está complementamenta integrado dentro de la interfaz de línea de comandos de Docker.
 
 \section{Proveedores de servicios en la nube}
 
@@ -575,9 +577,9 @@ Amazon es el líder en el mercado de computación en la nube con su producto Ama
 
 \subsection{Microsoft Azure}
 
-Microsoft Azure es una plataforma que ofrece un conjunto de herramientas y servicios en la nube. Es el segundo mayor proveedor de servicios en la nube y fue lanzado en 2010. Ofrece tanto funcionalidades de plataforma como servicio (PaaS) como IaaS.
+Microsoft Azure \cite{Qaisi2016} es una plataforma que ofrece un conjunto de herramientas y servicios en la nube. Es el segundo mayor proveedor de servicios en la nube y fue lanzado en 2010. Ofrece tanto funcionalidades de plataforma como servicio (PaaS) como IaaS.
 
-Los usuarios pueden crear, desplegar y gestionar aplicaciones  servicios a través de la red global de los centros de datos de Microsoft. Aunque el pago de sus servicios sea más cercano a la realidad, los modos de pago son manejados de forma poco transparente \cite{Qaisi2016}.
+Los usuarios pueden crear, desplegar y gestionar aplicaciones  servicios a través de la red global de los centros de datos de Microsoft. Aunque el pago de sus servicios sea más cercano a la realidad, los modos de pago son manejados de forma poco transparente.
 
 \section{Crítica al estado del arte}
 % Trabajos presentados en la ETSINF.
@@ -652,7 +654,7 @@ A partir de la descripción del sistema podemos definir el siguiente modelo de d
 \caption{Modelo de dominio del sistema.}
 \end{figure}
 
-\section{Casos de uso y modelo de dominio} \label{sect:CUs}
+\section{Casos de uso} \label{sect:CUs}
 
 A continuación, vamos a listar los casos de uso de la aplicación móvil. En los casos de uso aumentaremos el nivel de detalle de la descripción para emplearlos como especificación del sistema. El único usuario de la aplicación móvil es el cliente de la tienda, por lo que es el actor de todos los casos citados. Para cada caso de uso se va a proveer un identificador, un título y una descripción breve:
 
@@ -838,11 +840,11 @@ El sistema a implementar se puede dividir en dos partes: \textit{front-end} y \t
 
 Una vez se implemente la solución monolítica, se comenzará la implementación de la aplicación front-end. Las llamadas a la parte servidora van a realizarse a través de invocaciones HTTP. En consecuencia, el \textit{front-end} va a estar desacoplado de la implementación que elijamos para el \textit{back-end} y va a poder emplearse la misma solución, con muy pequeñas modificaciones, para comunicarse con ambas partes servidoras.
 
-La organización de la memoria en los siguientes capítulos es acorde a este proceso. Primero, presentaremos la solución monolítica centrándonos sobretodo en aspectos de implementación, que son comunes a los de la solución basada en servicios. Después, explicaremos la solución basada en microservicios, centrándonos sobretodo en aspectos de diseño y modificaciones que se han realizado frente a la monolítica.
+La organización de la memoria en los siguientes capítulos es acorde a este proceso. Primero, presentaremos la solución monolítica centrándonos sobre todo en aspectos de implementación, que son comunes a los de la solución basada en servicios. Después, explicaremos la solución basada en microservicios, centrándonos sobre todo en aspectos de diseño y modificaciones que se han realizado frente a la monolítica.
 
 \section{Organización del trabajo}
 
-El proceso de desarrollo se ha desglosado en grandes tareas, muy ligadas a las entidades del dominio que existen en el caso de estudio. En el siguiente cronograma de la figura \ref{fig:Cronograma} se pueden observar estas tareas y su evolución a lo largo del tiempo que ha durado el desarrollo de las soluciones. En azul se han representado las tareas asociadas a la solución monolítica, en verde las asociadas al front-end y en naranja las asociadas a la solución basada en microservicios.
+El proceso de desarrollo se ha desglosado en grandes tareas, muy ligadas a las entidades del dominio que existen en el caso de estudio. En el siguiente cronograma mostrado en la figura \ref{fig:Cronograma} se pueden observar estas tareas y su evolución a lo largo del tiempo que ha durado el desarrollo de las soluciones. En azul se han representado las tareas asociadas a la solución monolítica, en verde las asociadas al front-end y en naranja las asociadas a la solución basada en microservicios.
 
 \begin{figure}[h]
 \centering
@@ -851,7 +853,7 @@ El proceso de desarrollo se ha desglosado en grandes tareas, muy ligadas a las e
 \label{fig:Cronograma}
 \end{figure}
 
-Se puede observar como de las tres fases del desarrollo donde más esfuerzo se ha dedicado es en la solución monolítica. Esto es porque es aquí donde se ha implementado casi la totalidad del código del sistema y donde se han evaluado muchas de las tecnologías empleadas. La fase de desarrollo de la solución basada en microservicios se prolonga menos porque únicamente ha involucrado refactorizar el diseño monolítico y a penas se ha modificado la implementación del sistema. En un sistema real, esta tarea sería mucho más costosa que en nuestro caso de estudio.
+Se puede observar como de las tres actividades del desarrollo donde más esfuerzo se ha dedicado es en la implementación de la solución monolítica. Esto es porque es aquí donde se ha implementado casi la totalidad del código del sistema y donde se han evaluado muchas de las tecnologías empleadas. La fase de desarrollo de la solución basada en microservicios se prolonga menos porque únicamente ha involucrado refactorizar el diseño monolítico y a penas se ha modificado la implementación del sistema. En un sistema real, esta tarea sería mucho más costosa que en nuestro caso de estudio.
 
 Todo el código desarrollado se va a almacenar en un repositorio de código de GitHub. Se han creado tres repositorios: uno para el \textit{back-end} monolítico, otro para la interfaz de usuario y otro para el \textit{back-end} basado en servicios. Adicionalmente, se ha creado un repositorio para el desarrollo de la memoria de este TFG.
 
@@ -870,7 +872,7 @@ En los repositorios de GitHub vamos a emplear un proyecto. Un proyecto de GitHub
 \newpage
 
 
-El proceso de desarrollo se puede visualizar en los diferentes repositorios a través de los \textit{commits} (la unidad de los repositorios de código git que representa los cambios que se guardan en el repositorio) realizados. En el siguiente gráfico se muestra el número de \textit{commits} realizados cada día sobre los tres repositorios mencionados. Como en el cronograma, se puede ver como las fases de \textit{front-end} e implementación de la solución monolítica se superponen en la mitad del proceso de desarrollo. También se puede ver como la fase de la solución monolítica es la que más \textit{commits} ha requerido porque ha sido la más inestable respecto a defectos corregidos y detalles de implementación.
+El proceso de desarrollo se puede visualizar en los diferentes repositorios a través de los \textit{commits} (la unidad de los repositorios de código git que representa los cambios que se guardan en el repositorio) realizados. En el siguiente gráfico se muestra el número de \textit{commits} realizados cada día sobre los tres repositorios mencionados. Como en el cronograma, se puede ver como los períodos de \textit{front-end} e implementación de la solución monolítica se superponen en la mitad del proceso de desarrollo. También se puede ver como la fase de la solución monolítica es la que más \textit{commits} ha requerido porque ha sido la más inestable respecto a defectos corregidos y detalles de implementación.
 
 \begin{figure}[h]
 \centering
@@ -1337,7 +1339,7 @@ Como hemos mencionado en la sección \ref{sect:Propuesta} \nameref{sect:Propuest
 
 \chapter{Diseño e implementación de la solución basada en microservicios}
 
-A lo largo del capítulo anterior nos hemos centrado sobretodo en aspectos de implementación relacionados con diferentes herramientas como Identity o Swagger. En este capítulo nos vamos a centrar más en el diseño ya que, como hemos dicho en el apartado \ref{sct:PlanTrabajo} \nameref{sct:PlanTrabajo}, vamos a refactorizar la solución monolítica y a nivel de código apenas va a verse modificada.
+A lo largo del capítulo anterior nos hemos centrado sobre todo en aspectos de implementación relacionados con diferentes herramientas como Identity o Swagger. En este capítulo nos vamos a centrar más en el diseño ya que, como hemos dicho en el apartado \ref{sct:PlanTrabajo} \nameref{sct:PlanTrabajo}, vamos a refactorizar la solución monolítica y a nivel de código apenas va a verse modificada.
 
 \section{Diseño de la solución}
 
@@ -1442,7 +1444,7 @@ Para que un microservicio pueda hacer peticiones a otro, se deben seguir los sig
 
 Cada servicio es soberano de sus datos y la mejor manera de conseguir esto es separar los datos de cada uno en diferentes bases de datos. Una única base de datos relacional para toda la aplicación, tal y como se usa en la solución monolítica, tiene dos ventajas principalmente: se pueden emplear transacciones atómicas y restricciones de integridad referencial. 
 
-No se puede realizar una transacción única que involucre a diferentes microservicios, sobretodo porque cada uno puede utilizar una tecnología de BD diferente. Las transacciones se deben implementar en la capa de aplicación y en caso de que una operación falle, se deben establecer mecanismos de compensación que reviertan los cambios hechos hasta ese punto \cite{DelaTorre2018}.
+No se puede realizar una transacción única que involucre a diferentes microservicios, sobre todo porque cada uno puede utilizar una tecnología de BD diferente. Las transacciones se deben implementar en la capa de aplicación y en caso de que una operación falle, se deben establecer mecanismos de compensación que reviertan los cambios hechos hasta ese punto \cite{DelaTorre2018}.
 
 Por suerte, las únicas referencias en los datos que hay entre diferentes servicios son las que hay desde incidencias y pedidos al servicio de seguridad. Tanto los pedidos, las incidencias y los comentarios están asociados a un cliente. En caso de que se borre un cliente, se deben borrar en cascada las instancias de estas entidades que tenga asociadas, como si de una transacción se tratara. La operación de eliminar un cliente no está soportada por la API, por lo que no ha sido necesario implementar ninguna transacción entre microservicios.
 
@@ -1734,7 +1736,7 @@ Un sistema debe ser capaz de \textbf{tolerar fallos} y continuar trabajando. En 
 
 En nuestro caso de estudio, este problema está presente en las dos soluciones implementadas. El \textit{front-end} comunica con el \textit{back-end} a través de llamadas HTTP, al igual que ocurre entre los propios microservicios de la segunda solución. En ambos sistemas, para limitar el tiempo de espera se emplean \textit{timeouts}, tal que si una petición no obtiene una respuesta esta se considera un fallo.
 
-Sin embargo, el uso de \textit{timeotus} no es una solución aconsejable debido al valor que se le debe dar a la espera. No se puede poner un límite demasiado bajo porque trataría como errores respuestas que han tardado más de lo debido. Tampoco puede ser muy alto, o se tardaría mucho en devolver un error, sobretodo cuando se encadenan diferentes llamadas.
+Sin embargo, el uso de \textit{timeotus} no es una solución aconsejable debido al valor que se le debe dar a la espera. No se puede poner un límite demasiado bajo porque trataría como errores respuestas que han tardado más de lo debido. Tampoco puede ser muy alto, o se tardaría mucho en devolver un error, sobre todo cuando se encadenan diferentes llamadas.
 
 Una solución pasa por usar un patrón de cortocircuitos. Los cortocircuitos monitorizan continuamente el estado de un servicio. Si detectan que un servicio no responde cierto número de peticiones, el cortocircuito pasa a un estado en el que rechaza cualquier petición para que estas fallen rápidamente. Cuando el servicio vuelve a estar operativo, el cortocircuito comienza a aceptar de nuevo peticiones \cite{Richards2016}.
 
@@ -1900,7 +1902,7 @@ En cuanto a los objetivos de esta memoria, podemos hacer las siguientes reflexio
 
 \item En cuanto al proceso de desarrollo, a partir de una misma especificación hemos desarrollado una misma aplicación de dos formas distintas. Actividades como las de despliegue o pruebas han resultado ser más desafiantes en una solución basada en microservicios debido al incremento en el número de piezas de software que participan. Otras como las de diseño cobran mayor relevancia porque un fallo en la descomposición del sistema en servicios es más costoso de reparar. Las actividades de mantenimiento e implementación son más fáciles de gestionar porque las bases de código son menores y más flexibles.
 
-\item En el apartado \ref{sect:Mantenimiento} \nameref{sect:Mantenimiento} se han planteado diferentes situaciones que acreditan que, durante esta fase del ciclo del software, los beneficios de una arquitectura basada en microservicios son superiores a los de una arquitectura monolítica. Estos beneficios se plasman sobretodo dentro del marco del mantenimiento adaptativo.
+\item En el apartado \ref{sect:Mantenimiento} \nameref{sect:Mantenimiento} se han planteado diferentes situaciones que acreditan que, durante esta fase del ciclo del software, los beneficios de una arquitectura basada en microservicios son superiores a los de una arquitectura monolítica. Estos beneficios se plasman sobre todo dentro del marco del mantenimiento adaptativo.
 
 \item En la mayoría los requisitos no funcionales que hemos estudiado se observan ventajas en una arquitectura basada en microservicios frente a una monolítica. Algunos como la utilización de recursos no han podido ser comprobados debido al pequeño tamaño del caso de estudio. Otros como los de disponibilidad o tolerancia a fallos se benefician del gran número de tecnologías asociadas a los microservicios que garantizan estas propiedades, como por ejemplo Kubernetes.
 
@@ -1908,7 +1910,7 @@ En cuanto a los objetivos de esta memoria, podemos hacer las siguientes reflexio
 
 A lo largo de todo el proceso de desarrollo me he enfrentado a diversos problemas, de los que voy a destacar dos. El primero de ellos está asociado al despliegue de las soluciones. Mi experiencia con Microsoft Azure hasta la fecha era escasa y en una plataforma con tantas funcionalidades me he visto necesitado de una mejor guía en cuanto a documentación. Además, el proceso de despliegue se ha realizado de forma manual, por lo que un fallo en un paso del proceso de despliegue suponía mucho esfuerzo adicional. Como mejora, se podía haber invertido parte del tiempo del proyecto en desarrollar una \textit{pipeline} para la integración continua.
 
-En segundo lugar, la integración de los microservicios ha sido más costosa de lo que en un principio suponía. Desacoplar los microservicios a nivel de diseño ha supuesto realizar varias refactorizaciones durante la fase de implementación. Hay que ser consciente de que realizar un buen diseño a la primera es prácticamente imposible. Además, la comunicación entre los servicios en el entorno de producción ha requerido varios días de esfuerzo, sobretodo por la falta de conocimiento en herramientas para su depuración.
+En segundo lugar, la integración de los microservicios ha sido más costosa de lo que en un principio suponía. Desacoplar los microservicios a nivel de diseño ha supuesto realizar varias refactorizaciones durante la actividad de implementación. Hay que ser consciente de que realizar un buen diseño a la primera es prácticamente imposible. Además, la comunicación entre los servicios en el entorno de producción ha requerido varios días de esfuerzo, sobre todo por la falta de conocimiento en herramientas para su depuración.
 
 Personalmente este trabajo refleja el conocimiento adquirido en la universidad y en mi experiencia laboral. Por una parte, de la universidad he aplicado mis estudios realizados sobre dispositivos móviles y plataformas como Xamarin. Por otra parte, he podido aplicar mi experiencia con los microservicios en las tecnologías .NET y he fortalecido mi madurez a la hora de enfrentarme a un problema de tamaño considerable.
 
