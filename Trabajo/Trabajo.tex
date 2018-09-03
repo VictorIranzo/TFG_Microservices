@@ -189,7 +189,7 @@ En el capítulo 8 se realiza una comparación de ambas soluciones respecto a dif
 
 El último capítulo presenta las conclusiones del trabajo respecto a los objetivos planteados inicialmente.
 
-Adicionalmente, al final de la memoria se adjuntan un conjunto de apéndices. En ellos  se incluye un modelo de la aplicación desarrollada y se detallan los pasos para el despliegue de la solución basada en microservicios en un entorno de producción.
+Adicionalmente, al final de la memoria se adjuntan un listado de acrónimos ordenados alfabéticamente y un conjunto de apéndices. En ellos  se incluye un modelo de la aplicación desarrollada y se detallan los pasos para el despliegue de la solución basada en microservicios en un entorno de producción.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %              Los microservicios en el proceso de desarrollo
@@ -610,7 +610,7 @@ Kubernetes \cite{Rensin2015} es una herramienta diseñada por Google para el des
 
 Kubernetes se emplea principalmente para especificar el número de replicas que se desea tener simultánemanete de un pod. La herramienta es buena para asegurar la disponiblidad de un servicio, pero no garantizan la escalabilidad de esta, que consistiría en modificar el número de replicas de un pod de forma dinámica en función de su demanda. Para este propósito se deben introducir balanceadores de carga como puntos de entrada al sistema. Estos balanceadores redirigirían cada petición al pod correspondiente y se encargarán de ajustar el número de replicas de un pod según una serie de reglas.
 
-En el apéndice \ref{chap:Despliegue} \nameref{chap:Despliegue} se dan algunos detalles más acerca de Kubernetes ya que es el orquestador empleado por el caso de estudio en el entorno de producción. Entre la información que aquí se puede encontrar está el uso de los servicios \textit{LoadBalancer} e \textit{Ingress}.
+En el apéndice \textbf{\ref{chap:Despliegue} \nameref{chap:Despliegue}} se dan algunos detalles más acerca de Kubernetes ya que es el orquestador empleado por el caso de estudio en el entorno de producción. Entre la información que aquí se puede encontrar está el uso de los servicios \textit{LoadBalancer} e \textit{Ingress}.
 
 \subsection{Docker Swarm}
 
@@ -663,9 +663,9 @@ En \footnote{ Container Trends: Plans, Orchestration and CI – A Dataset from B
 
 \subsection{Revisión de trabajos realizados en la ETSInf}
 
-En esta sección revisaremos diferentes trabajos de final de grado realizados por alumnos de la Escuela Técnica Superior de Ingeniería Informática (ETSInf). No son muchos los trabajos en la escuela relacionados con los microservicios debido a que su complejidad y a que estos son una tendencia muy actual. Queremos poner en valor dos trabajos, los realizados por Mompó \cite{Mompo2017} y Roig\cite{Roig2017}.
+En esta sección revisaremos diferentes trabajos de final de grado realizados por alumnos de la Escuela Técnica Superior de Ingeniería Informática (ETSInf). No son muchos los trabajos en la escuela relacionados con los microservicios debido a que su complejidad y a que estos son una tendencia muy actual. Queremos poner en valor dos trabajos, los realizados por Mompó \cite{Mompo2017} y Roig \cite{Roig2017}.
 
-En el trabajo de Mompó se propone una nueva metodología de trabajo para disminuir el retrabajo e incrementar el código compartido en una organización. La memoria repasa prácticas como la integración continua, donde se comparan las herramientas de Jenkins y Bamboo. Esta nueva metodología incluye también el uso de una herramienta para integración continua. También realiza una comparativa entre una arquitectura basadas en microservicios y una monolítica frente a diferentes características como la escalabilidad o su complejidad. Entre las mayores diferencias que pueden observarse entre esta comparativa y la que realizamos en la sección \ref{sect:Comparativa} \nameref{sect:Comparativa} podemos citar la relacionada a la evolución de los microservicios. Según Mompó, introducir una modificación atañe solo al servicio al que se le aplica, cuando en este trabajo se presentan ejemplos de que esto no siempre es así.
+En el trabajo de Mompó se propone una nueva metodología de trabajo para disminuir el retrabajo e incrementar el código compartido en una organización. La memoria repasa prácticas como la integración continua, donde se comparan las herramientas de Jenkins y Bamboo. Esta nueva metodología incluye también el uso de una herramienta para integración continua. También realiza una comparativa entre una arquitectura basadas en microservicios y una monolítica frente a diferentes características como la escalabilidad o su complejidad. Entre las mayores diferencias que pueden observarse entre esta comparativa y la que realizamos en la sección \textbf{\ref{sect:Comparativa} \nameref{sect:Comparativa}} podemos citar la relacionada a la evolución de los microservicios. Según Mompó, introducir una modificación atañe solo al servicio al que se le aplica, cuando en este trabajo se presentan ejemplos de que esto no siempre es así.
 
 En cuanto al trabajo de Roig, recoge en el estado del arte las principales características de los contenedores Docker y LXC. Sin embargo, muestra predilección por los segundos, cuando son los primeros los más adoptados en la industria.
 
@@ -674,7 +674,7 @@ En cuanto al trabajo de Roig, recoge en el estado del arte las principales carac
 
 En el caso de estudio, en el desarrollo de la solución basada en microservicios se van a emplear contenedores Docker. Para su orquestación, en producción se hará uso de Kubernetes. En desarrollo, se hará uso de Docker Compose para agilizar la creación de los diferentes contenedores. 
 
-En cuanto a la comunicación entre los servicios y con la interfaz de usuario, en la sección \ref{subsect:Integracion} \nameref{subsect:Integracion} hemos presentado tres posibles alternativas. Se ha optado por la que la literatura considera más sencilla, la integración REST a través de HTTP.
+En cuanto a la comunicación entre los servicios y con la interfaz de usuario, en la sección \textbf{\ref{subsect:Integracion} \nameref{subsect:Integracion}} hemos presentado tres posibles alternativas. Se ha optado por la que la literatura considera más sencilla, la integración REST a través de HTTP.
 
 En cuanto a aspectos más técnicos, el lenguaje de programación que se va a emplear principalmente es C\# junto con el entorno de desarrollo (IDE) Visual Studio Enterprise 2017. Entre las plataformas de destino que ofrece la tecnología .NET vamos a utilizar tanto .NET Standard 2.0 como .NET Core en su versión 2.1, publicada en Mayo de 2018. \footnote{ Versiones de .NET Core 2.1: \url{https://www.microsoft.com/net/download/dotnet-core/2.1}} El uso de librerías distintas a las provistas por la plataforma se realizará a través de paquetes NuGet, un mecanismo sencillo que envuelve el código compilado de una librería y fácil de referenciar. \footnote{ Una introducción a NuGet: \url{https://docs.microsoft.com/es-es/nuget/what-is-nuget}}
 
@@ -894,7 +894,7 @@ Se pueden consultar todas las incidencias creadas por el cliente en un listado d
 
 \section{Plan de trabajo} \label{sct:PlanTrabajo}
 
-El sistema a implementar se puede dividir en dos partes: \textit{front-end} y \textit{back-end}. En lo referente al \textit{back-end}, este se va a implementar siguiendo dos arquitecturas distintas: una monolítica y otra basada en microservicios. Existirá una gran cantidad de código compartido entre ambas soluciones y las mayores diferencias entre ellas serán las relacionadas con la organización del código. Por este motivo, primero se va a implementar la solución monolítica y una vez implementada se creará una nueva solución donde se refactorizará el código para obtener la solución basada en microservicios, siguiendo los principios que en la sección \ref{sct:FaseDiseño} \nameref{sct:FaseDiseño} se han mencionado.
+El sistema a implementar se puede dividir en dos partes: \textit{front-end} y \textit{back-end}. En lo referente al \textit{back-end}, este se va a implementar siguiendo dos arquitecturas distintas: una monolítica y otra basada en microservicios. Existirá una gran cantidad de código compartido entre ambas soluciones y las mayores diferencias entre ellas serán las relacionadas con la organización del código. Por este motivo, primero se va a implementar la solución monolítica y una vez implementada se creará una nueva solución donde se refactorizará el código para obtener la solución basada en microservicios, siguiendo los principios que en la sección \textbf{\ref{sct:FaseDiseño} \nameref{sct:FaseDiseño}} se han mencionado.
 
 Una vez se implemente la solución monolítica, se comenzará la implementación de la aplicación front-end. Las llamadas a la parte servidora van a realizarse a través de invocaciones HTTP. En consecuencia, el \textit{front-end} va a estar desacoplado de la implementación que elijamos para el \textit{back-end} y va a poder emplearse la misma solución, con muy pequeñas modificaciones, para comunicarse con ambas partes servidoras.
 
@@ -1187,7 +1187,7 @@ La documentación de la API se genera en la dirección formada por la unión de 
 \subsection{Generación de la capa de proxy}
 %TODO Incluir algo más de NSwag.
 
-Como hemos comentado en la sección \ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}, la capa de proxy se emplea para invocar a la API de la parte servidora a través de llamadas HTTP. Para cada una de las interfaces de contratos vamos a crear un proxy, que implementará sus métodos delegando en un cliente HTTP generado automáticamente con \textbf{NSwag}. NSwag es un conjunto de herramientas para varias plataformas, entre ellas .NET Core, para la generación de especificaciones Swagger a partir de los controladores definidos en C\# y la generación de clientes HTTP para el consumo de estos controladores. \footnote{ Página de GitHub de NSwag: \url{https://github.com/RSuter/NSwag}} \footnote{ NSwag Tutorial: How to integrate NSwag into your ASP.NET Core Web API project: \url{https://www.youtube.com/watch?v=lF9ZZ8p2Ciw}}
+Como hemos comentado en la sección \textbf{\ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}}, la capa de proxy se emplea para invocar a la API de la parte servidora a través de llamadas HTTP. Para cada una de las interfaces de contratos vamos a crear un proxy, que implementará sus métodos delegando en un cliente HTTP generado automáticamente con \textbf{NSwag}. NSwag es un conjunto de herramientas para varias plataformas, entre ellas .NET Core, para la generación de especificaciones Swagger a partir de los controladores definidos en C\# y la generación de clientes HTTP para el consumo de estos controladores. \footnote{ Página de GitHub de NSwag: \url{https://github.com/RSuter/NSwag}} \footnote{ NSwag Tutorial: How to integrate NSwag into your ASP.NET Core Web API project: \url{https://www.youtube.com/watch?v=lF9ZZ8p2Ciw}}
 
 El cliente HTTP autogenerado es inyectado en el proxy a través del constructor. El proxy también es el encargado de adaptar los parámetros de la interfaz de contratos a los parámetros que espera el cliente HTTP. Esta adaptación es necesaria porque, por ejemplo, en las peticiones HTTP para los métodos GET no se puede especificar un Body. Como consecuencia, todos los parámetros se deben pasar a través de la cabecera de la petición. De esta forma, los parámetros solo pueden ser de tipos simples como una cadena (\textit{string}) y objetos muy utilizados como los identificadores (\textit{Guid}) han de ser transformados a tipos más simples. 
 
@@ -1217,7 +1217,7 @@ En la mayoría de proyectos se ha configurado para que las alertas que devuelve 
 
 \section{Interfaz de usuario}
 
-Como hemos comentado en la sección \ref{sct:PlanTrabajo} \nameref{sct:PlanTrabajo}, vamos a implementar una interfaz de usuario que cumpla con los casos de uso y se pueda emplear para comunicar tanto con la solución monolítica como con la basada en microservicios. Para desacoplar el desarrollo del \textit{back-end} y el \textit{front-end}, la aplicación móvil va a desarrollarse en un repositorio de código distinto.
+Como hemos comentado en la sección \textbf{\ref{sct:PlanTrabajo} \nameref{sct:PlanTrabajo}}, vamos a implementar una interfaz de usuario que cumpla con los casos de uso y se pueda emplear para comunicar tanto con la solución monolítica como con la basada en microservicios. Para desacoplar el desarrollo del \textit{back-end} y el \textit{front-end}, la aplicación móvil va a desarrollarse en un repositorio de código distinto.
 
 %TODO Decidir si poner esto. https://techcrunch.com/2017/05/11/microsoft-now-lets-ios-developers-deploy-run-and-test-their-apps-directly-from-windows/
 Como se observa en la figura \ref{fig:ShopFrontEnd}, la solución de la UI está compuesta por dos proyectos. El primero es en el que se localiza la mayoría del código que se ha implementado, un proyecto .NET Standard con el código compartido por todas las plataformas. El segundo es el proyecto específico para la plataforma Android. Los proyectos asociados a las plataformas UWP y iOS han sido eliminados para hacer más simple su desarrollo.
@@ -1256,13 +1256,13 @@ Sin embargo, usar este patrón puede ser excesivo para UIs muy sencillas. \footn
 
 \end{itemize}
 
-Como material adicional, en el apéndice \ref{ch:ModeloNavegacion} \nameref{ch:ModeloNavegacion} se incluyen capturas de la aplicación desarrollada y la navegación que existe entre las diferentes pantallas.
+Como material adicional, en el apéndice \textbf{\ref{ch:ModeloNavegacion} \nameref{ch:ModeloNavegacion}} se incluyen capturas de la aplicación desarrollada y la navegación que existe entre las diferentes pantallas.
 
 \section{Pruebas} \label{sect:MonoPruebas}
 
 Se han realizado un total de 16 pruebas automatizadas mediante el framework \textbf{NUnit}. NUnit es una librería para la implementación de pruebas unitarias en todos los lenguajes .NET al igual que JUnit lo es para el lenguaje Java. \footnote{ Página de GitHub de NUnit: \url{https://github.com/nunit/nunit}}. La mayoría de las pruebas realizadas se clasifican como pruebas de integración porque involucran a más de una clase. 
 
-No se han podido probar todos los métodos expuestos en la interfaz del \textit{back-end}, pero gracias a que existe mucho código genérico para la realización de operaciones CRUD y la persistencia de datos, podemos considerar el sistema como fiable. Algunas de las pruebas que si se han hecho son las asociadas a los casos de uso CU003, CU004, CU005, CU007, CU009 y CU013 que se encuentran en la sección \ref{sect:CUs} \nameref{sect:CUs}. El resumen de las pruebas realizadas y su correcta ejecución se muestran en la siguiente figura.
+No se han podido probar todos los métodos expuestos en la interfaz del \textit{back-end}, pero gracias a que existe mucho código genérico para la realización de operaciones CRUD y la persistencia de datos, podemos considerar el sistema como fiable. Algunas de las pruebas que si se han hecho son las asociadas a los casos de uso CU003, CU004, CU005, CU007, CU009 y CU013 que se encuentran en la sección \textbf{\ref{sect:CUs} \nameref{sect:CUs}}. El resumen de las pruebas realizadas y su correcta ejecución se muestran en la siguiente figura.
 
 \begin{figure}[h]
 \centering
@@ -1288,7 +1288,7 @@ Por último, para algunos servicios provistos por las herramientas utilizadas se
 
 \section{Despliegue de la solución monolítica}
 
-Como hemos mencionado en la sección \ref{sect:Propuesta} \nameref{sect:Propuesta}, para el despliegue de la aplicación se va a hacer uso de Azure App Service. No se va a implementar ninguna \textit{pipeline} para desplegar automáticamente y todos los pasos que se detallan se deben hacer manualmente, aunque sean muy sencillos:
+Como hemos mencionado en la sección \textbf{\ref{sect:Propuesta} \nameref{sect:Propuesta}}, para el despliegue de la aplicación se va a hacer uso de Azure App Service. No se va a implementar ninguna \textit{pipeline} para desplegar automáticamente y todos los pasos que se detallan se deben hacer manualmente, aunque sean muy sencillos:
 
 \begin{enumerate}
 
@@ -1333,11 +1333,11 @@ Como hemos mencionado en la sección \ref{sect:Propuesta} \nameref{sect:Propuest
 
 \chapter{Diseño e implementación de la solución basada en microservicios}
 
-A lo largo del capítulo anterior nos hemos centrado sobre todo en aspectos de implementación relacionados con diferentes herramientas como Identity o Swagger. En este capítulo nos vamos a centrar más en el diseño ya que, como hemos dicho en el apartado \ref{sct:PlanTrabajo} \nameref{sct:PlanTrabajo}, vamos a refactorizar la solución monolítica y a nivel de código apenas va a verse modificada.
+A lo largo del capítulo anterior nos hemos centrado sobre todo en aspectos de implementación relacionados con diferentes herramientas como Identity o Swagger. En este capítulo nos vamos a centrar más en el diseño ya que, como hemos dicho en el apartado \textbf{\ref{sct:PlanTrabajo} \nameref{sct:PlanTrabajo}}, vamos a refactorizar la solución monolítica y a nivel de código apenas va a verse modificada.
 
 \section{Diseño de la solución}
 
-Para la descomposición de la solución en microservicios vamos a aplicar los principios que hemos explicado en el apartado \ref{sct:FaseDiseño} \nameref{sct:FaseDiseño}. Se tienen que extraer contextos bien delimitados sin importar en un primer momento el tamaño de estos. Aunque contemos con la experiencia del desarrollo de la solución monolítica, el tamaño de los microservicios se puede ajustar más adelante evaluando si vale la pena dividir un microservicio.
+Para la descomposición de la solución en microservicios vamos a aplicar los principios que hemos explicado en el apartado \textbf{\ref{sct:FaseDiseño} \nameref{sct:FaseDiseño}}. Se tienen que extraer contextos bien delimitados sin importar en un primer momento el tamaño de estos. Aunque contemos con la experiencia del desarrollo de la solución monolítica, el tamaño de los microservicios se puede ajustar más adelante evaluando si vale la pena dividir un microservicio.
 
 Concretamente, para representar visualmente la división en contextos delimitados se va emplear el modelo de dominio del caso de estudio, como se muestra en la figura \ref{fig:ShopBoundedContexts}. A continuación, detallamos cada uno de ellos, centrándonos en las capacidades que ofrece al negocio y no tanto en las entidades que maneja:
 
@@ -1364,7 +1364,7 @@ Concretamente, para representar visualmente la división en contextos delimitado
 
 \subsection{Arquitectura interna de los microservicios}
 
-En el apartado \ref{subsec:Poliglota} \nameref{subsec:Poliglota} se ha reflexionado sobre que una arquitectura basada en microservicios permite emplear diferentes tecnologías, arquitecturas y bases de datos en cada microservicio. Para validar lo que en este apartado se dice, vamos a desarrollar algunos microservicios con diferentes combinaciones de estas 3 características. Las arquitecturas de cada uno de los servicios así como las relaciones de dependencias que existen entre ellos se pueden ver en el diagrama de la figura \ref{fig:Componentes}.
+En el apartado \textbf{\ref{subsec:Poliglota} \nameref{subsec:Poliglota}} se ha reflexionado sobre que una arquitectura basada en microservicios permite emplear diferentes tecnologías, arquitecturas y bases de datos en cada microservicio. Para validar lo que en este apartado se dice, vamos a desarrollar algunos microservicios con diferentes combinaciones de estas 3 características. Las arquitecturas de cada uno de los servicios así como las relaciones de dependencias que existen entre ellos se pueden ver en el diagrama de la figura \ref{fig:Componentes}.
 
 \begin{figure}[h]
 \centering
@@ -1373,7 +1373,7 @@ En el apartado \ref{subsec:Poliglota} \nameref{subsec:Poliglota} se ha reflexion
 \label{fig:Componentes}
 \end{figure}
 
-En la mayoría de microservicios vamos a seguir la arquitectura de 6 capas que se describe en la sección \ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}. Esto hará que su refactorización sea más sencilla ya que solo debemos copiar las clases relacionadas al microservicio en cada una de las capas. 
+En la mayoría de microservicios vamos a seguir la arquitectura de 6 capas que se describe en la sección \textbf{\ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}}. Esto hará que su refactorización sea más sencilla ya que solo debemos copiar las clases relacionadas al microservicio en cada una de las capas. 
 
 Cada microservicio tendrá su propia base de datos, aunque estas pueden localizarse dentro del mismo servidor. Para evaluar otra tecnología de base de datos, la BD del servicio de incidencias la vamos a implementar con \textbf{Firebase}.
 
@@ -1383,7 +1383,7 @@ En el microservicio de informes vamos a seguir una arquitectura más sencilla. S
 
 En cuanto al servicio de notificaciones, vamos a implementarlo en el lenguaje \textbf{Java}. Sin embargo, como debe ser consumido por microservicios en lenguaje C\#, construiremos un proxy en este lenguaje para hacer más fácil su consumo.
 
-En el capítulo anterior, en las secciones \ref{subsect:CRUD} \nameref{subsect:CRUD} y \ref{subsect:Persistencia} \nameref{subsect:Persistencia} hemos nombrado algunas interfaces e implementaciones genéricas relacionadas con las entidades de dominio. Los microservicios de pedidos e incidencias deben seguir haciendo uso de estas implementaciones. Hacer de este código común un servicio no tiene sentido porque está relacionado con el acceso a datos y cada microservicio es dueño de sus propios datos. En este caso, este código genérico se referencia como una \textbf{librería} a través de paquetes NuGet, que en el diagrama de componentes se muestra con la etiqueta ``Código común".
+En el capítulo anterior, en las secciones \textbf{\ref{subsect:CRUD} \nameref{subsect:CRUD}} y \textbf{\ref{subsect:Persistencia} \nameref{subsect:Persistencia}} hemos nombrado algunas interfaces e implementaciones genéricas relacionadas con las entidades de dominio. Los microservicios de pedidos e incidencias deben seguir haciendo uso de estas implementaciones. Hacer de este código común un servicio no tiene sentido porque está relacionado con el acceso a datos y cada microservicio es dueño de sus propios datos. En este caso, este código genérico se referencia como una \textbf{librería} a través de paquetes NuGet, que en el diagrama de componentes se muestra con la etiqueta ``Código común".
 
 Por último, indicar que el consumo de cualquier microservicio, ya sea desde la interfaz de usuario o desde otros servicios, se realizará a través de las capas de proxy. En el diagrama de componentes no se ha incluido esta capa en la arquitectura interna de ninguno de los microservicios porque esta capa no se ejecuta en el proceso del servicio.
 
@@ -1525,7 +1525,7 @@ Sin embargo, esta aproximación cuenta con algunas desventajas. En primer lugar,
 
 \end{itemize}
 
-En nuestro caso de estudio, tenemos control de todos los consumidores ya que la interfaz de los servicios no va a ser publicada para su consumo por aplicaciones de terceros. Los consumidores de un microservicio serán o la interfaz de usuario u otros servicios. Como hemos comentado en la sección \ref{subsect:Consumo} \nameref{subsect:Consumo}, el proxy se añade como un paquete NuGet con una versión específica. Para asegurarnos de que siempre se consume la última versión de un servicio, vamos a hacer uso de variables para referir a la versión del paquete NuGet a instalar, como se puede ver en la figura \ref{fig:Csproj}.
+En nuestro caso de estudio, tenemos control de todos los consumidores ya que la interfaz de los servicios no va a ser publicada para su consumo por aplicaciones de terceros. Los consumidores de un microservicio serán o la interfaz de usuario u otros servicios. Como hemos comentado en la sección \textbf{\ref{subsect:Consumo} \nameref{subsect:Consumo}}, el proxy se añade como un paquete NuGet con una versión específica. Para asegurarnos de que siempre se consume la última versión de un servicio, vamos a hacer uso de variables para referir a la versión del paquete NuGet a instalar, como se puede ver en la figura \ref{fig:Csproj}.
 
 \begin{figure}[h]
 \centering
@@ -1558,7 +1558,7 @@ Una vez hecho esto, habrá que corregir las referencias a diferentes espacios de
 
 De la misma forma que se han migrado las clases de cada una de las entidades a un microservicio específico, las pruebas también se situarán en el contexto de un servicio.
 
-En la sección \ref{sect:MonoPruebas} \nameref{sect:MonoPruebas} hemos visto que la mayoría de pruebas realizadas eran de integración porque representaban un caso de uso de la aplicación. Vamos a emplear la clasificación de pruebas hemos presentado en el apartado \ref{sect:FasePruebas} \nameref{sect:FasePruebas}. Las pruebas de integración pasarán ahora a denominarse pruebas de servicio, si toda la lógica que necesita se encuentra en un único servicio, o de extremo a extremo, si involucra para su ejecución más de un servicio.
+En la sección \textbf{\ref{sect:MonoPruebas} \nameref{sect:MonoPruebas}} hemos visto que la mayoría de pruebas realizadas eran de integración porque representaban un caso de uso de la aplicación. Vamos a emplear la clasificación de pruebas hemos presentado en el apartado \textbf{\ref{sect:FasePruebas} \nameref{sect:FasePruebas}}. Las pruebas de integración pasarán ahora a denominarse pruebas de servicio, si toda la lógica que necesita se encuentra en un único servicio, o de extremo a extremo, si involucra para su ejecución más de un servicio.
 
 De las pruebas realizadas en la solución monolítica, la mayoría se transformarán en pruebas de servicio. Sin embargo, servicios como los de incidencias o pedidos dependen del de seguridad para realizar muchos de los casos de uso en los que se requiere obtener datos de un cliente. Para evitar tener que representar estas pruebas como de extremo a extremo (mucho más costosas) se usará un \textit{fake} del servicio de seguridad. Si recordamos, en la solución monolítica ya hemos tenido que utilizar un \textit{fake} porque algunas clases de Identity trataban de acceder a la base de datos de usuarios. Ahora, el \textit{fake} será de la interfaz de contratos de seguridad y devolverá, por ejemplo, los datos de un usuario falso cuando se requiera uno por su identificador. Esto se ilustra en el código de la figura \ref{fig:FakeSecurityManager}.
 
@@ -1594,7 +1594,7 @@ En la figura \ref{fig:Compose} se puede ver un extracto de este archivo. En él 
 \label{fig:Compose}
 \end{figure}
 
-Docker Compose es una herramienta excepcional para agilizar el despliegue de la aplicación en un entorno de desarrollo. Sin embargo, en un entorno de producción se desean propiedades como la escalabilidad de los contenedores desplegados de acuerdo a su demanda o la recuperación automática de estos ante un fallo. Docker Compose no nos provee estas funcionalidades, que sí nos puede ofrecer un orquestador como Kubernetes. En el apéndice \ref{chap:Despliegue} \nameref{chap:Despliegue} recogemos paso por paso como se despliega la aplicación en un entorno de producción empleando Azure Kubernetes Services.
+Docker Compose es una herramienta excepcional para agilizar el despliegue de la aplicación en un entorno de desarrollo. Sin embargo, en un entorno de producción se desean propiedades como la escalabilidad de los contenedores desplegados de acuerdo a su demanda o la recuperación automática de estos ante un fallo. Docker Compose no nos provee estas funcionalidades, que sí nos puede ofrecer un orquestador como Kubernetes. En el apéndice \textbf{\ref{chap:Despliegue} \nameref{chap:Despliegue}} recogemos paso por paso como se despliega la aplicación en un entorno de producción empleando Azure Kubernetes Services.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       EVALUACIÓN
@@ -1625,7 +1625,7 @@ Por ejemplo, si se observa un fallo de que no se genera correctamente una factur
 
 Según la ISO/IEC 14764, el \textbf{mantenimiento pefectivo} es una modificación de un producto software una vez se ha entregado para proveer mejoras a sus usuarios, mejorar la documentación del programa o atributos del software como el rendimiento o la mantenibilidad \cite{Bourque2014}. Según Sommerville, este tipo de mantenimiento se origina cuando los requisitos del sistema cambian para responder a un cambio en el negocio. Además, el tamaño de la modificación a realizar es normalmente superior al de modificaciones asociadas al del resto de tipos de mantenimiento \cite{Sommerville2010}.
 
-Como hemos comentado en el apartado \ref{subsect:Descomposicion} \nameref{subsect:Descomposicion}, el hecho de que se divida la solución en contextos bien delimitados hará que los nuevos requisitos encajen mejor en uno de ellos.
+Como hemos comentado en el apartado \textbf{\ref{subsect:Descomposicion} \nameref{subsect:Descomposicion}}, el hecho de que se divida la solución en contextos bien delimitados hará que los nuevos requisitos encajen mejor en uno de ellos.
 
 Por ejemplo, se puede añadir una nueva funcionalidad que consista en generar un informe de una incidencia, mostrando datos como cuanto tiempo ha estado abierta o los empleados que han participado en su resolución. Como en la generación de una factura, hay más de un servicio implicado, pero está claro que es el de incidencias quien debe ofrecer este método en su interfaz.
 
@@ -1652,7 +1652,7 @@ Lo mismo ocurre con la versión de una librería. Diferentes servicios pueden em
 
 \section{Comparación de las soluciones ante RNFs}
 
-Ahora, revisaremos las soluciones frente a diferentes requisitos no funcionales que hemos mencionado en la sección \ref{subsect:RNF} \nameref{subsect:RNF}. En el capítulo de \nameref{ch:Conclusiones} sintetizaremos lo que aquí se comenta para ofrecer una respuesta al cuarto objetivo que proponemos en este memoria.
+Ahora, revisaremos las soluciones frente a diferentes requisitos no funcionales que hemos mencionado en la sección \textbf{\ref{subsect:RNF} \nameref{subsect:RNF}}. En el capítulo de \textbf{\nameref{ch:Conclusiones}} sintetizaremos lo que aquí se comenta para ofrecer una respuesta al cuarto objetivo que proponemos en este memoria.
 
 \subsection{Disponibilidad}
 
@@ -1706,7 +1706,7 @@ La \textbf{capacidad para ser reemplazado} está estrechamente relacionada con l
 
 Si recordamos el cronograma de la figura \ref{fig:Cronograma}, la refactorización de la solución monolítica para generar cualquiera de los servicios apenas se ha prolongado por más de un día (las tareas que empiezan su nombre con la palabra ``microservicio"). A esto habría que incluirle el tiempo que se ha tardado en desarrollar la lógica del servicio durante el desarrollo de la solución monolítica (las tareas que empiezan su nombre con la palabra ``implementación"). En comparación, el desarrollo de la solución monolítica en su totalidad se ha prolongado durante casi un mes (desde el día 19 de Junio hasta el día 16 de Julio).
 
-Tras sumar estos tiempos, se observa que el desarrollo de cada microservicio apenas ha costado dos semanas, tal y como se estima que debería ser en el apartado \ref{subsect:RNF} \nameref{subsect:RNF}. Si un componente del software debe ser reemplazado, puede ocurrir que en la solución basada en microservicios solo se tenga que reemplazar un microservicio mientras que en la solución monolítica se tenga que adaptar todo el monolito. Si consideramos que el tiempo para desarrollar un componente software que remplaza a otro es similar al tiempo que costó desarrollar al original, reemplazar la solución monolítica será más costoso que reemplazar un único microservicio. Si nos situamos en un caso más extremo en el que se tuviera que reemplazar todo el sistema basado en microservicios, este problema podría abordarse de forma incremental por la modularidad de la solución. De nuevo, no se puede afirmar lo mismo de la solución monolítica.
+Tras sumar estos tiempos, se observa que el desarrollo de cada microservicio apenas ha costado dos semanas, tal y como se estima que debería ser en el apartado \textbf{\ref{subsect:RNF} \nameref{subsect:RNF}}. Si un componente del software debe ser reemplazado, puede ocurrir que en la solución basada en microservicios solo se tenga que reemplazar un microservicio mientras que en la solución monolítica se tenga que adaptar todo el monolito. Si consideramos que el tiempo para desarrollar un componente software que remplaza a otro es similar al tiempo que costó desarrollar al original, reemplazar la solución monolítica será más costoso que reemplazar un único microservicio. Si nos situamos en un caso más extremo en el que se tuviera que reemplazar todo el sistema basado en microservicios, este problema podría abordarse de forma incremental por la modularidad de la solución. De nuevo, no se puede afirmar lo mismo de la solución monolítica.
 
 \section{Otras posibles soluciones}
 %Reports y notifications como una librería porque no requieren desplegarse frecuentemente y ahorras en llamadas HTTP.
@@ -1932,7 +1932,7 @@ En cuanto a líneas de trabajo futuras, tras este proyecto se abren dos caminos 
 
 \chapter{Descripción del prototipo de IU desarrollado} \label{ch:ModeloNavegacion}
 
-En este apéndice presentamos el modelo de navegación de la aplicación móvil desarrollada durante el caso de estudio. Junto con cada captura de la interfaz de usuario adjuntamos los casos de uso contenidos en dicha pantalla, empleando los códigos que hemos dado en la sección \ref{sect:CUs} \nameref{sect:CUs}.
+En este apéndice presentamos el modelo de navegación de la aplicación móvil desarrollada durante el caso de estudio. Junto con cada captura de la interfaz de usuario adjuntamos los casos de uso contenidos en dicha pantalla, empleando los códigos que hemos dado en la sección \textbf{\ref{sect:CUs} \nameref{sect:CUs}}.
 
 \begin{figure}[h]
 \centering
@@ -1968,7 +1968,7 @@ Para crear el registro iremos al portal de Azure y desde un nuevo terminal ejecu
 \label{fig:CreateACR}
 \end{figure}
 
-Ahora, en la máquina de desarrollo donde tenemos el repositorio de código de la solución basada en microservicios, abriremos una nueva terminal. Haciendo uso del archivo \textit{docker-compose.yml} que hemos mostrado en la sección \ref{sect:DespliegueMicroservicios} \nameref{sect:DespliegueMicroservicios} vamos a construir las imágenes de todos los contenedores a través del comando ``docker-compose build".
+Ahora, en la máquina de desarrollo donde tenemos el repositorio de código de la solución basada en microservicios, abriremos una nueva terminal. Haciendo uso del archivo \textit{docker-compose.yml} que hemos mostrado en la sección \textbf{\ref{sect:DespliegueMicroservicios} \nameref{sect:DespliegueMicroservicios}} vamos a construir las imágenes de todos los contenedores a través del comando ``docker-compose build".
 
 En esta máquina será necesario tener instalada la línea de comandos de Azure para la realización de los siguientes pasos. \footnote{ Instalación de la CLI de Azure 2.0: \url{https://docs.microsoft.com/es-es/cli/azure/install-azure-cli?view=azure-cli-latest}} Se debe iniciar sesión tanto con las credenciales del usuario de Azure a través del comando ``az login" como en en el registro de imágenes creado, tal y como muestra la figura \ref{fig:LoginAcr}.
 
@@ -2039,11 +2039,11 @@ En segundo lugar, una vez se establezca la conexión con el clúster, debemos cr
 \label{fig:KubernetesSecurity}
 \end{figure}
 
-Vamos a hacer un paréntesis para explicar en detalle parte de este archivo. Cada uno de los microservicios está formado por dos componentes: un servicio de Kubernetes y un balanceador de carga. Como hemos comentado en la sección \ref{subsect:Kubernetes} \nameref{subsect:Kubernetes}, los pods son la unidad de trabajo de Kubernetes, que son construidos y destruidos continuamente de forma transparente. En Kubernetes, un servicio es una abstracción que define un conjunto de pods. Aunque cada pod obtiene su propia dirección IP interna, no se puede garantizar que el servicio vaya a estar a la escucha siempre en esta IP debido a la naturaleza volátil del pod. \footnote{ Servicios en Kubernetes: \url{https://kubernetes.io/docs/concepts/services-networking/service/}} 
+Vamos a hacer un paréntesis para explicar en detalle parte de este archivo. Cada uno de los microservicios está formado por dos componentes: un servicio de Kubernetes y un balanceador de carga. Como hemos comentado en la sección \textbf{\ref{subsect:Kubernetes} \nameref{subsect:Kubernetes}}, los pods son la unidad de trabajo de Kubernetes, que son construidos y destruidos continuamente de forma transparente. En Kubernetes, un servicio es una abstracción que define un conjunto de pods. Aunque cada pod obtiene su propia dirección IP interna, no se puede garantizar que el servicio vaya a estar a la escucha siempre en esta IP debido a la naturaleza volátil del pod. \footnote{ Servicios en Kubernetes: \url{https://kubernetes.io/docs/concepts/services-networking/service/}} 
 
 En los servicios desplegados hemos seguido el caso de uso más común en relación entre pods y contenedores: cada pod representa un único contenedor Docker. A su vez, cada servicio está formado por un solo pod. \footnote{ Pods en Kubernetes: \url{https://kubernetes.io/docs/concepts/workloads/pods/pod/}} En la figura \ref{fig:KubernetesSecurity} se muestra en la sección \textit{containers} que solo hay un pod, basado en la imagen Docker del microservicio de seguridad.
 
-Si solo definieramos un servicio, la dirección IP que se le da es interna y no queda expuesta fuera del clúster para su consumo por aplicaciones frontend. Existen varias posibilidades para alcanzar este propósito. Vamos a repasar algunas de ellas en la sección \ref{sect:DespliegueOtros} \nameref{sect:DespliegueOtros}, pero entre ellas la que vamos a presentar ahora es el uso de un balanceador de carga externo. Como se comenta en el libro \cite{Rensin2015}, es una buena práctica situar un balanceador de carga frente a cada servicio aunque el número de replicas del servicio sea solo uno. Para seleccionar que servicios gestiona el balanceador de carga se hace uso de un selector de etiquetas definido en la sección \textit{selector} de la figura, que debe coincidir con la etiqueta dada al servicio en su sección \textit{labels}. \footnote{ Balanceadores de carga en Kubernetes: \url{https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/}}
+Si solo definieramos un servicio, la dirección IP que se le da es interna y no queda expuesta fuera del clúster para su consumo por aplicaciones frontend. Existen varias posibilidades para alcanzar este propósito. Vamos a repasar algunas de ellas en la sección \textbf{\ref{sect:DespliegueOtros} \nameref{sect:DespliegueOtros}}, pero entre ellas la que vamos a presentar ahora es el uso de un balanceador de carga externo. Como se comenta en el libro \cite{Rensin2015}, es una buena práctica situar un balanceador de carga frente a cada servicio aunque el número de replicas del servicio sea solo uno. Para seleccionar que servicios gestiona el balanceador de carga se hace uso de un selector de etiquetas definido en la sección \textit{selector} de la figura, que debe coincidir con la etiqueta dada al servicio en su sección \textit{labels}. \footnote{ Balanceadores de carga en Kubernetes: \url{https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/}}
 
 Tanto para la comunicación entre el \textit{back-end} y el \textit{fron-tend} como para la comunicación entre microservicios emplearemos la dirección IP externa que el balanceador de carga tiene. Esta decisión surge para hacer más sencilla la configuración de los microservicios, pero provoca que servicios internos como el de notificaciones o informes que no necesitan ser consumidos por el frontend sean también expuestos fuera del clúster.
 
@@ -2090,7 +2090,7 @@ En la sección anterior hemos mencionado que los microservicios comunican entre 
 
 Existen muchas formas de que un microservicio descubra donde se encuentran otros con los que ha de colaborar, como puede ser el uso de archivos de configuración. El microservicio de pedidos necesita comunicar con el de seguridad, pedidos y notificaciones, por lo que necesita conocer y almacenar la dirección donde estos se despliegan. Esta configuración será leída por los diferentes proxies que el servicio de pedidos utiliza para comunicar con los otros.
 
-Como se muestra en la figura, el archivo de configuración de desarrollo contiene la dirección de los servicios que se despliegan a través de Docker Compose en el archivo que hemos presentado en la sección \ref{sect:DespliegueMicroservicios} \nameref{sect:DespliegueMicroservicios}. Mientras tanto, en el archivo de producción se emplean las direcciones de los balanceadores de carga presentados en la figura \ref{fig:ServiciosKubernetes}.
+Como se muestra en la figura, el archivo de configuración de desarrollo contiene la dirección de los servicios que se despliegan a través de Docker Compose en el archivo que hemos presentado en la sección \textbf{\ref{sect:DespliegueMicroservicios} \nameref{sect:DespliegueMicroservicios}}. Mientras tanto, en el archivo de producción se emplean las direcciones de los balanceadores de carga presentados en la figura \ref{fig:ServiciosKubernetes}.
 
 \begin{figure}[h]
 \centering
