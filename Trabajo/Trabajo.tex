@@ -261,9 +261,9 @@ La figura \ref{fig:iso25010} muestra la división en características y subcarac
 
 \item La \textbf{disponibilidad} se define en la ISO/IEC 25010 como la capacidad del sistema de estar operativo y accesible para su uso cuando se requiere \cite{Standard2010}. En los sistemas distribuidos existen 3 características sobre las que se debe hacer balance: la consistencia, que establece que vamos a obtener una respuesta correcta de cualquier nodo de un servicio de acuerdo a su especificación, la disponibilidad, que ya hemos definido, y la tolerancia a particiones, que es la habilidad de gestionar situaciones en las que la comunicación entre las partes de un sistema se interrumpe. En la siguiente sección entraremos en más detalle sobre el balance que se debe realizar para elegir que propiedad se debe sacrificar.
 
-\item La \textbf{tolerancia a fallos} se define como la capacidad del sistema para operar según lo previsto en presencia de fallos hardware o software \cite{Standard2010}. Cuando se escala un sistema, la probabilidad de fallo es inevitable. Muchas organizaciones invierten mucho esfuerzo en evitar que un fallo se produzca, pero muy poco en mecanismos para recuperar el sistema una vez se ha producido. Un sistema que por culpa de un servicio caído deja de funcionar es menos resiliente que un sistema que puede continuar ofreciendo el resto de sus funcionalidades.
+\item La \textbf{tolerancia a fallos} se define como la capacidad del sistema para operar según lo previsto en presencia de fallos \textit{hardware} o software \cite{Standard2010}. Cuando se escala un sistema, la probabilidad de fallo es inevitable. Muchas organizaciones invierten mucho esfuerzo en evitar que un fallo se produzca, pero muy poco en mecanismos para recuperar el sistema una vez se ha producido. Un sistema que por culpa de un servicio caído deja de funcionar es menos resiliente que un sistema que puede continuar ofreciendo el resto de sus funcionalidades.
 
-\item La \textbf{utilización de recursos} se define en la ISO como la cantidad y tipos de recursos empleados durante el funcionamiento del software bajo unas condiciones determinadas \cite{Standard2010}. Por un lado, los arquitecturas basadas en microservicos ofrecen beneficios ya que permiten que cada servicio se despliegue en un hardware diferente con unas prestaciones acordes a sus necesidades. También permiten que se escale cada servicio de acuerdo a su demanda de forma independiente, en lugar de tener que escalar el sistema monolítico al completo \cite{DelaTorre2018}. Por otro lado, los servicios se ejecutan en diferentes procesos y las llamadas interprocedurales a través de la red suponen un mayor consumo de recursos \cite{FowlerSusan}.
+\item La \textbf{utilización de recursos} se define en la ISO como la cantidad y tipos de recursos empleados durante el funcionamiento del software bajo unas condiciones determinadas \cite{Standard2010}. Por un lado, los arquitecturas basadas en microservicos ofrecen beneficios ya que permiten que cada servicio se despliegue en un \textit{hardware} diferente con unas prestaciones acordes a sus necesidades. También permiten que se escale cada servicio de acuerdo a su demanda de forma independiente, en lugar de tener que escalar el sistema monolítico al completo \cite{DelaTorre2018}. Por otro lado, los servicios se ejecutan en diferentes procesos y las llamadas interprocedurales a través de la red suponen un mayor consumo de recursos \cite{FowlerSusan}.
 
 \item La \textbf{capacidad para ser reemplazado} es la capacidad de un producto software para ser reemplazado por otro en el mismo entorno y con el mismo propósito. La ventaja de los microservicios es que, gracias a su diseño modular, las piezas de software se pueden reemplazar fácilmente. Cada microservicio es un componente de software que puede ser completamente reescrito en poco tiempo. Autores como Jon Eaves \cite{Eaves2014} estiman que el tiempo para hacerlo no debería superar las dos semanas. Esto hace que se pueda reaccionar a situaciones imprevistas más fácilmente. Por ejemplo, para que un sistema pueda operar en un entorno determinado puede ocurrir que se tenga que reescribir un servicio por otra persona a la que inicialmente lo desarrolló. Al reescribirlo se puede hacer uso de otro lenguaje de programación; basta con mantener la misma interfaz del servicio para que otros puedan continuar operando con él. Si en lugar de reescribir un servicio se tuviera que reescribir toda la aplicación, el proceso de hacerlo no se podría abordar de forma incremental si la aplicación fuera un monolito.
 
@@ -898,13 +898,13 @@ Se pueden consultar todas las incidencias creadas por el cliente en un listado d
 
 El sistema a implementar se puede dividir en dos partes: \textit{front-end} y \textit{back-end}. En lo referente al \textit{back-end}, este se va a implementar siguiendo dos arquitecturas distintas: una monolítica y otra basada en microservicios. Existirá una gran cantidad de código compartido entre ambas soluciones y las mayores diferencias entre ellas serán las relacionadas con la organización del código. Por este motivo, primero se va a implementar la solución monolítica y una vez implementada se creará una nueva solución donde se refactorizará el código para obtener la solución basada en microservicios, siguiendo los principios que en la sección \textbf{\ref{sct:FaseDiseño} \nameref{sct:FaseDiseño}} se han mencionado.
 
-Una vez se implemente la solución monolítica, se comenzará la implementación de la aplicación front-end. Las llamadas a la parte servidora van a realizarse a través de invocaciones HTTP. En consecuencia, el \textit{front-end} va a estar desacoplado de la implementación que elijamos para el \textit{back-end} y va a poder emplearse la misma solución, con muy pequeñas modificaciones, para comunicarse con ambas partes servidoras.
+Una vez se implemente la solución monolítica, se comenzará la implementación de la aplicación \textit{front-end}. Las llamadas a la parte servidora van a realizarse a través de invocaciones HTTP. En consecuencia, el \textit{front-end} va a estar desacoplado de la implementación que elijamos para el \textit{back-end} y va a poder emplearse la misma solución, con muy pequeñas modificaciones, para comunicarse con ambas partes servidoras.
 
 La organización de la memoria en los siguientes capítulos es acorde a este proceso. Primero, presentaremos la solución monolítica centrándonos sobre todo en aspectos de implementación, que son comunes a los de la solución basada en servicios. Después, explicaremos la solución basada en microservicios, centrándonos sobre todo en aspectos de diseño y modificaciones que se han realizado frente a la monolítica.
 
 \section{Organización del trabajo}
 
-El proceso de desarrollo se ha desglosado en grandes tareas, muy ligadas a las entidades del dominio que existen en el caso de estudio. En el siguiente cronograma mostrado en la figura \ref{fig:Cronograma} se pueden observar estas tareas y su evolución a lo largo del tiempo que ha durado el desarrollo de las soluciones. En azul se han representado las tareas asociadas a la solución monolítica, en verde las asociadas al front-end y en naranja las asociadas a la solución basada en microservicios.
+El proceso de desarrollo se ha desglosado en grandes tareas, muy ligadas a las entidades del dominio que existen en el caso de estudio. En el siguiente cronograma mostrado en la figura \ref{fig:Cronograma} se pueden observar estas tareas y su evolución a lo largo del tiempo que ha durado el desarrollo de las soluciones. En azul se han representado las tareas asociadas a la solución monolítica, en verde las asociadas al \textit{front-end} y en naranja las asociadas a la solución basada en microservicios.
 
 \begin{figure}[h]
 \centering
@@ -972,7 +972,7 @@ También se situarán en esta capa los objetos para la transferencia de datos (D
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.5]{capas}
-\caption{Capas del back-end monolítico.}
+\caption{Capas del \textit{back-end} monolítico.}
 \label{fig:capas}
 \end{figure}
 
@@ -991,12 +991,13 @@ A nivel de diseño, se van a definir las siguientes entidades en la capa de domi
 
 Cabe destacar en el diseño la relación que existe entre un pedido y un producto. Esta relación es de muchos a muchos: un pedido está formado por múltiples productos y un producto puede estar incluido en diferentes pedidos. Además, la relación cuenta con una propiedad que es el número de unidades del producto en el pedido, que se puede modelar como un atributo en una clase asociación. Si razonamos a nivel de base de datos, la clase asociación se implementará como una tabla intermedia entre las tablas de pedidos y productos. En nuestro código, también lo modelaremos así, dando lugar a la entidad intermedia \textit{Purchase}. Esto lo hacemos para hacer uso de la librería Entity Framework en el mapeo objeto-relacional (ORM), que nos facilitará el acceso a la base de datos.
 
-Con todo esto, el diagrama de clases que se encuentran en la capa de dominio será el que se ilustra en la siguiente figura. En esta figura ya se ilustran las propiedades de las entidades de dominio.
+Con todo esto, el diagrama de clases que se encuentran en la capa de dominio será el que se ilustra en la figura \ref{fig:ClassDiagram}. En esta figura ya se ilustran las propiedades de las entidades de dominio.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.65]{ClassDiagram}
 \caption{Diagrama de clases de dominio de la solución monolítica.}
+\label{fig:ClassDiagram}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1004,7 +1005,7 @@ Con todo esto, el diagrama de clases que se encuentran en la capa de dominio ser
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 
-\section{Detalles de la implementación back-end}
+\section{Detalles de la implementación \textit{back-end}}
 
 \subsection{Operaciones CRUD} \label{subsect:CRUD}
 
@@ -1017,7 +1018,7 @@ Para la mayoría de entidades que hemos modelado vamos a ofrecer operaciones CRU
 \label{fig:ICrudManager}
 \end{figure}
 
-En la figura \ref{fig:ICrudManager} se muestra la interfaz genérica que hemos mencionado. La interfaz \textit{ICrudManager} es interna porque no debe ser visible fuera de la solución del back-end. Es genérica porque se define en base a DTOs con diferentes propósitos. Para la creación de una entidad son necesarias solo algunas propiedades y otras como la fecha de creación son calculadas por el sistema y no deben ser provistas en el \textbf{\textit{CreateDTO}} de la petición. Lo mismo ocurre con la lectura y la actualización de una entidad. Por ejemplo, de una entidad algunas propiedades no está permitido actualizarlas, por lo que no deben incluirse estas en el \textbf{\textit{UpdateDTO}} de la entidad. 
+En la figura \ref{fig:ICrudManager} se muestra la interfaz genérica que hemos mencionado. La interfaz \textit{ICrudManager} es interna porque no debe ser visible fuera de la solución del \textit{back-end}. Es genérica porque se define en base a DTOs con diferentes propósitos. Para la creación de una entidad son necesarias solo algunas propiedades y otras como la fecha de creación son calculadas por el sistema y no deben ser provistas en el \textbf{\textit{CreateDTO}} de la petición. Lo mismo ocurre con la lectura y la actualización de una entidad. Por ejemplo, de una entidad algunas propiedades no está permitido actualizarlas, por lo que no deben incluirse estas en el \textbf{\textit{UpdateDTO}} de la entidad. 
 
 Sin embargo, no se van a definir únicamente operaciones CRUD para una entidad. Cada entidad tiene una serie de operaciones asociadas, como puede ser generar la factura de un pedido o obtener la lista de incidencias de un usuario. Tanto estas acciones como las CRUD se definen en la interfaz de contratos de la entidad. Si para una entidad se quieren exponer operaciones CRUD, se deben definir los DTOs específicos para las operaciones de lectura, escritura y actualización y se debe extender la interfaz genérica. 
 
@@ -1032,7 +1033,7 @@ En la interfaz de la figura \ref{fig:IOrdersManager} se observa la interfaz de c
 
 La implementación de las operaciones CRUD en la capa de aplicación también se realizará de forma genérica, a través de la clase llamada \textit{CrudManager}. Si la implementación de una de las operaciones no se ajusta a la que una entidad necesita, esta puede ser sobreescrita en el \textit{manager} de la entidad.
 
-Por último, algunas entidades en lugar de ofrecer operaciones CRUD solo ofrecen \textbf{operaciones CUD} (crear, actualizar y eliminar). Estas entidades son las de Comentario y Compra porque podemos considerarlas como secundarias. No tiene sentido exponer un método en la interfaz de \textit{back-end} para leer un único comentario o obtener el número de unidades de un producto en un pedido. No obstante, si que tiene sentido exponer un método para, por ejemplo, crear o eliminar un comentario dentro de una incidencia. Las operaciones de lectura de estas entidades se realizan a través de su entidad principal asociada. Por ejemplo, cuando solicitamos una incidencia obtendremos todos los comentarios que en la incidencia se han hecho aunque los comentarios sean objetos de una entidad independiente.
+Por último, algunas entidades en lugar de ofrecer operaciones CRUD solo ofrecen \textbf{operaciones CUD} (crear, actualizar y eliminar). Estas entidades son las de Comentario y Compra porque podemos considerarlas como secundarias. No tiene sentido exponer un método en la interfaz de \textit{back-end} para leer un único comentario o obtener el número de unidades de un producto en un pedido. No obstante, si que tiene sentido exponer un método para, por ejemplo, crear o eliminar un comentario dentro de una incidencia. Las operaciones de lectura de estas entidades se realizan a través de su entidad principal asociada. Por ejemplo, cuando solicitamos una incidencia obtendremos todos los comentarios que en la incidencia se han hecho, aunque los comentarios sean objetos de una entidad independiente.
 
 \subsection{Seguridad}
 %TODO Ha faltado mencionar registro en la clase PersistenceDependencies.
@@ -1085,9 +1086,9 @@ El usuario podrá obtener el \textit{token} que le identifica a través del mét
 
 \subsection{Persistencia} \label{subsect:Persistencia}
 
-Para la persistencia se va a emplear \textbf{Entity Framework Core} para el mapeo objeto-relacional y una base de datos SQL en la nube de \textbf{Microsoft Azure}. Entity Framework Core es una versión multiplataforma del ORM Entity Framework (EF) para trabajar con una base de datos mediante objetos .NET. \footnote{Descripción general de Entity Framework Core: \url{https://docs.microsoft.com/es-es/ef/core/}}
+Para la persistencia se va a emplear \textbf{Entity Framework Core} \footnote{Descripción general de Entity Framework Core: \url{https://docs.microsoft.com/es-es/ef/core/}} para el mapeo objeto-relacional y una base de datos SQL en la nube de \textbf{Microsoft Azure}. Entity Framework Core es una versión multiplataforma del ORM Entity Framework (EF) para trabajar con una base de datos mediante objetos .NET.
 
-Vamos a seguir una aproximación \textit{Code-First} para el diseño de la base de datos. Esta aproximación nos permite diseñar primero las entidades de nuestro dominio a través de las clases en la capa de dominio y luego trasladar sus atributos y relaciones a un esquema de base de datos gracias a EF. \footnote{What is Code-First?: \url{http://www.entityframeworktutorial.net/code-first/what-is-code-first.aspx}}
+Vamos a seguir una aproximación \textit{Code-First} \cite{CodeFirst} para el diseño de la base de datos. Esta aproximación nos permite diseñar primero las entidades de nuestro dominio a través de las clases en la capa de dominio y luego trasladar sus atributos y relaciones a un esquema de base de datos gracias a EF.
 
 Para la creación de la base de datos se debe ir al portal de Azure \footnote{ Portal de Azure: \url{https://portal.azure.com/}} y navegar hasta la página SQL Databases. Se debe proveer principalmente su nombre, la suscripción a la que se redirigirán los costes asociados, el grupo de recursos en el que se incluirá y el servidor donde se emplazará. En la figura \ref{fig:CreateDB} se muestra el formulario principal para proveer estos datos.
 
@@ -1116,7 +1117,16 @@ En la clase \textit{ShopContext} debemos indicar cuáles son las entidades del d
 \label{fig:ShopContext}
 \end{figure}
 
-Por último, para que desde otras capas accedan a los datos emplearemos el \textbf{patrón DAO}. Exponer el contexto entero fuera de la capa de persistencia puede ser peligroso porque permitiría modificar desde otras capas aspectos que solo deben conocerse en esta capa. Por ello, se definirá para cada entidad del dominio una interfaz para acceder a sus datos donde las operaciones permitidas están acotadas.
+Por último, para que desde otras capas accedan a los datos emplearemos el \textbf{patrón DAO} \cite{Shubham2018}. Exponer el contexto entero fuera de la capa de persistencia puede ser peligroso porque permitiría modificar desde otras capas aspectos que solo deben conocerse en esta capa. Por ello, se definirá para cada entidad del dominio una interfaz para acceder a sus datos donde las operaciones permitidas están acotadas.
+
+La clase \textit{ICrudDAO} de la figura \ref{fig:ICrudDAO} es una interfaz de la capa de servicios que representa las operaciones permitidas en un DAO genérico. Estas operaciones se implementan en una clase base llamada \textit{CrudDaoBase}. Las diferentes entidades deben extender esta base (por ejemplo, \textit{PurchasesDAO}) para exponer las operaciones CRUD. Si es necesario, pueden sobreescribir la implementación por defecto que se da en la clase base.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.8]{ICrudDAO}
+\caption{Interfaz genérica para los DAOs que exponen operaciones CRUD.}
+\label{fig:ICrudDAO}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SALTO DE PAGINA
@@ -1125,9 +1135,9 @@ Por último, para que desde otras capas accedan a los datos emplearemos el \text
 
 \subsection{Informes empleando la librería Open XML PowerTools}
 
-La generación de informes es una de las funcionalidades más empleadas en los software de gestión. En los requisitos de nuestro sistema solo se ha establecido un informe: la factura de un pedido. Esto no implica que debamos dejar de seguir el principio de responsabilidad única. La lógica para generar un informe debe ser genérica para que no dependa del tipo de informe que se va a generar y así pueda ser invocada desde diferentes sitios. Vamos a hacer uso de la librería \textbf{Open XML PowerTools} para la generación de informes.
+La generación de informes es una de las funcionalidades más empleadas en los \textit{software} de gestión. En los requisitos de nuestro sistema solo se ha establecido un informe: la factura de un pedido. Esto no implica que debamos dejar de seguir el principio de responsabilidad única. La lógica para generar un informe debe ser genérica para que no dependa del tipo de informe que se va a generar y así pueda ser invocada desde diferentes sitios. Vamos a hacer uso de la librería \textbf{Open XML PowerTools} para la generación de informes.
 
-Open XML PowerTools provee funcionalidades para la combinación de documentos, la conversión de estos a diferentes formatos y la creación de informes a partir de plantillas. \footnote{ Página de GitHub de Open XML PowerTools: \url{https://github.com/OfficeDev/Open-Xml-PowerTools}}. Para generar un informe se separan explícitamente los datos que lo originan y la plantilla del documento. En las plantillas se define cómo se van a renderizar los datos mediante un lenguaje basado en anotaciones. Este lenguaje nos permite escribir contenido en base a condiciones, iterar sobre las colecciones en los datos, crear tablas, etc.
+Open XML PowerTools \footnote{ Página de GitHub de Open XML PowerTools: \url{https://github.com/OfficeDev/Open-Xml-PowerTools}} provee funcionalidades para la combinación de documentos, la conversión de estos a diferentes formatos y la creación de informes a partir de plantillas. Para generar un informe se separan explícitamente los datos que lo originan y la plantilla del documento. En las plantillas se define cómo se van a renderizar los datos mediante un lenguaje basado en anotaciones. Este lenguaje nos permite escribir contenido en base a condiciones, iterar sobre las colecciones en los datos, crear tablas, etc.
 
 La figura \ref{fig:Factura} muestra la plantilla para generar una factura. La anotación que más se emplea es \textit{Content Select}, que obtiene, a partir de un camino, una cadena de texto (\textit{string}) localizada en los datos provistos. Por ejemplo, el camino \textit{``./Client"} atraviesa los datos ordenados de forma jerárquica hasta alcanzar el nodo etiquetado como Client, donde se almacena el nombre del cliente.
 
@@ -1166,7 +1176,7 @@ El uso de interfaces reduce el acoplamiento entre la definición de las operacio
 
 \subsection{Documentando la API con Swagger UI}
 
-\textbf{Swagger} es un conjunto de herramientas de código abierto para describir la estructura de una API, crear clientes para consumirla en diferentes lenguajes (Swagger CodeGen) y documentarla para que los usuarios puedan emplearla de forma interactiva (Swagger UI). \footnote{ Documentación oficial de Swagger: \url{https://swagger.io/docs/specification/2-0/what-is-swagger/}}
+\textbf{Swagger} \footnote{ Documentación oficial de Swagger: \url{https://swagger.io/docs/specification/2-0/what-is-swagger/}} es un conjunto de herramientas de código abierto para describir la estructura de una API, crear clientes para consumirla en diferentes lenguajes (Swagger CodeGen) y documentarla para que los usuarios puedan emplearla de forma interactiva (Swagger UI).
 
 En este apartado nos centraremos en la construcción de la API interactiva. Para hacerlo, basta con añadir la siguiente pieza de código (figura \ref{fig:SwaggerUI}) en la clase \textit{Startup} de la capa de servicios. Aparte de proveer algunos metadatos como la versión de la API o su mantenedor, se debe indicar que los controladores para generar la documentación se encuentran en el ensamblado actual.
 
@@ -1189,7 +1199,7 @@ La documentación de la API se genera en la dirección formada por la unión de 
 \subsection{Generación de la capa de proxy}
 %TODO Incluir algo más de NSwag.
 
-Como hemos comentado en la sección \textbf{\ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}}, la capa de proxy se emplea para invocar a la API de la parte servidora a través de llamadas HTTP. Para cada una de las interfaces de contratos vamos a crear un proxy, que implementará sus métodos delegando en un cliente HTTP generado automáticamente con \textbf{NSwag}. NSwag es un conjunto de herramientas para varias plataformas, entre ellas .NET Core, para la generación de especificaciones Swagger a partir de los controladores definidos en C\# y la generación de clientes HTTP para el consumo de estos controladores. \footnote{ Página de GitHub de NSwag: \url{https://github.com/RSuter/NSwag}} \footnote{ NSwag Tutorial: How to integrate NSwag into your ASP.NET Core Web API project: \url{https://www.youtube.com/watch?v=lF9ZZ8p2Ciw}}
+Como hemos comentado en la sección \textbf{\ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}}, la capa de proxy se emplea para invocar a la API de la parte servidora a través de llamadas HTTP. Para cada una de las interfaces de contratos vamos a crear un proxy, que implementará sus métodos delegando en un cliente HTTP generado automáticamente con \textbf{NSwag} \footnote{ Página de GitHub de NSwag: \url{https://github.com/RSuter/NSwag}}. NSwag es un conjunto de herramientas para varias plataformas, entre ellas .NET Core, para la generación de especificaciones Swagger a partir de los controladores definidos en C\# y la generación de clientes HTTP para el consumo de estos controladores \cite{Suter2017}.
 
 El cliente HTTP autogenerado es inyectado en el proxy a través del constructor. El proxy también es el encargado de adaptar los parámetros de la interfaz de contratos a los parámetros que espera el cliente HTTP. Esta adaptación es necesaria porque, por ejemplo, en las peticiones HTTP para los métodos GET no se puede especificar un Body. Como consecuencia, todos los parámetros se deben pasar a través de la cabecera de la petición. De esta forma, los parámetros solo pueden ser de tipos simples como una cadena (\textit{string}) y objetos muy utilizados como los identificadores (\textit{Guid}) han de ser transformados a tipos más simples. 
 
@@ -1209,9 +1219,9 @@ Para asegurar la calidad del código se ha hecho uso de dos herramientas: CodeMa
 
 \begin{itemize}
 
-\item \textbf{CodeMaid}: es una extensión de Visual Studio para la limpieza automática de código C\# y otros lenguajes. En el proceso de limpieza, CodeMaid ordena los métodos y propiedades de acuerdo a los estándares, revisa el formato de los comentarios, elimina las referencias a espacios de nombres que no se emplean, etc. \footnote{ Página oficial de CodeMaid: \url{http://www.codemaid.net/}}
+\item \textbf{CodeMaid} \footnote{ Página oficial de CodeMaid: \url{http://www.codemaid.net/}}: es una extensión de Visual Studio para la limpieza automática de código C\# y otros lenguajes. En el proceso de limpieza, CodeMaid ordena los métodos y propiedades de acuerdo a los estándares, revisa el formato de los comentarios, elimina las referencias a espacios de nombres que no se emplean, etc.
 
-\item \textbf{StyleCop}: es un analizador estático de código C\# desarrollado por Microsoft. Se basa en reglas centradas en aspectos como la documentación, la ordenación de los elementos o el estilo de código. Además, permite configurar las reglas que se aplican, definir excepciones a una de ellas o la creación de reglas propias. \footnote{Página de la Wikipedia de StyleCop: \url{https://en.wikipedia.org/wiki/StyleCop}}
+\item \textbf{StyleCop} \footnote{ Página de GitHub de StyleCop: \url{https://github.com/StyleCop/StyleCop}}: es un analizador estático de código C\# desarrollado por Microsoft. Se basa en reglas centradas en aspectos como la documentación, la ordenación de los elementos o el estilo de código. Además, permite configurar las reglas que se aplican, definir excepciones a una de ellas o la creación de reglas propias.
 
 \end{itemize}
 
@@ -1235,13 +1245,13 @@ Podemos citar las siguientes características que se desean poner en valor de la
 
 \begin{itemize}
 
-\item \textbf{Presentación de resultados de forma paginada}: en el \textit{back-end} se han implementado diferentes métodos para obtener resultados (como la lista de incidencias de un usuario o la lista de productos) de forma paginada, ordenada y a través de filtros. La paginación en las invocaciones a una API son una forma de mejorar el rendimiento de una aplicación porque evita traer más resultados de los que luego se consultan. El filtrado y la ordenación de los datos están más centrados en mejor la experiencia del usuario (UX).\footnote{ REST API Design: Filtering, Sorting, and Pagination: \url{https://www.moesif.com/blog/technical/api-design/REST-API-Design-Filtering-Sorting-and-Pagination/}} 
+\item \textbf{Presentación de resultados de forma paginada}: en el \textit{back-end} se han implementado diferentes métodos para obtener resultados (como la lista de incidencias de un usuario o la lista de productos) de forma paginada, ordenada y a través de filtros. La paginación en las invocaciones a una API son una forma de mejorar el rendimiento de una aplicación porque evita traer más resultados de los que luego se consultan. El filtrado y la ordenación de los datos están más centrados en mejor la experiencia del usuario (UX) \cite{Gilling2018}.
 
 A nivel de UI se ha implementado de tal forma que se soliciten al \textit{back-end} una cantidad de datos aproximada a la que se puede mostrar en la pantalla de un dispositivo. Cuando el usuario haga \textit{scroll} para mostrar más resultados, se realizará una nueva petición en segundo plano a la parte servidora solicitando el siguiente bloque de datos. Mientras se cargan los datos, el usuario visualizará un elemento que indica que el sistema está trabajando en segundo plano para traer más datos.
 
 
 %TODO Interesante https://msdn.microsoft.com/en-us/magazine/dd419663.aspx https://blogs.msdn.microsoft.com/johngossman/2005/10/08/introduction-to-modelviewviewmodel-pattern-for-building-wpf-apps/
-\item \textbf{Uso de \textit{ViewModels}}: la separación de responsabilidades no es un principio que se deba aplicar solo en el back-end. El patrón arquitectónico \textbf{\textit{Model-View-ViewModel}} (MVVM) divide la interfaz de usuario en 3 capas: la vista, empleando páginas XAML, los datos tal como se obtienen en su origen, también llamados el modelo, y el modelo de la vista, que conecta ambos y se utiliza para rellenar la vista. \footnote{From Data Bindings to MVVM: \url{https://docs.microsoft.com/es-es/xamarin/xamarin-forms/xaml/xaml-basics/data-bindings-to-mvvm}}
+\item \textbf{Uso de \textit{ViewModels}}: la separación de responsabilidades no es un principio que se deba aplicar solo en el \textit{back-end}. El patrón arquitectónico \textbf{\textit{Model-View-ViewModel}} (MVVM) divide la interfaz de usuario en 3 capas: la vista, empleando páginas XAML, los datos tal como se obtienen en su origen, también llamados el modelo, y el modelo de la vista, que conecta ambos y se utiliza para rellenar la vista. \footnote{From Data Bindings to MVVM: \url{https://docs.microsoft.com/es-es/xamarin/xamarin-forms/xaml/xaml-basics/data-bindings-to-mvvm}}
 
 La diferencia entre este patrón y otros como el \textit{Model-View-Controller} (MVC) es que en MVC los datos con los que se llena la vista son los que se obtienen en el origen y es el controlador quien ha de adaptarlos a cómo se visualizan en la vista. En cambio, en MVVM la vista y el modelo de la vista suelen relacionarse a través de enlaces (\textit{bindings}) en el propio XAML y se notifican mutuamente cuando alguna de sus propiedades cambia. \footnote{ Patterns - WPF Apps With The Model-View-ViewModel Design Pattern: \url{https://msdn.microsoft.com/en-us/magazine/dd419663.aspx}}
 
@@ -1254,7 +1264,7 @@ Sin embargo, usar este patrón puede ser excesivo para UIs muy sencillas. \footn
 \label{fig:ProductViewModel}
 \end{figure}
 
-\item \textbf{Código específico de plataforma}: existen algunos servicios que no se pueden implementar en el proyecto compartido por todas las plataformas. Estos servicios están relacionados con aspectos muy ligados a cada plataforma, como puede ser el sistema de archivos. Para este propósito se define una interfaz en el proyecto compartido. Cada una de las plataformas debe dar una implementación concreta a esta interfaz. Desde el proyecto genérico, se hace uso de la interfaz y será el sistema quien se encargará de dirigir la operación que se invoca sobre la interfaz a la implementación de la plataforma. \footnote{Native Services with Xamarin.Forms? It's DependencyService to the Rescue: \url{https://visualstudiomagazine.com/articles/2015/09/01/native-services-with-xamarinforms.aspx}}
+\item \textbf{Código específico de plataforma}: existen algunos servicios que no se pueden implementar en el proyecto compartido por todas las plataformas. Estos servicios están relacionados con aspectos muy ligados a cada plataforma, como puede ser el sistema de archivos. Para este propósito se define una interfaz en el proyecto compartido. Cada una de las plataformas debe dar una implementación concreta a esta interfaz. Desde el proyecto genérico, se hace uso de la interfaz y será el sistema quien se encargará de dirigir la operación que se invoca sobre la interfaz a la implementación de la plataforma \cite{McClure2015}.
 
 \end{itemize}
 
@@ -1262,7 +1272,7 @@ Como material adicional, en el apéndice \textbf{\ref{ch:ModeloNavegacion} \name
 
 \section{Pruebas} \label{sect:MonoPruebas}
 
-Se han realizado un total de 16 pruebas automatizadas mediante el framework \textbf{NUnit}. NUnit es una librería para la implementación de pruebas unitarias en todos los lenguajes .NET al igual que JUnit lo es para el lenguaje Java. \footnote{ Página de GitHub de NUnit: \url{https://github.com/nunit/nunit}}. La mayoría de las pruebas realizadas se clasifican como pruebas de integración porque involucran a más de una clase. 
+Se han realizado un total de 16 pruebas automatizadas mediante el framework \textbf{NUnit} \footnote{ Página de GitHub de NUnit: \url{https://github.com/nunit/nunit}}. NUnit es una librería para la implementación de pruebas unitarias en todos los lenguajes .NET al igual que JUnit lo es para el lenguaje Java. La mayoría de las pruebas realizadas se clasifican como pruebas de integración porque involucran a más de una clase. 
 
 No se han podido probar todos los métodos expuestos en la interfaz del \textit{back-end}, pero gracias a que existe mucho código genérico para la realización de operaciones CRUD y la persistencia de datos, podemos considerar el sistema como fiable. Algunas de las pruebas que si se han hecho son las asociadas a los casos de uso CU003, CU004, CU005, CU007, CU009 y CU013 que se encuentran en la sección \textbf{\ref{sect:CUs} \nameref{sect:CUs}}. El resumen de las pruebas realizadas y su correcta ejecución se muestran en la siguiente figura.
 
@@ -1294,8 +1304,8 @@ Como hemos mencionado en la sección \textbf{\ref{sect:Propuesta} \nameref{sect:
 
 \begin{enumerate}
 
-\item \textbf{Creación de un Dockerfile}: en la capa de servicios se debe crear un Dockerfile. En la mayoría de ejemplos encontrados se ha visto que la imagen de Docker se genera básicamente mediante dos pasos del Dockerfile: se copian todos los archivos de la solución a la imagen y se compila la solución completo. Cuando se crea y arranca un contenedor, se inicia el proceso del servicio a través de la DLL que se ha generado tras la compilación. \footnote{ Dockerize a .NET Core application
-: \url{https://docs.docker.com/engine/examples/dotnetcore/\#create-a-dockerfile-for-an-aspnet-core-application}} Este Dockerfile es más fiable en cuanto a que los ensamblados necesarios se generan dentro de la propia imagen. Sin embargo, la creación de la imagen es más lenta. Por ello, para entornos de desarrollo vamos a simplificar el Dockerfile para que simplemente copie los ensamblados en la imagen, que se han generado previamente en el entorno de desarrollo. La figura \ref{fig:Dockerfile} muestra su contenido. Los ensamblados se publican dentro de una carpeta que hemos llamado PublishOutput. En el Dockerfile tampoco hace falta exponer ningún puerto porque esto ya lo hace la imagen base.
+\item \textbf{Creación de un Dockerfile}: en la capa de servicios se debe crear un Dockerfile. En la mayoría de ejemplos encontrados se ha visto que la imagen de Docker se genera básicamente mediante dos pasos del Dockerfile: se copian todos los archivos de la solución a la imagen y se compila la solución completo. Cuando se crea y arranca un contenedor, se inicia el proceso del servicio a través de la DLL que se ha generado tras la compilación \footnote{ Dockerize a .NET Core application
+: \url{https://docs.docker.com/engine/examples/dotnetcore/\#create-a-dockerfile-for-an-aspnet-core-application}}. Este Dockerfile es más fiable en cuanto a que los ensamblados necesarios se generan dentro de la propia imagen. Sin embargo, la creación de la imagen es más lenta. Por ello, para entornos de desarrollo vamos a simplificar el Dockerfile para que simplemente copie los ensamblados en la imagen, que se han generado previamente en el entorno de desarrollo. La figura \ref{fig:Dockerfile} muestra su contenido. Los ensamblados se publican dentro de una carpeta que hemos llamado PublishOutput. En el Dockerfile tampoco hace falta exponer ningún puerto porque esto ya lo hace la imagen base.
 
 \begin{figure}[h]
 \centering
@@ -1315,7 +1325,7 @@ Como hemos mencionado en la sección \textbf{\ref{sect:Propuesta} \nameref{sect:
 \label{fig:AppService2}
 \end{figure}
 
-\item \textbf{Importar perfil de publicación}: desde la solución de Visual Studio, abrir el menú contextual del proyecto de la capa de servicios y seleccionar la opción ``Publish". En la ventana que se abre seleccionar ``New profile" y luego ``Import profile", donde seleccionaremos el archivo que nos hemos descargado.
+\item \textbf{Importar perfil de publicación}: desde la solución de Visual Studio, abrir el menú contextual del proyecto de la capa de servicios y seleccionar la opción \textit{Publish}. En la ventana que se abre, seleccionad \textit{New profile} y luego \textit{Import profile}, donde elegiremos el archivo que nos hemos descargado.
 
 \item \textbf{Desplegar el servicio}: cada vez que queramos desplegar a producción una nueva versión de la API nos iremos al proyecto de servicios en Visual Studio, abriremos el menú de publicación a través del menú contextual y seleccionaremos el perfil de AppService. Las opciones principales que desde este formulario se pueden realizar se han resaltado en la figura \ref{fig:AppService3}. Si accedemos a la URL que antes hemos señalado, veremos la documentación de la API generada por Swagger UI.
 
@@ -1360,14 +1370,13 @@ Concretamente, para representar visualmente la división en contextos delimitado
 
 \item \textbf{Notificaciones}: al igual que el microservicio de informes, no está ligado a ningún tipo de dato. Simplemente, ofrece la funcionalidad de enviar una notificación con el contenido que recibe como parámetro al destinatario especificado. También es un microservicio interno.
 
-\item \textbf{Pedidos}: permite obtener los pedidos de un cliente, generar la factura de un pedido, añadir productos...En este servicio se ha incluido la entidad Producto. Podríamos diseñar un microservicio de catálogo aparte. A este servicio solo tendrían acceso los empleados del comercio para gestionar el número de unidades en stock o la creación de nuevos productos. Sin embargo, ninguna funcionalidad fuera del contexto de los pedidos se relaciona con los productos, por lo que en este servicio la entidad producto y más adelante evaluaremos si vale la pena representarla dentro de un microservicio independiente. 
+\item \textbf{Pedidos}: permite obtener los pedidos de un cliente, generar la factura de un pedido, añadir productos, etc. En este servicio se ha incluido la entidad Producto. Podríamos diseñar un microservicio de catálogo aparte. A este servicio solo tendrían acceso los empleados del comercio para gestionar el número de unidades en stock o la creación de nuevos productos. Sin embargo, ninguna funcionalidad fuera del contexto de los pedidos se relaciona con los productos, por lo que en este servicio la entidad producto y más adelante evaluaremos si vale la pena representarla dentro de un microservicio independiente. 
 
 \end{itemize}
 
 \subsection{Arquitectura interna de los microservicios}
 
-En el apartado \textbf{\ref{subsec:Poliglota} \nameref{subsec:Poliglota}} se ha reflexionado sobre que una arquitectura basada en microservicios permite emplear diferentes tecnologías, arquitecturas y bases de datos en cada microservicio. Para validar lo que en este apartado se dice, vamos a desarrollar algunos microservicios con diferentes combinaciones de estas 3 características. Las arquitecturas de cada uno de los servicios así como las relaciones de dependencias que existen entre ellos se pueden ver en el diagrama de la figura \ref{fig:Componentes}.
-
+En el apartado \textbf{\ref{subsec:Poliglota} \nameref{subsec:Poliglota}} se ha reflexionado sobre que una arquitectura basada en microservicios permite emplear diferentes tecnologías, arquitecturas y bases de datos en cada microservicio. Para validar lo que en este apartado se dice, vamos a desarrollar algunos microservicios con diferentes combinaciones de estas tres características.
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.35]{Componentes}
@@ -1375,9 +1384,9 @@ En el apartado \textbf{\ref{subsec:Poliglota} \nameref{subsec:Poliglota}} se ha 
 \label{fig:Componentes}
 \end{figure}
 
-En la mayoría de microservicios vamos a seguir la arquitectura de 6 capas que se describe en la sección \textbf{\ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}}. Esto hará que su refactorización sea más sencilla ya que solo debemos copiar las clases relacionadas al microservicio en cada una de las capas. 
+Las arquitecturas de cada uno de los servicios así como las relaciones de dependencias que existen entre ellos se pueden ver en el diagrama de la figura \ref{fig:Componentes}. En la mayoría de microservicios vamos a seguir la arquitectura de 6 capas que se describe en la sección \textbf{\ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}}. Esto hará que su refactorización sea más sencilla ya que solo debemos copiar las clases relacionadas al microservicio en cada una de las capas. 
 
-Cada microservicio tendrá su propia base de datos, aunque estas pueden localizarse dentro del mismo servidor. Para evaluar otra tecnología de base de datos, la BD del servicio de incidencias la vamos a implementar con \textbf{Firebase}.
+Cada microservicio tendrá su propia base de datos, aunque estas pueden localizarse dentro del mismo servidor. Para evaluar otra tecnología de base de datos, la BD del servicio de incidencias la vamos a implementar con \textbf{Firebase} \footnote{ Documentación de Firebase Realtime Database: \url{https://firebase.google.com/docs/database/}}.
 
 Las necesidades de cada microservicio de nuestro caso de estudio son diferentes: algunos como el de informes o notificaciones no requieren persistir datos, por lo que aplicar una arquitectura de 6 capas en ellos no es necesario. 
 
@@ -1473,11 +1482,11 @@ En C\# está desarrollado todo lo necesario para el consumo del servicio. Esto i
 \label{fig:NotificationsC}
 \end{figure}
 
-En Java se han desarrollado la capa de aplicación y servicios. La implementación de la capa de aplicación para mandar un correo electrónico es trivial. Para la capa de servicios, se crea e inicia un objeto HttpServer al que se le asigna un handler.
+En Java se han desarrollado la capa de aplicación y servicios. La implementación de la capa de aplicación para mandar un correo electrónico es trivial. Para la capa de servicios, se crea e inicia un objeto \textit{HttpServer} al que se le asigna un \textit{handler}.
 
-El handler es similar a lo que en .NET llamábamos controlador. En nuestro caso, deserializará el cuerpo (\textit{body}) de la petición en un objeto empleando la librería Gson y delegará en la capa de aplicación la operación a realizar. Cuando se quiere consumir otro microservicio no podemos utilizar los proxies que hemos creado para C\# porque es otro lenguaje de programación. En nuestro ejemplo, queremos contactar con el servicio de seguridad para obtener el correo electrónico de un usuario.
+El \textit{handler} es similar a lo que en .NET llamábamos controlador. En nuestro caso, deserializará el cuerpo de la petición en un objeto empleando la librería Gson y delegará en la capa de aplicación la operación a realizar. Cuando se quiere consumir otro microservicio no podemos utilizar los proxies que hemos creado para C\# porque es otro lenguaje de programación. En nuestro ejemplo, queremos contactar con el servicio de seguridad para obtener el correo electrónico de un usuario.
 
-Por último, el archivo Dockerfile (figura \ref{fig:JavaDockerfile}) para el despliegue del servicio también varía. Vamos a seguir el mismo criterio que en los contenedores de microservicios .NET de usar los ensamblados (en este caso, un archivo *.jar) para generar la imagen con el menor número de recursos posibles. Tanto el comando para iniciar el proceso del contenedor como la imagen base se verán modificados.
+Por último, el archivo Dockerfile (figura \ref{fig:JavaDockerfile}) para el despliegue del servicio también varía. Vamos a seguir el mismo criterio que en los contenedores de microservicios .NET de usar los ensamblados (en este caso, un archivo \textit{*.jar}) para generar la imagen con el menor número de recursos posibles. Tanto el comando para iniciar el proceso del contenedor como la imagen base se verán modificados.
 
 \begin{figure}[h]
 \centering
@@ -1488,7 +1497,7 @@ Por último, el archivo Dockerfile (figura \ref{fig:JavaDockerfile}) para el des
 
 \subsection{Persistencia en microservicio de incidencias}
 
-En el microservicio de incidencias vamos a emplear una base de datos en la plataforma Firebase. \textbf{Firebase} es una plataforma para el desarrollo de aplicaciones. Uno de los servicios que ofrece es una base de datos NoSQL en la nube en tiempo real. Los datos se almacenan en formato JSON y su acceso puede realizarse a través de peticiones HTTP. \footnote{ Documentación de Firebase Realtime Database: \url{https://firebase.google.com/docs/database/}} 
+En el microservicio de incidencias vamos a emplear una base de datos en la plataforma Firebase. \textbf{Firebase} es una plataforma para el desarrollo de aplicaciones. Uno de los servicios que ofrece es una base de datos NoSQL en la nube en tiempo real. Los datos se almacenan en formato JSON y su acceso puede realizarse a través de peticiones HTTP.
 
 Una de las principales ventajas de las bases de datos NoSQL es su escalabilidad horizontal. En lugar de tener un gran servidor para alojar una base de datos relacional, una base de datos NoSQL se puede distribuir entre diferentes máquinas. Esta funcionalidad en Firebase es de pago y no vamos a hacer uso de ella. Nuestro objetivo  es validar que diferentes microservicios pueden utilizar tecnologías de bases de datos distintas. En la figura \ref{fig:Firebase} se muestra la estructura jerárquica de la BD de incidencias.
 
@@ -1536,7 +1545,7 @@ En nuestro caso de estudio, tenemos control de todos los consumidores ya que la 
 \label{fig:Csproj}
 \end{figure}
 
-A estas variables se les da valor en un archivo llamado \textit{Versions.props}. Este archivo está centralizado y es común para todos los servicios para que todos ellos referencien a la misma versión de otro microservicio. \footnote{ Common MSBuild properties and items with Directory.Build.props: \url{https://www.thomaslevesque.com/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/}} Cuando se realice un cambio que cambie la interfaz de un servicio, la versión de este se incrementará en una unidad. Los consumidores deberán ser modificados para adaptarse al cambio de la interfaz y deberán desplegarse también. Como se puede ver en el archivo (figura \ref{fig:Versionsprops}), la versión de cada servicio evoluciona de forma separada.
+A estas variables se les da valor en un archivo llamado \textit{Versions.props}. En \cite{Levesque2017} se puede ver un ejemplo en el que se genera un fichero de propiedades con un propósito similar. Este archivo está centralizado y es común para todos los servicios para que todos ellos referencien a la misma versión de otro microservicio. Cuando se realice un cambio que modifique la interfaz de un servicio, la versión de este se incrementará en una unidad. Los consumidores deberán ser modificados para adaptarse al cambio de la interfaz y deberán desplegarse también. Como se puede ver en el archivo (figura \ref{fig:Versionsprops}), la versión de cada servicio evoluciona de forma separada.
 
 \begin{figure}[h]
 \centering
@@ -1571,7 +1580,7 @@ De las pruebas realizadas en la solución monolítica, la mayoría se transforma
 \label{fig:FakeSecurityManager}
 \end{figure}
 
-Algunas pruebas han tenido que implementarse obligatoriamente como pruebas de extremo a extremo. Es el caso de la prueba para la generación de una factura. En este tipo de prueba se hará uso de la clase de ASP .NET Core \textit{TestServer}. \textit{TestServer} permite la creación de un servidor en memoria para pruebas, que redirige las peticiones que recibe hacia los controladores que representa. \footnote{ In-Memory ASP.NET Core Integration Tests with TestServer: \url{https://visualstudiomagazine.com/articles/2017/07/01/testserver.aspx}} De esta forma, las depenendencias que tiene un servicio como el de pedidos para las pruebas quedan suplidas con un servidor que responde tal y como lo haría el servicio de informes y no como un \textit{fake}. En la siguiente figura se muestra un ejemplo de uso de la clase \textit{TestServer} en las pruebas.
+Algunas pruebas han tenido que implementarse obligatoriamente como pruebas de extremo a extremo. Es el caso de la prueba para la generación de una factura. En este tipo de prueba se hará uso de la clase de ASP .NET Core \textit{TestServer}. \textit{TestServer} permite la creación de un servidor en memoria para pruebas, que redirige las peticiones que recibe hacia los controladores que representa \cite{Roberts2017}. De esta forma, las depenendencias que tiene un servicio como el de pedidos para las pruebas quedan suplidas con un servidor que responde tal y como lo haría el servicio de informes y no como un \textit{fake}. En la siguiente figura se muestra un ejemplo de uso de la clase \textit{TestServer} en las pruebas.
 
 \begin{figure}[h]
 \centering
@@ -1583,11 +1592,11 @@ Otras pruebas que se han modificado son las del microservicio de incidencias. En
 
 \section{Despliegue de la solución basada en microservicios} \label{sect:DespliegueMicroservicios}
 
-Una de las características de los microservicios que más se ha repetido en la memoria es que se pueden desplegar de forma independiente. Esto es así porque cada uno de los microservicios se va a desplegar como un contenedor independiente, a diferencia de la solución monolítica donde solo había un Dockerfile y un contenedor. Por eso, en total existirán simultáneamente un total de 5 contenedores. Para agilizar el proceso de construcción de las imágenes e inicio de los contenedores haremos uso de Docker Compose. 
+Una de las características de los microservicios que más se ha repetido en la memoria es que se pueden desplegar de forma independiente. Esto es así porque cada uno de los microservicios se va a desplegar como un contenedor independiente, a diferencia de la solución monolítica donde solo había un Dockerfile y un contenedor. Por eso, en total existirán simultáneamente un total de cinco contenedores. Para agilizar el proceso de construcción de las imágenes e inicio de los contenedores haremos uso de Docker Compose. 
 
-Docker Compose es una herramienta para definir y ejecutar aplicaciones formadas por más de un contenedor Docker. Los servicios que forman la aplicación tienen su propio Dockerfile y se definen dentro de un archivo YAML para que con un único comando se inicie la aplicación al completo. \footnote{ Overview of Docker Compose: \url{https://docs.docker.com/compose/overview/}} 
+Docker Compose  \footnote{ Overview of Docker Compose: \url{https://docs.docker.com/compose/overview/}}  es una herramienta para definir y ejecutar aplicaciones formadas por más de un contenedor Docker. Los servicios que forman la aplicación tienen su propio Dockerfile y se definen dentro de un archivo YAML para que con un único comando se inicie la aplicación al completo.
 
-En la figura \ref{fig:Compose} se puede ver un extracto de este archivo. En él se ve como para cada contenedor que se debe ejecutar se especifica un nombre para la imagen que se va crear a partir del Dockerfile y la ubicación de este. Además, se pueden añadir parámetros, como los que se añaden al comando ``docker run" para la ejecución de un contenedor, para relacionar los puertos que emplea el contenedor y los del host donde se ejecuta.
+En la figura \ref{fig:Compose} se puede ver un extracto de este archivo. En él se ve como para cada contenedor que se debe ejecutar se especifica un nombre para la imagen que se va crear a partir del Dockerfile y la ubicación de este. Además, se pueden añadir parámetros, como los que se añaden al comando \textit{docker run} para la ejecución de un contenedor, para relacionar los puertos que emplea el contenedor y los del host donde se ejecuta.
 
 \begin{figure}[h]
 \centering
@@ -1611,7 +1620,7 @@ A continuación, revisaremos como una arquitectura monolítica y una basada en m
 
 \subsection{Mantenimiento correctivo}
 
-El \textbf{mantenimiento correctivo} consiste en una modificación del producto software una vez se ha entregado para corregir un error detectado \cite{Bourque2014}. En piezas de código muy largas resulta difícil encontrar dónde se encuentra un defecto. Gracias al diseño modular de las arquitecturas orientadas a servicios, un defecto será más fácil de localizar. A nivel de código, clases que deben modificarse como un conjunto para corregir un defecto estarán en el mismo microservicio.
+El \textbf{mantenimiento correctivo} consiste en una modificación del producto \textit{software} una vez se ha entregado para corregir un error detectado \cite{Bourque2014}. En piezas de código muy largas resulta difícil encontrar dónde se encuentra un defecto. Gracias al diseño modular de las arquitecturas orientadas a servicios, un defecto será más fácil de localizar. A nivel de código, clases que deben modificarse como un conjunto para corregir un defecto estarán en el mismo microservicio.
 
 En el caso de estudio, un fallo, por ejemplo, en la creación de un pedido se localizará en el microservicio de pedidos. En la misma solución monolítica, si las responsabilidades de las clases no están bien delimitadas, se deberá buscar entre más código para encontrar el defecto.
 
@@ -1625,7 +1634,7 @@ Por ejemplo, si se observa un fallo de que no se genera correctamente una factur
 
 %TODO Añadir la defincion de Sommerville
 
-Según la ISO/IEC 14764, el \textbf{mantenimiento pefectivo} es una modificación de un producto software una vez se ha entregado para proveer mejoras a sus usuarios, mejorar la documentación del programa o atributos del software como el rendimiento o la mantenibilidad \cite{Bourque2014}. Según Sommerville, este tipo de mantenimiento se origina cuando los requisitos del sistema cambian para responder a un cambio en el negocio. Además, el tamaño de la modificación a realizar es normalmente superior al de modificaciones asociadas al del resto de tipos de mantenimiento \cite{Sommerville2010}.
+Según la ISO/IEC 14764, el \textbf{mantenimiento pefectivo} es una modificación de un producto \textit{software} una vez se ha entregado para proveer mejoras a sus usuarios, mejorar la documentación del programa o atributos del \textit{software} como el rendimiento o la mantenibilidad \cite{Bourque2014}. Según Sommerville, este tipo de mantenimiento se origina cuando los requisitos del sistema cambian para responder a un cambio en el negocio. Además, el tamaño de la modificación a realizar es normalmente superior al de modificaciones asociadas al del resto de tipos de mantenimiento \cite{Sommerville2010}.
 
 Como hemos comentado en el apartado \textbf{\ref{subsect:Descomposicion} \nameref{subsect:Descomposicion}}, el hecho de que se divida la solución en contextos bien delimitados hará que los nuevos requisitos encajen mejor en uno de ellos.
 
@@ -1640,15 +1649,15 @@ Esto no es un problema y puede gestionarse a través de mecanismos para la consi
 \subsection{Mantenimiento adaptativo}
 % Migrar a una nueva plataforma
 
-El \textbf{mantenimiento adaptativo} se define como la modificación de un producto software tras su entrega para que sea utilizable en un nuevo entorno \cite{Bourque2014}. Según Sommerville, estos cambios pueden deberse, por ejemplo, a cambios en el hardware, la plataforma donde opera el sistema o cambios en productos software de los que se depende \cite{Sommerville2010}. En este tipo de mantenimiento, una arquitectura basada en microservicios presenta grandes beneficios que vamos a explicar siguiendo los 3 ejemplos de Sommerville.
+El \textbf{mantenimiento adaptativo} se define como la modificación de un producto \textit{software} tras su entrega para que sea utilizable en un nuevo entorno \cite{Bourque2014}. Según Sommerville, estos cambios pueden deberse, por ejemplo, a cambios en el \textit{hardware}, la plataforma donde opera el sistema o cambios en productos \textit{software} de los que se depende \cite{Sommerville2010}. En este tipo de mantenimiento, una arquitectura basada en microservicios presenta grandes beneficios que vamos a explicar siguiendo los 3 ejemplos de Sommerville.
 
-En primer lugar, al poderse desplegar de forma independiente, el alcance de un cambio en el hardware será menor. Cada servicio se puede desplegar en un hardware diferente de acuerdo a sus necesidades. En consecuencia, el aprovechamiento de los recursos es mayor. Microservicios que requieren mayor rendimiento se pueden ubicar en servidores con mayores prestaciones. Si nos situamos en el contexto de nuestro caso de estudio, los microservicios de incidencias y pedidos pueden situarse en un servidor con mayor CPU y RAM. En caso de que se detecte que las prestaciones hardware comienzan a deteriorarse por albergar ambos servicios en el mismo servidor, podemos migrar uno de ellos a otro servidor. 
+En primer lugar, al poderse desplegar de forma independiente, el alcance de un cambio en el \textit{hardware} será menor. Cada servicio se puede desplegar en un \textit{hardware} diferente de acuerdo a sus necesidades. En consecuencia, el aprovechamiento de los recursos es mayor. Microservicios que requieren mayor rendimiento se pueden ubicar en servidores con mayores prestaciones. Si nos situamos en el contexto de nuestro caso de estudio, los microservicios de incidencias y pedidos pueden situarse en un servidor con mayor CPU y RAM. En caso de que se detecte que las prestaciones \textit{hardware} comienzan a deteriorarse por albergar ambos servicios en el mismo servidor, podemos migrar uno de ellos a otro servidor. 
 
-En una arquitectura monolítica, al desplegarse todo el back-end como un conjunto las prestaciones hardware del servidor han de ser superiores para soportar todas las peticiones que recibe el monolito. En caso de que se requiera migrar a otro servidor, se ha de migrar todo el sistema como un conjunto.
+En una arquitectura monolítica, al desplegarse todo el \textit{back-end} como un conjunto las prestaciones \textit{hardware} del servidor han de ser superiores para soportar todas las peticiones que recibe el monolito. En caso de que se requiera migrar a otro servidor, se ha de migrar todo el sistema como un conjunto.
 
 En segundo lugar, en un sistema basado en microservicios, gracias a su integración interprocedural, la plataforma donde operan diferentes servicios puede ser distinta. Por ejemplo, el microservicio de incidencias podría ejecutarse en AWS mientras que el resto del sistema se encontrara en la plataforma de Azure. Obviamente, no podemos decir lo mismo de un sistema monolítico.
 
-En tercer lugar, las dependencias del software se pueden gestionar a un nivel más granular en un sistema basado en microservicios. Por ejemplo, puede ocurrir que un sistema necesite ejecutarse en .NET Framework para emplear una librería que no sea multiplataforma. En una arquitectura basada en microservicios, esa librería solo se utilizará en un servicio bien delimitado, por lo que solo hará falta tener este servicio en .NET Framework. En cambio, en un sistema monolítico para poder usar la librería, todo el sistema debería estar en este framework, lo que resulta muy restrictivo si se desea hacer un sistema multiplataforma.
+En tercer lugar, las dependencias del \textit{software} se pueden gestionar a un nivel más granular en un sistema basado en microservicios. Por ejemplo, puede ocurrir que un sistema necesite ejecutarse en .NET Framework para emplear una librería que no sea multiplataforma. En una arquitectura basada en microservicios, esa librería solo se utilizará en un servicio bien delimitado, por lo que solo hará falta tener este servicio en .NET Framework. En cambio, en un sistema monolítico para poder usar la librería, todo el sistema debería estar en este framework, lo que resulta muy restrictivo si se desea hacer un sistema multiplataforma.
 
 Lo mismo ocurre con la versión de una librería. Diferentes servicios pueden emplear versiones diferentes de ella. Así, si se tiene que actualizar la librería, solo hará falta hacerlo en un microservicio y no en todo el sistema, disminuyendo sus posibles efectos secundarios.
 
@@ -1683,7 +1692,7 @@ Por último, organizaciones como Netflix prueban la tolerancia a fallos de sus s
 \subsection{Utilización de recursos}
 %TODO Libros
 
-Los microservicios son una solución para afrontar problemas inherentes a productos de software de gran tamaño. Estos sistemas pueden llegar a descomponerse en cientos de pequeños servicios. Mientras que, según la teoría, en estos sistemas si que se observa un mejor aprovechamiento de los recursos por emplear microservicios \cite{DelaTorre2018}, en nuestro caso de estudio no. Por ejemplo, aunque hayamos hecho una solución basada en microservicios no hemos desplegado el servicio de pedidos en un hardware con mejores prestaciones, al igual que tampoco hemos hecho la situación inversa con los servicios que reciben menos peticiones.
+Los microservicios son una solución para afrontar problemas inherentes a productos de \textit{software} de gran tamaño. Estos sistemas pueden llegar a descomponerse en cientos de pequeños servicios. Mientras que, según la teoría, en estos sistemas si que se observa un mejor aprovechamiento de los recursos por emplear microservicios \cite{DelaTorre2018}, en nuestro caso de estudio no. Por ejemplo, aunque hayamos hecho una solución basada en microservicios no hemos desplegado el servicio de pedidos en un \textit{hardware} con mejores prestaciones, al igual que tampoco hemos hecho la situación inversa con los servicios que reciben menos peticiones.
 
 En el siguiente estudio \cite{Amaral2016}, realizado en la Universidad Politécnica de Cataluña junto con la organización IBM, se evalúa el uso de recursos de un servicio desplegado en diferentes configuraciones de contenedores y en una máquina virtual. En su primer experimento, se evalúa el uso que hacen de CPU, que es similar tanto en la MV como en los contenedores. También se evalúa el tiempo que consume la creación del servicio, donde en todos los escenarios el tiempo de desplegar el servicio en un MV es al menos es el doble que en un contenedor. En los últimos experimentos se evalúa el uso que hacen de la red. En este aspecto se puede concluir que, para las invocaciones que se hacen dentro del mismo host, los contenedores ofrecen un mejor rendimiento, mientras que para las llamadas fuera del host, el rendimiento de ambas tecnologías es similar.
 
@@ -1702,13 +1711,13 @@ En resumen, en el caso de estudio no se han apreciado grandes diferencias en el 
 %TODO Reformular. Jon Eaves (2 semanas).
 %Hablar del tiempo que ha costado desarrollar cada microservicio.
 
-Los microservicios incrementan la facilidad de cambio de un producto software. Un cambio en un único servicio se despliegue de manera independiente y llega al cliente final de forma más rápida si se siguen prácticas como las de entrega continua.
+Los microservicios incrementan la facilidad de cambio de un producto \textit{software}. Un cambio en un único servicio se despliegue de manera independiente y llega al cliente final de forma más rápida si se siguen prácticas como las de entrega continua.
 
 La \textbf{capacidad para ser reemplazado} está estrechamente relacionada con la facilidad de cambio. El uso de interfaces en la capa de contratos, por ejemplo, hace que un microservicio pueda ser modificado y reemplazado fácilmente. El componente sustituto puede estar implementada con otra tecnología si respeta la vieja interfaz.
 
 Si recordamos el cronograma de la figura \ref{fig:Cronograma}, la refactorización de la solución monolítica para generar cualquiera de los servicios apenas se ha prolongado por más de un día (las tareas que empiezan su nombre con la palabra ``microservicio"). A esto habría que incluirle el tiempo que se ha tardado en desarrollar la lógica del servicio durante el desarrollo de la solución monolítica (las tareas que empiezan su nombre con la palabra ``implementación"). En comparación, el desarrollo de la solución monolítica en su totalidad se ha prolongado durante casi un mes (desde el día 19 de Junio hasta el día 16 de Julio).
 
-Tras sumar estos tiempos, se observa que el desarrollo de cada microservicio apenas ha costado dos semanas, tal y como se estima que debería ser en el apartado \textbf{\ref{subsect:RNF} \nameref{subsect:RNF}}. Si un componente del software debe ser reemplazado, puede ocurrir que en la solución basada en microservicios solo se tenga que reemplazar un microservicio mientras que en la solución monolítica se tenga que adaptar todo el monolito. Si consideramos que el tiempo para desarrollar un componente software que remplaza a otro es similar al tiempo que costó desarrollar al original, reemplazar la solución monolítica será más costoso que reemplazar un único microservicio. Si nos situamos en un caso más extremo en el que se tuviera que reemplazar todo el sistema basado en microservicios, este problema podría abordarse de forma incremental por la modularidad de la solución. De nuevo, no se puede afirmar lo mismo de la solución monolítica.
+Tras sumar estos tiempos, se observa que el desarrollo de cada microservicio apenas ha costado dos semanas, tal y como se estima que debería ser en el apartado \textbf{\ref{subsect:RNF} \nameref{subsect:RNF}}. Si un componente del \textit{software} debe ser reemplazado, puede ocurrir que en la solución basada en microservicios solo se tenga que reemplazar un microservicio mientras que en la solución monolítica se tenga que adaptar todo el monolito. Si consideramos que el tiempo para desarrollar un componente \textit{software} que remplaza a otro es similar al tiempo que costó desarrollar al original, reemplazar la solución monolítica será más costoso que reemplazar un único microservicio. Si nos situamos en un caso más extremo en el que se tuviera que reemplazar todo el sistema basado en microservicios, este problema podría abordarse de forma incremental por la modularidad de la solución. De nuevo, no se puede afirmar lo mismo de la solución monolítica.
 
 \section{Otras posibles soluciones}
 %Reports y notifications como una librería porque no requieren desplegarse frecuentemente y ahorras en llamadas HTTP.
@@ -1727,7 +1736,7 @@ En cuanto a la solución basada en microservicios, se puede ver claramente que a
 
 Gracias a su implementación, tanto el servicio de informes como el de notificaciones están desacoplados de los datos que requieren para realizar su trabajo porque estos son transferidos como parámetros del método. Se ha hecho así para facilitar su invocación por cualquier servicio. Por ejemplo, el servicio de informes se podría haber implementado para que expusiera él directamente todos los informes que puede generar. Sin embargo, esto habría supuesto que tuviera una dependencia con todos los servicios de los que necesitara obtener datos. Como se desea mantener que puedan seguir siendo invocados desde cualquier otro servicio, no vamos a combinarlos con el servicio de pedidos.
 
-No obstante, podemos plantearnos si realmente vale la pena representar estos componentes de software como microservicios. Por ejemplo, si observamos que apenas se modifican una vez implementados, sería buena idea representarlos como una librería y no como un servicio. Así, el sobrecoste asociado a las invocaciones a través de la red se reduciría a cambio de no poder desplegarlos de forma independiente.
+No obstante, podemos plantearnos si realmente vale la pena representar estos componentes de \textit{software} como microservicios. Por ejemplo, si observamos que apenas se modifican una vez implementados, sería buena idea representarlos como una librería y no como un servicio. Así, el sobrecoste asociado a las invocaciones a través de la red se reduciría a cambio de no poder desplegarlos de forma independiente.
 
 Otra consideración a tener en cuenta a la hora de transformar un servicio en una librería es que las librerías están ligadas a una única plataforma. Por ejemplo, el servicio de notificaciones está desarrollado en Java y gracias a que se ejecuta en otro proceso puede ser invocado por cualquier servicio, da igual su lenguaje de programación, a través de llamadas HTTP. La implementación del servicio, tal como está en Java, no puede desplegarse como una librería y emplearse en los servicios desarrollados en .NET porque no son plataformas compatibles. Por tanto, para cada servicio que desea consumir este componente se debería dar una implementación compatible con la plataforma del consumidor.
 
@@ -1812,7 +1821,7 @@ En esta sección recogeremos algunas consideraciones finales acerca de los micro
 \tabitem \textbf{Estandarizar una tecnología}: en el desarrollo de un sistema puede ser una garantía para facilitar la cooperación entre los diferentes equipos. También se hace más sencilla la transferencia de personas entre distintos equipos \cite{Newman2015a}.
 
 \vspace{2mm}
-\tabitem \textbf{Generación automática de código}: en productos software de uso profesional, la división de un sistema en microservicios puede dar lugar a cientos de estos. Para facilitar la evolución de los servicios manteniendo constante su calidad y mantenibilidad, se puede invertir en técnicas de la ingeniería de software como el desarrollo guiado por modelos (MDD). Gracias a las prácticas del DDD, cada microservicio consiste en un contexto bien delimitado con unas pocas entidades. Estas entidades pueden recogerse en un modelo a partir del cual pueda generarse código de forma automática. De esta forma, un cambio en las propiedades de una entidad se puede implementar más rápido a través de la actualización del modelo y la regeneración del código a partir de este.
+\tabitem \textbf{Generación automática de código}: en productos \textit{software} de uso profesional, la división de un sistema en microservicios puede dar lugar a cientos de estos. Para facilitar la evolución de los servicios manteniendo constante su calidad y mantenibilidad, se puede invertir en técnicas de la ingeniería de \textit{software} como el desarrollo guiado por modelos (MDD). Gracias a las prácticas del DDD, cada microservicio consiste en un contexto bien delimitado con unas pocas entidades. Estas entidades pueden recogerse en un modelo a partir del cual pueda generarse código de forma automática. De esta forma, un cambio en las propiedades de una entidad se puede implementar más rápido a través de la actualización del modelo y la regeneración del código a partir de este.
 
 \\
 \hline
@@ -1826,17 +1835,17 @@ En esta sección recogeremos algunas consideraciones finales acerca de los micro
 
 \chapter{Conclusiones} \label{ch:Conclusiones}
 
-Gracias al caso de estudio desarrollado hemos podido evaluar las ventajas e inconvenientes del desarrollo de software basado en microservicios. Se han recapitulado todas las que recoge la literatura y se han añadido algunas ventajas fruto de la experiencia en este y otros proyectos anteriores. 
+Gracias al caso de estudio desarrollado hemos podido evaluar las ventajas e inconvenientes del desarrollo de \textit{software} basado en microservicios. Se han recapitulado todas las que recoge la literatura y se han añadido algunas ventajas fruto de la experiencia en este y otros proyectos anteriores. 
 
 En cuanto a los objetivos de esta memoria, podemos hacer las siguientes reflexiones:
 
 \begin{itemize}
 
-\item Se ha desarrollado satisfactoriamente la aplicación descrita en el caso de estudio siguiendo dos arquitecturas distintas. Para hacerlo se han utilizado tecnologías que se emplean en el desarrollo profesional de productos software para aportar al caso de estudio un enfoque lo más realista posible.
+\item Se ha desarrollado satisfactoriamente la aplicación descrita en el caso de estudio siguiendo dos arquitecturas distintas. Para hacerlo se han utilizado tecnologías que se emplean en el desarrollo profesional de productos \textit{software} para aportar al caso de estudio un enfoque lo más realista posible.
 
-\item En cuanto al proceso de desarrollo, a partir de una misma especificación hemos desarrollado una misma aplicación de dos formas distintas. Actividades como las de despliegue o pruebas han resultado ser más desafiantes en una solución basada en microservicios debido al incremento en el número de piezas de software que participan. Otras como las de diseño cobran mayor relevancia porque un fallo en la descomposición del sistema en servicios es más costoso de reparar. Las actividades de mantenimiento e implementación son más fáciles de gestionar porque las bases de código son menores y más flexibles.
+\item En cuanto al proceso de desarrollo, a partir de una misma especificación hemos desarrollado una misma aplicación de dos formas distintas. Actividades como las de despliegue o pruebas han resultado ser más desafiantes en una solución basada en microservicios debido al incremento en el número de piezas de \textit{software} que participan. Otras como las de diseño cobran mayor relevancia porque un fallo en la descomposición del sistema en servicios es más costoso de reparar. Las actividades de mantenimiento e implementación son más fáciles de gestionar porque las bases de código son menores y más flexibles.
 
-\item Se han planteado diferentes situaciones que acreditan que, durante esta fase del ciclo del software, los beneficios de una arquitectura basada en microservicios son superiores a los de una arquitectura monolítica. Estos beneficios se plasman sobre todo dentro del marco del mantenimiento adaptativo.
+\item Se han planteado diferentes situaciones que acreditan que, durante esta fase del ciclo del \textit{software}, los beneficios de una arquitectura basada en microservicios son superiores a los de una arquitectura monolítica. Estos beneficios se plasman sobre todo dentro del marco del mantenimiento adaptativo.
 
 \item En la mayoría los requisitos no funcionales que hemos estudiado se observan ventajas en una arquitectura basada en microservicios frente a una monolítica. Algunos como la utilización de recursos no han podido ser comprobados debido al pequeño tamaño del caso de estudio. Otros como los de disponibilidad o tolerancia a fallos se benefician del gran número de tecnologías asociadas a los microservicios que garantizan estas propiedades, como por ejemplo Kubernetes.
 
@@ -2045,7 +2054,7 @@ Vamos a hacer un paréntesis para explicar en detalle parte de este archivo. Cad
 
 En los servicios desplegados hemos seguido el caso de uso más común en relación entre pods y contenedores: cada pod representa un único contenedor Docker. A su vez, cada servicio está formado por un solo pod. \footnote{ Pods en Kubernetes: \url{https://kubernetes.io/docs/concepts/workloads/pods/pod/}} En la figura \ref{fig:KubernetesSecurity} se muestra en la sección \textit{containers} que solo hay un pod, basado en la imagen Docker del microservicio de seguridad.
 
-Si solo definieramos un servicio, la dirección IP que se le da es interna y no queda expuesta fuera del clúster para su consumo por aplicaciones frontend. Existen varias posibilidades para alcanzar este propósito. Vamos a repasar algunas de ellas en la sección \textbf{\ref{sect:DespliegueOtros} \nameref{sect:DespliegueOtros}}, pero entre ellas la que vamos a presentar ahora es el uso de un balanceador de carga externo. Como se comenta en el libro \cite{Rensin2015}, es una buena práctica situar un balanceador de carga frente a cada servicio aunque el número de replicas del servicio sea solo uno. Para seleccionar que servicios gestiona el balanceador de carga se hace uso de un selector de etiquetas definido en la sección \textit{selector} de la figura, que debe coincidir con la etiqueta dada al servicio en su sección \textit{labels}. \footnote{ Balanceadores de carga en Kubernetes: \url{https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/}}
+Si solo definieramos un servicio, la dirección IP que se le da es interna y no queda expuesta fuera del clúster para su consumo por aplicaciones frontend. Existen varias posibilidades para alcanzar este propósito. Vamos a repasar algunas de ellas en la sección \textbf{\ref{sect:DespliegueOtros} \nameref{sect:DespliegueOtros}}, pero entre ellas la que vamos a presentar ahora es el uso de un balanceador de carga externo. Como se comenta en el libro \cite{Rensin2015}, es una buena práctica situar un balanceador de carga frente a cada servicio, aunque el número de replicas del servicio sea solo uno. Para seleccionar que servicios gestiona el balanceador de carga se hace uso de un selector de etiquetas definido en la sección \textit{selector} de la figura, que debe coincidir con la etiqueta dada al servicio en su sección \textit{labels}. \footnote{ Balanceadores de carga en Kubernetes: \url{https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/}}
 
 Tanto para la comunicación entre el \textit{back-end} y el \textit{fron-tend} como para la comunicación entre microservicios emplearemos la dirección IP externa que el balanceador de carga tiene. Esta decisión surge para hacer más sencilla la configuración de los microservicios, pero provoca que servicios internos como el de notificaciones o informes que no necesitan ser consumidos por el frontend sean también expuestos fuera del clúster.
 
