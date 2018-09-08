@@ -1800,7 +1800,7 @@ En esta sección recogeremos algunas consideraciones finales acerca de los micro
 
 \chapter{Conclusiones} \label{ch:Conclusiones}
 
-Gracias al caso de estudio desarrollado hemos podido evaluar las ventajas e inconvenientes del desarrollo de \textit{software} basado en microservicios. Se han recapitulado todas las que recoge la literatura y se han añadido algunas ventajas fruto de la experiencia en este y otros proyectos anteriores. 
+Respecto al objetivo principal de este trabajo, gracias al caso de estudio desarrollado hemos podido evaluar las ventajas e inconvenientes del desarrollo de \textit{software} basado en microservicios. Se han recapitulado todas las que recoge la literatura y se han añadido algunas ventajas fruto de la experiencia en este y otros proyectos anteriores. 
 
 En cuanto a los objetivos de esta memoria, podemos hacer las siguientes reflexiones:
 
@@ -1816,11 +1816,15 @@ En cuanto a los objetivos de esta memoria, podemos hacer las siguientes reflexio
 
 \end{itemize}
 
+Como reflexión personal, me gustaría añadir que los microservicios se deben emplear solo cuando nos enfrentamos a problemas muy concretos. Una persona, viendo el gran número de ventajas que recoge la literatura, podría aventurarse en su uso sin razonar si realmente necesita desarrollar un sistema con tales características. Hoy en día, un gran número de sistemas requieren asegurar su disponibilidad, escalar de acuerdo a su demanda, etc. Los microservicios son una arquitectura realmente acertada para ellos, pero no lo es para una aplicación que no tiene tales exigencia. En tal caso, no es una decisión acertada porque el desarrollo de microservicios es complejo, costoso y su tecnología asociada está todavía en evolución.
+
 A lo largo de todo el proceso de desarrollo me he enfrentado a diversos problemas, de los que voy a destacar dos. El primero de ellos está asociado al despliegue de las soluciones. Mi experiencia con Microsoft Azure hasta la fecha era escasa y en una plataforma con tantas funcionalidades me he visto necesitado de una mejor guía en cuanto a documentación. Además, el proceso de despliegue se ha realizado de forma manual, por lo que un fallo en un paso del proceso de despliegue suponía mucho esfuerzo adicional. Como mejora, se podía haber invertido parte del tiempo del proyecto en desarrollar una \textit{pipeline} para la integración continua.
 
 En segundo lugar, la integración de los microservicios ha sido más costosa de lo que en un principio suponía. Desacoplar los microservicios a nivel de diseño ha supuesto realizar varias refactorizaciones durante la actividad de implementación. Hay que ser consciente de que realizar un buen diseño a la primera es prácticamente imposible. Además, la comunicación entre los servicios en el entorno de producción ha requerido varios días de esfuerzo, sobre todo por la falta de conocimiento en herramientas para su depuración.
 
-Personalmente, este trabajo refleja el conocimiento adquirido en la universidad y en mi experiencia laboral. Por una parte, de la universidad he aplicado mis estudios realizados sobre dispositivos móviles y plataformas como Xamarin. Por otra parte, he podido aplicar mi experiencia con los microservicios en las tecnologías .NET y he fortalecido mi madurez a la hora de enfrentarme a un problema de tamaño considerable.
+Personalmente, este trabajo refleja el conocimiento adquirido en la universidad y en mi experiencia laboral. Por una parte, de la universidad he aplicado mis estudios realizados sobre proceso de \textit{software}, contenedores y plataformas como Xamarin. Las asignaturas que he cursado y más he podido aplicar en este trabajo son: Proceso de Software (PSW), Tecnología de Sistemas de Información en la Red (TSR) y Sistemas Multimedia Interactivos Multicanal (SMM). Sobre ellas me gustaría decir que han sido más que una base de conocimiento porque sintetizan, cada una a su manera, una buena parte de la literatura que he podido consultar.
+
+Por otra parte, he podido aplicar mi experiencia con los microservicios en las tecnologías .NET y he fortalecido mi madurez a la hora de enfrentarme a un problema de tamaño considerable. Gracias a esto, en la organización en la que trabajo actualmente formo parte de un equipo de investigación y desarrollo (I+D). Las personas que forman parte de este equipo son especialistas en el desarrollo de microservicios, que combinan con la generación automática de código basada en modelos.
 
 En cuanto a líneas de trabajo futuras, tras este proyecto se abren dos caminos para proseguir el trabajo realizado. En primer lugar, la realización y aplicación de un modelo de calidad a las dos soluciones realizadas para medir de forma cuantitativa los atributos de calidad que hemos citado en la memoria. En segundo lugar, la extensión de la aplicación desarrollada mediante la exploración de otras tecnologías, como la asociada a la integración basada en eventos o diferentes orquestadores.
 
