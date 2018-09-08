@@ -45,9 +45,6 @@
 \usepackage{hyperref}
 \hypersetup{colorlinks,linkcolor={black},citecolor={black},urlcolor={blue}} 
 
-\usepackage{booktabs}
-\newcommand{\tabitem}{~~\llap{\textbullet}~~}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                        DADES DEL TREBALL                                    %
 %                                                                             %
@@ -189,7 +186,7 @@ En el capítulo 8 se realiza una comparación de ambas soluciones respecto a dif
 
 El último capítulo presenta las conclusiones del trabajo respecto a los objetivos planteados inicialmente.
 
-Adicionalmente, al final de la memoria se adjuntan un listado de acrónimos ordenados alfabéticamente y un conjunto de apéndices. En ellos  se incluye un modelo de la aplicación desarrollada y se detallan los pasos para el despliegue de la solución basada en microservicios en un entorno de producción.
+Adicionalmente, al final de la memoria se adjuntan un conjunto de apéndices. En ellos  se incluye un listado de los acrónimos empleados, un modelo de la aplicación desarrollada y se detallan los pasos para el despliegue de la solución basada en microservicios en un entorno de producción.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %              Los microservicios en el proceso de desarrollo
@@ -1740,94 +1737,62 @@ No obstante, podemos plantearnos si realmente vale la pena representar estos com
 
 Otra consideración a tener en cuenta a la hora de transformar un servicio en una librería es que las librerías están ligadas a una única plataforma. Por ejemplo, el servicio de notificaciones está desarrollado en Java y gracias a que se ejecuta en otro proceso puede ser invocado por cualquier servicio, da igual su lenguaje de programación, a través de llamadas HTTP. La implementación del servicio, tal como está en Java, no puede desplegarse como una librería y emplearse en los servicios desarrollados en .NET porque no son plataformas compatibles. Por tanto, para cada servicio que desea consumir este componente se debería dar una implementación compatible con la plataforma del consumidor.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SALTO DE PAGINA
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-
 \section{Ventajas e inconvenientes de los microservicios} \label{sect:Comparativa}
 
 A continuación, presentamos una recopilación de las ventajas e inconvenientes del uso de microservicios obtenidos a partir de algunas referencias consultadas y del desarrollo del caso de estudio:
 
-\begin{center}
-\begin{tabular}{|p{7.1cm}|p{7.1cm}|}
-\hline
+{\Huge Ventajas}
 
-\textbf{ Ventajas } & \textbf{ Inconvenientes } \\
-\hline
+\begin{itemize}
 
-\vspace{0.25mm}
-\tabitem \textbf{Escalabilidad}: en lugar de escalar el monolito al completo, se puede escalar cada servicio de forma distinta según sus necesidades. Esto produce un mejor aprovechamiento de los recursos y un ahorro en los costes \cite{Newman2015a, DelaTorre2018, Lewis2014}.
+\item \textbf{Escalabilidad}: en lugar de escalar el monolito al completo, se puede escalar cada servicio de forma distinta según sus necesidades. Esto produce un mejor aprovechamiento de los recursos y un ahorro en los costes \cite{Newman2015a, DelaTorre2018, Lewis2014}.
 
-\vspace{2mm}
-\tabitem \textbf{Alta cohesión y bajo acoplamiento}: un microservicio expone una interfaz muy concreta y contiene código relacionado que será modificado por el mismo motivo. Además, conoce lo mínimo posible de otros servicios con los que colabora. Normalmente, un cambio a realizar se localiza en el contexto de un microservicio y no requiere que otros se modifiquen \cite{Newman2015a, DelaTorre2018, Hunter2017}.
+\item \textbf{Alta cohesión y bajo acoplamiento}: un microservicio expone una interfaz muy concreta y contiene código relacionado que será modificado por el mismo motivo. Además, conoce lo mínimo posible de otros servicios con los que colabora. Normalmente, un cambio a realizar se localiza en el contexto de un microservicio y no requiere que otros se modifiquen \cite{Newman2015a, DelaTorre2018, Hunter2017}.
 
-\vspace{2mm}
-\tabitem \textbf{Facilidad para evolucionar}: un cambio en una aplicación monolítica supone el despliegue del sistema completo para publicarlo. Empleando microservicios, un cambio en un único servicio se despliega de manera independiente, haciendo que los cambios lleguen al cliente final de forma más rápida \cite{Newman2015a, DelaTorre2018, Lewis2014, Hunter2017}.
+\item \textbf{Facilidad para evolucionar}: un cambio en una aplicación monolítica supone el despliegue del sistema completo para publicarlo. Empleando microservicios, un cambio en un único servicio se despliega de manera independiente, haciendo que los cambios lleguen al cliente final de forma más rápida \cite{Newman2015a, DelaTorre2018, Lewis2014, Hunter2017}.
 
-\vspace{2mm}
-\tabitem \textbf{Programación y persistencia políglota}: se puede escoger una tecnología diferente para cada uno de los servicios. Esto se aplica tanto al lenguaje de programación empleado, la arquitectura del servicio o la tecnología de base de datos utilizada \cite{Newman2015a, DelaTorre2018, Lewis2014, Hunter2017}.
+\item \textbf{Programación y persistencia políglota}: se puede escoger una tecnología diferente para cada uno de los servicios. Esto se aplica tanto al lenguaje de programación empleado, la arquitectura del servicio o la tecnología de base de datos utilizada \cite{Newman2015a, DelaTorre2018, Lewis2014, Hunter2017}.
 
-\vspace{2mm}
-\tabitem \textbf{Tolerancia a fallos}: el fallo de un microservicio puede aislarse y no se propaga a otros. Además, el tiempo de recuperación de un servicio es menor al empleado para recuperar el monolito al completo, incrementando su disponibilidad. \cite{Newman2015a, Lewis2014, DelaTorre2018}.
+\item \textbf{Tolerancia a fallos}: el fallo de un microservicio puede aislarse y no se propaga a otros. Además, el tiempo de recuperación de un servicio es menor al empleado para recuperar el monolito al completo, incrementando su disponibilidad. \cite{Newman2015a, Lewis2014, DelaTorre2018}.
 
-\vspace{2mm}
-\tabitem \textbf{Facilidad para ser reemplazado}: el sistema se divide en componentes que pueden ser reescritos en pocos días. \cite{Newman2015a, Lewis2014}.
+\item \textbf{Facilidad para ser reemplazado}: el sistema se divide en componentes que pueden ser reescritos en pocos días. \cite{Newman2015a, Lewis2014}.
 
-&
+\end{itemize}
 
-\vspace{0.25mm}
-\tabitem \textbf{Descomposición en microservicios}: no es una tarea que se complete de forma acertada a la primera. Los requisitos del sistema evolucionan, añadiendo nuevos servicios y  relaciones entre ellos. Microservicios que interaccionan demasiado pueden combinarse. Otros que acumuluman demasiadas responsabilidades pueden particionarse. \cite{Newman2015a, Lewis2014, DelaTorre2018}.
+{\Huge Inconvenientes}
 
-\vspace{2mm}
-\tabitem \textbf{Depuración}: encontrar un defecto es sencillo si la funcionalidad que se ve afectada no involucra a más de un servicio. Sin embargo, si más de un servicio es partícipe, depurar el caso de uso al completo requiere mayor comprensión y un uso de recursos superior. \cite{Newman2015a}
+\begin{itemize}
 
-\vspace{2mm}
-\tabitem \textbf{Consistencia eventual}: no se pueden realizar transacciones atómicas. Se tienen que implementar mecanismos de compensación para revertir la transacción distribuida en caso de fallo. Mientras esto ocurre, se pueden obtener datos inconsistentes \cite{Newman2015a, DelaTorre2018, Lewis2014}.
+\item \textbf{Descomposición en microservicios}: no es una tarea que se complete de forma acertada a la primera. Los requisitos del sistema evolucionan, añadiendo nuevos servicios y  relaciones entre ellos. Microservicios que interaccionan demasiado pueden combinarse. Otros que acumuluman demasiadas responsabilidades pueden particionarse. \cite{Newman2015a, Lewis2014, DelaTorre2018}.
 
-\vspace{2mm}
-\tabitem \textbf{Integridad de los datos}: la integridad referencial no se puede realizar a través de claves ajenas porque existe más de una BD. Se tienen que implementar mecanismos para asegurar la integridad de datos localizados en otros servicios. \cite{Newman2015a, DelaTorre2018}.
+\item \textbf{Depuración}: encontrar un defecto es sencillo si la funcionalidad que se ve afectada no involucra a más de un servicio. Sin embargo, si más de un servicio es partícipe, depurar el caso de uso al completo requiere mayor comprensión y un uso de recursos superior. \cite{Newman2015a}
 
-\vspace{2mm}
-\tabitem \textbf{Código duplicado}: clases para el acceso a datos o la configuración del servicio están presentes en todos los microservicios del caso de estudio. Parte de este código duplicado se puede reducir mediante el uso de librerías.
+\item \textbf{Consistencia eventual}: no se pueden realizar transacciones atómicas. Se tienen que implementar mecanismos de compensación para revertir la transacción distribuida en caso de fallo. Mientras esto ocurre, se pueden obtener datos inconsistentes \cite{Newman2015a, DelaTorre2018, Lewis2014}.
 
-\\
-\hline
+\item \textbf{Integridad de los datos}: la integridad referencial no se puede realizar a través de claves ajenas porque existe más de una BD. Se tienen que implementar mecanismos para asegurar la integridad de datos localizados en otros servicios. \cite{Newman2015a, DelaTorre2018}.
 
-\end{tabular}
-\end{center}
+\item \textbf{Código duplicado}: clases para el acceso a datos o la configuración del servicio están presentes en todos los microservicios del caso de estudio. Parte de este código duplicado se puede reducir mediante el uso de librerías.
+
+\end{itemize}
 
 \section{Consideraciones finales}
 
-En esta sección recogeremos algunas consideraciones finales acerca de los microservicios. Algunas de ellas se recogen en la literatura como ventajas de las arquitecturas basadas en microservicios, pero hemos optado por no considerarlas como tal y reflexionar mejor acerca de ellas. Dada su relevancia hemos optado por recogerlas en la siguiente tabla, que acompaña a la recopilación hecha anteriormente de ventajas e inconvenientes.
+En esta sección recogeremos algunas consideraciones finales acerca de los microservicios. Algunas de ellas se recogen en la literatura como ventajas de las arquitecturas basadas en microservicios, pero hemos optado por no considerarlas como tal y reflexionar mejor acerca de ellas.
 
-\begin{center}
-\begin{tabular}{|p{14.2cm}|}
-\hline
+\begin{itemize}
 
-\textbf{ Otras consideraciones } \\
-\hline
+\item \textbf{Organización alrededor de las capacidades del negocio}: un equipo puede encargarse del desarrollo completo de un servicio. Esto puede ser práctico en organizaciones grandes, pero en organizaciones más pequeñas es probable que sea un único programador el encargado de un microservicio, que deberá reunir todas las cualidades necesarias \cite{Newman2015a, Lewis2014, DelaTorre2018, Hunter2017}.
 
-\vspace{2mm}
-\tabitem \textbf{Organización alrededor de las capacidades del negocio}: un equipo puede encargarse del desarrollo completo de un servicio. Esto puede ser práctico en organizaciones grandes, pero en organizaciones más pequeñas es probable que sea un único programador el encargado de un microservicio, que deberá reunir todas las cualidades necesarias \cite{Newman2015a, Lewis2014, DelaTorre2018, Hunter2017}.
+\item \textbf{Integración de servicios}: se debe estandarizar en toda la solución los mecanismos para que dos servicios comuniquen. De cualquier otra forma, comunicar dos servicios será más costoso si emplean protocolos distintos. Además, se deben exponer operaciones agregadas y seguir los principios de DDD para evitar la comunicación continuada entre dos servicios \cite{Newman2015a, DelaTorre2018}.
 
-\vspace{2mm}
-\tabitem \textbf{Integración de servicios}: se debe estandarizar en toda la solución los mecanismos para que dos servicios comuniquen. De cualquier otra forma, comunicar dos servicios será más costoso si emplean protocolos distintos. Además, se deben exponer operaciones agregadas y seguir los principios de DDD para evitar la comunicación continuada entre dos servicios \cite{Newman2015a, DelaTorre2018}.
+\item \textbf{Monitorización}: es un aspecto clave para detectar y corregir problemas rápidamente. Se debe ofrecer una vista agregada que contenga el estado de salud  de todos los servicios e informes de los fallos ocurridos. Si se usa un orquestador, este puede recoger información sobre el estado de salud de los servicios \cite{Newman2015a, DelaTorre2018}.
 
-\vspace{2mm}
-\tabitem \textbf{Monitorización}: es un aspecto clave para detectar y corregir problemas rápidamente. Se debe ofrecer una vista agregada que contenga el estado de salud  de todos los servicios e informes de los fallos ocurridos. Si se usa un orquestador, este puede recoger información sobre el estado de salud de los servicios \cite{Newman2015a, DelaTorre2018}.
+\item \textbf{Estandarizar una tecnología}: en el desarrollo de un sistema puede ser una garantía para facilitar la cooperación entre los diferentes equipos. También se hace más sencilla la transferencia de personas entre distintos equipos \cite{Newman2015a}.
 
-\vspace{2mm}
-\tabitem \textbf{Estandarizar una tecnología}: en el desarrollo de un sistema puede ser una garantía para facilitar la cooperación entre los diferentes equipos. También se hace más sencilla la transferencia de personas entre distintos equipos \cite{Newman2015a}.
+\item \textbf{Generación automática de código}: en productos \textit{software} de uso profesional, la división de un sistema en microservicios puede dar lugar a cientos de estos. Para facilitar la evolución de los servicios manteniendo constante su calidad y mantenibilidad, se puede invertir en técnicas de la ingeniería de \textit{software} como el desarrollo guiado por modelos (MDD). Gracias a las prácticas del DDD, cada microservicio consiste en un contexto bien delimitado con unas pocas entidades. Estas entidades pueden recogerse en un modelo a partir del cual pueda generarse código de forma automática. De esta forma, un cambio en las propiedades de una entidad se puede implementar más rápido a través de la actualización del modelo y la regeneración del código a partir de este.
 
-\vspace{2mm}
-\tabitem \textbf{Generación automática de código}: en productos \textit{software} de uso profesional, la división de un sistema en microservicios puede dar lugar a cientos de estos. Para facilitar la evolución de los servicios manteniendo constante su calidad y mantenibilidad, se puede invertir en técnicas de la ingeniería de \textit{software} como el desarrollo guiado por modelos (MDD). Gracias a las prácticas del DDD, cada microservicio consiste en un contexto bien delimitado con unas pocas entidades. Estas entidades pueden recogerse en un modelo a partir del cual pueda generarse código de forma automática. De esta forma, un cambio en las propiedades de una entidad se puede implementar más rápido a través de la actualización del modelo y la regeneración del código a partir de este.
+\end{itemize}
 
-\\
-\hline
-
-\end{tabular}
-\end{center}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      CONCLUSIONES                                 %
@@ -1867,11 +1832,17 @@ En cuanto a líneas de trabajo futuras, tras este proyecto se abren dos caminos 
 
 \bibliography{Bibliografia/library}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SALTO DE PAGINA
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-{\Huge Acrónimos}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           APENDICES  (Si HAY!)                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\APPENDIX
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                     ACRÓNIMOS                                 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Acrónimos empleados}
 
 \begin{itemize}
 
@@ -1925,23 +1896,12 @@ En cuanto a líneas de trabajo futuras, tras este proyecto se abren dos caminos 
 
 \end{itemize}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SALTO DE PAGINA
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                           APENDICES  (Si HAY!)                           %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\APPENDIX
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                      NAVEGACIÓN   
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\chapter{Descripción del prototipo de IU desarrollado} \label{ch:ModeloNavegacion}
+\chapter{Prototipo desarrollado} \label{ch:ModeloNavegacion}
 
 En este apéndice presentamos el modelo de navegación de la aplicación móvil desarrollada durante el caso de estudio. Junto con cada captura de la interfaz de usuario adjuntamos los casos de uso contenidos en dicha pantalla, empleando los códigos que hemos dado en la sección \textbf{\ref{sect:CUs} \nameref{sect:CUs}}.
 
@@ -1962,13 +1922,13 @@ En este apéndice presentamos el modelo de navegación de la aplicación móvil 
 
 \chapter{Despliegue en producción del sistema basado en microservicios} \label{chap:Despliegue}
 
-A continuación, detallaremos los pasos seguidos para el despliegue del sistema en producción. Las tecnologías de las que nos vamos a servir son las asociadas a la plataforma de Microsoft Azure, principalmente Azure Kubernetes Service. Una parte del proceso que detallaremos se puede encontrar en su documentación oficial. \footnote{ Documentación oficial de AKS: \url{https://docs.microsoft.com/es-es/azure/aks/}}
+A continuación, detallaremos los pasos seguidos para el despliegue del sistema en producción. Las tecnologías de las que nos vamos a servir son las asociadas a la plataforma de Microsoft Azure, principalmente Azure Kubernetes Service. Una parte del proceso que detallaremos se puede encontrar en su documentación oficial \footnote{ Documentación oficial de AKS: \url{https://docs.microsoft.com/es-es/azure/aks/}}.
 
 \section{Registro de las imágenes de los microservicios}
 
-Una de las ventajas de la tecnología de contenedores es que una vez se genera una imagen se pueden generar tantos contenedores como se deseen a partir de ella de forma confiable y portable. \cite{Matthias} En un entorno de desarrollo, las imágenes generadas se almacenan en el propio host. En un entorno de producción, la imagen generada se debe almacenar en un registro para que pueda ser accedido desde otras máquinas. Docker Hub es un registro público donde se almacenan la mayoría de imágenes públicas.
+Una de las ventajas de la tecnología de contenedores es que una vez se genera una imagen se pueden generar tantos contenedores como se deseen a partir de ella de forma confiable y portable \cite{Matthias}. En un entorno de desarrollo, las imágenes generadas se almacenan en el propio host. En un entorno de producción, la imagen generada se debe almacenar en un registro para que pueda ser accedido desde otras máquinas. Docker Hub es un registro público donde se almacenan la mayoría de imágenes públicas.
 
-En nuestro ejemplo, emplearemos nuestro propio registro privado para gestionar las imágenes de los microservicios a través de Azure Container Registry (ACR). \cite{DelaTorre2018}
+En nuestro ejemplo, emplearemos nuestro propio registro privado para gestionar las imágenes de los microservicios a través de Azure Container Registry (ACR) \cite{DelaTorre2018}.
 
 Para crear el registro iremos al portal de Azure y desde un nuevo terminal ejecutaremos el comando que se muestra en la figura \ref{fig:CreateACR}. Consideramos como punto de partida la existencia de un grupo de recursos llamado \textit{MicroservicesBackend}.
 
@@ -1990,7 +1950,7 @@ En esta máquina será necesario tener instalada la línea de comandos de Azure 
 \label{fig:LoginAcr}
 \end{figure}
 
-Para que las imágenes sean almacenadas en el registro que hemos creado, debemos etiquetar las imágenes que ha creado el comando ``docker-compose build" con la propiedad \textit{loginServer} del registro que se muestra en la figura \ref{fig:CreateACR}. Esto se puede realiza a través del comando ``docker tag" como se muestra en la figura \ref{fig:PushImage} o directamente poniendo el tag en de cada imagen creada en el archivo docker-compose.yml. \footnote{ Añadir una etiqueta en Docker Compose: \url{https://docs.docker.com/compose/compose-file/\#build}} Finalmente, cada una de las imágenes etiquetadas deberá ser subido al repositorio a través del comando ``docker push".
+Para que las imágenes sean almacenadas en el registro que hemos creado, debemos etiquetar las imágenes que ha creado el comando ``docker-compose build" con la propiedad \textit{loginServer} del registro que se muestra en la figura \ref{fig:CreateACR}. Esto se puede realizar a través del comando ``docker tag" como se muestra en la figura \ref{fig:PushImage} o directamente poniendo el tag en de cada imagen creada en el archivo docker-compose.yml. \footnote{ Añadir una etiqueta en Docker Compose: \url{https://docs.docker.com/compose/compose-file/\#build}} Finalmente, cada una de las imágenes etiquetadas deberá ser subido al repositorio a través del comando ``docker push".
 
 \begin{figure}[h]
 \centering
@@ -2054,9 +2014,11 @@ Vamos a hacer un paréntesis para explicar en detalle parte de este archivo. Cad
 
 En los servicios desplegados hemos seguido el caso de uso más común en relación entre pods y contenedores: cada pod representa un único contenedor Docker. A su vez, cada servicio está formado por un solo pod. \footnote{ Pods en Kubernetes: \url{https://kubernetes.io/docs/concepts/workloads/pods/pod/}} En la figura \ref{fig:KubernetesSecurity} se muestra en la sección \textit{containers} que solo hay un pod, basado en la imagen Docker del microservicio de seguridad.
 
-Si solo definieramos un servicio, la dirección IP que se le da es interna y no queda expuesta fuera del clúster para su consumo por aplicaciones frontend. Existen varias posibilidades para alcanzar este propósito. Vamos a repasar algunas de ellas en la sección \textbf{\ref{sect:DespliegueOtros} \nameref{sect:DespliegueOtros}}, pero entre ellas la que vamos a presentar ahora es el uso de un balanceador de carga externo. Como se comenta en el libro \cite{Rensin2015}, es una buena práctica situar un balanceador de carga frente a cada servicio, aunque el número de replicas del servicio sea solo uno. Para seleccionar que servicios gestiona el balanceador de carga se hace uso de un selector de etiquetas definido en la sección \textit{selector} de la figura, que debe coincidir con la etiqueta dada al servicio en su sección \textit{labels}. \footnote{ Balanceadores de carga en Kubernetes: \url{https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/}}
+Si solo definieramos un servicio, la dirección IP que se le da es interna y no queda expuesta fuera del clúster para su consumo por aplicaciones \textit{front-end}. Existen varias posibilidades para alcanzar este propósito. Vamos a repasar algunas de ellas en la sección \textbf{\ref{sect:DespliegueOtros} \nameref{sect:DespliegueOtros}}, pero entre ellas la que vamos a presentar ahora es el uso de un balanceador de carga externo. 
 
-Tanto para la comunicación entre el \textit{back-end} y el \textit{fron-tend} como para la comunicación entre microservicios emplearemos la dirección IP externa que el balanceador de carga tiene. Esta decisión surge para hacer más sencilla la configuración de los microservicios, pero provoca que servicios internos como el de notificaciones o informes que no necesitan ser consumidos por el frontend sean también expuestos fuera del clúster.
+Como se comenta en el libro \cite{Rensin2015}, es una buena práctica situar un balanceador de carga frente a cada servicio, aunque el número de replicas del servicio sea solo uno. Para seleccionar que servicios gestiona el balanceador de carga se hace uso de un selector de etiquetas definido en la sección \textit{selector} de la figura, que debe coincidir con la etiqueta dada al servicio en su sección \textit{labels}. \footnote{ Balanceadores de carga en Kubernetes: \url{https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/}}
+
+Tanto para la comunicación entre el \textit{back-end} y el \textit{fron-tend} como para la comunicación entre microservicios emplearemos la dirección IP externa que el balanceador de carga tiene. Esta decisión surge para hacer más sencilla la configuración de los microservicios, pero provoca que servicios internos como el de notificaciones o informes que no necesitan ser consumidos por el \textit{front-end} sean también expuestos fuera del clúster.
 
 Continuando con el proceso de ejecución de los microservicios, una vez definidos todos los servicios y balanceadores de carga podemos ejecutar el comando ``kubectl apply" para generar todos estos componentes a partir de su configuración. El resultado de la ejecución de este comando se muestra en la figura \ref{fig:KubernetesApply}. En caso de modificar la configuración y querer volver a desplegar los componentes basta con ejecutar de nuevo este comando o ``kubectl replace", que elimina los servicios existentes y los vuelve a crear.
 
@@ -2140,7 +2102,7 @@ Este despliegue puede ser excesivo debido al elevado número de componentes que 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 
-En \footnote{Quick Guide to Microservices With Kubernetes, Spring Boot 2.0, and Docker: \url{https://dzone.com/articles/quick-guide-to-microservices-with-kubernetes-sprin}} se muestra un ejemplo completo de desarrollo de un sistema de microservicios en Java que se despliega sobre Kubernetes. En lugar de emplear balanceadores de carga, emplea un único componente \textit{Ingress} para hacer públicos los servicios. Este es un objeto que se emplea para hacer accesibles los servicios desde el exterior a través de reglas. \footnote{Ingress en Kubernetes: \url{https://kubernetes.io/docs/concepts/services-networking/ingress/}} En el ejemplo de la figura \ref{fig:Ingress}, se especifica una dirección base a través de la anotación \textit{host} y se accede a los servicios a través de esta dirección más la ruta que representa a cada uno de los servicios.
+En \cite{Minkowski2018} se muestra un ejemplo completo de desarrollo de un sistema de microservicios en Java que se despliega sobre Kubernetes. En lugar de emplear balanceadores de carga, emplea un único componente \textit{Ingress} para hacer públicos los servicios. Este es un objeto que se emplea para hacer accesibles los servicios desde el exterior a través de reglas \footnote{Ingress en Kubernetes: \url{https://kubernetes.io/docs/concepts/services-networking/ingress/}}. En el ejemplo de la figura \ref{fig:Ingress}, se especifica una dirección base a través de la anotación \textit{host} y se accede a los servicios a través de esta dirección más la ruta que representa a cada uno de los servicios.
 
 \begin{figure}[h]
 \centering
