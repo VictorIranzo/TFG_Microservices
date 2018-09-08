@@ -93,7 +93,7 @@
 
 Les arquitectures basades en microserveis són una tendència actual a la qual una aplicació software es compon de serveis xicotets i autònoms que cooperen entre ells per oferir diverses funcionalitats. L’objectiu d’aquest treball és validar les avantatges e inconvenients d’una arquitectura basada en microserveis davant d’una arquitectura tradicional o monolítica mitjançant l’evaluació d’un cas de estudi. Amb aquest propòsit, es farà una revisió de la influencia dels microserveis en el procés de desenvolupament de software i es repassaran les principals eines associades al seu desplegament.
 
-El cas d’estudi consistirà en el disseny e implementació d’una aplicació  mòbil per al comerç electrònic (e-shop). La part servidora s’implementarà dues vegades seguint arquitectures diferents : una basada en microserveis i una altra monolítica. Per al desplegament del sistema s’empraran contenidors Docker orquestats per l’eina Kubernetes, dins de la plataforma Microsoft Azure.
+El cas d’estudi consistirà en el disseny e implementació d’una aplicació  mòbil per al comerç electrònic (e-shop). La part servidora s’implementarà dues vegades seguint arquitectures diferents: una basada en microserveis i una altra monolítica. Per al desplegament del sistema s’empraran contenidors Docker orquestats per l’eina Kubernetes, dins de la plataforma Microsoft Azure.
 
 Finalment, les dues solucions es compararan enfront de diferents requisits no funcionals, com la disponibilitat o la tolerància a errors, i diferents situacions de manteniment.
 
@@ -101,9 +101,9 @@ Finalment, les dues solucions es compararan enfront de diferents requisits no fu
 
 \begin{abstract}[spanish]
 
-Las arquitecturas basadas en microservicios son una tendencia actual en la cual una aplicación software se compone de servicios pequeños y autónomos que cooperan entre ellos para ofrecer diversas funcionalidades.  El objetivo de este trabajo es validar las ventajas e inconvenientes de una arquitectura basada en microservicios frente a una arquitectura tradicional o monolítica mediante la evaluación de un caso de estudio. Con este propósito, se hará una revisión de la influencia de los microservicios en el proceso de desarrollo de software y se repasarán las principales herramientas asociadas a su despliegue.
+Las arquitecturas basadas en microservicios son una tendencia actual en la cual una aplicación software se compone de servicios pequeños y autónomos que cooperan entre ellos para ofrecer diversas funcionalidades.  El objetivo de este trabajo es evaluar las ventajas e inconvenientes de una arquitectura basada en microservicios frente a una arquitectura tradicional o monolítica mediante la validación de un caso de estudio. Con este propósito, se hará una revisión de la influencia de los microservicios en el proceso de desarrollo de software y se repasarán las principales herramientas asociadas a su despliegue.
 
-El caso de estudio consistirá en el diseño e implementación de una aplicación móvil para el comercio electrónico (e-shop). La parte servidora se implementará dos veces siguiendo arquitecturas diferentes: una basada en microservicios y otra monolítica. Para el despliegue del sistema se emplearán contenedores Docker orquestados por la herramienta Kubernetes, dentro de la plataforma Microsoft Azure.
+El caso de estudio consistirá en el diseño e implementación de una aplicación móvil para el comercio electrónico. La parte servidora se implementará dos veces siguiendo arquitecturas diferentes: una basada en microservicios y otra monolítica. Para el despliegue del sistema se emplearán contenedores Docker orquestados por la herramienta Kubernetes, dentro de la plataforma Microsoft Azure.
 
 Finalmente, ambas soluciones se compararán frente a diferentes requisitos no funcionales, como la disponibilidad o la tolerancia a fallos, y distintas situaciones de mantenimiento. 
 
@@ -139,9 +139,9 @@ Finally, both solutions were compared in front of diverse non-functional require
 \section{Motivaci\'on}
 
 % Referencia a The Clean Architecture.
-En la actualidad, no es necesario un alto grado de conocimientos en ingeniería del software para desarrollar una aplicación o sistema. Personas que no tienen estudios relacionados con la informática pueden producir código que, sin ser limpio y elegante, funciona. Sin embargo, desarrollar sistemas de calidad requiere de grandes conocimientos, pero minimiza los costes y aumenta la productividad de una organización. Se debe poner el foco en emplear una arquitectura de software que se adapte a las necesidades del negocio; de lo contrario, el futuro mantenimiento será más costoso y repercutirá en la confianza de los clientes y en la moral del equipo \cite{Martin2017}.
+En la actualidad, no es necesario un alto grado de conocimientos en ingeniería del software para desarrollar una aplicación o sistema. Personas que no tienen estudios relacionados con la informática pueden producir código que, sin ser limpio y elegante, funciona. Sin embargo, desarrollar sistemas de gran envergadura, más complejos y con altas exigencias de calidad requiere de mayores conocimientos, pero minimiza los costes y aumenta la productividad de una organización. Se debe poner el foco en emplear una arquitectura de software que se adapte a las necesidades del negocio; de lo contrario, el futuro mantenimiento será más costoso y repercutirá en la confianza de los clientes y en la moral del equipo \cite{Martin2017}.
 
-El presente trabajo se ha desarrollado en el contexto de una colaboración con una PYME dedicada al desarrollo software. Esta empresa desarrolla un ERP para el sector socio-sanitario a la vez que apuesta por el uso de las tecnologías más punteras, como es el uso de microservicios. El autor de esta memoria ha colaborado en este espacio desarrollando algunos microservicios y herramientas que facilitan su construcción a través de la generación automática de código. La realización de este trabajo tiene como motivación profundizar en el conocimiento de las tecnologías asociadas a los microservicios, más allá de las utilizadas por esta organización.
+El presente trabajo se ha desarrollado en el contexto de una colaboración con una PYME dedicada al desarrollo software. Esta empresa desarrolla un ERP para el sector socio-sanitario a la vez que apuesta por el uso de las tecnologías más punteras, como es el uso de microservicios. El autor de esta memoria ha colaborado en este contexto desarrollando algunos microservicios y herramientas que facilitan su construcción a través de la generación automática de código. La realización de este trabajo tiene como motivación profundizar en el conocimiento de las tecnologías asociadas a los microservicios, más allá de las utilizadas por esta organización.
 
 Si bien ya existe bastante bibliografía destacando los beneficios de este tipo de arquitecturas, los ejemplos que se ilustran son muy básicos. Por este motivo, este trabajo pretende conocer de primera mano la realidad de este tipo de arquitecturas mediante la realización de un caso de estudio de tamaño superior a los presentados en la literatura. Para ello, se desarrollará una aplicación de forma integral empleando tecnologías lo más cercanas posibles a las que se usarían en el desarrollo profesional de un producto software.
 
@@ -259,7 +259,7 @@ La figura \ref{fig:iso25010} muestra la división en características y subcarac
 
 \begin{itemize}
 
-\item La \textbf{disponibilidad} se define en la ISO/IEC 25010 como la capacidad del sistema de estar operativo y accesible para su uso cuando se requiere \cite{Standard2010}. En los sistemas distribuidos existen 3 características sobre las que se debe hacer balance: la consistencia, que establece que vamos a obtener una respuesta correcta de cualquier nodo de un servicio de acuerdo a su especificación, la disponibilidad, que ya hemos definido, y la tolerancia a particiones, que es la habilidad de gestionar situaciones en las que la comunicación entre las partes de un sistema se interrumpe. El teorema de CAP (debe sus siglas a las características en inglés \textit{Consistency}, \textit{Availability} y \textit{Partition Tolerance}) establece que en caso de fallo, solo dos de las tres características pueden prevalecer \cite{Gilbert2012}. En la siguiente sección entraremos en más detalle sobre el balance que se debe realizar para elegir que propiedad se debe sacrificar.
+\item La \textbf{disponibilidad} se define en la ISO/IEC 25010 como la capacidad del sistema de estar operativo y accesible para su uso cuando se requiere \cite{Standard2010}. En los sistemas distribuidos existen 3 características sobre las que se debe hacer balance: la consistencia, que establece que vamos a obtener una respuesta correcta de cualquier nodo de un servicio de acuerdo a su especificación, la disponibilidad, que ya hemos definido, y la tolerancia a particiones, que es la habilidad de gestionar situaciones en las que la comunicación entre las partes de un sistema se interrumpe. En la siguiente sección entraremos en más detalle sobre el balance que se debe realizar para elegir que propiedad se debe sacrificar.
 
 \item La \textbf{tolerancia a fallos} se define como la capacidad del sistema para operar según lo previsto en presencia de fallos hardware o software \cite{Standard2010}. Cuando se escala un sistema, la probabilidad de fallo es inevitable. Muchas organizaciones invierten mucho esfuerzo en evitar que un fallo se produzca, pero muy poco en mecanismos para recuperar el sistema una vez se ha producido. Un sistema que por culpa de un servicio caído deja de funcionar es menos resiliente que un sistema que puede continuar ofreciendo el resto de sus funcionalidades.
 
@@ -270,6 +270,8 @@ La figura \ref{fig:iso25010} muestra la división en características y subcarac
 \end{itemize}
 
 \subsection{El teorema de CAP}
+
+El teorema de CAP \cite{Brewer2000} (debe sus siglas a las características en inglés \textit{Consistency}, \textit{Availability} y \textit{Partition Tolerance}) fue propuesto en el año 2000 en el simposio de ACM sobre los principios de computación distribuida por el doctor Eric Brewer. El teorema de CAP establece que en caso de fallo, solo dos de las tres características pueden prevalecer \cite{Gilbert2012}.
 
 Pongamos un ejemplo en el que un microservicio está replicado y se produce un fallo por el cual la comunicación entre las replicas se interrumpe y los cambios en una replica no se pueden propagar al resto. Los \textbf{sistemas AP} son los sistemas que surgen fruto de sacrificar la consistencia cuando un fallo se produce, mientras que en los \textbf{sistemas CP} se pierde la disponibilidad. 
 
@@ -417,7 +419,7 @@ Una \textbf{prueba unitaria} es una pieza de código que invoca al método o cla
 
 \subsection{Pruebas de servicios}
 
-En las \textbf{pruebas de servicios} se verifica cada una de las funcionalidades que un servicio expone. Se pretende verificar el servicio de forma aislada y para ignorar las dependencias que el servicio bajo pruebas tiene sobre otros se reemplazan los servicios colaboradores por \textit{fakes}. Un fake es un sustituto  de una dependencia que devuelve una respuesta predeterminada cuando el servicio bajo pruebas le solicita algo.
+En las \textbf{pruebas de servicios} se verifica cada una de las funcionalidades que un servicio expone. Se pretende verificar el servicio de forma aislada y para ignorar las dependencias que el servicio bajo pruebas tiene sobre otros se reemplazan los servicios colaboradores por \textit{fakes}. Un \textit{fake} es un sustituto  de una dependencia que devuelve una respuesta predeterminada cuando el servicio bajo pruebas le solicita algo.
 
 Encajan dentro de las pruebas de integración, que se definen como la prueba como un conjunto de dos o más módulos de software que colaboran para evaluar un resultado esperado \cite{Osherove2014}. Este tipo de pruebas pueden ser igual de rápidas que las unitarias siempre que no se tengan que emplear un gran número de infraestructuras como bases de datos o colas.
 
@@ -450,7 +452,7 @@ A medida que aumenta el alcance de las pruebas lo hace el nivel de confianza que
 \label{fig:Cohn_Pyramid_ES}
 \end{figure}
 
-El número de pruebas que se aconseja tener de cada tipo aumenta conforme descendemos por la pirámide. El número de servicios que participan para ofrecer una funcionalidad al usuario puede ser muy alto y en una prueba no se deberían de levantar más de 3 o 4 servicios para no potenciar las desventajas que hemos mencionado. Por este motivo, las pruebas de extremo a extremo deben ser las mínimas posibles y se deben organizar en pruebas de servicios que empleen fakes siempre que se pueda.
+El número de pruebas que se aconseja tener de cada tipo aumenta conforme descendemos por la pirámide. El número de servicios que participan para ofrecer una funcionalidad al usuario puede ser muy alto y en una prueba no se deberían de levantar más de 3 o 4 servicios para no potenciar las desventajas que hemos mencionado. Por este motivo, las pruebas de extremo a extremo deben ser las mínimas posibles y se deben organizar en pruebas de servicios que empleen \textit{fakes} siempre que se pueda.
 
 \section{Los microservicios en el despliegue}
 % Docker
@@ -533,7 +535,7 @@ No hay necesidad de distinguir entre quien construye un sistema y quien lo ejecu
 
 \subsection{Documentación y deuda técnica}
 
-Una de las ventajas de los microservicios es que acelara el proceso de desarrollo. Sin embargo, cuanto más rápido tratamos de implementar un servicio más probable es que tomemos atajos para poder desplegar antes una iteración del producto, lo que se traduce en un aumento de la \textbf{deuda técnica} \cite{FowlerSusan}. La deuda técnica \cite{Garzas} se puede definir como el sobresfuerzo que debe llevarse a cabo por  haber tomado una mala decisión en el desarrollo del software.
+Una de las ventajas de los microservicios es que acelara el proceso de desarrollo. Sin embargo, cuanto más rápido tratamos de implementar un servicio más probable es que tomemos atajos para poder desplegar antes una iteración del producto, lo que se traduce en un aumento de la \textbf{deuda técnica} \cite{FowlerSusan, Garzas}. La deuda técnica se puede definir como el sobresfuerzo que debe llevarse a cabo por  haber tomado una mala decisión en el desarrollo del software.
 
 En un equipo de desarrollo el conocimiento de cómo funciona un sistema se reparte entre los miembros que lo forman. Nadie es capaz de conocer completamente su funcionamiento y lo más probable es que cada desarrollador conozca mejor la parte donde más tiempo ha invertido. A la hora de realizar un cambio, el entendimiento de cómo funciona el sistema tiene que ser compartido por todos sus miembros para asegurar que el cambio a implementar es el correcto.
 
@@ -599,7 +601,7 @@ Un orquestador \cite{DelaTorre2018} es una herramienta para la gestión de clús
 \subsection{Kubernetes} \label{subsect:Kubernetes}
 %TODO Definir cluster.
 %TODO Rancher. 
-Kubernetes \cite{Rensin2015} es una herramienta diseñada por Google para el despliegue y orquestación de aplicaciones en contenedores Docker de forma resiliente. Cada una de las máquinas que aloja uno o más contenedores Docker se denomina \textbf{nodo}. La unidad más pequeña con la que trabaja Kubernetes no son los contenedores, sino los pods. Un \textbf{pod} es una colección de contendores y volúmenes agrupados juntos en un nodo. Los \textbf{volúmenes} son sistemas de archivos virtuales que se pueden emplear para comunicar entre ellos a los contenedores de un nodo. Kubernetes orquesta a nivel de los pods, por lo que dos contenedores en el mismo pod serán administrados igual. La relación de continencia entre estos componentes se plasma en la figura \ref{fig:kubernetes_ES}.
+Kubernetes \cite{Rensin2015} es una herramienta diseñada por Google para el despliegue y orquestación de aplicaciones en contenedores Docker de forma resiliente. Cada una de las máquinas que aloja uno o más contenedores Docker se denomina \textbf{nodo}. La unidad más pequeña con la que trabaja Kubernetes no son los contenedores, sino los pods. Un \textbf{pod} es una colección de contenedores y volúmenes agrupados juntos en un nodo. Los \textbf{volúmenes} son sistemas de archivos virtuales que se pueden emplear para comunicar entre ellos a los contenedores de un nodo. Kubernetes orquesta a nivel de los pods, por lo que dos contenedores en el mismo pod serán administrados igual. La relación de continencia entre estos componentes se plasma en la figura \ref{fig:kubernetes_ES}.
 
 \begin{figure}[h]
 \centering
@@ -650,9 +652,9 @@ El éxito en el uso de los microservicios está ligado a principios como la divi
 
 Existen un gran número de herramientas que se pueden emplear en su desarrollo. Su uso facilita alcanzar requisitos no funcionales como los citados en la sección \ref{subsect:RNF}. Sin embargo, las diferencias entre herramientas son mínimas, como prueba el gran número de funcionalidades similares que ofrecen AWS y Azure, por lo que no tiene relevancia utilizar una u otra. 
 
-Por lo general, ninguna herramienta se impone a sus competidoras a excepción de los contenedores Docker. Según el artículo \footnote{ 8 surprising facts about real Docker adoption: \url{https://www.datadoghq.com/docker-adoption/}} realizado por la compañía Datadog, que ofrece herramientas para la monitorización y análisis de aplicaciones, cerca del 25\% de las empresas emplean Docker. Además, en la mitad de ellas se combina con algún tipo de orquestador. 
+Por lo general, ninguna herramienta se impone a sus competidoras a excepción de los contenedores Docker. Según el artículo \cite{Datadog2018} realizado por la compañía Datadog, que ofrece herramientas para la monitorización y análisis de aplicaciones, cerca del 25\% de las empresas emplean Docker. Además, en la mitad de ellas se combina con algún tipo de orquestador. 
 
-En \footnote{ Container Trends: Plans, Orchestration and CI – A Dataset from Bitnami: \url{https://redmonk.com/fryan/2016/06/21/container-trends-plans-orchestration-and-ci-a-dataset-from-bitnami/}} se realiza un estudio relativo al uso de orquestadores en compañías según su tamaño. En la gráfica de la figura \ref{fig:Comparativa_Orquestadores_ES} se observan los orquestadores que las compañías utilizan. En la gráfica se agrupan las compañías según su número de empleados. Cada columna representa el número de compañías dentro de esa categoría que emplean una determinada herramienta. Se observa que las herramientas más populares son Kubernetes y Docker Swarm, siendo la primera más utilizada en todas las categorías salvo en la de empresas con más de 1000 empleados.
+En \cite{Ryan2016} se realiza un estudio relativo al uso de orquestadores en compañías según su tamaño. En la gráfica de la figura \ref{fig:Comparativa_Orquestadores_ES} se observan los orquestadores que las compañías utilizan. En la gráfica se agrupan las compañías según su número de empleados. Cada columna representa el número de compañías dentro de esa categoría que emplean una determinada herramienta. Se observa que las herramientas más populares son Kubernetes y Docker Swarm, siendo la primera más utilizada en todas las categorías salvo en la de empresas con más de 1000 empleados.
 
 \begin{figure}[h]
 \centering
@@ -676,13 +678,13 @@ En el caso de estudio, en el desarrollo de la solución basada en microservicios
 
 En cuanto a la comunicación entre los servicios y con la interfaz de usuario, en la sección \textbf{\ref{subsect:Integracion} \nameref{subsect:Integracion}} hemos presentado tres posibles alternativas. Se ha optado por la que la literatura considera más sencilla, la integración REST a través de HTTP.
 
-En cuanto a aspectos más técnicos, el lenguaje de programación que se va a emplear principalmente es C\# junto con el entorno de desarrollo (IDE) Visual Studio Enterprise 2017. Entre las plataformas de destino que ofrece la tecnología .NET vamos a utilizar tanto .NET Standard 2.0 como .NET Core en su versión 2.1, publicada en Mayo de 2018. \footnote{ Versiones de .NET Core 2.1: \url{https://www.microsoft.com/net/download/dotnet-core/2.1}} El uso de librerías distintas a las provistas por la plataforma se realizará a través de paquetes NuGet, un mecanismo sencillo que envuelve el código compilado de una librería y fácil de referenciar. \footnote{ Una introducción a NuGet: \url{https://docs.microsoft.com/es-es/nuget/what-is-nuget}}
+En cuanto a aspectos más técnicos, el lenguaje de programación que se va a emplear principalmente es C\# junto con el entorno de desarrollo (IDE) Visual Studio Enterprise 2017. Entre las plataformas de destino que ofrece la tecnología .NET vamos a utilizar tanto .NET Standard 2.0 como .NET Core en su versión 2.1, publicada en Mayo de 2018 \footnote{ Versiones de .NET Core 2.1: \url{https://www.microsoft.com/net/download/dotnet-core/2.1}}. El uso de librerías distintas a las provistas por la plataforma se realizará a través de paquetes NuGet \footnote{ Una introducción a NuGet: \url{https://docs.microsoft.com/es-es/nuget/what-is-nuget}}, un mecanismo sencillo que envuelve el código compilado de una librería y fácil de referenciar.
 
-Para el desarrollo de la interfaz de usuario se va a utilizar Xamarin.Forms. Xamarin es una plataforma que permite desarrollar aplicaciones móviles empleando código C\# para dispositivos Universal Windows Platform (UWP), Android y iOS. Xamarin.Forms es un conjunto de herramientas para Xamarin centrado en el desarrollo multiplataforma. Su propósito es que se pueda compartir la mayor cantidad de código posible en el desarrollo de una aplicación para las distintas plataformas que hemos mencionado. \footnote{ Introducción a Xamarin.Forms: \url{https://docs.microsoft.com/es-es/xamarin/xamarin-forms/get-started/introduction-to-xamarin-forms}}
+Para el desarrollo de la interfaz de usuario se va a utilizar Xamarin.Forms \footnote{ Introducción a Xamarin.Forms: \url{https://docs.microsoft.com/es-es/xamarin/xamarin-forms/get-started/introduction-to-xamarin-forms}}. Xamarin es una plataforma que permite desarrollar aplicaciones móviles empleando código C\# para dispositivos Universal Windows Platform (UWP), Android y iOS. Xamarin.Forms es un conjunto de herramientas para Xamarin centrado en el desarrollo multiplataforma. Su propósito es que se pueda compartir la mayor cantidad de código posible en el desarrollo de una aplicación para las distintas plataformas que hemos mencionado.
 
-A nivel de infraestructura se ha hecho uso de Microsoft Azure para la persistencia de datos en la nube y para la exposición de servicios a través de Azure App Service y Azure Kubernetes Service (AKS). Hemos decidido utilizar esta tecnología porque es la mejor soportada por el IDE en el que vamos a trabajar, ofreciendo funcionalidades para desplegar una nueva versión simplemente pulsando un botón. Tanto App Service como AKS son parte de los servicios de Azure. El primero se emplea para crear aplicaciones en la nube de forma rápida sin necesidad de administrar la infraestructura sobre la que se hospeda. En cuanto al segundo, permite la orquestación de contenedores Docker a través de Kubernetes dentro de la infraestructura de Azure. \footnote{ Página oficial de Microsoft Azure: \url{https://azure.microsoft.com/es-es/}}
+A nivel de infraestructura se ha hecho uso de Microsoft Azure \footnote{ Página oficial de Microsoft Azure: \url{https://azure.microsoft.com/es-es/}} para la persistencia de datos en la nube y para la exposición de servicios a través de Azure App Service y Azure Kubernetes Service (AKS). Hemos decidido utilizar esta tecnología porque es la mejor soportada por el IDE en el que vamos a trabajar, ofreciendo funcionalidades para desplegar una nueva versión simplemente pulsando un botón. Tanto App Service como AKS son parte de los servicios de Azure. El primero se emplea para crear aplicaciones en la nube de forma rápida sin necesidad de administrar la infraestructura sobre la que se hospeda. En cuanto al segundo, permite la orquestación de contenedores Docker a través de Kubernetes dentro de la infraestructura de Azure.
 
-Para terminar, para las pruebas a nivel de API se ha hecho uso de Postman. Postman es un entorno para el desarrollo de APIs (ADE) que nos va a permitir crear y almacenar de forma sencilla llamadas HTTP hacia la API del \textit{back-end}. \footnote{ Página oficial de Postman: \url{https://www.getpostman.com/}}
+Para terminar, para las pruebas a nivel de API se ha hecho uso de Postman. Postman \footnote{ Página oficial de Postman: \url{https://www.getpostman.com/}} es un entorno para el desarrollo de APIs (ADE) que nos va a permitir crear y almacenar de forma sencilla llamadas HTTP hacia la API del \textit{back-end}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                       Especificación de requisitos                                 %
@@ -690,7 +692,7 @@ Para terminar, para las pruebas a nivel de API se ha hecho uso de Postman. Postm
 
 \chapter{Especificación de requisitos del caso de estudio}
 
-A continuación, presentaremos la descripción y especificación del caso de estudio. Los siguientes capítulos se enfocarán en la arquitectura de las soluciones y las tecnologías empleadas. Para centrarnos en esto, en lugar de pensar en un dominio de negocio hipotético que quizás no conozca, hemos seleccionado un dominio de negocio bien conocido. En concreto, una aplicación simplificada de comercio electrónico (\textit{e-shop}) para la toma de pedidos y la gestión de incidencias.
+A continuación, presentaremos la descripción y especificación del caso de estudio. Los siguientes capítulos se enfocarán en la arquitectura de las soluciones y las tecnologías empleadas. Para centrarnos en esto, en lugar de pensar en un dominio de negocio hipotético que quizás no conozca, hemos seleccionado un dominio de negocio bien conocido. En concreto, una aplicación simplificada de comercio electrónico para la toma de pedidos y la gestión de incidencias.
 
 \section{Descripción del caso de estudio}
 
@@ -911,7 +913,7 @@ El proceso de desarrollo se ha desglosado en grandes tareas, muy ligadas a las e
 \label{fig:Cronograma}
 \end{figure}
 
-Se puede observar como de las tres actividades del desarrollo donde más esfuerzo se ha dedicado es en la implementación de la solución monolítica. Esto es porque es aquí donde se ha implementado casi la totalidad del código del sistema y donde se han evaluado muchas de las tecnologías empleadas. La fase de desarrollo de la solución basada en microservicios se prolonga menos porque únicamente ha involucrado refactorizar el diseño monolítico y a penas se ha modificado la implementación del sistema. En un sistema real, esta tarea sería mucho más costosa que en nuestro caso de estudio.
+Se puede observar como de las tres actividades del desarrollo donde más esfuerzo se ha dedicado es en la implementación de la solución monolítica. Esto es porque es aquí donde se ha implementado casi la totalidad del código del sistema y donde se han evaluado muchas de las tecnologías empleadas. La fase de desarrollo de la solución basada en microservicios se prolonga menos porque únicamente ha involucrado refactorizar el diseño monolítico y apenas se ha modificado la implementación del sistema. En un sistema real, esta tarea sería mucho más costosa que en nuestro caso de estudio.
 
 Todo el código desarrollado se va a almacenar en un repositorio de código de GitHub. Se han creado tres repositorios: uno para el \textit{back-end} monolítico, otro para la interfaz de usuario y otro para el \textit{back-end} basado en servicios. Adicionalmente, se ha creado un repositorio para el desarrollo de la memoria de este TFG.
 
@@ -1565,7 +1567,7 @@ De las pruebas realizadas en la solución monolítica, la mayoría se transforma
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.8]{FakeSecurityManager}
-\caption{Fake de la interfaz de contratos del servicio de seguridad.}
+\caption{\textit{Fake} de la interfaz de contratos del servicio de seguridad.}
 \label{fig:FakeSecurityManager}
 \end{figure}
 
