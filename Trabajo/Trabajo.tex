@@ -725,7 +725,7 @@ A partir de la descripción del sistema podemos definir el siguiente modelo de d
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.5]{modelo_dominio_final}
+\includegraphics[scale=0.6]{modelo_dominio_final}
 \caption{Modelo de dominio del sistema.}
 \end{figure}
 
@@ -936,7 +936,7 @@ En los repositorios de GitHub vamos a emplear proyectos. Un \textbf{proyecto de 
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.6]{GitHubProject}
+\includegraphics[scale=0.55]{GitHubProject}
 \caption{Proyecto de GitHub asociado al desarrollo del \textit{front-end}.}
 \label{fig:GitHubProject}
 \end{figure}
@@ -1138,7 +1138,7 @@ La clase \textit{ICrudDAO} de la figura \ref{fig:ICrudDAO} es una interfaz de la
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.8]{ICrudDAO}
+\includegraphics[scale=0.75]{ICrudDAO}
 \caption{Interfaz genérica para los DAOs que exponen operaciones CRUD.}
 \label{fig:ICrudDAO}
 \end{figure}
@@ -1189,11 +1189,6 @@ La \textbf{inyección de dependencias} (DI) \hyperlink{page.80}{[48]} es un meca
 
 El uso de interfaces reduce el acoplamiento entre la definición de las operaciones de una clase y las implementaciones concretas que esta definición puede tener. Sin embargo, es necesario indicar con qué implementación se resuelve una interfaz cuando esta se inyecta en el constructor de una clase. Para ello, se emplean una serie de métodos (\textit{AddDependencies}) para indicar cómo resolver cada interfaz dentro de la colección de servicios donde el sistema busca sus dependencias. En nuestra solución, cada capa es responsable de registrar las diferentes interfaces que contiene junto con la clase que la implementa. De esta forma, desde otras capas se podrán usar las interfaces resultas.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SALTO DE PAGINA
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-
 \subsection{Documentando la API con Swagger UI}
 
 \textbf{Swagger} \footnote{ Documentación oficial de Swagger: \url{https://swagger.io/docs/specification/2-0/what-is-swagger/}} es un conjunto de herramientas de código abierto para describir la estructura de una API, crear clientes para consumirla en diferentes lenguajes (Swagger CodeGen) y documentarla para que los usuarios puedan emplearla de forma interactiva (Swagger UI).
@@ -1232,11 +1227,6 @@ En la figura \ref{fig:OrdersProxy} se muestra el proxy de pedidos, donde los par
 \label{fig:OrdersProxy}
 \end{figure}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SALTO DE PAGINA
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-
 \subsection{Calidad del código}
 %TODO Uso de variables con nombre descriptivo, TODOs
 
@@ -1251,11 +1241,6 @@ Para asegurar la calidad del código se ha hecho uso de dos herramientas: CodeMa
 \end{itemize}
 
 En la mayoría de proyectos se ha configurado para que las alertas que devuelve StyleCop cuando no se cumple una regla se trate como un error y no como una alerta. Esto se puede conseguir añadiendo la opción \textit{TreatWarningsAsErrors} en los archivos \textit{.csproj}.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SALTO DE PAGINA
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
 
 \section{Interfaz de usuario}
 
@@ -1338,7 +1323,7 @@ Como hemos mencionado en la sección \textbf{\ref{sect:Propuesta} \nameref{sect:
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.8]{Dockerfile}
+\includegraphics[scale=1]{Dockerfile}
 \caption{Dockerfile de la solución monolítica.}
 \label{fig:Dockerfile}
 \end{figure}
@@ -1773,6 +1758,8 @@ Otra consideración a tener en cuenta a la hora de transformar un servicio en un
 
 A continuación, presentamos una recopilación de las ventajas e inconvenientes del uso de microservicios obtenidos a partir de algunas referencias consultadas y del desarrollo del caso de estudio:
 
+\vspace{0.3cm}
+
 {\Huge Ventajas}
 
 \begin{itemize}
@@ -1790,6 +1777,11 @@ A continuación, presentamos una recopilación de las ventajas e inconvenientes 
 \item \textbf{Facilidad para ser reemplazado}: el sistema se divide en componentes que pueden ser reescritos en pocos días \cite{Newman2015a, Lewis2014}.
 
 \end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 
 {\Huge Inconvenientes}
 
@@ -1868,7 +1860,7 @@ En cuanto a líneas de trabajo futuras, tras este proyecto se abren dos caminos 
 
 \bibliography{Bibliografia/library}
 {
-[48]   Artículos de Microsoft consultados (por orden de uso en el texto):
+[48]   Artículos de Microsoft consultados (por orden de aparición en el texto):
 \begin{itemize}
 
 \item Una introducción a NuGet. Consultado el día 26/07/2018. URL: \url{https://docs.microsoft.com/es-es/nuget/what-is-nuget}
