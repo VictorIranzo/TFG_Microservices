@@ -158,7 +158,7 @@ En la actualidad, no es necesario un alto grado de conocimientos en ingeniería 
 
 El presente trabajo se ha desarrollado en el contexto de una colaboración con una PYME dedicada al desarrollo \textit{software}. Esta empresa desarrolla un ERP para el sector socio-sanitario a la vez que apuesta por el uso de las tecnologías más punteras, como es el uso de microservicios. El autor de esta memoria ha colaborado en este contexto desarrollando algunos microservicios y herramientas que facilitan su construcción a través de la generación automática de código. La realización de este trabajo tiene como motivación profundizar en el conocimiento de las tecnologías asociadas a los microservicios, más allá de las utilizadas por esta organización.
 
-Si bien ya existe bastante bibliografía destacando los beneficios de este tipo de arquitecturas, los ejemplos que se ilustran son muy básicos. Por este motivo, este trabajo pretende conocer de primera mano la realidad de este tipo de arquitecturas mediante la realización de un caso de estudio de tamaño superior a los presentados en la literatura. Para ello, se desarrollará una aplicación de forma integral empleando tecnologías lo más cercanas posibles a las que se usarían en el desarrollo profesional de un producto \textit{software}.
+Si bien ya existe bastante bibliografía destacando los beneficios de este tipo de arquitecturas, los ejemplos que se ilustran son muy básicos. Por este motivo, este trabajo pretende conocer de primera mano la realidad de estas arquitecturas mediante la realización de un caso de estudio de tamaño superior a los presentados en la literatura. Para ello, se desarrollará una aplicación de forma integral empleando tecnologías lo más cercanas posibles a las que se usarían en el desarrollo profesional de un producto \textit{software}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SALTO DE PAGINA
@@ -168,7 +168,7 @@ Si bien ya existe bastante bibliografía destacando los beneficios de este tipo 
 \section{Objetivos}
 %TODO Revisar.
 
-El objetivo de este proyecto es validar con un caso de estudio las ventajas e inconvenientes de una arquitectura basada en microservicios frente a una arquitectura monolítica. Concretamente,los objetivos específicos son:
+El objetivo de este proyecto es validar con un caso de estudio las ventajas e inconvenientes de una arquitectura basada en microservicios frente a una arquitectura monolítica. Concretamente, los objetivos específicos son:
 
 \begin{itemize}
 
@@ -190,7 +190,7 @@ El capítulo 1 introduce la memoria a través de la motivación del trabajo y lo
 
 En el capítulo 2 se presenta una definición para el término microservicio y se describe su influencia en el proceso de desarrollo a lo largo del ciclo de vida del \textit{software}.
 
-El capítulo 3 presentará brevemente el estado del arte asociado a la tecnología de los microservicios, explicando brevemente algunas de las herramientas más empleadas.
+El capítulo 3 presentará brevemente el estado del arte asociado a la tecnología de los microservicios, explicando brevemente algunas de las herramientas más empleadas. También se incluye una crítica al estado del arte, compuesta en parte por la revisión de algunos trabajos realizados en la universidad.
 
 En el capítulo 4 se analiza la aplicación a desarrollar mediante su especificación   empleando casos de uso y un modelo de dominio.
 
@@ -220,15 +220,15 @@ Según Newman, \cite{Newman2015a} los microservicios son servicios pequeños y a
 \begin{itemize}
 %TODO Sustituir referencia a Wikipedia.
 
-\item Un \textbf{servicio} es un conjunto de funcionalidades que se expone a los clientes para que las empleen con diferentes propósitos. La programación orientada a servicios es un paradigma que se aplica en las arquitecturas orientadas a servicios (SOA) \cite{Arsanjani2009a}. El objetivo principal de SOA es desarrollar servicios que aporten valor al negocio y se adapten a los cambios en las necesidades de los clientes, de forma ágil y con el menor coste posible. Las arquitecturas orientadas a servicios no están asociadas a ninguna tecnología específica. En líneas generales, dividen un sistema en componentes que cambian por el mismo motivo y promueven la flexibilidad y los servicios compartidos frente a implementaciones específicas y óptimas. Son muchos los beneficios de estas arquitecturas, sin embargo existe una falta de consenso sobre cómo debe llevarse a cabo este tipo de arquitecturas en aspectos como los protocolos de comunicación a emplear o la granularidad de los servicios. Los microservicios pueden entenderse como una aproximación específica de las arquitecturas SOA. \footnote{ NOTA: A partir de este punto, se emplearán los términos servicio y microservicio como sinónimos para hacer más ligera la lectura.}
+\item Un \textbf{servicio} es un conjunto de funcionalidades que se expone a los clientes para que las empleen con diferentes propósitos. La programación orientada a servicios es un paradigma que se aplica en las arquitecturas orientadas a servicios (SOA) \cite{Arsanjani2009a}. El objetivo principal de SOA es desarrollar servicios que aporten valor al negocio y se adapten a los cambios en las necesidades de los clientes, de forma ágil y con el menor coste posible. Las arquitecturas orientadas a servicios no están asociadas a ninguna tecnología específica. En líneas generales, dividen un sistema en componentes que cambian por el mismo motivo, promueven la flexibilidad y los servicios compartidos frente a implementaciones específicas y óptimas. Son muchos los beneficios de estas arquitecturas, sin embargo existe una falta de consenso sobre cómo deben construirse en aspectos como los protocolos de comunicación a emplear o la granularidad de los servicios. Los microservicios pueden entenderse como una aproximación específica de las arquitecturas SOA. \footnote{ NOTA: A partir de este punto, se emplearán los términos servicio y microservicio como sinónimos para hacer más ligera la lectura.}
 
-\item Diseñar microservicios con el menor \textbf{tamaño} posible no debe ser el foco principal. En todo momento han de cumplirse los principios de cohesión y coherencia: el código relacionado debe agruparse conjuntamente porque será modificado por el mismo motivo \cite{Newman2015a}.
+\item Diseñar microservicios con el menor \textbf{tamaño} posible no debe ser el foco principal. En todo momento han de cumplirse los principios de alta cohesión y bajo acoplamiento: el código relacionado debe agruparse conjuntamente porque será modificado por el mismo motivo \cite{Newman2015a}.
 
 \item  Los servicios han de ser lo menos acoplados posibles para garantizar la \textbf{autonomía} de cada uno. Cada microservicio es una entidad separada: cambian de forma independiente al resto y al hacerlo sus consumidores no necesiten ser modificados, a menos que se modifique el contrato entre ambas partes. Para lograrlo, lo más habitual es que cada servicio exponga una interfaz (API) y todas las comunicaciones se realicen mediante llamadas a través de la red\cite{Newman2015a, Hunter2017}.
 
 \end{itemize}
 
-Otra definición interesante es la que aportan Lewis y Fowler \cite{Lewis2014}. Según ellos, los microservicios son una aproximación para desarrollar una aplicación compuesta por pequeños servicios, cada uno ejecutándose en su propio proceso y comunicando a través de mecanismos ligeros. Estos servicios se construyen alrededor de las capacidades de negocio y se despliegan de forma independiente. Cada funcionalidad se encapsula en un servicio que puede escalar de forma diferente de acuerdo a sus necesidades, a diferencia de las aplicaciones monolíticas donde se debe replicar el monolito al completo. Esto se observa en la figura \ref{fig:microservices_escaling_ES}, donde los microservicios escalan de acuerdo a su carga de trabajo para asegurar la disponibilidad de la funcionalidad que ofrecen.
+Otra definición interesante es la que aportan Lewis y Fowler \cite{Lewis2014}. Según ellos, los microservicios son una aproximación para desarrollar una aplicación compuesta por pequeños servicios, cada uno ejecutándose en su propio proceso y comunicando a través de mecanismos ligeros. Estos servicios se construyen alrededor de las capacidades de negocio y se despliegan de forma independiente. Cada funcionalidad se encapsula en un servicio que puede escalar de forma diferente de acuerdo a sus necesidades, a diferencia de las aplicaciones monolíticas donde se debe replicar el monolito al completo. Esto se observa en la figura \ref{fig:microservices_escaling_ES}, donde los microservicios escalan, por ejemplo, de acuerdo a su carga de trabajo para asegurar la disponibilidad de la funcionalidad que ofrecen.
 
 \begin{figure}[h]
 \centering
@@ -239,17 +239,17 @@ Otra definición interesante es la que aportan Lewis y Fowler \cite{Lewis2014}. 
 
 \section{Aplicaciones monolíticas}
 
-Una \textbf{aplicación monolítica} \cite{Mazzara2017} es aquella cuyos módulos no pueden ejecutarse de forma independiente. Su estructura interna consiste en una torre o monolito donde las partes de la aplicación se apilan una encima de otras. Desarrollar todo un sistema siguiendo una arquitectura por capas se puede considerar una arquitectura monolítica porque los componentes que los componen no se pueden desplegar de forma independiente. Entre sus principales desventajas podemos citar:
+Una \textbf{aplicación monolítica} \cite{Mazzara2017} es aquella cuyos módulos no pueden ejecutarse de forma independiente. Su estructura interna consiste en una torre o monolito donde las partes de la aplicación se apilan una encima de otra. Desarrollar todo un sistema siguiendo una arquitectura por capas se puede considerar una arquitectura monolítica porque los componentes que lo constituyen no se pueden desplegar de forma independiente. Por su sencillez, se pueden emplear en sistemas simples. Entre sus principales desventajas podemos citar:
 
 \begin{itemize}
 
 \item En las aplicaciones monolíticas aumenta la complejidad conforme aumenta su  tamaño. Su complejidad hace que el sistema sea difícil de evolucionar y mantener.
 
-\item Un sistema monolítico tiene limitada su escalabilidad, que principalmente se consigue replicando toda la aplicación y repartiendo la carga entre las diferentes replicas. De esta forma, se están escalando componentes del sistema que no requieren hacerlo.
+\item Un sistema monolítico tiene limitada su escalabilidad, que principalmente se consigue replicando toda la aplicación y repartiendo las peticiones que recibe entre las diferentes replicas. De esta forma, se están escalando componentes del sistema que no requieren hacerlo.
 
-\item Los sistemas monolíticos limitan el uso de lenguajes y herramientas que se pueden emplear. Esto puede suponer que solo se puedan emplear los lenguajes y herramientas que se utilizan desde el inicio de su construcción.
+\item Los sistemas monolíticos limitan el uso de lenguajes y herramientas que se pueden emplear. Esto puede suponer que solo se pueda hacer uso de los lenguajes y herramientas que se utilizan desde el inicio de su construcción.
 
-\item Actualizar una dependencia en un monolito puede conllevar efectos secundarios. Esto se debe a que todos los componentes que lo forman han de hacer uso de las mismas versiones de las librerías.
+\item Actualizar una dependencia en un monolito puede conllevar efectos secundarios. Esto se debe a que todos los componentes que lo forman han de hacer uso de la misma versión de una librería.
 
 \end{itemize}
 
@@ -261,7 +261,7 @@ La especificación de requisitos del \textit{software} es una actividad en la qu
 
 Los requisitos se pueden clasificar en funcionales y no funcionales. Los \textbf{requisitos funcionales} (RF) describen la funcionalidad que los usuarios esperan del sistema. Los \textbf{requisitos no funcionales} (RNF) son restricciones impuestas sobre el sistema a desarrollar, estableciendo por ejemplo como de rápido o fiable ha de ser. Mientras que los primeros no incluyen ninguna mención relacionada con la tecnología que emplea el sistema, los segundos sí pueden establecer restricciones de este tipo. Por ejemplo, un requisito no funcional puede consistir en desarrollar una aplicación en un lenguaje de programación específico o hacer que esté disponible para diferentes sistemas operativos móviles. Por este motivo, los requisitos deben ser tenidos en cuenta a lo largo de todo el desarrollo del sistema.
 
-Los requisitos funcionales y no funcionales son ortogonales en el sentido de que diferentes diseños de \textit{software} pueden ofrecer la misma funcionalidad (RF) pero con distintos atributos de calidad (RNF). Los arquitectos \textit{software} están más centrados en los requisitos no funcionales porque estos son los que conducen hacia la elección de una u otra arquitectura. Los requisitos no funcionales pueden influir en los patrones arquitectónicos a seguir, las futuras estrategias de implementación del sistema o la plataforma sobre la que se desplegará el sistema \cite{Ameller2013}.
+Los requisitos funcionales y no funcionales son ortogonales en el sentido de que diferentes diseños de \textit{software} pueden ofrecer la misma funcionalidad (RF) pero con distintos atributos de calidad (RNF). Los arquitectos de \textit{software} están más centrados en los requisitos no funcionales porque estos son los que conducen hacia la elección de una u otra arquitectura. Los RNFs pueden influir en los patrones arquitectónicos a seguir, las futuras estrategias de implementación del sistema o la plataforma sobre la que se desplegará el sistema \cite{Ameller2013}.
 
 \begin{figure}[h]
 \centering
@@ -280,7 +280,7 @@ La figura \ref{fig:iso25010} muestra la división en características y subcarac
 
 \item La \textbf{utilización de recursos} se define en la ISO como la cantidad y tipos de recursos empleados durante el funcionamiento del \textit{software} bajo unas condiciones determinadas \cite{Standard2010}. Por un lado, los arquitecturas basadas en microservicos ofrecen beneficios ya que permiten que cada servicio se despliegue en un \textit{hardware} diferente con unas prestaciones acordes a sus necesidades. También permiten que se escale cada servicio de acuerdo a su demanda de forma independiente, en lugar de tener que escalar el sistema monolítico al completo \cite{DelaTorre2018}. Por otro lado, los servicios se ejecutan en diferentes procesos y las llamadas interprocedurales a través de la red suponen un mayor consumo de recursos \cite{FowlerSusan}.
 
-\item La \textbf{capacidad para ser reemplazado} es la capacidad de un producto \textit{software} para ser reemplazado por otro en el mismo entorno y con el mismo propósito. La ventaja de los microservicios es que, gracias a su diseño modular, las piezas de \textit{software} se pueden reemplazar fácilmente. Cada microservicio es un componente de \textit{software} que puede ser completamente reescrito en poco tiempo. Autores como Jon Eaves \cite{Eaves2014} estiman que el tiempo para hacerlo no debería superar las dos semanas. Esto hace que se pueda reaccionar a situaciones imprevistas más fácilmente. Por ejemplo, para que un sistema pueda operar en un entorno determinado puede ocurrir que se tenga que reescribir un servicio por otra persona a la que inicialmente lo desarrolló. Al reescribirlo se puede hacer uso de otro lenguaje de programación; basta con mantener la misma interfaz del servicio para que otros puedan continuar operando con él. Si en lugar de reescribir un servicio se tuviera que reescribir toda la aplicación, el proceso de hacerlo no se podría abordar de forma incremental si la aplicación fuera un monolito.
+\item La \textbf{capacidad para ser reemplazado} es la capacidad de un producto \textit{software} para ser reemplazado por otro en el mismo entorno y con el mismo propósito. La ventaja de los microservicios es que, gracias a su diseño modular, las piezas de \textit{software} se pueden reemplazar fácilmente. Cada microservicio es un componente de \textit{software} que puede ser completamente reescrito en poco tiempo. Autores como Jon Eaves \cite{Eaves2014} estiman que el tiempo para hacerlo no debería superar las dos semanas. Esto hace que se pueda reaccionar a situaciones imprevistas más fácilmente. Por ejemplo, puede ocurrir que se tenga que reescribir un servicio por una persona distinta a la que inicialmente lo desarrolló. Al reescribirlo se puede hacer uso de otro lenguaje de programación; basta con mantener la misma interfaz del servicio para que otros puedan continuar operando con él. Si en lugar de reescribir un servicio se tuviera que reescribir toda la aplicación, el proceso de hacerlo no se podría abordar de forma incremental si la aplicación fuera un monolito.
 
 \end{itemize}
 
@@ -290,13 +290,13 @@ El teorema de CAP \cite{Brewer2000} (debe sus siglas a las características en i
 
 Pongamos un ejemplo en el que un microservicio está replicado y se produce un fallo por el cual la comunicación entre las replicas se interrumpe y los cambios en una replica no se pueden propagar al resto. Los \textbf{sistemas AP} son los sistemas que surgen fruto de sacrificar la consistencia cuando un fallo se produce, mientras que en los \textbf{sistemas CP} se pierde la disponibilidad. 
 
-En el primer tipo, las replicas continuarían operativas, pero como los datos entre las replicas no se sincronizan se pueden obtener datos incorrectos al hacer una consulta. Cuando la comunicación se restablece, los cambios entre las replicas se sincronizarán. En los sistemas CP, para mantener la consistencia entre las replicas se tiene que rechazar cualquier petición, con lo que el servicio deja de estar disponible.
+En el primer tipo, las replicas continuarían operativas, pero como los datos entre las replicas no se sincronizan, se pueden obtener datos incorrectos al hacer una consulta. Cuando la comunicación se restablece, los cambios entre las replicas se sincronizarán. En los sistemas CP, para mantener la consistencia entre las replicas se tiene que rechazar cualquier petición, con lo que el servicio deja de estar disponible.
 
 Los sistemas AP escalan más fácilmente y son más sencillos de construir, pero nos obligan a una consistencia eventual de los datos. Los segundos son los únicos que nos aseguran una consistencia fuerte, pero son más difíciles de construir. A la hora de optar por una solución u otra se debe tener en cuenta la especificación de requisitos, donde se debe detallar de forma específica y cuantitativa cuánto tiempo puede nuestro servicio estar inoperativo o con un dato obsoleto. Si en las actividades posteriores se opta por una arquitectura basada en microservicios, no será necesario implementar el sistema completo de una u otra forma. Cada microservicio tendrá necesidades diferentes y podrá seguir la aproximación que mejor le convenga \cite{Newman2015a}.
 
 \section{Los microservicios en el diseño del sistema} \label{sct:FaseDiseño}
 
-En la actividad de diseño se definen la arquitectura, componentes e interfaces del sistema. La especificación de requisitos es analizada para producir una descripción de la estructura interna del sistema, con el suficiente nivel de detalle para que sirva como base en su construcción. Diferentes diseños se plantean como alternativas, entre las que se debe hacer balance. Los modelos que se generan se destinarán a validar que se cumplen los requisitos establecidos y para planificar la implementación del sistema \cite{Bourque2014}.
+En la actividad de diseño se definen la arquitectura, componentes e interfaces del sistema. La especificación de requisitos es analizada para producir una descripción de la estructura interna del sistema, con el suficiente nivel de detalle para que sirva como base en su construcción. Diferentes diseños se plantean como alternativas entre las que se debe hacer balance. Los modelos que se generan se destinarán a validar que se cumplen los requisitos establecidos y para planificar la implementación del sistema \cite{Bourque2014}.
 
 \subsection{Librerías \textit{versus} servicios} \label{subsect:librerias}
 
@@ -308,7 +308,7 @@ Uno de los motivos por los que se recomienda emplear servicios frente a librerí
 
 El \textbf{diseño guiado por el dominio} (DDD) \cite{Vaughn2013} es un enfoque para el desarrollo de \textit{software} que propone un modelado rico, expresivo y evolutivo basado en la realidad del negocio. El dominio representa lo que hace una organización y la forma en que lo hace.
 
-Con esta aproximación los expertos del dominio y los desarrolladores se sitúan en el mismo nivel empleando un \textbf{lenguaje ubicuo}. No hace falta ninguna traducción de términos entre ellos porque todos hablan un lenguaje común, que se plasma hasta en el código de programación. El lenguaje no tiene porque seguir los estándares de la industria que representa: utiliza los términos y acciones que en el negocio se dan.
+Con esta aproximación los expertos del dominio y los desarrolladores se sitúan en el mismo nivel empleando un \textbf{lenguaje ubicuo}. No hace falta ninguna traducción de términos entre ellos porque todos hablan un lenguaje común, que se plasma hasta en el código de programación. No es necesario que el lenguaje siga los estándares de la industria que representa: utiliza los términos y acciones que en el negocio se dan.
 
 El lenguaje ubicuo que se usa crece y cambia con el paso del tiempo. Nadie es capaz de conocer el dominio de un negocio completo porque este forma parte de un proceso de descubrimiento continuo. Si la organización sigue una estrategia de desarrollo ágil, en cada iteración se refina el modelo de forma incremental y este plasma en todo momento el \textit{software} en funcionamiento.
 
@@ -321,9 +321,9 @@ Para su tratamiento, las áreas independientes del dominio se transforman en \te
 \label{fig:BoundedContexts}
 \end{figure}
 
-En la figura \ref{fig:BoundedContexts} se han modelado dos contextos delimitados. En el ejemplo se observan los conceptos paciente y cliente, que representan a una única persona del mundo real, pero que se representa como una entidad distintas en cada contexto. Cada contexto nombra al mismo concepto de forma diferente, pero ambos están relacionadas. En cada uno, las entidades cuenta con unos atributos únicos asociados al contexto, como son la cuenta bancaria en el contexto económico o la persona de contacto en el sanitario. Estos atributos están ocultos fuera del contexto donde se localizan. Otros atributos como el nombre está presente en ambos contextos, lo que puede traer problemas de consistencia. 
+En la figura \ref{fig:BoundedContexts} se han modelado dos contextos delimitados. En el ejemplo se observan los conceptos paciente y cliente, que representan a una única persona del mundo real, pero que se representa como una entidad distintas en cada contexto. Cada contexto nombra al mismo concepto de forma diferente, pero ambos están relacionadas. En cada uno, las entidades cuentan con unos atributos únicos relacionados con el contexto, como son la cuenta bancaria en el contexto económico o la persona de contacto en el sanitario. Estos atributos están ocultos fuera del contexto donde se localizan. Otros atributos, como el nombre, están presentes en ambos contextos, lo que puede traer problemas de consistencia. 
 
-Un cambio en el nombre de un paciente debe propagarse al nombre del cliente en el otro contexto. En los microservicios, cada servicio cuenta con su propia base de datos y propagar este tipo de cambios puede suponer un problema si uno de los que debe actualizarse está inoperativo. Para solventar este problema, se puede hacer que los atributos comunes solo se puedan modificar desde uno de los servicios donde está modelado y que los cambios al otro servicio se transfieran a través de una cola. 
+Un cambio en el nombre de un paciente debe propagarse al nombre del cliente en el otro contexto. En los microservicios, cada servicio cuenta con su propia base de datos y propagar este tipo de cambios puede suponer un problema si uno de los servicios que debe actualizarse está inoperativo. Para solventar este problema, se puede hacer que los atributos comunes solo se puedan modificar desde uno de los servicios donde está modelado y que los cambios al otro servicio se transfieran a través de una cola. En esta cola, se almacenarán los cambios a realizar, que solo se eliminarán cuando el servicio vuelva a estar operativo y se aplique el cambio.
 
 Cada contexto está formado por modelos que no necesitan ser compartidos con otros a menos que se defina explícitamente una interfaz para que los empleen. La interfaz es el punto de entrada para que otros contextos puedan comunicar con el nuestro, empleando los términos y entidades que en nuestros modelos se definan.
 
@@ -335,7 +335,7 @@ Cuando se razona sobre los límites de un servicio no se debe pensar en los dato
 
 Una descomposición temprana de un sistema en microservicios puede conllevar ciertos riesgos. Si el equipo a cargo del desarrollo tiene pocos conocimientos del dominio del problema a resolver, puede  ser buena idea comenzar la implementación como si de un sistema monolítico se tratara. Un mal diseño inicial puede desenvocar en que dos servicios se tengan que combinar porque exista un exceso de interacciones entre ellos. 
 
-Es aconsejable dividir la solución en grandes servicios que poco a poco se vayan dividiendo en más pequeños conforme se estudien las ventajas de hacer cada nueva extracción. Una vez sean conocidos los límites de cada servicio, se pueden refactorizar los datos y el código hacia una granularidad más fina. Como se puede ver en la figura \ref{fig:refactoring}, se puede migrar primero solo la funcionalidad del servicio sin preocuparse por sus límites en base de datos para no tener que realizar simultáneamente dos migraciones. Una vez nos aseguremos de que el microservicio funciona correctamente, podemos migrar sus datos a una base de datos diferentes ya que cada microservicio ha de ser dueño de sus propios datos \cite{Richards2016}.
+Es aconsejable dividir la solución en grandes servicios que poco a poco se vayan dividiendo en más pequeños conforme se estudien las ventajas de hacer cada nueva extracción. Una vez sean conocidos los límites de cada servicio, se pueden refactorizar los datos y el código hacia una granularidad más fina. Como se puede ver en la figura \ref{fig:refactoring}, se puede migrar primero solo la funcionalidad del servicio sin preocuparse por sus límites en base de datos y no tener que realizar simultáneamente dos migraciones. Una vez nos aseguremos de que el microservicio funciona correctamente, podemos migrar sus datos a una base de datos diferentes ya que cada microservicio ha de ser dueño de sus propios datos \cite{Richards2016}.
 
 \begin{figure}[h]
 \centering
@@ -383,7 +383,7 @@ La arquitectura REST es ampliamente usada junto con HTTP (término que proviene 
 \label{fig:rabbitmq}
 \end{figure}
 
-Un bróker de mensajería es un patrón arquitectónico para la validación, la transformación y el enrutamiento de mensajes. RabbitMQ es un ejemplo de este patrón. En esta herramienta, el productor de un evento publica este a través de una API, donde será tramitado por el bróker para hacerlo llegar a todos los consumidores suscritos, como se representa en la figura \ref{fig:rabbitmq}. En el mismo servidor de RabbitMQ se pueden hospedar diferentes colas, haciendo que cada servicio solo se suscriba a la que le interesa (en el ejemplo, cada servicio se suscribe a una cola diferente).
+Un \textit{bróker} de mensajería es un patrón arquitectónico para la validación, la transformación y el enrutamiento de mensajes. RabbitMQ es un ejemplo de este patrón. En esta herramienta, el productor de un evento publica este a través de una API, donde será tramitado por el \textit{bróker} para hacerlo llegar a todos los consumidores suscritos, como se representa en la figura \ref{fig:rabbitmq}. En el mismo servidor de RabbitMQ se pueden hospedar diferentes colas, haciendo que cada servicio solo se suscriba a la que le interesa (en el ejemplo, cada servicio se suscribe a una cola diferente).
  
 \end{itemize}
 
@@ -394,7 +394,7 @@ En cuanto al tercer tipo de integración, la integración basada en eventos fome
 \subsection{Programación y persistencia políglotas} \label{subsec:Poliglota}
 
 %TODO Sustituir anteriormente por enlace.
-Como hemos comentado anteriormente, diferentes microservicios se pueden desarrollar empleando diferentes tecnologías. La base de datos que contiene los datos del servicio o la arquitectura interna del microservicio también pueden adaptarse a los requisitos del mismo \cite{DelaTorre2018}. La \textbf{programación políglota} se fundamenta en que diferentes lenguajes de programación son más aptos para tratar problemas específicos. Es más productivo escoger el lenguaje adecuado para un servicio concreto que tratar de buscar un lenguaje que se ajuste a los requisitos de todos.
+Como hemos comentado anteriormente, diferentes microservicios se pueden desarrollar empleando diferentes tecnologías. La base de datos que contiene los datos del servicio o la arquitectura interna del microservicio también pueden adaptarse a los requisitos del mismo. La \textbf{programación políglota} \cite{DelaTorre2018} se fundamenta en que diferentes lenguajes de programación son más aptos para tratar problemas específicos. Es más productivo escoger el lenguaje adecuado para un servicio concreto que tratar de buscar un lenguaje que se ajuste a los requisitos de todos.
 
 \begin{figure}[h]
 \centering
@@ -403,13 +403,13 @@ Como hemos comentado anteriormente, diferentes microservicios se pueden desarrol
 \label{fig:poliglota}
 \end{figure}
 
-El término también se puede extrapolar a la persistencia. La \textbf{persistencia políglota} hace uso de diferentes tecnologías para la persistencia en función de los datos a almacenar y de cómo estos se van a manipular. Cada microservicio es dueño de sus datos y puede utilizar una tecnología diferente. Las bases de datos relacionales no son la única opción y se deben considerar otras que escalen mejor si el servicio recibe muchas peticiones o se quiere hacer una explotación eficiente de los datos \cite{Fowler2011}.
+El término también se puede extrapolar a la persistencia. La \textbf{persistencia políglota} \cite{Fowler2011} hace uso de diferentes tecnologías para la persistencia en función de los datos a almacenar y de cómo estos se van a manipular. Cada microservicio es dueño de sus datos y puede utilizar una tecnología diferente. Las bases de datos relacionales no son la única opción y se deben considerar otras que escalen mejor si el servicio recibe muchas peticiones o se quiere hacer una explotación eficiente de los datos.
 
 En ambos casos, se debe hacer balance entre los beneficios que puede aportar un diseño políglota y sus costes asociados, por ejemplo, de aprendizaje. En la figura \ref{fig:poliglota} se representa un sistema políglota donde se emplean diferentes lenguajes (Java, Javascript, C\#) y diferentes tecnologías de BD en diferentes microservicios.
 
 \subsection{La ley de Conway \cite{Conway1968}}
 
-Problemas asociados a bases de código inmensas donde colabora un gran equipo pueden ser evitados empleando microservicios. Si el código está repartido entre diferentes componentes, equipos pequeños pueden encargarse de mantener cada uno de ellos. De esta manera, la organización del trabajo adquiere un enfoque más ágil al estar formado por equipos independientes y auto-organizados \cite{Newman2015a}.
+Problemas asociados a bases de código inmensas donde colabora un gran equipo pueden ser evitados empleando microservicios. Si el código está repartido en diferentes componentes, equipos pequeños pueden encargarse de mantener cada uno de ellos. De esta manera, la organización del trabajo adquiere un enfoque más ágil al estar formado por equipos independientes y autoorganizados \cite{Newman2015a}.
 
 En las aplicaciones monolíticas, normalmente los equipos de trabajo que se forman están asociados la interfaz de usuario, la base de datos y la parte servidora. Cualquier cambio simple involucra la coordinación entre diferentes equipos. De acuerdo a la \textbf{ley de Conway}, una organización que diseña un sistema producirá un diseño para la aplicación que será una copia de su estructura organizacional \cite{Conway1968}. Así, es natural que la organización de los microservicios se realice de acuerdo con el negocio. Los equipos que se encargan de cada servicio son multifuncionales y se pueden autogestionar. En cada equipo están presentes, entre la totalidad de sus miembros, todas las habilidades necesarias para el desarrollo completo del servicio \cite{Lewis2014}.
 
@@ -420,11 +420,11 @@ En las aplicaciones monolíticas, normalmente los equipos de trabajo que se form
 
 Las pruebas de \textit{software} consisten en la verificación de que un programa produce las salidas esperadas para un conjunto finito de casos de prueba. Los casos de prueba son finitos porque el número posible de pruebas es infinito y estos se seleccionan en función de la prioridad y riesgo del código bajo pruebas. Además, se debe comprobar la salida obtenida con el resultado esperado para comprobar si esta es o no aceptable \cite{Bourque2014}.
 
-En esta sección presentaremos la clasificación de pruebas que Newman \cite{Newman2015a} realiza. Se enfoca en clasificar las pruebas en base a su alcance respecto a los microservicios que involucran, a diferencia de como se clasifican las pruebas tradicionalmente según las clases o métodos que se invocan.
+En esta sección presentaremos la clasificación de pruebas que Newman \cite{Newman2015a} realiza. Clasificar las pruebas en base a su alcance respecto a los microservicios que involucran, a diferencia de como se clasifican las pruebas tradicionalmente según las clases o métodos que se invocan.
 
 \subsection{Pruebas unitarias}
 
-Una \textbf{prueba unitaria} es una pieza de código que invoca al método o clase bajo prueba y que comprueba ciertas asunciones sobre su lógica. Se ejecutan de forma rápida y sencilla, están automatizados y son fácilmente mantenibles \cite{Osherove2014}. En general, se prefiere tener un gran número de este tipo de pruebas por su rapidez, porque pueden ayudar a la refactorización del código y porque es donde mayor cantidad de defectos se suele detectar.
+Una \textbf{prueba unitaria} es una pieza de código que invoca al método o clase bajo prueba y que comprueba ciertas asunciones sobre su lógica. Se ejecutan de forma rápida y sencilla, están automatizados y son fáciles de mantener \cite{Osherove2014}. En general, se prefiere tener un gran número de este tipo de pruebas por su rapidez, porque pueden ayudar a la refactorización del código y porque son las pruebas donde mayor cantidad de defectos se detectan.
 
 \begin{figure}[h]
 \centering
@@ -436,7 +436,7 @@ Una \textbf{prueba unitaria} es una pieza de código que invoca al método o cla
 
 En las \textbf{pruebas de servicios} se verifica cada una de las funcionalidades que un servicio expone. Se pretende verificar el servicio de forma aislada y para ignorar las dependencias que el servicio bajo pruebas tiene sobre otros se reemplazan los servicios colaboradores por \textit{fakes}. Un \textit{fake} es un sustituto  de una dependencia que devuelve una respuesta predeterminada cuando el servicio bajo pruebas le solicita algo.
 
-Encajan dentro de las pruebas de integración, que se definen como la prueba como un conjunto de dos o más módulos de \textit{software} que colaboran para evaluar un resultado esperado \cite{Osherove2014}. Este tipo de pruebas pueden ser igual de rápidas que las unitarias siempre que no se tengan que emplear un gran número de infraestructuras como bases de datos o colas.
+Encajan dentro de las pruebas de integración, que se definen como la prueba de un conjunto de dos o más módulos de \textit{software} que colaboran \cite{Osherove2014}. Este tipo de pruebas pueden ser igual de rápidas que las unitarias siempre que no se tengan que emplear un gran número de infraestructuras como bases de datos o colas.
 
 \begin{figure}[h]
 \centering
@@ -446,9 +446,9 @@ Encajan dentro de las pruebas de integración, que se definen como la prueba com
 
 \subsection{Pruebas de extremo a extremo}
 
-Las \textbf{pruebas de extremo a extremo} (en inglés, \textit{end to end} o E2E) \cite{Newman2015a} son pruebas que se ejecutan sobre todo el sistema. Cubren gran parte de código, por lo que su correcta ejecución dan mucho grado de confianza. En su ejecución se levantan varios servicios diferentes.
+Las \textbf{pruebas de extremo a extremo} (en inglés, \textit{end to end} o E2E) \cite{Newman2015a} son pruebas que se ejecutan sobre todo el sistema. Cubren gran parte de código, por lo que su correcta ejecución dan un alto grado de confianza. En su ejecución se levantan varios servicios diferentes.
 
-Son pruebas frágiles: conforme el alcance de la prueba aumenta más son las partes sobre las que no se puede tener control. Estas partes pueden introducir fallos que no demuestran que la funcionalidad tenga un defecto y hacen la prueba menos determinista. Si la prueba falla continuamente, el equipo encargado puede llegar a asumir como normal está situación. Su tiempo de ejecución es mayor y en consecuencia, más tarde se detecta si un cambio ha introducido un defecto \cite{Newman2015a}.
+Son pruebas frágiles: conforme el alcance de la prueba aumenta más son las partes sobre las que no se puede tener control. Estas partes pueden introducir fallos que no demuestran que la funcionalidad tenga un defecto, provocando que la prueba sea menos determinista. Si la prueba falla continuamente, el equipo encargado puede llegar a asumir como natural está situación. Su tiempo de ejecución es mayor y en consecuencia, más tarde se detecta si un cambio ha introducido un defecto \cite{Newman2015a}.
 
 \begin{figure}[h]
 \centering
@@ -458,7 +458,7 @@ Son pruebas frágiles: conforme el alcance de la prueba aumenta más son las par
 
 \subsection{Balance de pruebas a realizar}
 
-A medida que aumenta el alcance de las pruebas lo hace el nivel de confianza que las pruebas dan sobre la ausencia de defectos. Por otro lado, cuanto más arriba en la pirámide de la figura \ref{fig:Cohn_Pyramid_ES} más tiempo tardará una prueba en implementarse y ejecutarse. Además, determinar el motivo de fallo de una prueba será más costoso cuanto mayor sean las líneas de código probadas \cite{Cohn2010}.
+A medida que aumenta el alcance de las pruebas lo hace el nivel de confianza que las pruebas dan sobre la ausencia de defectos. Por otro lado, cuanto más arriba en la pirámide de la figura \ref{fig:Cohn_Pyramid_ES}, más tiempo tardará una prueba en implementarse y ejecutarse. Además, determinar el motivo de fallo de una prueba será más costoso cuanto mayor sean las líneas de código probadas \cite{Cohn2010}.
 
 \begin{figure}[h]
 \centering
@@ -476,15 +476,15 @@ El número de pruebas que se aconseja tener de cada tipo aumenta conforme descen
 % Azure y AWS
 % CI/CD
 
-El despliegue se define como la entrega de \textit{software} (como un producto completo o como resultado de un incremento en un desarrollo incremental) al cliente para que este lo evalúe y devuelva retroalimentación al equipo de desarrollo \cite{Pressman}. Debido a la naturaleza incremental de la mayoría de procesos de desarrollo, esta es una actividad que se realiza numerosas ocasiones. 
+El despliegue se define como la entrega de \textit{software} (como un producto completo o como resultado de un incremento en un desarrollo incremental) al cliente para que este lo evalúe y devuelva retroalimentación al equipo de desarrollo \cite{Pressman}. Debido a la naturaleza incremental de la mayoría de procesos de desarrollo, esta es una actividad que se realiza en numerosas ocasiones. 
 
-En cada despliegue, se debe proveer del soporte necesario para el empleo de las nuevas características. Además, la retroalimentación recibida guiará el proceso de desarrollo hacia las siguientes modificaciones y funcionalidades que se deben realizar.
+En cada despliegue, se debe proveer del soporte necesario para el uso de las nuevas características. Además, la retroalimentación recibida guiará el proceso de desarrollo hacia las siguientes modificaciones y funcionalidades que se deben realizar.
 
 Los problemas que aparecen en una nueva versión del producto deben ser atendidos. Para garantizar que estos no ocurran, se deben hacer pruebas en cuantos más entornos posibles mejor.
 
 \subsection{Integración y entrega continua}
 
-La \textbf{integración continua} es una práctica en el desarrollo de \textit{software} donde los miembros del equipo integran su trabajo de forma frecuente, normalmente a diario. Cada integración se verifica mediante compilaciones automatizadas que incluyen la ejecución de pruebas para detectar errores y conflictos en la integración \cite{Fowler2006}. El término tiene su origen como una de las doce prácticas de la metodología \textit{Extreme Programming} (XP).
+La \textbf{integración continua} (CI) es una práctica en el desarrollo de \textit{software} donde los miembros del equipo integran su trabajo de forma frecuente, normalmente a diario. Cada integración se verifica mediante compilaciones automatizadas que incluyen la ejecución de pruebas para detectar errores y conflictos en la integración \cite{Fowler2006}. El término tiene su origen como una de las doce prácticas de la metodología \textit{Extreme Programming} (XP).
 
 Durante este proceso se crean artefactos sobre los que se ejecutarán validaciones. Los artefactos construidos deben ser lo más parecidos a los que más tarde se despliegan en la versión de producción para asegurar que es el mismo artefacto sobre el que se han hecho las pruebas. Entre los beneficios de la integración continua encontramos:
  
@@ -504,7 +504,7 @@ Durante este proceso se crean artefactos sobre los que se ejecutarán validacion
 \caption{Ejemplo de una pipeline \cite{Newman2015a}.}
 \end{figure}
 
-La \textbf{entrega continua} extiende la idea de la integración continua en cuanto a que cada cambio que ha superado la compilación puede ser candidata para ser desplegada en producción en cualquier momento. Sobre cada cambio se puede decidir si se publica o no a producción y hacerlo no cuesta más que pulsar un botón porque está todo el proceso de despliegue automatizado. La práctica de que cada cambio que se realiza y supera la \textit{pipeline} es publicado automáticamente a producción se denomina \textbf{despliegue continuo} \cite{Fowler2013}.
+La \textbf{entrega continua} (CD) extiende la idea de la integración continua en cuanto a que cada cambio que ha superado la compilación puede ser candidata para ser desplegada en producción en cualquier momento. Sobre cada cambio se puede decidir si se publica o no a producción. Publicar un cambio no cuesta más que pulsar un botón porque está todo el proceso de despliegue automatizado. La práctica de que cada cambio que se realiza y supera la \textit{pipeline} es publicado automáticamente a producción se denomina \textbf{despliegue continuo} \cite{Fowler2013}.
 
 \subsection{Virtualización y tecnología de contenedores}
 
@@ -532,15 +532,15 @@ Ambas soluciones se pueden combinar para obtener las ventajas de las dos. Se pue
 
 Los productos \textit{software} cambian y evolucionan. Una vez están desplegados en el entorno donde operan se dan situaciones en las que se detectan errores o los requisitos de los usuarios se ven modificados. Es una fase que debe comenzar de forma temprana para garantizar la mantenibilidad del sistema a desarrollar \cite{Bourque2014}.
 
-El mantenimiento de \textit{software} es la fase del desarrollo que más recursos consume, alrededor del 60\% o 70\% del coste original de un proyecto. La mayoría del \textit{software} que hoy se emplea tiene entre 10 y 15 años, tiempo en el cual ha sufrido muchas modificaciones hasta alcanzar un diseño pobre y difícil de mantener. Se puede definir el \textit{software} mantenible como aquel que se diseña de forma modular, siguiendo patrones de diseño y estándares de calidad y que se documenta de tal forma que es explicativo por si mismo \cite{Pressman}.
+El \textbf{mantenimiento de \textit{software}} es la fase del desarrollo que más recursos consume, alrededor del 60\% o 70\% del coste original de un proyecto. La mayoría del \textit{software} que hoy se emplea tiene entre 10 y 15 años, tiempo en el cual ha sufrido muchas modificaciones hasta alcanzar un diseño pobre y difícil de mantener. Se puede definir el \textit{software} mantenible como aquel que se diseña de forma modular, siguiendo patrones de diseño y estándares de calidad y que se documenta de tal forma que es explicativo por si mismo \cite{Pressman}.
 
-Gracias a su diseño modular, los microservicios son una arquitectura que se puede seguir para hacer más sencillo el mantenimiento de un sistema. Sin embargo, las consecuencias de elegir un estilo arquitectónico no son evidente hasta años más tarde de haber sido desarrollado, por lo que hasta que no se vean sistemas maduros que empleen microservicios no se debe afirmar a ciencia cierta que garantizan estas características \cite{Lewis2014}.
+Gracias a su diseño, los microservicios son una arquitectura que se puede seguir para hacer más sencillo el mantenimiento de un sistema. Sin embargo, las consecuencias de elegir un estilo arquitectónico no son evidente hasta años más tarde de haber sido desarrollado, por lo que hasta que no se vean sistemas maduros que empleen microservicios no se debe afirmar a ciencia cierta que se garantiza su mantenibilidad \cite{Lewis2014}.
 
 \subsection{Refactorización}
 
 %TODO Característica del ISO 25010
 
-En la mayoría de empresas abundan los sistemas legados que nadie desea mantener. La \textbf{refactorización} de estos sistemas suele ser muy difícil por su tamaño y riesgo. Si en lugar de haber seguido una arquitectura monolítica para su diseño se emplearan microservicios se observaría como los barreras para la refactorización no existen al poderse reescribir el microservicio al completo en pocos días \cite{Eaves2014}.
+En la mayoría de empresas abundan los sistemas legados que nadie desea mantener. La \textbf{refactorización} de estos sistemas suele ser muy difícil por su tamaño y riesgo. Si en lugar de haber seguido una arquitectura monolítica para su diseño se emplearan microservicios, se observaría como los barreras para la refactorización no existen al poderse reescribir el microservicio al completo en pocos días \cite{Eaves2014}.
 
 \subsection{\textit{You Build It, You Run It}}
 
@@ -550,19 +550,19 @@ No hay necesidad de distinguir entre quien construye un sistema y quien lo ejecu
 
 \subsection{Documentación y deuda técnica}
 
-Una de las ventajas de los microservicios es que acelara el proceso de desarrollo. Sin embargo, cuanto más rápido tratamos de implementar un servicio más probable es que tomemos atajos para poder desplegar antes una iteración del producto, lo que se traduce en un aumento de la \textbf{deuda técnica} \cite{FowlerSusan, Garzas}. La deuda técnica se puede definir como el sobresfuerzo que debe llevarse a cabo por  haber tomado una mala decisión en el desarrollo del \textit{software}.
+Una de las ventajas de los microservicios es que acelara el proceso de desarrollo. Sin embargo, cuanto más rápido tratamos de implementar un servicio, más probable es que tomemos atajos para poder desplegar antes una iteración del producto, lo que se traduce en un aumento de la \textbf{deuda técnica} \cite{FowlerSusan, Garzas}. La deuda técnica se puede definir como el sobresfuerzo que debe llevarse a cabo por  haber tomado una mala decisión en el desarrollo del \textit{software}.
 
 En un equipo de desarrollo el conocimiento de cómo funciona un sistema se reparte entre los miembros que lo forman. Nadie es capaz de conocer completamente su funcionamiento y lo más probable es que cada desarrollador conozca mejor la parte donde más tiempo ha invertido. A la hora de realizar un cambio, el entendimiento de cómo funciona el sistema tiene que ser compartido por todos sus miembros para asegurar que el cambio a implementar es el correcto.
 
-La documentación es una de las mejores maneras de solventar la deuda técnica y garantizar que el equipo de desarrollo conoce realmente cómo funciona un microservicio. Cabe recordar que cada microservicio puede seguir una arquitectura diferente o utilizar una tecnología distinta. Debido a esto, se debe documentar de forma exhaustiva para facilitar la integración entre ellos y facilitar el traslado de personas de un equipo a otro.
+La documentación es una de las mejores maneras de solventar la deuda técnica y garantizar que el equipo de desarrollo conoce realmente cómo funciona un microservicio. Cabe recordar que cada microservicio puede seguir una arquitectura diferente o utilizar una tecnología distinta. Debido a esto, se debe documentar de forma exhaustiva para facilitar la integración entre ellos y facilitar la colaboración entre equipos.
 
 \subsection{Monitorización}
 
-Durante el mantenimiento se debe asegurar la disponibilidad de los microservicios. Las herramientas de monitorización son clave para garantizar los \textbf{acuerdos de nivel de un servicio} (SLA) y el estudio de errores cuando estos ocurren.
+Durante el mantenimiento se debe asegurar la disponibilidad de los microservicios. Las herramientas de monitorización son clave para garantizar los \textbf{acuerdos de nivel de un servicio} (SLA) y estudiar los errores cuando estos ocurren.
 
 Con este fin, se debe registrar toda aquella información relevante que ocurra. Los microservicios colaboran entre ellos para ofrecer funcionalidades concretas y recrear un sistema donde ha ocurrido un error puede ser complejo debido a que cada uno se versiona de forma independiente. Por ello, lo mejor es contar con toda la información necesaria registrada para determinar la causa del problema.
 
-La información más útil se debe mostrar de forma gráfica a través de \textit{dashboards} que reflejen el estado de salud de los servicios. Así, la informacón más consultada se puede visualizar de forma rápida y fácil de entender para ahorrar tiempo. No obstante, cuando un problema ocurre se debe hacer uso de alertas para atenderlo de forma prioritaria. Estas alertas han de ser accionadas automáticamente por métricas que superen un límite establecido, como puede ser el uso de recursos, o por la ocurrencia de excepeciones en el servicio \cite{FowlerSusan}. 
+La información más útil se debe mostrar de forma gráfica a través de \textit{dashboards} que reflejen el estado de salud de los servicios. Así, la informacón más consultada se puede visualizar de forma rápida y fácil de entender para ahorrar tiempo. No obstante, cuando un problema ocurre se debe hacer uso de alertas para atenderlo de forma prioritaria. Estas alertas han de ser accionadas automáticamente por métricas cuando se supere un umbral establecido, como puede ser el uso de recursos, o por la ocurrencia de excepeciones en el servicio \cite{FowlerSusan}. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %              					Estado del arte
