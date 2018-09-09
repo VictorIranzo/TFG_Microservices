@@ -1395,11 +1395,11 @@ Concretamente, para representar visualmente la división en contextos delimitado
 
 \item \textbf{Seguridad}: ofrece las funcionalidades de registro de nuevos clientes y \textit{login}. Además, persiste los datos de los clientes, por lo que algunos de los microservicios tendrán una referencia a este, por ejemplo, para obtener el cliente o empleado que escribió un comentario.
 
-\item \textbf{Informes}: es un motor que almacena las plantillas de los informes que se pueden generar y combina estas con los datos que recibe para generar un documento de salida. No ofrece directamente ninguna funcionalidad al cliente: se trata de un \textbf{microservicio interno} que otros servicios emplean.
+\item \textbf{Informes}: es un motor que almacena las plantillas de los informes que se pueden generar. Combina estas plantillas con los datos que recibe para generar un documento de salida. No ofrece directamente ninguna funcionalidad al cliente: se trata de un \textbf{microservicio interno} que otros servicios emplean.
 
 \item \textbf{Notificaciones}: al igual que el microservicio de informes, no está ligado a ningún tipo de dato. Simplemente, ofrece la funcionalidad de enviar una notificación con el contenido que recibe como parámetro al destinatario especificado. También es un microservicio interno.
 
-\item \textbf{Pedidos}: permite obtener los pedidos de un cliente, generar la factura de un pedido, añadir productos, etc. En este servicio se ha incluido la entidad Producto. Podríamos diseñar un microservicio de catálogo aparte. A este servicio solo tendrían acceso los empleados del comercio para gestionar el número de unidades en stock o la creación de nuevos productos. Sin embargo, ninguna funcionalidad fuera del contexto de los pedidos se relaciona con los productos, por lo que en este servicio la entidad producto y más adelante evaluaremos si vale la pena representarla dentro de un microservicio independiente. 
+\item \textbf{Pedidos}: permite obtener los pedidos de un cliente, generar la factura de un pedido, añadir productos, etc. En este servicio se ha incluido la entidad Producto. Podríamos diseñar un microservicio de catálogo aparte. A este servicio solo tendrían acceso los empleados del comercio para gestionar el número de unidades en stock o la creación de nuevos productos. Sin embargo, ninguna funcionalidad fuera del contexto de los pedidos se relaciona con los productos, por lo que mantendremos en este servicio la entidad producto. Más adelante, evaluaremos si vale la pena representarla dentro de un microservicio independiente cuando conozcamos mejor los límites de cada contexto. 
 
 \end{itemize}
 
@@ -1432,9 +1432,9 @@ Por último, indicar que el consumo de cualquier microservicio, ya sea desde la 
 
 En cuanto a la organización de los microservicios, vamos a emplear un único repositorio de código que contenga el código de todos los microservicios. Como en la solución monolítica, cada capa se representará a través de un proyecto .NET y cada microservicio tendrá una solución de Visual Studio distinta.
 
-Newman \cite{Newman2015a} reflexiona sobre esto en relación a las compilaciones de integración continua. Según él, la mejor opción es tener un repositorio y una compilación diferente para cada microservicio. De esta forma, existe una mayor correspondencia entre los servicios y los equipos encargados de cada uno porque cada equipo realiza cambios en un único repositorio. Además, se evita que un simple cambio en un microservicio lance la compilación de toda la solución \cite{Newman2015a}. En nuestro caso, no vamos a aplicar las prácticas de integración continua y tampoco tenemos equipos de trabajo distintos, por lo que será más cómodo utilizar un único repositorio. Como consecuencia, esto implica que en un mismo \textit{commit} se puedan incluir cambios de diferentes microservicios.
+Newman \cite{Newman2015a} reflexiona sobre esto en relación a las compilaciones de integración continua. Según él, la mejor opción es tener un repositorio y una compilación diferente para cada microservicio. De esta forma, existe una mayor correspondencia entre los servicios y los equipos encargados de cada uno porque cada equipo realiza cambios en un único repositorio. Además, se evita que un simple cambio en un microservicio lance la compilación de toda la solución. En nuestro caso, no vamos a aplicar las prácticas de integración continua y tampoco tenemos equipos de trabajo distintos, por lo que será más cómodo utilizar un único repositorio de código. Como consecuencia, esto implica que en un mismo \textit{commit} se puedan incluir cambios de diferentes microservicios.
 
-En cuanto a la organización en soluciones en Visual Studio, en \cite{DelaTorre2018} se organiza el código de la aplicación desarrollada en un único repositorio con una única solución. Creemos que esta aproximación no es la mejor. No tiene sentido que un desarrollador que trabaja en un único repositorio vea en su solución otros microservicios distintos al suyo. Además, incluir tantos archivos en la solución aumenta su tiempo de compilación, cuando jamás se van a realizar cambios o ejecutar algunos de ellos. Por ello, hemos optado por una solución diferente para cada servicio, como se muestra en la figura \ref{fig:MicroservicesSolution}.
+En cuanto a la organización en soluciones en Visual Studio, De la Torre realiza en\cite{DelaTorre2018} un caso de estudio donde se organiza el código de la aplicación desarrollada en un único repositorio con una única solución. Creemos que esta aproximación no es la mejor. No tiene sentido que un desarrollador que trabaja en un único repositorio vea en su solución otros microservicios distintos al suyo. Además, incluir tantos archivos en la solución aumenta su tiempo de compilación, cuando jamás se van a realizar cambios o ejecutar algunos de ellos. Por ello, hemos optado por una solución diferente para cada servicio, como se muestra en la figura \ref{fig:MicroservicesSolution}.
 
 \begin{figure}[h]
 \centering
@@ -1474,7 +1474,7 @@ Para que un microservicio pueda hacer peticiones a otro, se deben seguir los sig
 \label{fig:UsingMicroservices}
 \end{figure}
 
-\item En el microservicio, inyectar en el constructor la interfaz de contratos del servicio que se desea consumir.
+\item En el microservicio, en el \textit{manager} que depende del microservicio externo, se debe inyectar en su constructor la interfaz de contratos del servicio a consumir.
 
 \end{enumerate}
 
@@ -1485,11 +1485,11 @@ Cada servicio es soberano de sus datos y la mejor manera de conseguir esto es se
 
 No se puede realizar una transacción única que involucre a diferentes microservicios, sobre todo porque cada uno puede utilizar una tecnología de BD diferente. Las transacciones se deben implementar en la capa de aplicación y en caso de que una operación falle, se deben establecer mecanismos de compensación que reviertan los cambios hechos hasta ese punto \cite{DelaTorre2018}.
 
-Por suerte, las únicas referencias en los datos que hay entre diferentes servicios son las que hay desde incidencias y pedidos al servicio de seguridad. Tanto los pedidos, las incidencias y los comentarios están asociados a un cliente. En caso de que se borre un cliente, se deben borrar en cascada las instancias de estas entidades que tenga asociadas, como si de una transacción se tratara. La operación de eliminar un cliente no está soportada por la API, por lo que no ha sido necesario implementar ninguna transacción entre microservicios.
+Por suerte, las únicas referencias en los datos que hay entre diferentes servicios son las que hay desde incidencias y pedidos al servicio de seguridad. Tanto los pedidos, las incidencias y los comentarios están asociados a un cliente. En caso de que se borre un cliente, se deben borrar en cascada las instancias de estas entidades que el cliente tenga asociadas, como si de una transacción se tratara. La operación de eliminar un cliente no está soportada por la API, por lo que no ha sido necesario implementar ninguna transacción entre microservicios.
 
 En caso de que estuviera soportada, no se puede realizar de forma atómica y la consistencia sería eventual. Un usuario podría ver un estado inconsistente del sistema si se ha eliminado un cliente en el microservicio de seguridad pero sus pedidos todavía no. Se denomina eventual porque en algún punto próximo del tiempo la transacción que se ha iniciado entre diferentes microservicios para eliminar a un usuario se completará en todo el sistema.
 
-En cuanto a las restricciones de integridad referencial, en una base de datos relacional se modela a través de claves externas (\textit{foreign key}, FK). Dentro de la base de datos de un servicio podemos emplear FKs, como ocurre en las relaciones entre pedido y compra. Sin embargo, en las relaciones que hemos comentado con el módulo de seguridad, no se pueden usar como tal FKs porque se referenciaría a otra base de datos. En su lugar, se almacena únicamente el identificador de la entidad referenciada y cuando se quiere acceder a ella se debe hacer una petición al servicio que la gestiona. Esto se refleja en las entidades de la capa de dominio, como se ve en la figura \ref{fig:Comment}.
+En cuanto a las restricciones de integridad referencial, en una base de datos relacional se modela a través de claves externas (\textit{foreign key}, FK). Dentro de la base de datos de un servicio podemos emplear FKs, como ocurre en las relaciones entre pedido y compra. Sin embargo, en las relaciones que hemos comentado con el módulo de seguridad, no se pueden usar como tal FKs porque se referenciaría a otra base de datos. En su lugar, se almacena únicamente el identificador de la entidad referenciada y cuando se quiere acceder a ella se debe hacer una petición al servicio que la gestiona. Esto se refleja en las entidades de la capa de dominio, como se ve en la figura \ref{fig:Comment}, donde del autor solo se almacena ahora su identificador.
 
 \begin{figure}[h]
 \centering
@@ -1513,9 +1513,9 @@ En C\# está desarrollado todo lo necesario para el consumo del servicio. Esto i
 
 En Java se han desarrollado la capa de aplicación y servicios. La implementación de la capa de aplicación para mandar un correo electrónico es trivial. Para la capa de servicios, se crea e inicia un objeto \textit{HttpServer} al que se le asigna un \textit{handler}.
 
-El \textit{handler} es similar a lo que en .NET llamábamos controlador. En nuestro caso, deserializará el cuerpo de la petición en un objeto empleando la librería Gson y delegará en la capa de aplicación la operación a realizar. Cuando se quiere consumir otro microservicio no podemos utilizar los proxies que hemos creado para C\# porque es otro lenguaje de programación. En nuestro ejemplo, queremos contactar con el servicio de seguridad para obtener el correo electrónico de un usuario.
+El \textit{handler} es similar a lo que en .NET llamábamos controlador. En nuestro caso, deserializará el cuerpo de la petición en un objeto empleando la librería Gson y delegará en la capa de aplicación la operación a realizar. Cuando se quiere consumir otro microservicio, no podemos utilizar los proxies que hemos creado para C\# porque es otro lenguaje de programación. En su lugar, crearemos nuestro propio objeto para hacer la petición HTTP. En nuestro ejemplo, queremos contactar con el servicio de seguridad para obtener el correo electrónico de un usuario.
 
-Por último, el archivo Dockerfile (figura \ref{fig:JavaDockerfile}) para el despliegue del servicio también varía. Vamos a seguir el mismo criterio que en los contenedores de microservicios .NET de usar los ensamblados (en este caso, un archivo \textit{*.jar}) para generar la imagen con el menor número de recursos posibles. Tanto el comando para iniciar el proceso del contenedor como la imagen base se verán modificados.
+Por último, el archivo Dockerfile (figura \ref{fig:JavaDockerfile}) para el despliegue del servicio también varía. Vamos a seguir el mismo criterio que en los contenedores de microservicios .NET. Esto es usar los ensamblados (en este caso, un archivo \textit{*.jar}) para generar la imagen con el menor número de recursos posibles. Tanto el comando para iniciar el proceso del contenedor como la imagen base se verán modificados.
 
 \begin{figure}[h]
 \centering
@@ -1621,15 +1621,15 @@ Otras pruebas que se han modificado son las del microservicio de incidencias. En
 
 \section{Despliegue de la solución basada en microservicios} \label{sect:DespliegueMicroservicios}
 
-Una de las características de los microservicios que más se ha repetido en la memoria es que se pueden desplegar de forma independiente. Esto es así porque cada uno de los microservicios se va a desplegar como un contenedor independiente, a diferencia de la solución monolítica donde solo había un Dockerfile y un contenedor. Por eso, en total existirán simultáneamente un total de cinco contenedores. Para agilizar el proceso de construcción de las imágenes e inicio de los contenedores haremos uso de Docker Compose. 
+Una de las características de los microservicios que más se ha repetido en la memoria es que se pueden desplegar de forma independiente. Esto es así porque cada uno de los microservicios se va a desplegar como un contenedor independiente, a diferencia de la solución monolítica, donde solo había un Dockerfile y un contenedor. Por eso, en total existirán simultáneamente un total de cinco contenedores. Para agilizar el proceso de construcción de las imágenes e inicio de los contenedores haremos uso de Docker Compose. 
 
-Docker Compose  \footnote{ Overview of Docker Compose: \url{https://docs.docker.com/compose/overview/}}  es una herramienta para definir y ejecutar aplicaciones formadas por más de un contenedor Docker. Los servicios que forman la aplicación tienen su propio Dockerfile y se definen dentro de un archivo YAML para que con un único comando se inicie la aplicación al completo.
+\textbf{Docker Compose} \footnote{ Overview of Docker Compose: \url{https://docs.docker.com/compose/overview/}}  es una herramienta para definir y ejecutar aplicaciones formadas por más de un contenedor Docker. Los servicios que forman la aplicación tienen su propio Dockerfile. Además, se define archivo YAML que referencia todos los Dockerfile para que con un único comando se inicie la aplicación al completo.
 
-En la figura \ref{fig:Compose} se puede ver un extracto de este archivo. En él se ve como para cada contenedor que se debe ejecutar se especifica un nombre para la imagen que se va crear a partir del Dockerfile y la ubicación de este. Además, se pueden añadir parámetros, como los que se añaden al comando \textit{docker run} para la ejecución de un contenedor, para relacionar los puertos que emplea el contenedor y los del host donde se ejecuta.
+En la figura \ref{fig:Compose} se puede ver un extracto de este archivo. En él se ve como para cada contenedor que se debe ejecutar se especifica un nombre para la imagen que se va crear a partir del Dockerfile (clave \textit{image}) y la ubicación de este (clave \textit{context}). Además, se pueden añadir parámetros, como los que se añaden al comando \textit{docker run} para la ejecución de un contenedor, para relacionar los puertos que emplea el contenedor y los del host donde se ejecuta.
 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=0.6]{Compose}
+\includegraphics[scale=0.7]{Compose}
 \caption{Extracto del archivo docker-compose.yml de la solución basada en microservicios.}
 \label{fig:Compose}
 \end{figure}
