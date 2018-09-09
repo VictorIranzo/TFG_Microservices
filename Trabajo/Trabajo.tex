@@ -202,7 +202,7 @@ Según Newman, \cite{Newman2015a} los microservicios son servicios pequeños y a
 \begin{itemize}
 %TODO Sustituir referencia a Wikipedia.
 
-\item Un \textbf{servicio} es un conjunto de funcionalidades que se expone a los clientes para que las empleen con diferentes propósitos \cite{Wikipedia}. La programación orientada a servicios es un paradigma que se aplica en las arquitecturas orientadas a servicios (SOA) \cite{Arsanjani2009a}. El objetivo principal de SOA es desarrollar servicios que aporten valor al negocio y se adapten a los cambios en las necesidades de los clientes, de forma ágil y con el menor coste posible. Las arquitecturas orientadas a servicios no están asociadas a ninguna tecnología específica. En líneas generales, dividen un sistema en componentes que cambian por el mismo motivo y promueven la flexibilidad y los servicios compartidos frente a implementaciones específicas y óptimas. Son muchos los beneficios de estas arquitecturas, sin embargo existe una falta de consenso sobre cómo debe llevarse a cabo este tipo de arquitecturas en aspectos como los protocolos de comunicación a emplear o la granularidad de los servicios. Los microservicios pueden entenderse como una aproximación específica de las arquitecturas SOA. \footnote{ NOTA: A partir de este punto, se emplearán los términos servicio y microservicio como sinónimos para hacer más ligera la lectura.}
+\item Un \textbf{servicio} es un conjunto de funcionalidades que se expone a los clientes para que las empleen con diferentes propósitos. La programación orientada a servicios es un paradigma que se aplica en las arquitecturas orientadas a servicios (SOA) \cite{Arsanjani2009a}. El objetivo principal de SOA es desarrollar servicios que aporten valor al negocio y se adapten a los cambios en las necesidades de los clientes, de forma ágil y con el menor coste posible. Las arquitecturas orientadas a servicios no están asociadas a ninguna tecnología específica. En líneas generales, dividen un sistema en componentes que cambian por el mismo motivo y promueven la flexibilidad y los servicios compartidos frente a implementaciones específicas y óptimas. Son muchos los beneficios de estas arquitecturas, sin embargo existe una falta de consenso sobre cómo debe llevarse a cabo este tipo de arquitecturas en aspectos como los protocolos de comunicación a emplear o la granularidad de los servicios. Los microservicios pueden entenderse como una aproximación específica de las arquitecturas SOA. \footnote{ NOTA: A partir de este punto, se emplearán los términos servicio y microservicio como sinónimos para hacer más ligera la lectura.}
 
 \item Diseñar microservicios con el menor \textbf{tamaño} posible no debe ser el foco principal. En todo momento han de cumplirse los principios de cohesión y coherencia: el código relacionado debe agruparse conjuntamente porque será modificado por el mismo motivo \cite{Newman2015a}.
 
@@ -675,9 +675,9 @@ En el caso de estudio, en el desarrollo de la solución basada en microservicios
 
 En cuanto a la comunicación entre los servicios y con la interfaz de usuario, en la sección \textbf{\ref{subsect:Integracion} \nameref{subsect:Integracion}} hemos presentado tres posibles alternativas. Se ha optado por la que la literatura considera más sencilla, la integración REST a través de HTTP.
 
-En cuanto a aspectos más técnicos, el lenguaje de programación que se va a emplear principalmente es C\# junto con el entorno de desarrollo (IDE) Visual Studio Enterprise 2017. Entre las plataformas de destino que ofrece la tecnología .NET vamos a utilizar tanto .NET Standard 2.0 como .NET Core en su versión 2.1, publicada en Mayo de 2018 \footnote{ Versiones de .NET Core 2.1: \url{https://www.microsoft.com/net/download/dotnet-core/2.1}}. El uso de librerías distintas a las provistas por la plataforma se realizará a través de paquetes NuGet \footnote{ Una introducción a NuGet: \url{https://docs.microsoft.com/es-es/nuget/what-is-nuget}}, un mecanismo sencillo que envuelve el código compilado de una librería y fácil de referenciar.
+En cuanto a aspectos más técnicos, el lenguaje de programación que se va a emplear principalmente es C\# junto con el entorno de desarrollo (IDE) Visual Studio Enterprise 2017. Entre las plataformas de destino que ofrece la tecnología .NET vamos a utilizar tanto .NET Standard 2.0 como .NET Core en su versión 2.1, publicada en Mayo de 2018 \footnote{Versiones de .NET Core 2.1: \url{https://www.microsoft.com/net/download/dotnet-core/2.1}}. El uso de librerías distintas a las provistas por la plataforma se realizará a través de paquetes NuGet \hyperref[Microsoft]{[48]}, un mecanismo sencillo que envuelve el código compilado de una librería y fácil de referenciar.
 
-Para el desarrollo de la interfaz de usuario se va a utilizar Xamarin.Forms \footnote{ Introducción a Xamarin.Forms: \url{https://docs.microsoft.com/es-es/xamarin/xamarin-forms/get-started/introduction-to-xamarin-forms}}. Xamarin es una plataforma que permite desarrollar aplicaciones móviles empleando código C\# para dispositivos Universal Windows Platform (UWP), Android y iOS. Xamarin.Forms es un conjunto de herramientas para Xamarin centrado en el desarrollo multiplataforma. Su propósito es que se pueda compartir la mayor cantidad de código posible en el desarrollo de una aplicación para las distintas plataformas que hemos mencionado.
+Para el desarrollo de la interfaz de usuario se va a utilizar Xamarin.Forms \hyperref[Microsoft]{[48]}. Xamarin es una plataforma que permite desarrollar aplicaciones móviles empleando código C\# para dispositivos Universal Windows Platform (UWP), Android y iOS. Xamarin.Forms es un conjunto de herramientas para Xamarin centrado en el desarrollo multiplataforma. Su propósito es que se pueda compartir la mayor cantidad de código posible en el desarrollo de una aplicación para las distintas plataformas que hemos mencionado.
 
 A nivel de infraestructura se ha hecho uso de Microsoft Azure \footnote{ Página oficial de Microsoft Azure: \url{https://azure.microsoft.com/es-es/}} para la persistencia de datos en la nube y para la exposición de servicios a través de Azure App Service y Azure Kubernetes Service (AKS). Hemos decidido utilizar esta tecnología porque es la mejor soportada por el IDE en el que vamos a trabajar, ofreciendo funcionalidades para desplegar una nueva versión simplemente pulsando un botón. Tanto App Service como AKS son parte de los servicios de Azure. El primero se emplea para crear aplicaciones en la nube de forma rápida sin necesidad de administrar la infraestructura sobre la que se hospeda. En cuanto al segundo, permite la orquestación de contenedores Docker a través de Kubernetes dentro de la infraestructura de Azure.
 
@@ -952,11 +952,11 @@ A nivel arquitectónico, la aplicación monolítica va a seguir una arquitectura
 
 \item \textbf{Capa de contratos}: en esta capa se situarán las interfaces que contienen todas las acciones del \textit{back-end} que pueden ser invocadas desde el exterior a través de la API. Estas interfaces se implementarán tanto en las capas de aplicación, servicios y proxy. 
 
-También se situarán en esta capa los objetos para la transferencia de datos (DTO). Los DTOs se utilizan para desacoplar los servicios que ofrece una API de la representación interna que da el sistema a sus entidades. En lugar de devolver al cliente una entidad tal y como se almacena en base de datos, los DTOs representan una entidad ocultando aquellas propiedades que no necesitan ser transferidas. También pueden cambiar el formato de algunas propiedades para que sea más cómodo para el cliente su procesamiento \footnote{ Crear objetos de transferencia de datos (DTO): \url{https://docs.microsoft.com/es-es/aspnet/web-api/overview/data/using-web-api-with-entity-framework/part-5}}.
+También se situarán en esta capa los objetos para la transferencia de datos (DTO). Los DTOs se utilizan para desacoplar los servicios que ofrece una API de la representación interna que da el sistema a sus entidades. En lugar de devolver al cliente una entidad tal y como se almacena en base de datos, los DTOs representan una entidad ocultando aquellas propiedades que no necesitan ser transferidas. También pueden cambiar el formato de algunas propiedades para que sea más cómodo para el cliente su procesamiento \hyperref[Microsoft]{[48]}.
 
 \item \textbf{Capa de aplicación}: en esta capa es donde se implementa la lógica de la parte servidora. Aquí se da implementación a las interfaces que se sitúan en la capa de contratos. Es en esta capa donde se validan los permisos de un usuario que ha realizado una petición al servidor sobre la acción que desea realizar. En caso de que se trate de hacer una operación no válida será esta capa la encarga de lanzar la excepción oportuna. También aquí se situarán los conversores para transformar una entididad en un DTO, que se emplearán principalmente en las operaciones CRUD.
 
-\item \textbf{Capa de servicios}: contiene el punto de entrada del proceso que representa al \textit{back-end} (el método Main). En esta capa se encuentran los controladores, donde se definen todas las acciones de la API. Cada acción se define a través de un verbo HTTP, la URL donde se localiza y sus parámetros, que pueden ser obtenidos a partir del cuerpo o la cabecera de una petición. La capa de servicios delega en la capa de aplicación para devolver un resultado a cada una de las peticiones que atiende \footnote{ Control de solicitudes con controladores en ASP.NET Core MVC: \url{https://docs.microsoft.com/es-ES/aspnet/core/mvc/controllers/actions?view=aspnetcore-2.1}}.
+\item \textbf{Capa de servicios}: contiene el punto de entrada del proceso que representa al \textit{back-end} (el método Main). En esta capa se encuentran los controladores, donde se definen todas las acciones de la API. Cada acción se define a través de un verbo HTTP, la URL donde se localiza y sus parámetros, que pueden ser obtenidos a partir del cuerpo o la cabecera de una petición. La capa de servicios delega en la capa de aplicación para devolver un resultado a cada una de las peticiones que atiende \hyperref[Microsoft]{[48]}.
 
 \item \textbf{Capa de dominio}: contiene las entidades del dominio del sistema junto con sus propiedades y los estados asociados a estas. Esta capa es referenciada tanto por la capa de aplicación como por la capa de persistencia.
 
@@ -975,7 +975,7 @@ También se situarán en esta capa los objetos para la transferencia de datos (D
 
 En la figura \ref{fig:capas} se representa la arquitectura de 6 capas. Mediante flechas se señala que una capa depende de otra. También se ha representado la base de datos, a la que solo se accede desde la capa de persistencia. De cada capa se ha especificado el estándar usado para nombrar de las clases más importantes en el código. Por ejemplo, de la capa de aplicación se señala \textit{\_Manager}; los \textit{managers} serán las clases donde se implemente la lógica para cada una de las entidades del dominio, dando lugar a clases como \textit{ProductsManager} o \textit{IncidencesManager}. Lo mismo ocurre con el patrón \textit{I\_DAO} en la persistencia, que define una interfaz para el acceso a datos de una entidad y que da lugar a clases como \textit{IOrdersDAO}.
 
-A nivel de la solución en Visual Studio, cada capa consistirá en un proyecto distinto, tal como se muestra en la figura \ref{fig:MonolithicSolution}. Un proyecto consiste en un archivo XML con extensión *.csproj que tiene una plataforma y dependencias específicas y que se puede compilar de forma independiente. Cada proyecto es un contenedor que organiza sus clases y otros archivos de forma jerárquica \footnote{ Soluciones y proyectos en Visual Studio: \url{https://docs.microsoft.com/es-es/visualstudio/ide/solutions-and-projects-in-visual-studio}}. Adicionalmente, existe un proyecto que contiene las pruebas del sistema. Todos los proyectos son .NET Standard 2.0 salvo los de las capa de servicios y pruebas, cuya plataforma es .NET Core 2.1 porque no son librerías y pueden ser ejecutados.
+A nivel de la solución en Visual Studio, cada capa consistirá en un proyecto distinto, tal como se muestra en la figura \ref{fig:MonolithicSolution}. Un proyecto consiste en un archivo XML con extensión *.csproj que tiene una plataforma y dependencias específicas y que se puede compilar de forma independiente. Cada proyecto es un contenedor que organiza sus clases y otros archivos de forma jerárquica \hyperref[Microsoft]{[48]}. Adicionalmente, existe un proyecto que contiene las pruebas del sistema. Todos los proyectos son .NET Standard 2.0 salvo los de las capa de servicios y pruebas, cuya plataforma es .NET Core 2.1 porque no son librerías y pueden ser ejecutados.
 
 \begin{figure}[h]
 \centering
@@ -1041,7 +1041,7 @@ Por último, algunas entidades en lugar de ofrecer operaciones CRUD solo ofrecen
 
 La mayoría de métodos expuestos en la API del \textit{back-end} requieren de mecanismos de autorización para establecer si la persona que realiza una petición puede acceder o no a los datos que solicita. Con este propósito, vamos a hacer uso de \textbf{ASP.NET Core Identity} y de \textit{tokens} de seguridad JWT (JSON Web Token). 
 
-Identity es el sistema de ASP.NET Core para administrar los usuarios registrados de una aplicación a través de proveedores externos como Google y Facebook o a través de una base de datos de usuarios propia \footnote{ Introducción a la identidad en ASP.NET Core: \url{https://docs.microsoft.com/es-es/aspnet/core/security/authentication/identity}}. Atendiendo a los requisitos especificados, no necesitamos que nuestros usuarios se puedan autenticar a través de proveedores externos, por lo que vamos a optar por gestionar los usuarios de la aplicación nosotros mismos. Los pasos para conseguirlo se resumen a continuación:
+Identity es el sistema de ASP.NET Core para administrar los usuarios registrados de una aplicación a través de proveedores externos como Google y Facebook o a través de una base de datos de usuarios propia \hyperref[Microsoft]{[48]}. Atendiendo a los requisitos especificados, no necesitamos que nuestros usuarios se puedan autenticar a través de proveedores externos, por lo que vamos a optar por gestionar los usuarios de la aplicación nosotros mismos. Los pasos para conseguirlo se resumen a continuación:
 
 \begin{itemize}
 
@@ -1056,7 +1056,7 @@ Identity es el sistema de ASP.NET Core para administrar los usuarios registrados
 \label{fig:BDMonolitica}
 \end{figure}
 
-\item En la capa de servicios, a los métodos de la API que requieran de autorización se les ha de añadir el atributo \textit{Authorize}. Con esto, cuando se realice una petición sin proveer un \textit{token} de autorización se devolverá automáticamente un error 401: Unauthorized. En el atributo \textit{Authorize} se puede especificar si el método puede ser ejecutado solo por los usuarios que tengan cierto rol \footnote{ Autorización basada en roles en ASP.NET Core: \url{https://docs.microsoft.com/es-es/aspnet/core/security/authorization/roles?view=aspnetcore-2.1}}. Por ejemplo, podemos establecer que las operaciones agregadas de tipo CRUD solo puedan ser invocadas por los usuarios con el rol Administrador, como muestra la figura \ref{fig:Authorize}.
+\item En la capa de servicios, a los métodos de la API que requieran de autorización se les ha de añadir el atributo \textit{Authorize}. Con esto, cuando se realice una petición sin proveer un \textit{token} de autorización se devolverá automáticamente un error 401: Unauthorized. En el atributo \textit{Authorize} se puede especificar si el método puede ser ejecutado solo por los usuarios que tengan cierto rol \hyperref[Microsoft]{[48]}. Por ejemplo, podemos establecer que las operaciones agregadas de tipo CRUD solo puedan ser invocadas por los usuarios con el rol Administrador, como muestra la figura \ref{fig:Authorize}.
 
 \begin{figure}[h]
 \centering
@@ -1083,7 +1083,7 @@ El usuario podrá obtener el \textit{token} que le identifica a través del mét
 
 \subsection{Persistencia} \label{subsect:Persistencia}
 
-Para la persistencia se va a emplear \textbf{Entity Framework Core} \footnote{Descripción general de Entity Framework Core: \url{https://docs.microsoft.com/es-es/ef/core/}} para el mapeo objeto-relacional y una base de datos SQL en la nube de \textbf{Microsoft Azure}. Entity Framework Core es una versión multiplataforma del ORM Entity Framework (EF) para trabajar con una base de datos mediante objetos .NET.
+Para la persistencia se va a emplear \textbf{Entity Framework Core} \hyperref[Microsoft]{[48]} para el mapeo objeto-relacional y una base de datos SQL en la nube de \textbf{Microsoft Azure}. Entity Framework Core es una versión multiplataforma del ORM Entity Framework (EF) para trabajar con una base de datos mediante objetos .NET.
 
 Vamos a seguir una aproximación \textit{Code-First} \cite{CodeFirst} para el diseño de la base de datos. Esta aproximación nos permite diseñar primero las entidades de nuestro dominio a través de las clases en la capa de dominio y luego trasladar sus atributos y relaciones a un esquema de base de datos gracias a EF.
 
@@ -1160,7 +1160,7 @@ Para desacoplar los mensajes a enviar y el código para enviarlo se hará uso de
 
 \subsection{Inyección de dependencias}
 
-La \textbf{inyección de dependencias} (DI) es un mecanismo para desacoplar un objeto de sus colaboradores. En lugar de instanciar o obtener una referencia a los objetos de los que depende una clase, estos se declaran en el constructor de la clase y es el sistema quien automáticamente los resuelve e instancia \footnote{ Inserción de dependencias en ASP.NET Core: \url{https://docs.microsoft.com/es-es/aspnet/core/fundamentals/dependency-injection}}. En la figura \ref{fig:ProductsManager} se puede ver como se inyecta en el constructor del \textit{manager} de productos el conversor de entidad a DTO y el DAO de la entidad.
+La \textbf{inyección de dependencias} (DI) \hyperref[Microsoft]{[48]} es un mecanismo para desacoplar un objeto de sus colaboradores. En lugar de instanciar o obtener una referencia a los objetos de los que depende una clase, estos se declaran en el constructor de la clase y es el sistema quien automáticamente los resuelve e instancia. En la figura \ref{fig:ProductsManager} se puede ver como se inyecta en el constructor del \textit{manager} de productos el conversor de entidad a DTO y el DAO de la entidad.
 
 \begin{figure}[h]
 \centering
@@ -1248,11 +1248,11 @@ A nivel de UI se ha implementado de tal forma que se soliciten al \textit{back-e
 
 
 %TODO Interesante https://msdn.microsoft.com/en-us/magazine/dd419663.aspx https://blogs.msdn.microsoft.com/johngossman/2005/10/08/introduction-to-modelviewviewmodel-pattern-for-building-wpf-apps/
-\item \textbf{Uso de \textit{ViewModels}}: la separación de responsabilidades no es un principio que se deba aplicar solo en el \textit{back-end}. El patrón arquitectónico \textbf{\textit{Model-View-ViewModel}} (MVVM) divide la interfaz de usuario en 3 capas: la vista, empleando páginas XAML, los datos tal como se obtienen en su origen, también llamados el modelo, y el modelo de la vista, que conecta ambos y se utiliza para rellenar la vista \footnote{From Data Bindings to MVVM: \url{https://docs.microsoft.com/es-es/xamarin/xamarin-forms/xaml/xaml-basics/data-bindings-to-mvvm}}.
+\item \textbf{Uso de \textit{ViewModels}}: la separación de responsabilidades no es un principio que se deba aplicar solo en el \textit{back-end}. El patrón arquitectónico \textbf{\textit{Model-View-ViewModel}} (MVVM) divide la interfaz de usuario en 3 capas: la vista, empleando páginas XAML, los datos tal como se obtienen en su origen, también llamados el modelo, y el modelo de la vista, que conecta ambos y se utiliza para rellenar la vista \hyperref[Microsoft]{[48]}.
 
-La diferencia entre este patrón y otros como el \textit{Model-View-Controller} (MVC) es que en MVC los datos con los que se llena la vista son los que se obtienen en el origen y es el controlador quien ha de adaptarlos a cómo se visualizan en la vista. En cambio, en MVVM la vista y el modelo de la vista suelen relacionarse a través de enlaces (\textit{bindings}) en el propio XAML y se notifican mutuamente cuando alguna de sus propiedades cambia \footnote{ Patterns - WPF Apps With The Model-View-ViewModel Design Pattern: \url{https://msdn.microsoft.com/en-us/magazine/dd419663.aspx}}.
+La diferencia entre este patrón y otros como el \textit{Model-View-Controller} (MVC) es que en MVC los datos con los que se llena la vista son los que se obtienen en el origen y es el controlador quien ha de adaptarlos a cómo se visualizan en la vista. En cambio, en MVVM la vista y el modelo de la vista suelen relacionarse a través de enlaces (\textit{bindings}) en el propio XAML y se notifican mutuamente cuando alguna de sus propiedades cambia \hyperref[Microsoft]{[48]}.
 
-Sin embargo, usar este patrón puede ser excesivo para UIs muy sencillas \footnote{Advantages and disadvantages of M-V-VM: \url{https://blogs.msdn.microsoft.com/johngossman/2006/03/04/advantages-and-disadvantages-of-m-v-vm/}}. Por este motivo, hemos usado objetos \textit{ViewModel} en solo aquellos casos que era necesario adaptar los datos del modelo a la vista. Lo que aquí definimos como modelo es un DTO que devuelve la parte servidora y ya está diseñado para que contenga solo la información estrictamente necesaria. Un ejemplo en el que se emplea un \textit{ViewModel} es el \textit{ProductViewModel} (figura \ref{fig:ProductViewModel}), donde se tiene que transformar la imagen que se recibe del ProductDTO de una \textit{byte array} a un \textit{ImageSource}.
+Sin embargo, usar este patrón puede ser excesivo para UIs muy sencillas. Por este motivo, hemos usado objetos \textit{ViewModel} en solo aquellos casos que era necesario adaptar los datos del modelo a la vista. Lo que aquí definimos como modelo es un DTO que devuelve la parte servidora y ya está diseñado para que contenga solo la información estrictamente necesaria. Un ejemplo en el que se emplea un \textit{ViewModel} es el \textit{ProductViewModel} (figura \ref{fig:ProductViewModel}), donde se tiene que transformar la imagen que se recibe del ProductDTO de una \textit{byte array} a un \textit{ImageSource}.
 
 \begin{figure}[h]
 \centering
@@ -1279,7 +1279,7 @@ No se han podido probar todos los métodos expuestos en la interfaz del \textit{
 \caption{Pruebas realizadas en la solución monolítica.}
 \end{figure}
 
-Para la realización de las pruebas se ha empleado una base de datos en memoria. Así, las pruebas son más cercanas a una situación real. A la vez, no añade un sobrecoste asociado al acceso a datos de una base de datos real, que haría más lenta la ejecución de las pruebas \footnote{ Pruebas con InMemory: \url{https://docs.microsoft.com/es-es/ef/core/miscellaneous/testing/in-memory}}. Además, en el método \textit{Setup} que se invoca antes de cada prueba es donde se resuelven las dependencias declaradas en los constructores de las clases invocando a los métodos \textit{AddDependencies} de las capas de aplicación y persistencia, como muestra la figura \ref{fig:SetupTest}. 
+Para la realización de las pruebas se ha empleado una base de datos en memoria \hyperref[Microsoft]{[48]}. Así, las pruebas son más cercanas a una situación real. A la vez, no añade un sobrecoste asociado al acceso a datos de una base de datos real, que haría más lenta la ejecución de las pruebas . Además, en el método \textit{Setup} que se invoca antes de cada prueba es donde se resuelven las dependencias declaradas en los constructores de las clases invocando a los métodos \textit{AddDependencies} de las capas de aplicación y persistencia, como muestra la figura \ref{fig:SetupTest}. 
 
 \begin{figure}[h]
 \centering
@@ -1301,8 +1301,7 @@ Como hemos mencionado en la sección \textbf{\ref{sect:Propuesta} \nameref{sect:
 
 \begin{enumerate}
 
-\item \textbf{Creación de un Dockerfile}: en la capa de servicios se debe crear un Dockerfile. En la mayoría de ejemplos encontrados se ha visto que la imagen de Docker se genera básicamente mediante dos pasos del Dockerfile: se copian todos los archivos de la solución a la imagen y se compila la solución completo. Cuando se crea y arranca un contenedor, se inicia el proceso del servicio a través de la DLL que se ha generado tras la compilación \footnote{ Dockerize a .NET Core application
-: \url{https://docs.docker.com/engine/examples/dotnetcore/\#create-a-dockerfile-for-an-aspnet-core-application}}. Este Dockerfile es más fiable en cuanto a que los ensamblados necesarios se generan dentro de la propia imagen. Sin embargo, la creación de la imagen es más lenta. Por ello, para entornos de desarrollo vamos a simplificar el Dockerfile para que simplemente copie los ensamblados en la imagen, que se han generado previamente en el entorno de desarrollo. La figura \ref{fig:Dockerfile} muestra su contenido. Los ensamblados se publican dentro de una carpeta que hemos llamado PublishOutput. En el Dockerfile tampoco hace falta exponer ningún puerto porque esto ya lo hace la imagen base.
+\item \textbf{Creación de un Dockerfile}: en la capa de servicios se debe crear un Dockerfile. En la mayoría de ejemplos encontrados se ha visto que la imagen de Docker se genera básicamente mediante dos pasos del Dockerfile: se copian todos los archivos de la solución a la imagen y se compila la solución completo. Cuando se crea y arranca un contenedor, se inicia el proceso del servicio a través de la DLL que se ha generado tras la compilación \footnote{ Dockerize a .NET Core application: \url{https://docs.docker.com/engine/examples/dotnetcore/\#create-a-dockerfile-for-an-aspnet-core-application}}. Este Dockerfile es más fiable en cuanto a que los ensamblados necesarios se generan dentro de la propia imagen. Sin embargo, la creación de la imagen es más lenta. Por ello, para entornos de desarrollo vamos a simplificar el Dockerfile para que simplemente copie los ensamblados en la imagen, que se han generado previamente en el entorno de desarrollo. La figura \ref{fig:Dockerfile} muestra su contenido. Los ensamblados se publican dentro de una carpeta que hemos llamado PublishOutput. En el Dockerfile tampoco hace falta exponer ningún puerto porque esto ya lo hace la imagen base.
 
 \begin{figure}[h]
 \centering
@@ -1835,6 +1834,39 @@ En cuanto a líneas de trabajo futuras, tras este proyecto se abren dos caminos 
 \renewcommand{\bibname}{Referencias}
 
 \bibliography{Bibliografia/library}
+{
+[48]   Artículos de Microsoft consultados (por orden de uso en el texto):
+\begin{itemize}
+
+\item Una introducción a NuGet. Consultado el día 26/07/2018. URL: \url{https://docs.microsoft.com/es-es/nuget/what-is-nuget}
+
+\item Introducción a Xamarin.Forms. Consultado el día 30/07/2018. URL: \url{https://docs.microsoft.com/es-es/xamarin/xamarin-forms/get-started/introduction-to-xamarin-forms}
+
+\item Crear objetos de transferencia de datos (DTO). Consultado el día 18/07/2018. URL: \url{https://docs.microsoft.com/es-es/aspnet/web-api/overview/data/using-web-api-with-entity-framework/part-5}
+
+\item Control de solicitudes con controladores en ASP.NET Core MVC. Consultado el día 21/07/2018. URL: \url{https://docs.microsoft.com/es-ES/aspnet/core/mvc/controllers/actions?view=aspnetcore-2.1}
+
+\item Soluciones y proyectos en Visual Studio. Consultado el día 01/07/2018. URL: \url{https://docs.microsoft.com/es-es/visualstudio/ide/solutions-and-projects-in-visual-studio}
+
+\item Introducción a la identidad en ASP.NET Core. Consultado el día 10/07/2018. URL: \url{https://docs.microsoft.com/es-es/aspnet/core/security/authentication/identity}
+
+\item Autorización basada en roles en ASP.NET Core. Consultado el día 13/07/2018. URL: \url{https://docs.microsoft.com/es-es/aspnet/core/security/authorization/roles?view=aspnetcore-2.1}
+
+\item Descripción general de Entity Framework Core. Consultado el día 05/07/2018. URL: \url{https://docs.microsoft.com/es-es/ef/core/}
+
+\item Inserción de dependencias en ASP.NET Core. Consultado el día 02/07/2018. URL: \url{https://docs.microsoft.com/es-es/aspnet/core/fundamentals/dependency-injection}
+
+\item Desde los enlaces de datos para MVVM. Consultado el día 28/07/2018. URL: \url{https://docs.microsoft.com/es-es/xamarin/xamarin-forms/xaml/xaml-basics/data-bindings-to-mvvm}
+
+\item Aplicaciones WPF con el patrón de diseño Model-View-ViewModel. Consultado el día 28/07/2018. URL: \url{https://msdn.microsoft.com/es-ES/magazine/dd419663.aspx}
+
+\item Pruebas con InMemory. Consultado el día 14/07/2018. URL: \url{https://docs.microsoft.com/es-es/ef/core/miscellaneous/testing/in-memory}
+
+\item Configuración en ASP.NET Core. Consultado el día 17/07/2018. URL: \url{https://docs.microsoft.com/es-es/aspnet/core/fundamentals/configuration/?view=aspnetcore-2.1}
+
+\end{itemize}
+}
+\label{Microsoft}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                           APENDICES  (Si HAY!)                           %
@@ -2063,7 +2095,7 @@ Por último, si a través del navegador accedemos a la dirección del balanceado
 
 \section{Integración de los microservicios}
 
-En la sección anterior hemos mencionado que los microservicios comunican entre ellos a través de la dirección IP del balanceador de carga de cada uno de ellos. Esta dirección se especifica en los archivos de configuración \textit{appsettings.json} que se localizan en la capa de servicios. Se pueden definir diferentes archivos de configuración, uno para cada uno de los entornos que existen. Esto se puede observar en la figura \ref{fig:appsettings}, donde se muestra para el microservicio de pedidos el archivo de configuración global y el del entorno de desarrollo, \textit{appsettings.Development.json}, que se consulta solo cuando la aplicación se despliega en el entorno de desarrollo y sobreescribe las propiedades que tiene en común con el archivo de configuración global \footnote{ Configuración en ASP.NET Core: \url{https://docs.microsoft.com/es-es/aspnet/core/fundamentals/configuration/?view=aspnetcore-2.1}}.
+En la sección anterior hemos mencionado que los microservicios comunican entre ellos a través de la dirección IP del balanceador de carga de cada uno de ellos. Esta dirección se especifica en los archivos de configuración \textit{appsettings.json} que se localizan en la capa de servicios. Se pueden definir diferentes archivos de configuración, uno para cada uno de los entornos que existen. Esto se puede observar en la figura \ref{fig:appsettings}, donde se muestra para el microservicio de pedidos el archivo de configuración global y el del entorno de desarrollo, \textit{appsettings.Development.json}, que se consulta solo cuando la aplicación se despliega en el entorno de desarrollo y sobreescribe las propiedades que tiene en común con el archivo de configuración global \hyperref[Microsoft]{[48]}.
 
 Existen muchas formas de que un microservicio descubra donde se encuentran otros con los que ha de colaborar, como puede ser el uso de archivos de configuración. El microservicio de pedidos necesita comunicar con el de seguridad, pedidos y notificaciones, por lo que necesita conocer y almacenar la dirección donde estos se despliegan. Esta configuración será leída por los diferentes proxies que el servicio de pedidos utiliza para comunicar con los otros.
 

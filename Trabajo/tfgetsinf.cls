@@ -48,7 +48,7 @@
 % Escritura de los enlaces de internet; ejemplo: \url{www.upv.es}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\RequirePackage{url}
+\RequirePackage[hyphens]{url}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
