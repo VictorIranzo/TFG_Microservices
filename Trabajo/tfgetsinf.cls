@@ -239,8 +239,9 @@
 \renewcommand{\chaptermark}[1]{\markboth{{\sffamily\mdseries\normalsize\hspace{1em} #1}}{}}
 \renewcommand{\sectionmark}[1]{\markright{{\sffamily\mdseries\normalsize\thesection\hspace{0.5em} #1}}{}}
 
-\lhead[\bfseries\thepage]{\sffamily\rightmark}
-\rhead[\sffamily\leftmark]{\bfseries\thepage}
+\lhead[\bfseries\thepage]{Desarrollo de software basado en microservicios}
+\rhead[Desarrollo de software basado en microservicios]{\bfseries\thepage}
+
 \cfoot{} 
 \lfoot{}
 \rfoot{}
