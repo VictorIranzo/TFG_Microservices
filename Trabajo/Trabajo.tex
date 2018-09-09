@@ -573,7 +573,7 @@ La información más útil se debe mostrar de forma gráfica a través de \texti
 
 \section{Contenedores}
 
-Un contenedor \cite{Hunter2017} es una unidad de aislamiento que existe dentro de un sistema operativo. Mientras que una máquina virtual requiere tener su propio SO, un contenedor puede acceder al sistema operativo de la máquina donde reside, eliminando la necesidad de tener sistemas operativos redundantes. En esta sección revisaremos dos de los más empleados: los contenedores Docker y los contenedores Linux. Existen otros contenedores, como los contenedores Warden y OpenVZ. Si se desea obtener más información sobre ellos, en \cite{Dua2014} se realiza una comparación entre todos ellos en cuanto al aislamiento que ofrecen y su ciclo de vida.
+Un \textbf{contenedor} \cite{Hunter2017} es una unidad de aislamiento que existe dentro de un sistema operativo. Mientras que una máquina virtual requiere tener su propio SO, un contenedor puede acceder al sistema operativo de la máquina donde reside, eliminando la necesidad de tener sistemas operativos redundantes. En esta sección revisaremos dos de los más empleados: los contenedores Docker y los contenedores Linux. Existen otros contenedores, como los contenedores Warden y OpenVZ. Si se desea obtener más información sobre ellos, en \cite{Dua2014} se realiza una comparación entre todos ellos en cuanto al aislamiento que ofrecen y su ciclo de vida.
 
 \subsection{Contenedores Linux}
 
@@ -587,7 +587,7 @@ Una solución a estos problemas consiste en usar contenedores Linux desplegados 
 
 \subsection{Docker}
 
-Docker \cite{Matthias} es una herramienta basada en contenedores Linux para la creación de artefactos que se pueden desplegar en cualquier entorno y se pueden distribuir y escalar bajo demanda. Su funcionamiento es sencillo: en un fichero llamado \textbf{Dockerfile} se especifican las dependencias del servicio en distintos pasos y un comando que inicia el servicio. De la compilación del Dockerfile se origina una \textbf{imagen del contenedor}. Una imagen un paquete con todas las dependencias e información necesaria para crear un contenedor. Las imágenes permiten empaquetar un servicio para desplegarlo de forma confiable y reproducible tantas veces como se desee \cite{DelaTorre2018}.
+\textbf{Docker} \cite{Matthias} es una herramienta basada en contenedores Linux para la creación de artefactos que se pueden desplegar en cualquier entorno y se pueden distribuir y escalar bajo demanda. Su funcionamiento es sencillo: en un fichero llamado \textbf{Dockerfile} se especifican las dependencias del servicio en distintos pasos y un comando que inicia el servicio. De la compilación del Dockerfile se origina una \textbf{imagen del contenedor}. Una imagen un paquete con todas las dependencias e información necesaria para crear un contenedor. Las imágenes permiten empaquetar un servicio para desplegarlo de forma confiable y reproducible tantas veces como se desee \cite{DelaTorre2018}.
 
 La filosofía de Docker se centra en los contenedores desechables. Nada en el entorno donde se ejecuta la aplicación permanecerá ahí más allá de lo que viva la aplicación. Esto implica que no se desplegará en entornos donde se encuentra casualmente una dependencia no especificada en la imagen. Docker promueve las arquitecturas sin estado (\textit{stateless}) o que externalizan este a otras infraestructuras como bases de datos. Las aplicaciones así se hacen más portables, escalables y confiables \cite{Matthias}.
 
@@ -611,12 +611,12 @@ Si se integra dentro del proceso de despliegue, cada cambio que pasa por una \te
 %TODO https://medium.com/@PamRucinque/qu%C3%A9-es-eso-de-serverless-f4f6c8949b87
 %TODO https://rancher.com/load-balancing-in-kubernetes/
 
-Un orquestador \cite{DelaTorre2018} es una herramienta para la gestión de clústeres y contenedores. Permiten gestionar las imágenes que originan los contenedores, los \textit{hosts}, las redes de contenedores, el balanceo de carga o el descubrimiento de servicios. De nuevo, nos centraremos solo en dos: Kubernetes y Docker Swarm. Estos son los dos más empleados por la industria, aunque podemos nombrar otros como  Apache Mesos.
+Un \textbf{orquestador} \cite{DelaTorre2018} es una herramienta para la gestión de clústeres y contenedores. Permiten gestionar las imágenes que originan los contenedores, los \textit{hosts}, las redes de contenedores, el balanceo de carga o el descubrimiento de servicios. De nuevo, nos centraremos solo en dos: Kubernetes y Docker Swarm. Estos son los dos más empleados por la industria, aunque podemos nombrar otros como  Apache Mesos.
 
 \subsection{Kubernetes} \label{subsect:Kubernetes}
 %TODO Definir cluster.
 %TODO Rancher. 
-Kubernetes \cite{Rensin2015} es una herramienta diseñada por Google para el despliegue y orquestación de aplicaciones en contenedores Docker de forma resiliente. Cada una de las máquinas que aloja uno o más contenedores Docker se denomina \textbf{nodo}. La unidad más pequeña con la que trabaja Kubernetes no son los contenedores, sino los pods. Un \textbf{pod} es una colección de contenedores y volúmenes agrupados juntos en un nodo. Los \textbf{volúmenes} son sistemas de archivos virtuales que se pueden emplear para comunicar entre ellos a los contenedores de un nodo. Kubernetes orquesta a nivel de los pods, por lo que dos contenedores en el mismo pod serán administrados igual. La relación de continencia entre estos componentes se plasma en la figura \ref{fig:kubernetes_ES}.
+\textbf{Kubernetes} \cite{Rensin2015} es una herramienta diseñada por Google para el despliegue y orquestación de aplicaciones en contenedores Docker de forma resiliente. Cada una de las máquinas que aloja uno o más contenedores Docker se denomina \textbf{nodo}. La unidad más pequeña con la que trabaja Kubernetes no son los contenedores, sino los pods. Un \textbf{pod} es una colección de contenedores y volúmenes agrupados juntos en un nodo. Los \textbf{volúmenes} son sistemas de archivos virtuales que se pueden emplear para comunicar entre ellos a los contenedores de un nodo. Kubernetes orquesta a nivel de los pods, por lo que dos contenedores en el mismo pod serán administrados igual. La relación de continencia entre estos componentes se plasma en la figura \ref{fig:kubernetes_ES}.
 
 \begin{figure}[h]
 \centering
@@ -631,7 +631,7 @@ En el apéndice \textbf{\ref{chap:Despliegue} \nameref{chap:Despliegue}} se dan 
 
 \subsection{Docker Swarm}
 
-Docker Swarm \cite{DeAlfonso2017} es la aproximación nativa propuesta por Docker para la creación de clústeres. Un clúster consiste en un conjunto de contenedores Docker que aparentan formar uno único de forma virtual.
+\textbf{Docker Swarm} \cite{DeAlfonso2017} es la aproximación nativa propuesta por Docker para la creación de clústeres. Un clúster consiste en un conjunto de contenedores Docker que aparentan formar uno único de forma virtual.
 
 En cuanto a la arquitectura de Docker Swarm, todos los nodos ejecutan un agente para atender a los cambios en su configuración. Solo uno de ellos ejecuta un gestor llamado \textit{Swarm} para la coordinación del resto. Cuando un contenedor es creado, este se despliega en cualquiera de los nodos gestionados por el Swarm. El conjunto de contenedores es gestionado por el \textit{Swarm} como una única entidad.
 
@@ -642,13 +642,13 @@ Docker Swarm se puede ejecutar para ofrecer servicios con alta disponibilidad a 
 Un \textbf{proveedor de servicios en la nube} \footnote{ What is a cloud service provider?: \url{https://azure.microsoft.com/en-gb/overview/what-is-a-cloud-provider/}} es una compañía de terceros que ofrece servicios en la nube de plataforma (PaaS), infraestructura (IaaS), aplicación (SaaS) o persistencia. Solo se deben pagar los servicios que una organización consume, bajo el modelo de pago por uso. Entre los beneficios que supone para una compañía se puede citar la escalabilidad y flexibilidad entre diferentes centros de datos, la seguridad por almacenar los datos de forma replicada o la comodidad que supone olvidarse de servidores físicos.
 
 \subsection{Amazon Web Services (AWS)}
-Amazon es el líder en el mercado de computación en la nube con su producto Amazon Web Services (AWS), lanzado en 2006. Fue el primer proveedor en ofrecer infraestructura como servicio (IaaS), permitiendo el alquiler de máquinas virtuales.
+Amazon es el líder en el mercado de computación en la nube con su producto \textbf{Amazon Web Services} (AWS), lanzado en 2006. Fue el primer proveedor en ofrecer infraestructura como servicio (IaaS), permitiendo el alquiler de máquinas virtuales.
 
-\textit{Amazon Elastic Compute Cloud} (EC2) permite a sus usuarios la creación de las máquinas necesarias para la ejecución de una aplicación. Este servicio es capaz de escalar las aplicaciones de acuerdo a las necesidades de sus usuarios. La creación, ejecución y destrucción de máquinas virtuales o instancias puede ser controlada a demanda del usuario de AWS. El pago de esta plataforma se realiza por horas, a diferencia de Azure, donde se paga por minutos y el pago es más exacto de acuerdo al uso realizado \cite{Qaisi2016}.
+\textbf{Amazon Elastic Compute Cloud} (EC2) permite a sus usuarios la creación de las máquinas necesarias para la ejecución de una aplicación. Este servicio es capaz de escalar las aplicaciones de acuerdo a las necesidades de sus usuarios. La creación, ejecución y destrucción de máquinas virtuales o instancias puede ser controlada a demanda del usuario de AWS. El pago de esta plataforma se realiza por horas, a diferencia de Azure, donde se paga por minutos y el pago es más exacto de acuerdo al uso realizado \cite{Qaisi2016}.
 
 \subsection{Microsoft Azure}
 
-Microsoft Azure \cite{Qaisi2016} es una plataforma que ofrece un conjunto de herramientas y servicios en la nube. Es el segundo mayor proveedor de servicios en la nube y fue lanzado en 2010. Ofrece tanto funcionalidades de plataforma como servicio (PaaS) como IaaS.
+\textbf{Microsoft Azure} \cite{Qaisi2016} es una plataforma que ofrece un conjunto de herramientas y servicios en la nube. Es el segundo mayor proveedor de servicios en la nube y fue lanzado en 2010. Ofrece tanto funcionalidades de plataforma como servicio (PaaS) como IaaS.
 
 Los usuarios pueden crear, desplegar y gestionar aplicaciones y servicios a través de la red global de los centros de datos de Microsoft. Aunque el pago de sus servicios sea más cercano a la realidad, los modos de pago son manejados de forma poco transparente.
 
