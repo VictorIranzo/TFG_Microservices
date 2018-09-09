@@ -526,7 +526,7 @@ Los \textbf{contenedores} son sistemas operativos ligeros que se ejecutan sobre 
 Ambas soluciones se pueden combinar para obtener las ventajas de las dos. Se puede obtener una máquina virtual de una plataforma como Amazon Web Services (AWS) que nos asegure características como la escalabilidad bajo demanda y sobre ella ejecutar diferentes servicios desplegados como contenedores.
 
 \section{Los microservicios en la fase de mantenimiento}
-% You code, you run it -> Buscar documento "oficial"
+% You code, you run it -> Buscar documento ''oficial''
 % Monitorización
 % Arquitectura evolutiva
 
@@ -544,7 +544,7 @@ En la mayoría de empresas abundan los sistemas legados que nadie desea mantener
 
 \subsection{\textit{You Build It, You Run It}}
 
-En muchas organizaciones, el desarrollo de sistemas se hace a través de proyectos: piezas de \textit{software} que una vez desarrolladas se consideran completadas. En una aproximación basada en microservicios, cada equipo es responsable del ciclo de vida completo de un producto o servicio. Esto sigue la filosofía de Amazon: \textbf{\textit{``you build it, you run it"}} \cite{Lewis2014}.
+En muchas organizaciones, el desarrollo de sistemas se hace a través de proyectos: piezas de \textit{software} que una vez desarrolladas se consideran completadas. En una aproximación basada en microservicios, cada equipo es responsable del ciclo de vida completo de un producto o servicio. Esto sigue la filosofía de Amazon: \textbf{\textit{``you build it, you run it''}} \cite{Lewis2014}.
 
 No hay necesidad de distinguir entre quien construye un sistema y quien lo ejecuta y posteriormente mantiene. Esta filosofía aproxima a desarralloradores y clientes: los desarrolladores están en contacto directo con los clientes día tras día, lo que les proporciona retroalimentación para mejorar la calidad de sus servicios. Tampoco hay necesidad de contar en la organización con un equipo centrado en la infraestructura (IT). Contar con un equipo así distribuye la responsabilidad de hacer un servicio funcionar entre diferentes equipos y añade un sobresfuerzo de coordinación y comunicación cuando un problema aparece \cite{Vliet2011}.
 
@@ -1154,7 +1154,7 @@ La generación de informes es una de las funcionalidades más empleadas en los \
 
 Open XML PowerTools \footnote{ Página de GitHub de Open XML PowerTools: \url{https://github.com/OfficeDev/Open-Xml-PowerTools}} provee funcionalidades para la combinación de documentos, la conversión de estos a diferentes formatos y la creación de informes a partir de plantillas. Para generar un informe se separan explícitamente los datos que lo originan y la plantilla del documento. En las plantillas se define cómo se van a renderizar los datos mediante un lenguaje basado en anotaciones. Este lenguaje nos permite escribir contenido en base a condiciones, iterar sobre las colecciones en los datos, crear tablas, etc.
 
-La figura \ref{fig:Factura} muestra la plantilla para generar una factura. La anotación que más se emplea es \textit{Content Select}, que obtiene, a partir de un camino, una cadena de texto (\textit{string}) localizada en los datos provistos. Por ejemplo, el camino \textit{``./Client"} atraviesa los datos ordenados de forma jerárquica hasta alcanzar el nodo etiquetado como \textit{Client}, donde se almacena el nombre del cliente.
+La figura \ref{fig:Factura} muestra la plantilla para generar una factura. La anotación que más se emplea es \textit{Content Select}, que obtiene, a partir de un camino, una cadena de texto (\textit{string}) localizada en los datos provistos. Por ejemplo, el camino \textit{``./Client''} atraviesa los datos ordenados de forma jerárquica hasta alcanzar el nodo etiquetado como \textit{Client}, donde se almacena el nombre del cliente.
 
 \begin{figure}[h]
 \centering
@@ -1423,7 +1423,7 @@ En el microservicio de informes vamos a seguir una arquitectura más sencilla. S
 
 En cuanto al servicio de notificaciones, vamos a implementarlo en el lenguaje \textbf{Java}. Sin embargo, como debe ser consumido por microservicios en lenguaje C\#, construiremos un proxy en este lenguaje para hacer más fácil su consumo.
 
-En el capítulo anterior, en las secciones \textbf{\ref{subsect:CRUD} \nameref{subsect:CRUD}} y \textbf{\ref{subsect:Persistencia} \nameref{subsect:Persistencia}} hemos nombrado algunas interfaces e implementaciones genéricas relacionadas con las entidades de dominio. Los microservicios de pedidos e incidencias deben seguir haciendo uso de estas implementaciones. Hacer de este código común un servicio no tiene sentido porque está relacionado con el acceso a datos y cada microservicio es dueño de sus propios datos. En este caso, este código genérico se referencia como una \textbf{librería} a través de paquetes NuGet, que en el diagrama de componentes se muestra con la etiqueta ``Código común".
+En el capítulo anterior, en las secciones \textbf{\ref{subsect:CRUD} \nameref{subsect:CRUD}} y \textbf{\ref{subsect:Persistencia} \nameref{subsect:Persistencia}} hemos nombrado algunas interfaces e implementaciones genéricas relacionadas con las entidades de dominio. Los microservicios de pedidos e incidencias deben seguir haciendo uso de estas implementaciones. Hacer de este código común un servicio no tiene sentido porque está relacionado con el acceso a datos y cada microservicio es dueño de sus propios datos. En este caso, este código genérico se referencia como una \textbf{librería} a través de paquetes NuGet, que en el diagrama de componentes se muestra con la etiqueta ``Código común''.
 
 Por último, indicar que el consumo de cualquier microservicio, ya sea desde la interfaz de usuario o desde otros servicios, se realizará a través de las capas de proxy. En el diagrama de componentes no se ha incluido esta capa en la arquitectura interna de ninguno de los microservicios porque esta capa no se ejecuta en el proceso del servicio.
 
@@ -1716,7 +1716,7 @@ También se ha de proteger el sistema de los fallos de infraestructura. La mejor
 
 El uso de diferentes bases de datos y no una única como hay en la solución monolítica también hace que en los datos no haya un único punto de fallo. No obstante, se podrían haber empleado tecnologías de bases de datos distribuidas (BDD) como MongoDB para garantizar esta característica a nivel de cada microservicio.
 
-Por último, cabe mencionar que organizaciones como Netflix prueban la tolerancia a fallos de sus servicios incitando al fallo de estos. Para ello, emplea un conjunto de programas que componen el ``ejército de simios", que apagan máquinas y centros de datos en producción de forma aleatoria \cite{Lewis2014}.
+Por último, cabe mencionar que organizaciones como Netflix prueban la tolerancia a fallos de sus servicios incitando al fallo de estos. Para ello, emplea un conjunto de programas que componen el ``ejército de simios'', que apagan máquinas y centros de datos en producción de forma aleatoria \cite{Lewis2014}.
 
 \subsection{Utilización de recursos}
 %TODO Libros
@@ -1744,7 +1744,7 @@ Los microservicios incrementan la facilidad de cambio de un producto \textit{sof
 
 La \textbf{capacidad para ser reemplazado} está estrechamente relacionada con la facilidad de cambio. El uso de interfaces en la capa de contratos, por ejemplo, hace que un microservicio pueda ser modificado y reemplazado fácilmente. El componente sustituto puede estar implementado con otra tecnología si respeta la vieja interfaz.
 
-Si recordamos el cronograma de la figura \ref{fig:Cronograma}, la refactorización de la solución monolítica para generar cualquiera de los servicios apenas se ha prolongado por más de un día (las tareas que empiezan su nombre con la palabra ``microservicio"). A esto habría que incluirle el tiempo que se ha tardado en desarrollar la lógica del servicio durante el desarrollo de la solución monolítica (las tareas que empiezan su nombre con la palabra ``implementación"). En comparación, el desarrollo de la solución monolítica en su totalidad se ha prolongado durante casi un mes (desde el día 19 de Junio hasta el día 16 de Julio).
+Si recordamos el cronograma de la figura \ref{fig:Cronograma}, la refactorización de la solución monolítica para generar cualquiera de los servicios apenas se ha prolongado por más de un día (las tareas que empiezan su nombre con la palabra ``microservicio''). A esto habría que incluirle el tiempo que se ha tardado en desarrollar la lógica del servicio durante el desarrollo de la solución monolítica (las tareas que empiezan su nombre con la palabra ``implementación''). En comparación, el desarrollo de la solución monolítica en su totalidad se ha prolongado durante casi un mes (desde el día 19 de Junio hasta el día 16 de Julio).
 
 Tras sumar estos tiempos, se observa que el desarrollo de cada microservicio apenas ha costado dos semanas, tal y como se estima que debería ser en el apartado \textbf{\ref{subsect:RNF} \nameref{subsect:RNF}}. Si un componente del \textit{software} debe ser reemplazado, puede ocurrir que en la solución basada en microservicios solo se tenga que reemplazar un microservicio mientras que en la solución monolítica se tenga que adaptar todo el monolito. Si consideramos que el tiempo para desarrollar un componente \textit{software} que remplaza a otro es similar al tiempo que costó desarrollar al original, reemplazar la solución monolítica será más costoso que reemplazar un único microservicio. Si nos situamos en un caso más extremo en el que se tuviera que reemplazar todo el sistema basado en microservicios, este problema podría abordarse de forma incremental por la modularidad de la solución. De nuevo, no se puede afirmar lo mismo de la solución monolítica.
 
@@ -2020,10 +2020,10 @@ Para crear el registro iremos al portal de Azure y desde un nuevo terminal ejecu
 \label{fig:CreateACR}
 \end{figure}
 
-Ahora, en la máquina de desarrollo donde tenemos el repositorio de código de la solución basada en microservicios, abriremos una nueva terminal. Haciendo uso del archivo \textit{docker-compose.yml} que hemos mostrado en la sección \textbf{\ref{sect:DespliegueMicroservicios} \nameref{sect:DespliegueMicroservicios}} vamos a construir las imágenes de todos los contenedores a través del comando ``docker-compose build".
+Ahora, en la máquina de desarrollo donde tenemos el repositorio de código de la solución basada en microservicios, abriremos una nueva terminal. Haciendo uso del archivo \textit{docker-compose.yml} que hemos mostrado en la sección \textbf{\ref{sect:DespliegueMicroservicios} \nameref{sect:DespliegueMicroservicios}} vamos a construir las imágenes de todos los contenedores a través del comando \textit{\textbf{``docker-compose build''}}.
 
 En esta máquina será necesario tener instalada la línea de comandos de Azure para la realización de los siguientes pasos 
-\hyperlink{page.80}{[48]}. Se debe iniciar sesión tanto con las credenciales del usuario de Azure a través del comando ``az login" como en en el registro de imágenes creado, tal y como muestra la figura \ref{fig:LoginAcr}.
+\hyperlink{page.80}{[48]}. Se debe iniciar sesión tanto con las credenciales del usuario de Azure a través del comando \textit{\textbf{``az login''}} como en en el registro de imágenes creado, tal y como muestra la figura \ref{fig:LoginAcr}.
 
 \begin{figure}[h]
 \centering
@@ -2032,7 +2032,7 @@ En esta máquina será necesario tener instalada la línea de comandos de Azure 
 \label{fig:LoginAcr}
 \end{figure}
 
-Para que las imágenes sean almacenadas en el registro que hemos creado, debemos etiquetar las imágenes que ha creado el comando ``docker-compose build". La etiqueta que daremos es el valor de la propiedad \textit{loginServer} del registro que se muestra en la figura \ref{fig:CreateACR}. Esto se puede realizar a través del comando ``docker tag" como se muestra en la figura \ref{fig:PushImage} o directamente poniendo el tag de cada imagen en el archivo docker-compose.yml \footnote{ Añadir una etiqueta en Docker Compose: \url{https://docs.docker.com/compose/compose-file/\#build}}. Finalmente, cada una de las imágenes etiquetadas deberá ser subido al repositorio a través del comando ``docker push".
+Para que las imágenes sean almacenadas en el registro que hemos creado, debemos etiquetar las imágenes que ha creado el comando \textbf{\textit{``docker-compose build''}}. La etiqueta que daremos es el valor de la propiedad \textit{loginServer} del registro que se muestra en la figura \ref{fig:CreateACR}. Esto se puede realizar a través del comando \textit{\textbf{``docker tag''}} como se muestra en la figura \ref{fig:PushImage} o directamente poniendo el tag de cada imagen en el archivo docker-compose.yml \footnote{ Añadir una etiqueta en Docker Compose: \url{https://docs.docker.com/compose/compose-file/\#build}}. Finalmente, cada una de las imágenes etiquetadas deberá ser subido al repositorio a través del comando \textit{\textbf{``docker push''}}.
 
 \begin{figure}[h]
 \centering
@@ -2052,7 +2052,7 @@ Si accedemos al recurso que se ha creado para el registro de imágenes desde el 
 
 \textbf{Azure Active Directory} (Azure AD) es un servicio para administrar el acceso a las aplicaciones y recursos. En nuestro caso, necesitamos comunicar dos recursos: el registro con las imágenes de los microservicios y el clúster de Kubernetes donde se desplegarán. Con el fin de que el clúster pueda obtener la imagen que en el archivo YAML se especifica, se hace uso de una entidad de servicio de Azure AD.
 
-Con este propósito, desde la línea de comandos del portal de Azure crearemos una entidad de servicio a través del comando ``az ad sp create-for-rbac". Una vez hecho esto, asignaremos el rol de lectura en la entidad de Azure AD que hemos creado (la seleccionaremos a través de su propiedad \textit{appId} que se muestra como resultado de ejecutar el comando anterior). Esto lo haremos para el recurso que contiene el registro de las imágenes, que seleccionaremos a través de su identificador (oculto en la figura \ref{fig:CreateACR}). Todos estos pasos se ilustran en la figura \ref{fig:ActiveDirectory}.
+Con este propósito, desde la línea de comandos del portal de Azure crearemos una entidad de servicio a través del comando \textit{\textbf{``az ad sp create-for-rbac''}}. Una vez hecho esto, asignaremos el rol de lectura en la entidad de Azure AD que hemos creado (la seleccionaremos a través de su propiedad \textit{appId} que se muestra como resultado de ejecutar el comando anterior). Esto lo haremos para el recurso que contiene el registro de las imágenes, que seleccionaremos a través de su identificador (oculto en la figura \ref{fig:CreateACR}). Todos estos pasos se ilustran en la figura \ref{fig:ActiveDirectory}.
 
 \begin{figure}[h]
 \centering
@@ -2061,7 +2061,7 @@ Con este propósito, desde la línea de comandos del portal de Azure crearemos u
 \label{fig:ActiveDirectory}
 \end{figure}
 
-A continuación, para la creación del clúster emplearemos el comando de la figura \ref{fig:CreateCluster}. En él especificaremos el grupo de recursos donde residirá el clúster y el número de nodos en el clúster (este valor se puede modificar más tarde empleando el comando ``az aks scale"). Como servidor principal para la autenticación se usará la entidad de servicio creada, a través de su propiedad \textit{appId}. También se deberá indicar la contraseña de este servicio, que se ha marcado con color gris en la imagen \ref{fig:ActiveDirectory}. La ejecución de este comando puede llegar a prolongarse más de cinco minutos.
+A continuación, para la creación del clúster emplearemos el comando de la figura \ref{fig:CreateCluster}. En él especificaremos el grupo de recursos donde residirá el clúster y el número de nodos en el clúster (este valor se puede modificar más tarde empleando el comando \textit{\textbf{``az aks scale''}}). Como servidor principal para la autenticación se usará la entidad de servicio creada, a través de su propiedad \textit{appId}. También se deberá indicar la contraseña de este servicio, que se ha marcado con color gris en la imagen \ref{fig:ActiveDirectory}. La ejecución de este comando puede llegar a prolongarse más de cinco minutos.
 
 \begin{figure}[h]
 \centering
@@ -2102,7 +2102,7 @@ Como se comenta en el libro \cite{Rensin2015}, es una buena práctica situar un 
 
 Tanto para la comunicación entre el \textit{back-end} y el \textit{fron-tend} como para la comunicación entre microservicios emplearemos la dirección IP externa que el balanceador de carga tiene. Esta decisión surge para hacer más sencilla la configuración de los microservicios, pero provoca que servicios internos como el de notificaciones o informes que no necesitan ser consumidos por el \textit{front-end} sean también expuestos fuera del clúster.
 
-Continuando con el proceso de ejecución de los microservicios, una vez definidos todos los servicios y balanceadores de carga podemos ejecutar el comando ``kubectl apply" para generar todos estos componentes a partir de su configuración. El resultado de la ejecución de este comando se muestra en la figura \ref{fig:KubernetesApply}. En caso de modificar la configuración y querer volver a desplegar los componentes basta con ejecutar de nuevo este comando o ``kubectl replace", que elimina los servicios existentes y los vuelve a crear.
+Continuando con el proceso de ejecución de los microservicios, una vez definidos todos los servicios y balanceadores de carga podemos ejecutar el comando \textit{\textbf{``kubectl apply''}} para generar todos estos componentes a partir de su configuración. El resultado de la ejecución de este comando se muestra en la figura \ref{fig:KubernetesApply}. En caso de modificar la configuración y querer volver a desplegar los componentes basta con ejecutar de nuevo este comando o \textit{\textbf{``kubectl replace''}}, que elimina los servicios existentes y los vuelve a crear.
 
 \begin{figure}[h]
 \centering
@@ -2116,7 +2116,7 @@ Continuando con el proceso de ejecución de los microservicios, una vez definido
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 
-Tras la ejecución de este comando, podemos ver los servicios que se han creado a través del comando ``kubectl get service". En un primer momento, los balanceadores de carga no tendrán dirección IP externa, como muestra la figura \ref{fig:ServiciosKubernetes}. Al cabo de alrededor cinco minutos, a cada balanceador de carga se le asignará una dirección IP.
+Tras la ejecución de este comando, podemos ver los servicios que se han creado a través del comando \textit{\textbf{``kubectl get service''}}. En un primer momento, los balanceadores de carga no tendrán dirección IP externa, como muestra la figura \ref{fig:ServiciosKubernetes}. Al cabo de alrededor cinco minutos, a cada balanceador de carga se le asignará una dirección IP.
 
 \begin{figure}[h]
 \centering
