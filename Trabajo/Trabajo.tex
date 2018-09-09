@@ -346,6 +346,11 @@ Es aconsejable dividir la solución en grandes servicios que poco a poco se vaya
 
 Cuando sea necesario realizar un cambio por nuevos requisitos del negocio, estos se localizarán en un contexto bien delimitado porque existirá una correspondencia entre la estructura de la organización y los microservicios del sistema. Como consecuencia, el tiempo medio para realizar un cambio se verá reducido porque solo hará falta volver a desplegar una porción del sistema. Además, la comunicación entre microservicios se asemejará a la existente entre las entidades del negocio.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
 \subsection{La tarea del arquitecto de \textit{software}}
 
 El \textit{software} ha de ser diseñado para ser flexible, adaptarse y evolucionar en función de los requisitos de los usuarios. En lugar de centrarse en diseñar un producto final perfecto, el arquitecto debe crear un entorno donde el sistema correcto pueda emerger creciendo progresivamente a medida que se descubren nuevos requisitos. Gracias a su modularidad, los microservicios son el entorno perfecto para que esto ocurra.
@@ -616,7 +621,7 @@ Un \textbf{orquestador} \cite{DelaTorre2018} es una herramienta para la gestión
 \subsection{Kubernetes} \label{subsect:Kubernetes}
 %TODO Definir cluster.
 %TODO Rancher. 
-\textbf{Kubernetes} \cite{Rensin2015} es una herramienta diseñada por Google para el despliegue y orquestación de aplicaciones en contenedores Docker de forma resiliente. Cada una de las máquinas que aloja uno o más contenedores Docker se denomina \textbf{nodo}. La unidad más pequeña con la que trabaja Kubernetes no son los contenedores, sino los pods. Un \textbf{pod} es una colección de contenedores y volúmenes agrupados juntos en un nodo. Los \textbf{volúmenes} son sistemas de archivos virtuales que se pueden emplear para comunicar entre ellos a los contenedores de un nodo. Kubernetes orquesta a nivel de los pods, por lo que dos contenedores en el mismo pod serán administrados igual. La relación de continencia entre estos componentes se plasma en la figura \ref{fig:kubernetes_ES}.
+\textbf{Kubernetes} \cite{Rensin2015} es una herramienta diseñada por Google para el despliegue y orquestación de aplicaciones en contenedores Docker de forma resiliente. Cada una de las máquinas que aloja uno o más contenedores Docker se denomina \textbf{nodo}. La unidad más pequeña con la que trabaja Kubernetes no son los contenedores, sino los \textit{pods}. Un \textbf{\textit{pod}} es una colección de contenedores y volúmenes agrupados juntos en un nodo. Los \textbf{volúmenes} son sistemas de archivos virtuales que se pueden emplear para comunicar entre ellos a los contenedores de un nodo. Kubernetes orquesta a nivel de los \textit{pods}, por lo que dos contenedores en el mismo \textit{pod} serán administrados igual. La relación de continencia entre estos componentes se plasma en la figura \ref{fig:kubernetes_ES}.
 
 \begin{figure}[h]
 \centering
@@ -625,7 +630,7 @@ Un \textbf{orquestador} \cite{DelaTorre2018} es una herramienta para la gestión
 \label{fig:kubernetes_ES}
 \end{figure}
 
-Kubernetes se emplea principalmente para especificar el número de réplicas que se desea tener simultáneamente de un pod. La herramienta nos permite fácilmente asegurar la disponibilidad de un servicio. No obstante, para garantizar la escalabilidad de esta se requiere de mayores conocimientos. Esto se consigue haciendo que el número de réplicas de un pod se modifique de forma dinámica en función de su demanda. Para este propósito se deben introducir balanceadores de carga como puntos de entrada al sistema. Estos balanceadores redirigirán cada petición al pod correspondiente y se encargarán de ajustar el número de réplicas de un pod según una serie de reglas.
+Kubernetes se emplea principalmente para especificar el número de réplicas que se desea tener simultáneamente de un \textit{pod}. La herramienta nos permite fácilmente asegurar la disponibilidad de un servicio. No obstante, para garantizar la escalabilidad de esta se requiere de mayores conocimientos. Esto se consigue haciendo que el número de réplicas de un \textit{pod} se modifique de forma dinámica en función de su demanda. Para este propósito se deben introducir balanceadores de carga como puntos de entrada al sistema. Estos balanceadores redirigirán cada petición al \textit{pod} correspondiente y se encargarán de ajustar el número de réplicas de un \textit{pod} según una serie de reglas.
 
 En el apéndice \textbf{\ref{chap:Despliegue} \nameref{chap:Despliegue}} se dan algunos detalles más acerca de Kubernetes ya que es el orquestador empleado en el caso de estudio dentro del el entorno de producción. Entre la información que aquí se puede encontrar está el uso de los servicios \textit{LoadBalancer} e \textit{Ingress}.
 
@@ -965,7 +970,7 @@ A nivel arquitectónico, la aplicación monolítica va a seguir una arquitectura
 
 \begin{itemize}
 
-\item \textbf{Capa de contratos}: en esta capa se situarán las interfaces que contienen todas las acciones del \textit{back-end} que pueden ser invocadas desde el exterior a través de la API. Estas interfaces se implementarán tanto en las capas de aplicación, servicios y proxy. 
+\item \textbf{Capa de contratos}: en esta capa se situarán las interfaces que contienen todas las acciones del \textit{back-end} que pueden ser invocadas desde el exterior a través de la API. Estas interfaces se implementarán tanto en las capas de aplicación, servicios y \textit{proxy}. 
 
 También se situarán en esta capa los objetos para la transferencia de datos (DTO). Los DTOs se utilizan para desacoplar los servicios que ofrece una API de la representación interna que da el sistema a sus entidades. En lugar de devolver al cliente una entidad tal y como se almacena en base de datos, los DTOs representan una entidad ocultando aquellas propiedades que no necesitan ser transferidas. También pueden cambiar el formato de algunas propiedades para que sea más cómodo para el cliente su procesamiento \hyperlink{page.80}{[48]}.
 
@@ -977,7 +982,7 @@ También se situarán en esta capa los objetos para la transferencia de datos (D
 
 \item \textbf{Capa de persistencia}: la capa de persistencia ofrece operaciones CRUD para cada una de las entidades que se almacenan en BD a través de objetos para el acceso a datos (DAO). La capa de persistencia no trabaja con DTOs: cuando la capa de aplicación le solicita una entidad, la devuelve completa. Es la capa de aplicación quien a través de los conversores transforma la entidad en un DTO para devolver una representación de esta al usuario.
 
-\item \textbf{Capa de proxy}: esta capa contiene los clientes necesarios para invocar al \textit{back-end} empleando código C\#, que genera internamente una llamada HTTP. Esta capa será referenciada por el \textit{front-end} a través de un paquete NuGet para comunicar con el \textit{back-end}. El \textit{front-end} es quien ejecutará el código contenido en esta capa. Cuando se desee comunicar con la parte servidor, en el proceso del \textit{front-end} se invocará al proxy para realizar una llamada HTTP al \textit{back-end}. Como debe ofrecer todas las operaciones de la API, implementa las interfaces de la capa de contratos.
+\item \textbf{Capa de \textit{proxy}}: esta capa contiene los clientes necesarios para invocar al \textit{back-end} empleando código C\#, que genera internamente una llamada HTTP. Esta capa será referenciada por el \textit{front-end} a través de un paquete NuGet para comunicar con el \textit{back-end}. El \textit{front-end} es quien ejecutará el código contenido en esta capa. Cuando se desee comunicar con la parte servidor, en el proceso del \textit{front-end} se invocará al \textit{proxy} para realizar una llamada HTTP al \textit{back-end}. Como debe ofrecer todas las operaciones de la API, implementa las interfaces de la capa de contratos.
 
 \end{itemize}
 
@@ -1208,19 +1213,19 @@ La documentación de la API se genera en la dirección formada por la unión de 
 \label{fig:SwaggerAPI}
 \end{figure}
 
-\subsection{Generación de la capa de proxy}
+\subsection{Generación de la capa de \textit{proxy}}
 %TODO Incluir algo más de NSwag.
 
-Como hemos comentado en la sección \textbf{\ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}}, la capa de proxy se emplea para invocar a la API de la parte servidora a través de llamadas HTTP. Para cada una de las interfaces de contratos vamos a crear un proxy, que implementará sus métodos delegando en un cliente HTTP generado automáticamente con \textbf{NSwag} \footnote{ Página de GitHub de NSwag: \url{https://github.com/RSuter/NSwag}}. NSwag es un conjunto de herramientas para varias plataformas, entre ellas .NET Core, para la generación de especificaciones Swagger a partir de los controladores definidos en C\# y la generación de clientes HTTP para el consumo de estos controladores \cite{Suter2017}.
+Como hemos comentado en la sección \textbf{\ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}}, la capa de \textit{proxy} se emplea para invocar a la API de la parte servidora a través de llamadas HTTP. Para cada una de las interfaces de contratos vamos a crear un \textit{proxy}, que implementará sus métodos delegando en un cliente HTTP generado automáticamente con \textbf{NSwag} \footnote{ Página de GitHub de NSwag: \url{https://github.com/RSuter/NSwag}}. NSwag es un conjunto de herramientas para varias plataformas, entre ellas .NET Core, para la generación de especificaciones Swagger a partir de los controladores definidos en C\# y la generación de clientes HTTP para el consumo de estos controladores \cite{Suter2017}.
 
-El cliente HTTP autogenerado es inyectado en el proxy a través del constructor. El proxy también es el encargado de adaptar los parámetros de la interfaz de contratos a los parámetros que espera el cliente HTTP. Esta adaptación es necesaria porque, por ejemplo, en las peticiones HTTP para los métodos GET no se puede especificar un Body. Como consecuencia, todos los parámetros se deben pasar a través de la cabecera de la petición. De esta forma, los parámetros solo pueden ser de tipos simples como una cadena (\textit{string}) y objetos muy utilizados como los identificadores (\textit{Guid}) han de ser transformados a tipos más simples. 
+El cliente HTTP autogenerado es inyectado en el \textit{proxy} a través del constructor. El \textit{proxy} también es el encargado de adaptar los parámetros de la interfaz de contratos a los parámetros que espera el cliente HTTP. Esta adaptación es necesaria porque, por ejemplo, en las peticiones HTTP para los métodos GET no se puede especificar un Body. Como consecuencia, todos los parámetros se deben pasar a través de la cabecera de la petición. De esta forma, los parámetros solo pueden ser de tipos simples como una cadena (\textit{string}) y objetos muy utilizados como los identificadores (\textit{Guid}) han de ser transformados a tipos más simples. 
 
-En la figura \ref{fig:OrdersProxy} se muestra el proxy de pedidos, donde los parámetros de tipo \textit{Guid} son transformados a una cadena de texto mediante la invocación del método \textit{ToString} en el método \textit{GenerateOrderReportAsync}. Para el resto de operaciones, el proxy delega en el cliente generado por NSwag.
+En la figura \ref{fig:OrdersProxy} se muestra el \textit{proxy} de pedidos, donde los parámetros de tipo \textit{Guid} son transformados a una cadena de texto mediante la invocación del método \textit{ToString} en el método \textit{GenerateOrderReportAsync}. Para el resto de operaciones, el \textit{proxy} delega en el cliente generado por NSwag.
 
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.7]{OrdersProxy}
-\caption{Fragmento del proxy de pedidos donde se adaptan los parámetros a tipos simples.}
+\caption{Fragmento del \textit{proxy} de pedidos donde se adaptan los parámetros a tipos simples.}
 \label{fig:OrdersProxy}
 \end{figure}
 
@@ -1405,11 +1410,11 @@ Las necesidades de cada microservicio de nuestro caso de estudio son diferentes:
 
 En el microservicio de informes vamos a seguir una arquitectura más sencilla. Su lógica se situará directamente en la capa de servicios, eliminando la capa de aplicación. Las capas de dominio y persistencia también pueden ser eliminadas porque las plantillas de los informes se van a almacenar ahora como un recurso y no en una base de datos. 
 
-En cuanto al servicio de notificaciones, vamos a implementarlo en el lenguaje \textbf{Java}. Sin embargo, como debe ser consumido por microservicios en lenguaje C\#, construiremos un proxy en este lenguaje para hacer más fácil su consumo.
+En cuanto al servicio de notificaciones, vamos a implementarlo en el lenguaje \textbf{Java}. Sin embargo, como debe ser consumido por microservicios en lenguaje C\#, construiremos un \textit{proxy} en este lenguaje para hacer más fácil su consumo.
 
 En el capítulo anterior, en las secciones \textbf{\ref{subsect:CRUD} \nameref{subsect:CRUD}} y \textbf{\ref{subsect:Persistencia} \nameref{subsect:Persistencia}} hemos nombrado algunas interfaces e implementaciones genéricas relacionadas con las entidades de dominio. Los microservicios de pedidos e incidencias deben seguir haciendo uso de estas implementaciones. Hacer de este código común un servicio no tiene sentido porque está relacionado con el acceso a datos y cada microservicio es dueño de sus propios datos. En este caso, este código genérico se referencia como una \textbf{librería} a través de paquetes NuGet, que en el diagrama de componentes se muestra con la etiqueta ``Código común''.
 
-Por último, indicar que el consumo de cualquier microservicio, ya sea desde la interfaz de usuario o desde otros servicios, se realizará a través de las capas de proxy. En el diagrama de componentes no se ha incluido esta capa en la arquitectura interna de ninguno de los microservicios porque esta capa no se ejecuta en el proceso del servicio.
+Por último, indicar que el consumo de cualquier microservicio, ya sea desde la interfaz de usuario o desde otros servicios, se realizará a través de las capas de \textit{proxy}. En el diagrama de componentes no se ha incluido esta capa en la arquitectura interna de ninguno de los microservicios porque esta capa no se ejecuta en el proceso del servicio.
 
 \subsection{Organización de los microservicios}
 %Cesar de la Torre.
@@ -1449,7 +1454,7 @@ Para que un microservicio pueda hacer peticiones a otro, se deben seguir los sig
 \label{fig:OrdersApplicationDependencies}
 \end{figure}
 
-\item Al registrar las dependencias de la capa de aplicación, invocar al código de la capa de proxy donde se registran las interfaces del microservicio a consumir (figura \ref{fig:UsingMicroservices}). Esto significa que en un microservicio cuando hagamos una petición a otro servicio a través de la interfaz se realizará una llamada HTTP a través de su proxy.
+\item Al registrar las dependencias de la capa de aplicación, invocar al código de la capa de \textit{proxy} donde se registran las interfaces del microservicio a consumir (figura \ref{fig:UsingMicroservices}). Esto significa que en un microservicio cuando hagamos una petición a otro servicio a través de la interfaz se realizará una llamada HTTP a través de su \textit{proxy}.
 
 \begin{figure}[h]
 \centering
@@ -1486,7 +1491,7 @@ En cuanto a las \textbf{restricciones de integridad referencial}, en una base de
 
 El microservicio de notificaciones ahora está desarrollado en dos lenguajes de programación distintos: \textbf{Java y C\#}.
 
-En C\# está desarrollado todo lo necesario para el consumo del servicio. Esto incluye la capa de contratos (donde se define su interfaz y el DTO que se empleará en la parte C\#) y la de proxy (donde se encuentra el cliente HTTP para realizar peticiones al microservicio). El proyecto C\# del microservicio de notificaciones se muestra en la figura \ref{fig:NotificationsC}.
+En C\# está desarrollado todo lo necesario para el consumo del servicio. Esto incluye la capa de contratos (donde se define su interfaz y el DTO que se empleará en la parte C\#) y la de \textit{proxy} (donde se encuentra el cliente HTTP para realizar peticiones al microservicio). El proyecto C\# del microservicio de notificaciones se muestra en la figura \ref{fig:NotificationsC}.
 
 \begin{figure}[h]
 \centering
@@ -1497,7 +1502,7 @@ En C\# está desarrollado todo lo necesario para el consumo del servicio. Esto i
 
 En Java se han desarrollado la capa de aplicación y servicios. La implementación de la capa de aplicación para mandar un correo electrónico es trivial. Para la capa de servicios, se crea e inicia un objeto \textit{HttpServer} al que se le asigna un \textit{handler}.
 
-El \textit{handler} es similar a lo que en .NET llamábamos controlador. En nuestro caso, deserializará el cuerpo de la petición en un objeto empleando la librería Gson y delegará en la capa de aplicación la operación a realizar. Cuando se quiere consumir otro microservicio, no podemos utilizar los proxies que hemos creado para C\# porque es otro lenguaje de programación. En su lugar, crearemos nuestro propio objeto para hacer la petición HTTP. En nuestro ejemplo, queremos contactar con el servicio de seguridad para obtener el correo electrónico de un usuario.
+El \textit{handler} es similar a lo que en .NET llamábamos controlador. En nuestro caso, deserializará el cuerpo de la petición en un objeto empleando la librería Gson y delegará en la capa de aplicación la operación a realizar. Cuando se quiere consumir otro microservicio, no podemos utilizar los \textit{proxies} que hemos creado para C\# porque es otro lenguaje de programación. En su lugar, crearemos nuestro propio objeto para hacer la petición HTTP. En nuestro ejemplo, queremos contactar con el servicio de seguridad para obtener el correo electrónico de un usuario.
 
 Por último, el archivo Dockerfile (figura \ref{fig:JavaDockerfile}) para el despliegue del servicio también varía. Vamos a seguir el mismo criterio que en los contenedores de microservicios .NET. Esto es usar los ensamblados (en este caso, un archivo \textit{*.jar}) para generar la imagen con el menor número de recursos posibles. Tanto el comando para iniciar el proceso del contenedor como la imagen base se verán modificados.
 
@@ -1526,7 +1531,7 @@ Gracias a la arquitectura interna basada en capas, el uso de esta BD solo implic
 \section{Versionado de servicios}
 % https://www.thomaslevesque.com/2017/09/18/common-msbuild-properties-and-items-with-directory-build-props/
 
-Cada uno de los microservicios se va a desplegar de forma independiente. El consumo de un microservicio se realiza a través de su proxy, que es una implementación de una interfaz de la capa de contratos. Cuando se realiza y se despliega un cambio en un servicio pueden ocurrir dos situaciones respecto a sus consumidores:
+Cada uno de los microservicios se va a desplegar de forma independiente. El consumo de un microservicio se realiza a través de su \textit{proxy}, que es una implementación de una interfaz de la capa de contratos. Cuando se realiza y se despliega un cambio en un servicio pueden ocurrir dos situaciones respecto a sus consumidores:
 
 \begin{itemize}
 
@@ -1534,7 +1539,7 @@ Cada uno de los microservicios se va a desplegar de forma independiente. El cons
 
 Los consumidores pueden seguir consumiendo la misma versión del servicio. Solo en caso de que se haya modificado el comportamiento del servicio (su especificación) los consumidores deberán ser notificados para adaptarse a cambios en las respuestas del servidor. Por ejemplo, se puede haber cambiado la política de permisos de un método sin haber cambiado su interfaz y ahora devuelve un error 401:Unauthorized porque es necesario otro rol para invocarlo.
 
-\item Una segunda situación consiste en que el cambio \textbf{haya significado un cambio en la interfaz} de contratos. Por ejemplo, puede ocurrir que se haya añadido un nuevo parámetro a un método o se haya cambiado el DTO de respuesta de un método. En este caso, los consumidores deben actualizar el proxy que emplean para comunicar con la nueva versión del servicio. Para asegurar que ningún consumidor se rompe por la actualización se pueden seguir dos aproximaciones, según la literatura:
+\item Una segunda situación consiste en que el cambio \textbf{haya significado un cambio en la interfaz} de contratos. Por ejemplo, puede ocurrir que se haya añadido un nuevo parámetro a un método o se haya cambiado el DTO de respuesta de un método. En este caso, los consumidores deben actualizar el \textit{proxy} que emplean para comunicar con la nueva versión del servicio. Para asegurar que ningún consumidor se rompe por la actualización se pueden seguir dos aproximaciones, según la literatura:
 
 %TODO Esto está muy relacionado con los despliegues V-A y canary releases.
 \begin{itemize}
@@ -1549,7 +1554,7 @@ Sin embargo, esta aproximación cuenta con algunas desventajas. En primer lugar,
 
 \end{itemize}
 
-En nuestro caso de estudio, tenemos control de todos los consumidores ya que la interfaz de los servicios no va a ser publicada para su consumo por aplicaciones de terceros. Los consumidores de un microservicio serán o la interfaz de usuario u otros servicios. Como hemos comentado en la sección \textbf{\ref{subsect:Consumo} \nameref{subsect:Consumo}}, el proxy se añade como un paquete NuGet con una versión específica. Para asegurarnos de que siempre se consume la última versión de un servicio, vamos a hacer uso de variables para referir a la versión del paquete NuGet a instalar, como se puede ver en la figura \ref{fig:Csproj}.
+En nuestro caso de estudio, tenemos control de todos los consumidores ya que la interfaz de los servicios no va a ser publicada para su consumo por aplicaciones de terceros. Los consumidores de un microservicio serán o la interfaz de usuario u otros servicios. Como hemos comentado en la sección \textbf{\ref{subsect:Consumo} \nameref{subsect:Consumo}}, el \textit{proxy} se añade como un paquete NuGet con una versión específica. Para asegurarnos de que siempre se consume la última versión de un servicio, vamos a hacer uso de variables para referir a la versión del paquete NuGet a instalar, como se puede ver en la figura \ref{fig:Csproj}.
 
 \begin{figure}[h]
 \centering
@@ -1574,9 +1579,9 @@ A estas variables se les da valor en un archivo llamado \textit{Versions.props}.
 
 \section{Adaptación de la interfaz de usuario}
 
-Para que la IU emplee los microservicios que se han creado se debe sustituir el proxy monolítico por los proxies de los microservicios de Seguridad, Incidencias y Pedidos. Esto se hace eliminando el paquete NuGet del proxy monolítico e instalando los tres paquetes nuevos.
+Para que la IU emplee los microservicios que se han creado se debe sustituir el \textit{proxy} monolítico por los \textit{proxies} de los microservicios de Seguridad, Incidencias y Pedidos. Esto se hace eliminando el paquete NuGet del \textit{proxy} monolítico e instalando los tres paquetes nuevos.
 
-Una vez hecho esto, habrá que corregir las referencias a diferentes \textbf{espacios de nombres}. Los espacios de nombre de la solución monolítica a la solución basada en microservicios se han modificado para distinguir clases de ambas soluciones que se llaman igual. Otro cambio que se debe realizar, es invocar el código para resolver las interfaces de contratos con los nuevos proxies. Como se puede ver, los cambios asociados a emplear una u otra solución han sido mínimos.
+Una vez hecho esto, habrá que corregir las referencias a diferentes \textbf{espacios de nombres}. Los espacios de nombre de la solución monolítica a la solución basada en microservicios se han modificado para distinguir clases de ambas soluciones que se llaman igual. Otro cambio que se debe realizar, es invocar el código para resolver las interfaces de contratos con los nuevos \textit{proxies}. Como se puede ver, los cambios asociados a emplear una u otra solución han sido mínimos.
 
 \section{Adaptación de las pruebas}
 
@@ -1749,7 +1754,7 @@ En cuanto a la solución basada en microservicios, se puede ver claramente que a
 
 Gracias a su implementación, tanto el servicio de informes como el de notificaciones están desacoplados de los datos que requieren para realizar su trabajo porque estos son transferidos como parámetros del método. Se ha hecho así para facilitar su invocación por cualquier servicio. Por ejemplo, el servicio de informes se podría haber implementado para que expusiera él directamente todos los informes que puede generar. Sin embargo, esto habría supuesto que tuviera una dependencia con todos los servicios de los que necesitara obtener datos. Como se desea mantener que puedan seguir siendo invocados desde cualquier otro servicio, no vamos a combinarlos con el servicio de pedidos.
 
-No obstante, podemos plantearnos si realmente vale la pena representar estos componentes de \textit{software} como microservicios. Por ejemplo, si observamos que apenas se modifican una vez implementados, sería buena idea representarlos como una \textbf{librería} y no como un servicio. Así, el sobrecoste asociado a las invocaciones a través de la red se reduciría a cambio de no poder desplegarlos de forma independiente.
+No obstante, tenemos que plantearnos si realmente vale la pena representar estos componentes de \textit{software} como microservicios. Por ejemplo, si observamos que apenas se modifican una vez implementados, sería buena idea representarlos como una \textbf{librería} y no como un servicio. Así, el sobrecoste asociado a las invocaciones a través de la red se reduciría a cambio de no poder desplegarlos de forma independiente.
 
 Otra consideración a tener en cuenta a la hora de transformar un servicio en una librería es que las librerías están ligadas a una única plataforma. Por ejemplo, el servicio de notificaciones está desarrollado en Java y gracias a que se ejecuta en otro proceso puede ser invocado por cualquier servicio, da igual su lenguaje de programación, a través de llamadas HTTP. La implementación del servicio, tal como está en Java, no puede desplegarse como una librería y emplearse en los servicios desarrollados en .NET porque no son plataformas compatibles. Por tanto, para cada servicio que desea consumir este componente se debería dar una implementación compatible con la plataforma del consumidor.
 
@@ -1847,7 +1852,7 @@ En segundo lugar, la integración de los microservicios ha sido más costosa de 
 
 Personalmente, este trabajo refleja el conocimiento adquirido en la universidad y en mi experiencia laboral. Por una parte, de la universidad he aplicado mis estudios realizados sobre proceso de \textit{software}, contenedores y plataformas como Xamarin. Las asignaturas que he cursado y más he podido aplicar en este trabajo son: Proceso de Software (PSW), Tecnología de Sistemas de Información en la Red (TSR) y Sistemas Multimedia Interactivos Multicanal (SMM). Sobre ellas me gustaría decir que han sido más que una base de conocimiento porque sintetizan, cada una a su manera, una buena parte de la literatura que he podido consultar.
 
-Por otra parte, he podido aplicar mi experiencia con los microservicios en las tecnologías .NET y he fortalecido mi madurez a la hora de enfrentarme a un problema de tamaño considerable. Gracias a esto, en la organización en la que trabajo actualmente formo parte de un equipo de investigación y desarrollo (I+D). Las personas que forman parte de este equipo son especialistas en el desarrollo de microservicios, que combinan con la generación automática de código basada en modelos.
+Por otra parte, he aplicado mi experiencia con los microservicios en las tecnologías .NET y he fortalecido mi madurez a la hora de enfrentarme a un problema de tamaño considerable. Gracias a esto, en la organización en la que trabajo actualmente formo parte de un equipo de investigación y desarrollo (I+D). Las personas que forman parte de este equipo son especialistas en el desarrollo de microservicios, que combinan con la generación automática de código basada en modelos.
 
 En cuanto a líneas de trabajo futuras, tras este proyecto se abren dos caminos para proseguir el trabajo realizado. En primer lugar, la realización y aplicación de un \textbf{modelo de calidad} a las dos soluciones realizadas para medir de forma cuantitativa los atributos de calidad que hemos citado en la memoria. En segundo lugar, la extensión de la aplicación desarrollada mediante la exploración de otras tecnologías, como la asociada a la integración basada en eventos o diferentes orquestadores.
 
@@ -2083,9 +2088,9 @@ En segundo lugar, una vez se establezca la conexión con el clúster, debemos cr
 \label{fig:KubernetesSecurity}
 \end{figure}
 
-Vamos a hacer un paréntesis para explicar en detalle parte de este archivo. Cada uno de los microservicios está formado por dos componentes: un servicio de Kubernetes y un balanceador de carga. Como hemos comentado en la sección \textbf{\ref{subsect:Kubernetes} \nameref{subsect:Kubernetes}}, los pods son la unidad de trabajo de Kubernetes, que son construidos y destruidos continuamente de forma transparente. En Kubernetes, un servicio es una abstracción que define un conjunto de pods. Aunque cada pod obtiene su propia dirección IP interna, no se puede garantizar que el servicio vaya a estar a la escucha siempre en esta IP debido a la naturaleza volátil del pod \footnote{ Servicios en Kubernetes: \url{https://kubernetes.io/docs/concepts/services-networking/service/}}.
+Vamos a hacer un paréntesis para explicar en detalle parte de este archivo. Cada uno de los microservicios está formado por dos componentes: un servicio de Kubernetes y un balanceador de carga. Como hemos comentado en la sección \textbf{\ref{subsect:Kubernetes} \nameref{subsect:Kubernetes}}, los \textit{pods} son la unidad de trabajo de Kubernetes, que son construidos y destruidos continuamente de forma transparente. En Kubernetes, un servicio es una abstracción que define un conjunto de \textit{pods}. Aunque cada \textit{pod} obtiene su propia dirección IP interna, no se puede garantizar que el servicio vaya a estar a la escucha siempre en esta IP debido a la naturaleza volátil del \textit{pod} \footnote{ Servicios en Kubernetes: \url{https://kubernetes.io/docs/concepts/services-networking/service/}}.
 
-En los servicios desplegados hemos seguido el caso de uso más común en relación entre pods y contenedores: cada pod representa un único contenedor Docker. A su vez, cada servicio está formado por un solo pod \footnote{ Pods en Kubernetes: \url{https://kubernetes.io/docs/concepts/workloads/pods/pod/}}. En la figura \ref{fig:KubernetesSecurity} se muestra en la sección \textit{containers} que solo hay un pod, basado en la imagen Docker del microservicio de seguridad.
+En los servicios desplegados hemos seguido el caso de uso más común en relación entre \textit{pods} y contenedores: cada \textit{pod} representa un único contenedor Docker. A su vez, cada servicio está formado por un solo \textit{pod} \footnote{ \textit{Pods} en Kubernetes: \url{https://kubernetes.io/docs/concepts/workloads/pods/pod/}}. En la figura \ref{fig:KubernetesSecurity} se muestra en la sección \textit{containers} que solo hay un \textit{pod}, basado en la imagen Docker del microservicio de seguridad.
 
 Si solo definieramos un servicio, la dirección IP que se le da es interna y no queda expuesta fuera del clúster para su consumo por aplicaciones \textit{front-end}. Existen varias posibilidades para alcanzar este propósito. Vamos a repasar algunas de ellas en la sección \textbf{\ref{sect:DespliegueOtros} \nameref{sect:DespliegueOtros}}, pero entre ellas la que vamos a presentar ahora es el uso de un balanceador de carga externo. \footnote{ Balanceadores de carga en Kubernetes: \url{https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/}} 
 
@@ -2134,7 +2139,7 @@ Por último, si a través del navegador accedemos a la dirección del balanceado
 
 En la sección anterior hemos mencionado que los microservicios comunican entre ellos a través de la dirección IP del balanceador de carga de cada uno de ellos. Esta dirección se especifica en los archivos de configuración \textit{appsettings.json} que se localizan en la capa de servicios. Se pueden definir diferentes archivos de configuración, uno para cada uno de los entornos que existen. Esto se puede observar en la figura \ref{fig:appsettings}, donde se muestra para el microservicio de pedidos el archivo de configuración global y el del entorno de desarrollo, \textit{appsettings.Development.json}, que se consulta solo cuando la aplicación se despliega en el entorno de desarrollo. El segundo sobreescribe las propiedades que tiene en común con el archivo de configuración global \hyperlink{page.80}{[48]}.
 
-Existen muchas formas de que un microservicio descubra donde se encuentran otros con los que ha de colaborar, como puede ser el uso de archivos de configuración. El microservicio de pedidos necesita comunicar con el de seguridad, informes y notificaciones, por lo que necesita conocer y almacenar la dirección donde estos se despliegan. Esta configuración será leída por los diferentes proxies que el servicio de pedidos utiliza para comunicar con los otros.
+Existen muchas formas de que un microservicio descubra donde se encuentran otros con los que ha de colaborar, como puede ser el uso de archivos de configuración. El microservicio de pedidos necesita comunicar con el de seguridad, informes y notificaciones, por lo que necesita conocer y almacenar la dirección donde estos se despliegan. Esta configuración será leída por los diferentes \textit{proxies} que el servicio de pedidos utiliza para comunicar con los otros.
 
 Como se muestra en la figura, el archivo de configuración de desarrollo contiene la dirección de los servicios que se despliegan a través de Docker Compose en el archivo que hemos presentado en la sección \textbf{\ref{sect:DespliegueMicroservicios} \nameref{sect:DespliegueMicroservicios}}. Mientras tanto, en el archivo de producción se emplean las direcciones de los balanceadores de carga presentados en la figura \ref{fig:ServiciosKubernetes}.
 
