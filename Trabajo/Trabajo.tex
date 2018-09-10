@@ -85,7 +85,7 @@ En primer lugar, quisiera agradecer a mi tutor en este trabajo, Patricio Letelie
 
 \vspace{0.4cm}
 
-Además, me gustaría dedicar este trabajo a mi madre y a mi hermana. Somos pocos, pero somos una gran familia. Quisiera agradeceros vuestro cariño, complicidad y el haber estado siempre que lo necesitaba. También me quiero acordar de mi abuelo, por ser un ejemplo que seguir y poner pasión en todo lo que hacía.
+Además, me gustaría dedicar este trabajo a mi madre y a mi hermana. Somos pocos, pero somos una gran familia. Quisiera agradeceros vuestro cariño, complicidad y el haber estado siempre que lo necesitaba. También me quiero acordar de mi abuelo, por ser un ejemplo a seguir y poner pasión en todo lo que hacía.
 
 \vspace{0.4cm}
 
@@ -286,7 +286,7 @@ La figura \ref{fig:iso25010} muestra la división en características y subcarac
 
 \subsection{El teorema de CAP}
 
-El teorema de CAP \cite{Brewer2000} (debe sus siglas a las características en inglés \textit{Consistency}, \textit{Availability} y \textit{Partition Tolerance}) fue propuesto en el año 2000 en el simposio de ACM sobre los principios de computación distribuida por el doctor Eric Brewer. El teorema de CAP establece que, en caso de fallo, solo dos de estas tres características pueden prevalecer \cite{Gilbert2012}.
+El teorema de CAP \cite{Brewer2000} fue propuesto en el año 2000 en el simposio de ACM sobre los principios de computación distribuida por el doctor Eric Brewer. Este teorema, que debe sus siglas a las características en inglés \textit{Consistency}, \textit{Availability} y \textit{Partition Tolerance}, establece que, en caso de fallo, solo dos de estas tres características pueden prevalecer \cite{Gilbert2012}.
 
 Pongamos un ejemplo en el que un microservicio está replicado y se produce un fallo por el cual la comunicación entre las réplicas se interrumpe y los cambios en una réplica no se pueden propagar al resto. Los \textbf{sistemas AP} son los sistemas que surgen fruto de sacrificar la consistencia cuando un fallo se produce, mientras que en los \textbf{sistemas CP} se pierde la disponibilidad. 
 
