@@ -651,11 +651,20 @@ Amazon es el líder en el mercado de computación en la nube con su producto \te
 
 \textbf{Amazon Elastic Compute Cloud} (EC2) permite a sus usuarios la creación de las máquinas necesarias para la ejecución de una aplicación. Este servicio es capaz de escalar las aplicaciones de acuerdo con las necesidades de sus usuarios. La creación, ejecución y destrucción de máquinas virtuales o instancias puede ser controlada a demanda del usuario de AWS. El pago de esta plataforma se realiza por horas, a diferencia de Azure, donde se paga por minutos y el pago es más exacto de acuerdo con el uso realizado \cite{Qaisi2016}.
 
+Otra funcionalidad interesante es AWS Lambda \footnote{ Características de AWS Lambda: https://aws.amazon.com/es/lambda/features/}, un \textbf{servicio sin servidores} que ejecuta código como respuesta a eventos y administra automáticamente sus recursos subyacentes. Se ejecuta sobre una infraestructura de alta disponibilidad y permite crear servicios back-end totalmente personalizados.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
 \subsection{Microsoft Azure}
 
 \textbf{Microsoft Azure} \cite{Qaisi2016} es una plataforma que ofrece un conjunto de herramientas y servicios en la nube. Es el segundo mayor proveedor de servicios en la nube y fue lanzado en 2010. Ofrece tanto funcionalidades de plataforma como servicio (PaaS) como IaaS.
 
 Los usuarios pueden crear, desplegar y gestionar aplicaciones y servicios a través de la red global de los centros de datos de Microsoft. Aunque el pago de sus servicios sea más cercano a la realidad, los modos de pago son manejados de forma poco transparente.
+
+De forma similar a AWS Lambda, Azure Functions \footnote{Página de información sobre Azure Functions: https://azure.microsoft.com/es-es/services/functions/} es un servicio para la construcción de aplicaciones con una arquitectura sin servidor. Permite crear \textit{back-ends} de aplicaciones webs y móviles o automatizar tareas programadas. El usuario no tiene que administrar la infraestructura donde se despliega. Gracias a esto, no es necesario crear reglas que hagan escalar el sistema de acuerdo con las peticiones que recibe ni gestionar los centros de datos donde el servicio se localiza.
 
 Al igual que con Kubernetes, en este trabajo se repasan varios de los servicios que ofrece Microsoft Azure porque es el proveedor que hemos escogido en el desarrollo del caso de estudio.
 
@@ -680,6 +689,11 @@ En \cite{Ryan2016} se realiza un estudio relativo al uso de orquestadores en com
 \label{fig:Comparativa_Orquestadores_ES}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
 \subsection{Revisión de trabajos realizados en la ETSInf}
 
 En esta sección revisaremos diferentes trabajos de final de grado realizados por alumnos de la Escuela Técnica Superior de Ingeniería Informática (ETSInf). No son muchos los trabajos en la escuela relacionados con los microservicios debido a su complejidad y a que estos son una tendencia muy actual. Queremos poner en valor dos trabajos, los realizados por Mompó \cite{Mompo2017} y Roig \cite{Roig2017}.
@@ -687,6 +701,11 @@ En esta sección revisaremos diferentes trabajos de final de grado realizados po
 En el trabajo de Mompó se propone una nueva metodología de trabajo para disminuir el retrabajo e incrementar el código compartido en una organización. La memoria repasa prácticas como la integración continua, donde se comparan las herramientas de Jenkins y Bamboo. Tras su evaluación, Jenkins es la herramienta elegida para incorporar al proceso de desarrollo. También realiza una comparativa entre una arquitectura basadas en microservicios y una monolítica frente a diferentes características como la escalabilidad o su complejidad. Entre las mayores diferencias que pueden observarse entre esta comparativa y la que realizamos en la sección \textbf{\ref{sect:Comparativa} \nameref{sect:Comparativa}} podemos citar la relacionada a la evolución de los microservicios. Según Mompó, introducir una modificación atañe solo al servicio al que se le aplica, cuando en este trabajo se presentan ejemplos de que esto no siempre es así.
 
 En cuanto al trabajo de Roig, recoge en el estado del arte las principales características de los contenedores Docker y LXC. Sin embargo, muestra predilección por los segundos, cuando son los primeros los más adoptados en la industria.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 
 \section{Propuesta} \label{sect:Propuesta}
 %TODO Revisar
@@ -1213,6 +1232,11 @@ La documentación de la API se genera en la dirección formada por la unión de 
 \label{fig:SwaggerAPI}
 \end{figure}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
 \subsection{Generación de la capa de \textit{proxy}}
 %TODO Incluir algo más de NSwag.
 
@@ -1229,6 +1253,15 @@ En la figura \ref{fig:OrdersProxy} se muestra el \textit{proxy} de pedidos, dond
 \label{fig:OrdersProxy}
 \end{figure}
 
+Se podría no haber diseñado un \textit{proxy} y realizar directamente invocaciones HTTP con las librerías que .NET define para este propósito. No obstante, el uso de un \textit{proxy} marca una línea más clara entre el \textit{front-end} y el \textit{back-end}. Si llegado el momento se desea que el \textit{proxy} no emplee el cliente generado por NSwag, esta capa podría referenciar directamente a la capa de aplicación. Haciendo esto, en lugar de haber desplegado un servicio se estaría haciendo del \textit{back-end} una librería. El código de aplicación, persistencia y dominio se ejecutaría en el proceso del front-end y la capa de servicios no sería invocada jamás, por lo que podría ser eliminada. En la figura \ref{fig:InProcess} se ve el resultado de este proceso en comparación con la arquitectura de 6 capas presentada al inicio del capítulo. La existencia del \textit{proxy} se ve justificada por esto ya que haciendo que emplee el cliente de NSwag o la capa de aplicación se construye un servicio o una librería.
+
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.4]{InProcess}
+\caption{Sistema de back-end como un servicio (izquierda) y como una librería (derecha).}
+\label{fig:InProcess}
+\end{figure}
+
 \subsection{Calidad del código}
 %TODO Uso de variables con nombre descriptivo, TODOs
 
@@ -1243,6 +1276,11 @@ Para asegurar la calidad del código se ha hecho uso de dos herramientas: CodeMa
 \end{itemize}
 
 En la mayoría de los proyectos se ha configurado para que las alertas que devuelve StyleCop cuando no se cumple una regla se trate como un error y no como una alerta. Esto se puede conseguir añadiendo la opción \textit{TreatWarningsAsErrors} en los archivos \textit{.csproj}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 
 \section{Interfaz de usuario}
 
@@ -1395,6 +1433,7 @@ Concretamente, para representar visualmente la división en contextos delimitado
 \subsection{Arquitectura interna de los microservicios}
 
 En el apartado \textbf{\ref{subsec:Poliglota} \nameref{subsec:Poliglota}} se ha reflexionado sobre que una arquitectura basada en microservicios permite emplear diferentes tecnologías, arquitecturas y bases de datos en cada microservicio. Para validar lo que en este apartado se dice, vamos a desarrollar algunos microservicios con diferentes combinaciones de estas tres características.
+
 \begin{figure}[h]
 \centering
 \includegraphics[scale=0.35]{Componentes}
@@ -1402,11 +1441,11 @@ En el apartado \textbf{\ref{subsec:Poliglota} \nameref{subsec:Poliglota}} se ha 
 \label{fig:Componentes}
 \end{figure}
 
-Las arquitecturas de cada uno de los servicios, así como las relaciones de dependencias que existen entre ellos se pueden ver en el diagrama de la figura \ref{fig:Componentes}. En la mayoría de los microservicios vamos a seguir la arquitectura de 6 capas que se describe en la sección \textbf{\ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}}. Esto hará que su refactorización sea más sencilla ya que solo debemos copiar las clases relacionadas al microservicio en cada una de las capas. 
+Las \textbf{arquitecturas internas} de cada uno de los servicios, así como las relaciones de dependencias que existen entre ellos se pueden ver en el diagrama de la figura \ref{fig:Componentes}. En la mayoría de los microservicios vamos a seguir la arquitectura de 6 capas que se describe en la sección \textbf{\ref{sct:DiseñoMonolitico} \nameref{sct:DiseñoMonolitico}}. Esto hará que su refactorización sea más sencilla ya que solo debemos copiar las clases relacionadas al microservicio en cada una de las capas. 
 
 Cada microservicio tendrá su propia base de datos, aunque estas pueden localizarse dentro del mismo servidor. Para evaluar otra tecnología de base de datos, la BD del servicio de incidencias la vamos a implementar con \textbf{Firebase} \footnote{ Documentación de Firebase Realtime Database: \url{https://firebase.google.com/docs/database/}}.
 
-Las necesidades de cada microservicio de nuestro caso de estudio son diferentes: algunos como el de informes o notificaciones no requieren persistir datos, por lo que aplicar una arquitectura de 6 capas en ellos no es necesario. 
+Las necesidades de cada microservicio de nuestro caso de estudio son diferentes: algunos como el de informes o notificaciones no requieren persistir datos, por lo que aplicar una arquitectura interna de 6 capas en ellos no es necesario. 
 
 En el microservicio de informes vamos a seguir una arquitectura más sencilla. Su lógica se situará directamente en la capa de servicios, eliminando la capa de aplicación. Las capas de dominio y persistencia también pueden ser eliminadas porque las plantillas de los informes se van a almacenar ahora como un recurso y no en una base de datos. 
 
@@ -1723,7 +1762,7 @@ Durante el desarrollo, tanto el sistema basado en microservicios como el monolí
 \label{fig:UsoRecursos}
 \end{figure}
 
-En resumen, en el caso de estudio no se han apreciado grandes diferencias en el uso de recursos entre la solución monolítica y la basada en microservicios. Esto se debe principalmente al pequeño tamaño del sistema desarrollado. Sin embargo, tal y como dice la literatura, los servicios se pueden desplegar de forma independiente de acuerdo con las prestaciones que necesiten. También se debe recordar que, en un entorno de producción, al escalar el monolito se desaprovechan gran cantidad de recursos.
+En resumen, en el caso de estudio no se han apreciado grandes diferencias en el uso de recursos entre la solución monolítica y la basada en microservicios. Esto se debe principalmente a que no se han realizado pruebas que muestren como escalan uno y otro sistema. Tal y como dice la literatura, los servicios se pueden desplegar de forma independiente de acuerdo con las prestaciones que necesiten. En un entorno de producción, al escalar el monolito se desaprovechan gran cantidad de recursos. Esto no ocurre con los microservicios, donde solo se asignan recursos a aquellos componentes que así lo requieran.
 
 \subsection{Capacidad de ser reemplazado}
 %TODO Reformular. Jon Eaves (2 semanas).
@@ -1733,9 +1772,17 @@ Los microservicios incrementan la facilidad de cambio de un producto \textit{sof
 
 La \textbf{capacidad para ser reemplazado} está estrechamente relacionada con la facilidad de cambio. El uso de interfaces en la capa de contratos, por ejemplo, hace que un microservicio pueda ser modificado y reemplazado fácilmente. El componente sustituto puede estar implementado con otra tecnología si respeta la vieja interfaz.
 
-Si recordamos el cronograma de la figura \ref{fig:Cronograma}, la refactorización de la solución monolítica para generar cualquiera de los servicios apenas se ha prolongado por más de un día (las tareas que empiezan su nombre con la palabra ``microservicio''). A esto habría que incluirle el tiempo que se ha tardado en desarrollar la lógica del servicio durante el desarrollo de la solución monolítica (las tareas que empiezan su nombre con la palabra ``implementación''). En comparación, el desarrollo de la solución monolítica en su totalidad se ha prolongado durante casi un mes (desde el día 19 de Junio hasta el día 16 de Julio).
+Si recordamos el cronograma de la figura \ref{fig:Cronograma}, la refactorización de la solución monolítica para generar cualquiera de los servicios apenas se ha prolongado por más de un día (las tareas que empiezan su nombre con la palabra ``microservicio''). A esto habría que incluirle el tiempo que se ha tardado en desarrollar la lógica del servicio durante el desarrollo de la solución monolítica (las tareas que empiezan su nombre con la palabra ``implementación''). En comparación, el desarrollo de la solución monolítica en su totalidad se ha prolongado durante casi un mes (desde el día 19 de Junio hasta el día 16 de Julio). Tras sumar estos tiempos, se observa que el desarrollo de cada microservicio apenas ha costado dos semanas, tal y como se estima que debería ser en el apartado \textbf{\ref{subsect:RNF} \nameref{subsect:RNF}}. 
 
-Tras sumar estos tiempos, se observa que el desarrollo de cada microservicio apenas ha costado dos semanas, tal y como se estima que debería ser en el apartado \textbf{\ref{subsect:RNF} \nameref{subsect:RNF}}. Si un componente del \textit{software} debe ser reemplazado, puede ocurrir que en la solución basada en microservicios solo se tenga que reemplazar un microservicio mientras que en la solución monolítica se tenga que adaptar todo el monolito. Si consideramos que el tiempo para desarrollar un componente de \textit{software} que remplaza a otro es similar al tiempo que costó desarrollar al original, reemplazar la solución monolítica será más costoso que reemplazar un único microservicio. Si nos situamos en un caso más extremo en el que se tuviera que reemplazar todo el sistema basado en microservicios, este problema podría abordarse de forma incremental por la modularidad de la solución. De nuevo, no se puede afirmar lo mismo de la solución monolítica.
+Según la literatura, el desarrollo de un sistema basado en microservicios es más costoso debido a su complejidad añadida \cite{Pressman}. Un ejemplo de esta complejidad se puede observar en la integración de los microservicios. Las invocaciones interprocedurales son más costosas de diseñar porque se debe hacer mayor incisión en los parámetros que se deben transferir de un proceso a otro. También se hace más difícil probar la respuesta que recibiremos porque, en la mayoría de los casos, no tenemos control sobre el otro proceso. En la alternativa monolítica, es más sencillo definir la interfaz con la que comunican dos módulos porque no requiere ejecutar dos procesos diferentes y la infraestructura sobre la que se ejecuta el sistema es más sencilla.
+
+Una vez dicho esto, vamos a partir de la hipótesis de que el tiempo para desarrollar un componente de \textit{software} que remplaza a otro es similar al tiempo que costó desarrollar el original.
+
+Si un componente del \textit{software} debe ser reemplazado, puede ocurrir que en la solución basada en microservicios solo se tenga que reemplazar un microservicio mientras que en la solución monolítica se tenga que adaptar todo el monolito. De acuerdo con nuestra hipótesis, reemplazar la solución monolítica será más costoso que reemplazar un único microservicio. Si nos situamos en un caso más extremo en el que se tuviera que reemplazar todo el sistema basado en microservicios, este problema podría abordarse de forma incremental por la modularidad de la solución. De nuevo, no se puede afirmar lo mismo de la solución monolítica.
+
+Aunque hagamos todos estos cálculos, no podemos obtener conclusiones claras debido a limitaciones como no contar con equipos diferentes para una y otra aproximación. El desarrollo de los microservicios no tuvo el mismo punto de partida que la solución monolítica. Se contaba con la experiencia fruto de la implementación del \textit{back-end} monolítico. Por ejemplo, las interfaces ya estaban bien definidas en el sistema monolítico. Como hemos dicho, diseñar la interfaz entre dos servicios es más sencillo en una arquitectura monolítica y es por este motivo por el cual algunos autores recomiendan comenzar el desarrollo de microservicios como si de un sistema monolítico se tratara. Realizar este paso en el sistema basado en microservicios directamente habría supuesto un sobreesfuerzo.
+
+Por último, se debe añadir que la hipótesis de la que partimos no tiene en cuenta aspectos como los comentados en el párrafo anterior. En el desarrollo inicial de un componente se realiza un esfuerzo extra debido a pruebas como las de la interfaz entre dos servicios. Cuando se vaya a reemplazar un componente, los contratos entre este componente y otros servicios ya serán estables y no se deberán evaluar de nuevo.
 
 \section{Otras posibles soluciones}
 %Reports y notifications como una librería porque no requieren desplegarse frecuentemente y ahorras en llamadas HTTP.
@@ -1781,11 +1828,6 @@ A continuación, presentamos una recopilación de las ventajas e inconvenientes 
 \item \textbf{Facilidad para ser reemplazado}: el sistema se divide en componentes que pueden ser reescritos en pocos días \cite{Newman2015a, Lewis2014}.
 
 \end{itemize}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% SALTO DE PAGINA
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
 
 {\Huge Inconvenientes}
 
@@ -1836,9 +1878,9 @@ Respecto al objetivo principal de este trabajo, gracias al caso de estudio desar
 
 \item En cuanto al proceso de desarrollo, a partir de una misma especificación hemos desarrollado una misma aplicación de dos formas distintas. Actividades como las de despliegue o pruebas han resultado ser más desafiantes en una solución basada en microservicios debido al incremento en el número de piezas de \textit{software} que participan. Otras como las de \textbf{diseño} cobran mayor relevancia porque un fallo en la descomposición del sistema en servicios es más costoso de reparar. Las actividades de mantenimiento e implementación son más fáciles de gestionar porque las bases de código son menores y más flexibles.
 
-\item Se han planteado diferentes situaciones que acreditan que, durante esta fase del ciclo del \textit{software}, los beneficios de una arquitectura basada en microservicios son superiores a los de una arquitectura monolítica. Estos beneficios se plasman sobre todo dentro del marco del \textbf{mantenimiento adaptativo}.
+\item Se han planteado diferentes situaciones que acreditan que, durante la fase de mantenimiento del ciclo del \textit{software}, los beneficios de una arquitectura basada en microservicios son superiores a los de una arquitectura monolítica. Estos beneficios se plasman sobre todo dentro del marco del \textbf{mantenimiento adaptativo}.
 
-\item En la mayoría los requisitos no funcionales que hemos estudiado se observan ventajas en una arquitectura basada en microservicios frente a una monolítica. Algunos como la utilización de recursos no han podido ser comprobados debido al pequeño tamaño del caso de estudio. Otros como los de disponibilidad o tolerancia a fallos se benefician del gran número de \textbf{tecnologías asociadas} a los microservicios que garantizan estas propiedades, como por ejemplo Kubernetes.
+\item En la mayoría los requisitos no funcionales que hemos estudiado se observan ventajas en una arquitectura basada en microservicios frente a una monolítica. Algunos como la utilización de recursos no han podido ser comprobados debido a que no se han hecho pruebas de la escalabilidad del caso de estudio. Otros como los de disponibilidad o tolerancia a fallos se benefician del gran número de \textbf{tecnologías asociadas} a los microservicios que garantizan estas propiedades, como por ejemplo Kubernetes.
 
 \end{itemize}
 
