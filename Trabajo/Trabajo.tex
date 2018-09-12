@@ -53,7 +53,7 @@
 
 \title{ Desarrollo de software basado en microservicios: un caso de estudio para evaluar sus ventajas e inconvenientes }
 \author{Víctor Alberto Iranzo Jiménez}
-\tutor{Patricio Orlando Letelier Torres}
+\tutor{Patricio Orlando Letelier Torres \\ María Carmen Penadés Gramage}
 \curs{2017-2018}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1805,11 +1805,15 @@ No obstante, tenemos que plantearnos si realmente vale la pena representar estos
 
 Otra consideración para tener en cuenta a la hora de transformar un servicio en una librería es que las librerías están ligadas a una única plataforma. Por ejemplo, el servicio de notificaciones está desarrollado en Java y gracias a que se ejecuta en otro proceso puede ser invocado por cualquier servicio, da igual su lenguaje de programación, a través de llamadas HTTP. La implementación del servicio, tal como está en Java, no puede desplegarse como una librería y emplearse en los servicios desarrollados en .NET porque no son plataformas compatibles. Por tanto, para cada servicio que desea consumir este componente se debería dar una implementación compatible con la plataforma del consumidor.
 
+
 \section{Ventajas e inconvenientes de los microservicios} \label{sect:Comparativa}
 
 A continuación, presentamos una recopilación de las ventajas e inconvenientes del uso de microservicios obtenidos a partir de algunas referencias consultadas y del desarrollo del caso de estudio:
 
-\vspace{0.3cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 
 {\Huge Ventajas}
 
@@ -1844,6 +1848,11 @@ A continuación, presentamos una recopilación de las ventajas e inconvenientes 
 \item \textbf{Código duplicado}: clases para el acceso a datos o la configuración del servicio están presentes en todos los microservicios del caso de estudio. Parte de este código duplicado se puede reducir mediante el uso de librerías.
 
 \end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SALTO DE PAGINA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 
 \section{Consideraciones finales}
 
@@ -1890,7 +1899,7 @@ A lo largo de todo el proceso de desarrollo me he enfrentado a diversos problema
 
 En segundo lugar, la integración de los microservicios ha sido más costosa de lo que en un principio suponía. Desacoplar los microservicios a nivel de diseño ha supuesto realizar varias refactorizaciones durante la actividad de implementación. Hay que ser consciente de que realizar un buen diseño a la primera es prácticamente imposible. Además, la comunicación entre los servicios en el entorno de producción ha requerido varios días de esfuerzo, sobre todo por la falta de conocimiento en herramientas para su depuración.
 
-Personalmente, este trabajo refleja el conocimiento adquirido en la Universidad y en mi experiencia laboral. Por una parte, de la Universidad he aplicado mis estudios realizados sobre proceso de \textit{software}, contenedores y plataformas como Xamarin. Las asignaturas que he cursado y más he podido aplicar en este trabajo son: Proceso de Software (PSW), Tecnología de Sistemas de Información en la Red (TSR) y Sistemas Multimedia Interactivos Multicanal (SMM). Sobre ellas me gustaría decir que han sido más que una base de conocimiento porque sintetizan, cada una a su manera, una buena parte de la literatura que he podido consultar.
+Personalmente, este trabajo refleja el conocimiento adquirido en la Universidad y en mi experiencia laboral. Por una parte, de la Universidad he aplicado mis estudios realizados sobre proceso de \textit{software}, contenedores y herramientas como Xamarin. Las asignaturas que he cursado y más he podido aplicar en este trabajo son: Proceso de Software (PSW), Tecnología de Sistemas de Información en la Red (TSR) y Sistemas Multimedia Interactivos Multicanal (SMM). Sobre ellas me gustaría decir que han sido más que una base de conocimiento porque sintetizan, cada una a su manera, una buena parte de la literatura que he podido consultar.
 
 Por otra parte, he aplicado mi experiencia con las tecnologías .NET y he fortalecido mi madurez a la hora de enfrentarme a un problema de tamaño considerable. Actualmente, en la organización en la que trabajo  formo parte de un equipo de investigación y desarrollo (I+D). Las personas que forman parte de este equipo son especialistas en el desarrollo de microservicios, que combinan con la generación automática de código basada en modelos.
 

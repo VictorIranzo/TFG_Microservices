@@ -18,31 +18,6 @@ Con el permiso del jurado, comenzaré con la exposición de este trabajo de fina
 
 \section{Introducción}
 
-
-\subsection{Motivación}
-
-Uno de los objetivos principales de una organización debe ser desarrollar sistemas de calidad. Se debe poner el foco en emplear una arquitectura de software que se adapte a las necesidades del negocio.
-
-Actualmente, trabajo en una organización que apuesta por el uso de arquitecturas basadas en microservicios. Como motivación personal, busco profundizar mi conocimiento en las tecnologías asociadas a estos.
-
-Además, queremos presentar un caso de estudio con la suficiente envergadura para reflejar su realidad: sus ventajas, inconvenientes, cuándo es recomendable su uso, etc.
-
-\subsection{Objetivos}
-
-Los objetivos que persigue este trabajo son los siguientes:
-
-\begin{itemize}
-
-\item Desarrollar una misma aplicación para el comercio electrónico siguiendo dos arquitecturas diferentes: una basada en microservicios y otra monolítica.
-
-\item Comparar el proceso de desarrollo de ambos sistemas a lo largo del ciclo de vida del software.
-
-\item Evaluar cómo realizar diferentes modificaciones durante el mantenimiento de ambas aplicaciones.
-
-\item Examinar ambas arquitecturas respecto a los requisitos no funcionales de disponibilidad, tolerancia a fallos, utilización de recursos y capacidad para ser reemplazado.
-
-\end{itemize}
-
 \subsection{Microservicios}
 
 Antes de entrar en materia, vamos a definir primero qué son los microservicios. Los microservicios son servicios pequeños y autónomos que cooperan entre ellos. Vamos a desglosar esta definición:
@@ -67,6 +42,32 @@ Las arquitecturas monolíticas se caracterizan porque:
 \item No se puede escalar cada módulo de acuerdo a sus necesidades. En su lugar, se debe escalar el sistema como una única pieza o monolito.
 
 \item Se limita el uso de lenguajes y herramientas, haciendo que en todos los módulos se deban emplear prácticamente los mismos.
+
+\end{itemize}
+
+\subsection{Motivación}
+
+Uno de los objetivos principales de una organización debe ser desarrollar sistemas de calidad. Se debe poner el foco en emplear una arquitectura de software que se adapte a las necesidades del negocio.
+
+Actualmente, trabajo en en departamento de I+D de una organización que apuesta por el uso de arquitecturas basadas en microservicios. Aquí se emplean las tecnologías más punteras y técnicas como la del desarrollo guiado por modelos (MDD). Mi labor aquí ha consistido en desarrollar algunos microservicios para la generación de informes y herramientas para la generación automática de código a partir de modelos. 
+
+Como motivación personal, busco profundizar mi conocimiento en las tecnologías asociadas a los microservicios.
+
+Además, queremos presentar un caso de estudio con la suficiente envergadura para reflejar su realidad: sus ventajas, inconvenientes, cuándo es recomendable su uso, etc.
+
+\subsection{Objetivos}
+
+Los objetivos que persigue este trabajo son los siguientes:
+
+\begin{itemize}
+
+\item Desarrollar una misma aplicación para el comercio electrónico siguiendo dos arquitecturas diferentes: una basada en microservicios y otra monolítica.
+
+\item Comparar el proceso de desarrollo de ambos sistemas a lo largo del ciclo de vida del software.
+
+\item Evaluar cómo realizar diferentes modificaciones durante el mantenimiento de ambas aplicaciones.
+
+\item Examinar ambas arquitecturas respecto a los requisitos no funcionales de disponibilidad, tolerancia a fallos, utilización de recursos y capacidad para ser reemplazado.
 
 \end{itemize}
 
@@ -195,13 +196,13 @@ A partir de la descricpión que se da en la descripción del caso de estudio, se
 
 \subsection{Proceso de desarrollo}
 
-El desarrollo de la aplicación siguiendo ambas alternativas se divide en tres grandes bloques: el desarrollo del back-end monolítico (en azul), el desarrollo del front-end (en verde) y el desarrollo del back-end basado en microservicios (en naranja).
+El desarrollo de la aplicación siguiendo ambas alternativas se divide en tres grandes bloques: el desarrollo del back-end monolítico, el desarrollo del front-end y el desarrollo del back-end basado en microservicios.
 
-El desarrollo del sistema comienza el 19 de junio y dura hasta el 29 de julio. En el cronograma se pueden ver las prinicpales tareas que se han llevado a cabo. 
+El desarrollo del sistema comienza el 19 de junio y dura hasta el 29 de julio. En el cronograma se pueden ver las principales tareas que se han llevado a cabo. 
 
-El back-end monolítico es el bloque que se alarga por más tiempo porque es donde se han evaluado diferentes detalles de implementación. 
+El back-end monolítico (en azul) es el bloque que se alarga por más tiempo porque es donde se han evaluado diferentes detalles de implementación. 
 
-Después, explotando ese back-end se construyó la aplicación móvil, cuyo código debía ser el mismo para comunicar con el sistema de microservicios o el monolítico.
+Después, explotando ese back-end se construyó la aplicación móvi(en verde), cuyo código debía ser el mismo para comunicar con el sistema de microservicios o el monolítico.
 
 Por último, en naranja aparece las tareas de refactorización del sistema monolítico en uno basado en microservicios, de menor duración porque consiste en la reorganización del código.
 
@@ -211,7 +212,7 @@ Como arquitectura para el sistema monolítico se va a seguir la arquitectura de 
 
 \begin{itemize}
 
-\item En la capa de Contratos se definen las interfaces con las operaciones que desde el exterior se pueden solicitar a la parte servidora. También aquí se definen los objetos para la transferencia de datos.
+\item En la capa de Contratos es una capa transversal donde se definen las interfaces con las operaciones que desde el exterior se pueden solicitar a la parte servidora. También aquí se definen los objetos para la transferencia de datos.
 
 \item La capa de persistencia es la única que accede directamente a la base de datos. Para hacerlo emplea Entity Framework Core, que mapea el esquema relacional en objetos C\#.
 
@@ -236,6 +237,8 @@ Para la construcción del sistema se han usado un gran número de herramientas, 
 \item Swagger UI: para la creación de una API interactiva para probar la parte servidora.
 
 \item CodeMaid y StyleCop: para controlar la calidad del sistema desarrollado.
+
+\item Xamarin: para la construcción de la aplicación móvil multiplataforma.
 
 \item Docker, Kubernetes y Azure: para el despliegue del sistema en un entorno de producción.
 
@@ -328,6 +331,16 @@ Para finaliar, vamos a repasar las conclusiones de este trabajo:
 \item Los RNFs que hemos mencionado son más fáciles de alcanzar en una arquitectura basada en microservicios.
 
 \end{itemize}
+
+Se ha podido experimentar, de primera mano, con las tecnologías asociadas a los microservicios. Personalmente, algunas de ellas, como Kubernetes, no las había utilizado nunca pero sí las conocía.
+
+Este trabajo refleja el conocimiento adquirido en la Universidad y en mi experiencia laboral.
+
+Por una parte, asignaturas como Proceso de Software (PSW), Tecnología de Sistemas de Información en la Red (TSR) O Sistemas Multimedia Interactivos Multicanal (SMM) han sido de gran ayuda como punto de partida de este trabajo.
+
+Por otra parte, he podido aplicar parte de mi experiencia laboral con los microservicios. Además, el conocimiento adquirido realizando este trabajo está alineado con la empresa donde trabajo, donde he aumentado mi nivel de desempeño técnico en la construcción de aplicaciones reales.
+
+Por último, en cuanto a líneas de trabajo futuras proponemos la realización y aplicación de un modelo de calidad a las alternativas desarrolladas en el caso de estudio. La comparación que se ha hecho en este trabajo respecto a los RNFs ha sido informal. Como los sistemas ya han sido construidos, se podrían medir el nivel en que se alcanzan en cada solución, de forma más rigurosa con un modelo de calidad.
 
 Gracias por su atención. Pasemos ahora al turno de preguntas.
 
