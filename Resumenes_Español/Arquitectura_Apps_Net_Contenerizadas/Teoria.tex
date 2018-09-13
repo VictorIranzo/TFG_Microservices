@@ -72,15 +72,27 @@ Entre los beneficios de una arquitectura basada en microservicios:
 
 \end{itemize}
 
+\section{Arquitectura lógica vs Arquitectura física}
+
+El desarrollo de microservicios no requiere de una tecnología específica. Emplear contenedores Docker es opcional para su implementación y se pueden emplear otras herramientas como Vagrant. Es decir, los microservicios son una arquitectura lógica.
+
+La paridad entre un microservicio y el contenedor donde se ejecuta no es siempre requerida en todos los casos. La arquitectura lógica no se correlaciona siempre con la arquitectura física. 
+
 \section{Contenerizando aplicaciones monolíticas}
 
 Un único servicio monolítico ejecutándose en un contenedor no permite escalar solo aquellos componentes de la aplicación que son realmente un cuello de botella. Aunque se ejecute en un contenedor que se puede replicar, el escalado es forma gruesa porque se replica toda la aplicación. El enfoque monolítico se puede emplear inicialmente porque es más fácil que un enfoque basado en microservicios.
 
 \section{Datos de un microservicio}
 
+Un proceso no mantiene un estado persistente. Se pueden emplear diferentes soluciones para gestionar datos persistentes en aplicaciones Docker: volúmenes, Bind mounts, tmpfs mounts o almacenamientos remotos como Azure Storage. A la imagen también se le puede añadir datos a través de la función overlay file system, pero esto no es aconsejable porque la imagen ha de tener el menor estado posible (stateless). La opción preferida actualmente son los volúmenes de Docker.
+
 \subsection{Soberanía de datos por microservicio}
 
-\subsection{Datos y el patrón Bounded Context}
+Cada microservicio debe poseer sus propios datos y lógica de dominio, a diferencia del enfoque monolítico donde se emplea una única base de datos para toda la aplicación. Entre las ventajas del enfoque tradicional están que se pueden implementar fácilmente transacciones ACID y consultas a través del lenguaje SQL.
+
+Cuando se emplean microservicios, el acceso a los datos es más complejo. El acceso a los datos de otro microservicio se debe realizar a través de la API que este ofrece. Además, no se puede realizar una transacción ACID que involucre a más de un microservicio, por lo que se está obligado a emplear consistencia eventual. Por último, las consultas son más complejas porque no se pueden establecer restricciones de integridad referencial entre datos de distintos servicios.
+
+Entre las ventajas de que cada microservicio posea su propia base de datos podemos citar que se pueden emplear diferentes tecnologías: un microservicio puede usar MongoDB mientras que otro usa tecnología SQL, lo que se denomina persistencia políglota. Además los servicios están menos acoplados y tienen una mejor escalabilidad y capacidad de administración.
 
 \subsection{Retos y soluciones para la gestión de datos distribuidos}
 
