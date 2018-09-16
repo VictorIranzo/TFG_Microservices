@@ -1,0 +1,3 @@
+Backend_Monolithic: 7080 líneas de código + 2160 de comentarios
+Frontend_Xamarin: 4867 líneas de código + 2187 de comentarios
+Backend_Microservices: 10000 líneas de código + 2800 de comentarios
